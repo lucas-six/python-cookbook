@@ -1,2 +1,3 @@
-# python-cookbook
-Python Cookbook: Recipes for Python.
+# Python Cookbook
+
+Recipes for Python.
