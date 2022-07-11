@@ -24,6 +24,8 @@
 
 - Function Decorator
   - [Create Function Decorator Without Argument](recipes/core/function_decorator_no_args)
+- Type Hint
+  - [Type Hint for `Callable`](recipes/core/type_hint_for_callable)
 
 ## License
 
