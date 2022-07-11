@@ -65,3 +65,5 @@ Without **`@functools.wraps`**, some attributes have not been passed:
 >>> func.__qualname__
 'decorator.<locals>.wrapper'
 ```
+
+More details to see [Function (Method) Decorator on Python Handbook](https://leven-cn.github.io/python-handbook/recipes/core/function_decorator).
