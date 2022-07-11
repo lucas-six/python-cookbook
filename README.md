@@ -26,6 +26,8 @@
   - [Create Function Decorator Without Argument](recipes/core/function_decorator_no_args)
   - [Create Function Decorator With Required Arguments](recipes/core/function_decorator_args_required)
   - [Create Function Decorator With Optional Arguments](recipes/core/function_decorator_args_optional)
+- Context Manager
+  - [Create Context Manager](recipes/core/context_manager)
 - Type Hint
   - [Type Hint for `Callable`](recipes/core/type_hint_for_callable)
 
