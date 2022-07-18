@@ -16,21 +16,6 @@ True
 True
 ```
 
-## epoch
-
-```python
-import time
-
-time.gmtime(0)
-```
-
-## UTC Time
-
-```python
->>> utc_time = time.gmtime()
->>> isinstance(utc_time, time.struct_time)
-```
-
 ## Local Time
 
 ```python

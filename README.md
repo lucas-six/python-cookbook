@@ -31,6 +31,7 @@
 - [Regex Patterns](recipes/core/regex_patterns)
 - Time
   - [Time](recipes/core/time)
+  - [UTC Time](recipes/core/utc_time)
 - Type Hint
   - [Type Hint for `Callable`](recipes/core/type_hint_for_callable)
 - I/O, File-Like Object
