@@ -2,7 +2,11 @@
 
 ## Solution
 
+### Text Files
+
 ```python
+import io
+
 # For UTF-8 with BOM, use encoding='utf-8-sig'
 # errors=None same with errors='strict',
 #   raise ValueError when encoding/decoding errors happened
@@ -26,5 +30,26 @@ with open('x.txt', 'w+', encoding='utf-8') as f:
     curr_pos: int = f.seek(0)
     curr_pos: int = f.seek(1, io.SEEK_CUR)
 ```
+
+### In-memory text buffer `io.StringIO`
+
+```python
+import io
+
+output = io.StringIO()
+output.write('First line.\n')
+print('Second line.', file=output)
+
+# Retrieve file contents -- this will be
+# 'First line.\nSecond line.\n'
+# stream position is not changed (diff `read()`)
+contents = output.getvalue()
+
+# Close object and discard memory buffer --
+# .getvalue() will now raise an exception.
+output.close()
+```
+
+## References
 
 More details to see [File Object, I/O on Python Handbook](https://leven-cn.github.io/python-handbook/recipes/core/file_object).
