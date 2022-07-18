@@ -30,7 +30,7 @@
   - [Create Context Manager](recipes/core/context_manager)
 - [Regex Patterns](recipes/core/regex_patterns)
 - Time
-  - [Time](recipes/core/time)
+  - [Timestamp (UNIX Time)](recipes/core/timestamp)
   - [UTC Time](recipes/core/utc_time)
   - [Local Time](recipes/core/local_time)
   - [Convert Local Time To Timestamp](recipes/core/local_time_to_timestamp)
