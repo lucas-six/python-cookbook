@@ -33,6 +33,7 @@
   - [Type Hint for `Callable`](recipes/core/type_hint_for_callable)
 - I/O, File-Like Object
   - [Access Text Files](recipes/core/text_io)
+  - [Access Binary Files](recipes/core/binary_io)
 
 ## License
 
