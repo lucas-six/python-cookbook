@@ -16,15 +16,6 @@ True
 True
 ```
 
-## Local Time
-
-```python
-import time
-
->>> local_time = time.localtime()
->>> isinstance(local_time, time.struct_time)
-```
-
 ## Local Time To Timestamp
 
 ```python
