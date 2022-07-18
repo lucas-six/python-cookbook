@@ -1,6 +1,8 @@
 # Access Binary Files
 
-## Read/Write
+## Solution
+
+### Read/Write
 
 ```python
 with open('x.png', 'wb+') as f:
@@ -17,7 +19,7 @@ with open('x.png', 'wb+') as f:
     curr_pos: int = f.seek(1, io.SEEK_CUR)
 ```
 
-## Read Only
+### Read Only
 
 ```python
 with open('x.png', 'rb') as f:
@@ -37,7 +39,7 @@ with open('x.png', 'rb') as f:
     data: bytes = f.peek()
 ```
 
-## Write Only
+### Write Only
 
 ```python
 with open('x.png', 'rw') as f:
@@ -53,7 +55,7 @@ with open('x.png', 'rw') as f:
     curr_pos: int = f.seek(1, io.SEEK_CUR)
 ```
 
-## In-memory bytes buffer: `io.BytesIO`
+### In-memory bytes buffer: `io.BytesIO`
 
 ```python
 with io.BytesIO(b'data') as buf:
@@ -70,5 +72,7 @@ with io.BytesIO(b'data') as buf:
     curr_pos: int = f.seek(0)
     curr_pos: int = f.seek(1, io.SEEK_CUR)
 ```
+
+## References
 
 More details to see [File Object, I/O on Python Handbook](https://leven-cn.github.io/python-handbook/recipes/core/file_object).
