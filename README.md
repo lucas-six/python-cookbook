@@ -29,6 +29,8 @@
 - Context Manager
   - [Create Context Manager](recipes/core/context_manager)
 - [Regex Patterns](recipes/core/regex_patterns)
+- Time
+  - [Time](recipes/core/time)
 - Type Hint
   - [Type Hint for `Callable`](recipes/core/type_hint_for_callable)
 - I/O, File-Like Object
