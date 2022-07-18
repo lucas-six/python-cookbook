@@ -32,6 +32,7 @@
 - Time
   - [Time](recipes/core/time)
   - [UTC Time](recipes/core/utc_time)
+  - [Local Time](recipes/core/local_time)
 - Type Hint
   - [Type Hint for `Callable`](recipes/core/type_hint_for_callable)
 - I/O, File-Like Object
