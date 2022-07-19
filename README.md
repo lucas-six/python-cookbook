@@ -37,7 +37,7 @@
   - Representation (Format) of Dates and Times
     - [ISO 8601 Format](recipes/core/iso_8601_fmt)
     - [RFC 3339 Format](recipes/core/rfc_3339_fmt)
-    - [Format Time String](recipes/core/time_str_fmt)
+    - [Format Date & Time String](recipes/core/time_str_fmt)
 - Type Hint
   - [Type Hint for `Callable`](recipes/core/type_hint_for_callable)
 - I/O, File-Like Object
