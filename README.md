@@ -43,7 +43,7 @@
 - I/O, File-Like Object
   - [Access Text Files](recipes/core/text_io)
   - [Access Binary Files](recipes/core/binary_io)
-- [Logging](recipes/core/logging_config)
+- [Logging Dictionary Configuration](recipes/core/logging_config)
 
 ## License
 
