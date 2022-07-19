@@ -34,7 +34,9 @@
   - [UTC Time](recipes/core/utc_time)
   - [Local Time](recipes/core/local_time)
   - [Convert Local Time To Timestamp](recipes/core/local_time_to_timestamp)
-  - [Format Time String](recipes/core/time_str_fmt)
+  - Representation (Format) of Dates and Times
+    - [ISO 8601 Format](recipes/core/iso_8601_fmt)
+    - [Format Time String](recipes/core/time_str_fmt)
 - Type Hint
   - [Type Hint for `Callable`](recipes/core/type_hint_for_callable)
 - I/O, File-Like Object
