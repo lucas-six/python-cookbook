@@ -42,26 +42,53 @@ LOGGING = {
             'filename': 'example.log',
             'mode': 'a',
             'encoding': 'utf-8',
+            'errors': 'strict',  # since Python 3.9
+            'formatter': 'verbose',
+        },
+        'rfile': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': 'r.log',
+            'mode': 'a',
+            'encoding': 'utf-8',
+            'errors': 'strict',  # since Python 3.9
+            'maxBytes': 204800,  # 200kB
+            'backupCount': 10,
+            'formatter': 'verbose',
+        },
+        'tfile': {
+            'level': 'INFO',
+            'class': 'logging.handlers.TimedRotatingFileHandler',
+            'filename': 't.log',
+            'encoding': 'utf-8',
+            'errors': 'strict',  # since Python 3.9
+            'when': 'midnight',  # for Day; 's'(second), 'm'(minute), 'h'(hour), 'd'(day)
+            'atTime': None,  # datetime.time instance
+            'interval': 1,
+            'utc': True,
             'formatter': 'verbose',
         },
         'errors': {
-            'level': 'ERROR',
-            'class': 'logging.FileHandler',
-            'filename': 'example-errors.log',
+            'level': 'WARNING',
+            'class': 'logging.RotatingFileHandler',
+            'filename': 'errors.log',
             'mode': 'a',
             'encoding': 'utf-8',
+            'errors': 'strict',  # since Python 3.9
+            'maxBytes': 204800,  # 200kB
+            'backupCount': 10,
             'formatter': 'verbose',
         },
     },
     'loggers': {
         'app': {
             'level': 'INFO',
-            'handlers': ['file']
+            'handlers': ['tfile', 'errors']
         }
     },
     'root': {
         'level': 'DEBUG',
-        'handlers': ['console', 'file', 'errors']
+        'handlers': ['console', 'rfile', 'errors']
     },
 }
 ```
