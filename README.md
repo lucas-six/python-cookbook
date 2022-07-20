@@ -45,8 +45,8 @@
   - [Access Binary Files](recipes/core/binary_io)
 - [Logging Dictionary Configuration](recipes/core/logging_config)
 - Parallelism & Cocurrent
-  - [Multi-Threads - `threading`](recipes/core/multi_threads): for **I/O-bound** tasks
-  - [Multi-Processes - `multiprocessing`](recipes/core/multi_processes): for **CPU-bound** tasks
+  - [`threading` - Multi-Threads for **I/O-bound** tasks](recipes/core/multi_threads)
+  - [`multiprocessing` - Multi-Processes for **CPU-bound** tasks](recipes/core/multi_processes)
 
 ## License
 
