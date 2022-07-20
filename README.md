@@ -46,6 +46,7 @@
 - [Logging Dictionary Configuration](recipes/core/logging_config)
 - Parallelism & Cocurrent
   - [Multi-Threads - `threading`](recipes/core/multi_threads): for **I/O-bound** tasks
+  - [Multi-Processes - `multiprocessing`](recipes/core/multi_processes): for **CPU-bound** tasks
 
 ## License
 
