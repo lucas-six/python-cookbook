@@ -14,7 +14,7 @@
       alt="pre-commit" style="max-width:100%;">
     </a>
   </p>
-  <p>Recipes for <code>Python</code>.</p>
+  <p>Recipes for daily working with <code>Python</code>.</p>
   <p><a href="https://leven-cn.github.io/python-cookbook/">https://leven-cn.github.io/python-cookbook/</a></p>
 </section>
 
