@@ -40,20 +40,18 @@ if __name__ == '__main__':
     logger = multiprocessing.log_to_stderr(logging.DEBUG)
 
 
+    p1 = multiprocessing.Process(target=worker, name='worker_name', args=(logger,))
+    p1.start()
     for i in range(5):
-        p1 = multiprocessing.Process(target=worker, name='worker_name', args=(logger,))
 
         # passing arguments
         # default name: "Process-N"
-        p2 = multiprocessing.Process(target=worker_args, args=(logger, i))
-
-        p1.start()
-        p2.start()
+        p = multiprocessing.Process(target=worker_args, args=(logger, i))
+        p.start()
 
 
     # enumerate active child processes
     for p in multiprocessing.active_children():
-        logger.debug(f'join {p.name}({p.pid})')
         p.join()
 ```
 
