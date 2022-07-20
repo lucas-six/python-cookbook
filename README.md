@@ -50,6 +50,7 @@
   - [Synchronization Primitives - `Event` (For Threads)](recipes/core/synchronization_event_threads)
   - [Synchronization Primitives - `Event` (For Processes)](recipes/core/synchronization_event_processes)
   - [Synchronization Primitives - Mutex Lock `Lock` (For Threads)](recipes/core/synchronization_lock_threads)
+  - [Synchronization Primitives - Mutex Lock `Lock` (For Processes)](recipes/core/synchronization_lock_processes)
 
 ## License
 
