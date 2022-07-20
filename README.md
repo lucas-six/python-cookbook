@@ -44,9 +44,9 @@
   - [Access Text Files](recipes/core/text_io)
   - [Access Binary Files](recipes/core/binary_io)
 - [Logging Dictionary Configuration](recipes/core/logging_config)
-- Parallelism & Cocurrent
-  - [Multi-Threads for **I/O-bound** tasks](recipes/core/multi_threads)
-  - [Multi-Processes for **CPU-bound** tasks](recipes/core/multi_processes)
+- Parallelism & Concurrent
+  - [Multi-Threads Parallelism for **I/O-bound** tasks](recipes/core/multi_threads)
+  - [Multi-Processes Parallelism for **CPU-bound** tasks](recipes/core/multi_processes)
   - [Process Pool](recipes/core/process_pool)
   - [Synchronization Primitives - `Event` (For Threads)](recipes/core/synchronization_event_threads)
   - [Synchronization Primitives - `Event` (For Processes)](recipes/core/synchronization_event_processes)
