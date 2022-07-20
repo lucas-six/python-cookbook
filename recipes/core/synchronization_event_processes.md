@@ -32,7 +32,6 @@ def worker_timeout(event: Event, logger: logging.Logger):
         logger.debug('run')
     else:
         logger.debug(f'timeout: {timeout}')
-        assert not event.is_set()
 
 
 def worker_wait_main(event: Event, logger: logging.Logger):

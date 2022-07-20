@@ -38,7 +38,6 @@ def worker_timeout(event: threading.Event):
         logging.debug('run')
     else:
         logging.debug(f'timeout: {timeout}')
-        assert not event.is_set()
 
 
 def worker_wait_mainthread(event: threading.Event):
