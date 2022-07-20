@@ -29,8 +29,6 @@ def worker():
     assert tid == threading.get_native_id()
 
     # thread name
-    # `Thread.getName()` and `Thread.setName()` are deprecated,
-    # using `Thread.name` instead.
     thread_name: str = current_thread.name
     assert thread_name == 'worker_name'
 
@@ -54,8 +52,8 @@ for i in range(5):
 
 # Wait until the threads terminate.
 main_thread = threading.main_thread()
-for t in threading.enumerate():  # enumerate active threads
-    if t is not main_threading:
+for t in threading.enumerate():
+    if t is not main_thread:
         t.join()
 ```
 
