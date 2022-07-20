@@ -34,10 +34,10 @@
   - [UTC Time](recipes/core/utc_time)
   - [Local Time](recipes/core/local_time)
   - [Convert Local Time To Timestamp](recipes/core/local_time_to_timestamp)
-  - Representation (Format) of Dates and Times
-    - [ISO 8601 Format](recipes/core/iso_8601_fmt)
-    - [RFC 3339 Format](recipes/core/rfc_3339_fmt)
-    - [Format Date & Time String](recipes/core/time_str_fmt)
+- Representation of Dates and Times
+  - [ISO 8601 Format](recipes/core/iso_8601_fmt)
+  - [RFC 3339 Format](recipes/core/rfc_3339_fmt)
+  - [Format Date & Time String](recipes/core/time_str_fmt)
 - Type Hint
   - [Type Hint for `Callable`](recipes/core/type_hint_for_callable)
 - I/O, File-Like Object
@@ -45,8 +45,8 @@
   - [Access Binary Files](recipes/core/binary_io)
 - [Logging Dictionary Configuration](recipes/core/logging_config)
 - Parallelism & Cocurrent
-  - [`threading` - Multi-Threads for **I/O-bound** tasks](recipes/core/multi_threads)
-  - [`multiprocessing` - Multi-Processes for **CPU-bound** tasks](recipes/core/multi_processes)
+  - [Multi-Threads for **I/O-bound** tasks](recipes/core/multi_threads)
+  - [Multi-Processes for **CPU-bound** tasks](recipes/core/multi_processes)
 
 ## License
 
