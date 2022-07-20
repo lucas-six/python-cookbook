@@ -48,6 +48,7 @@
   - [Multi-Threads Parallelism for **I/O-bound** tasks](recipes/core/multi_threads)
   - [Multi-Processes Parallelism for **CPU-bound** tasks](recipes/core/multi_processes)
   - [Process Pool](recipes/core/process_pool)
+  - [High-Level Threads-Based Concurrent](recipes/core/concurrent_threads)
   - [Synchronization Primitives - `Event` (For Threads)](recipes/core/synchronization_event_threads)
   - [Synchronization Primitives - `Event` (For Processes)](recipes/core/synchronization_event_processes)
   - [Synchronization Primitives - Mutex Lock `Lock` (For Threads)](recipes/core/synchronization_lock_threads)
