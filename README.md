@@ -48,6 +48,7 @@
   - [Multi-Threads for **I/O-bound** tasks](recipes/core/multi_threads)
   - [Multi-Processes for **CPU-bound** tasks](recipes/core/multi_processes)
   - [Synchronization Primitives - `Event` (For Threads)](recipes/core/synchronization_event_threads)
+  - [Synchronization Primitives - `Event` (For Processes)](recipes/core/synchronization_event_processes)
 
 ## License
 
