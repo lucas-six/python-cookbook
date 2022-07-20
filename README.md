@@ -44,6 +44,8 @@
   - [Access Text Files](recipes/core/text_io)
   - [Access Binary Files](recipes/core/binary_io)
 - [Logging Dictionary Configuration](recipes/core/logging_config)
+- Parallelism & Cocurrent
+  - [Multi-Threads - `threading`](recipes/core/multi_threads): for **I/O-bound** tasks
 
 ## License
 
