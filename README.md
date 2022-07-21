@@ -44,6 +44,7 @@
   - [Type Hint for type object](recipes/core/type_hint_for_type)
   - [Type Hint for callable object](recipes/core/type_hint_for_callable)
   - [Type Hint for Regex](recipes/core/type_hint_for_regex)
+  - [Type Hint for socket](recipes/core/type_hint_for_socket)
   - [Type Hint for Constants and Class Attributes: `typing.Final`](recipes/core/type_hint_for_constant)
   - [Type Hint for Restricting Inheritance and Overriding: `@typing.final`](recipes/core/type_hint_for_inheritance)
 - I/O, File-Like Object
