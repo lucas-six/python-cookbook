@@ -6,6 +6,7 @@
 import socket
 
 sock: socket.SocketType = socket.socket(...)
+socket_type: socket.SocketKind = socket.SOCK_STREAM  # or socket.SOCK_DGRAM
 ```
 
 ## References
