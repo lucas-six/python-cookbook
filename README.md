@@ -65,6 +65,7 @@
   - [Create UDP Server with Standard Framework](recipes/core/udp_server_std)
   - [Create Threaded TCP/UDP Server with Standard Framework](recipes/core/threaded_server_std)
   - [Create TCP (IPv4) Client](recipes/core/tcp_ipv4_client)
+  - [Create TCP (IPv4) Server](recipes/core/tcp_ipv4_server)
 
 ## License
 
