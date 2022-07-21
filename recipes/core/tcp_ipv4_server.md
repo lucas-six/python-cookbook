@@ -7,7 +7,11 @@ import logging
 import socket
 
 
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+sock: socket.SocketType = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+# The `SO_REUSEADDR` flag tells the kernel to reuse a local socket in
+# `TIME_WAIT` state, without waiting for its natural timeout to expire.
+sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
 # socket.INADDR_LOOPBACK: 'localhost'
 # socket.INADDR_ANY: '' or '0.0.0.0'
