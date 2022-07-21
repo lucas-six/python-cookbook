@@ -7,6 +7,8 @@ import logging
 import socket
 
 
+logger = logging.getLogger(__name__)
+
 sock: socket.SocketType = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # The `SO_REUSEADDR` flag tells the kernel to reuse a local socket in
@@ -27,10 +29,10 @@ try:
             while True:
                 data = conn.recv(1024)
                 if data:
-                    logging.debug(f'receive data from {client_address}')
+                    logger.debug(f'receive data from {client_address}')
                     conn.sendall(data)
                 else:
-                    logging.debug(f'no data from {client_address}')
+                    logger.debug(f'no data from {client_address}')
                     break
             conn.shutdown(socket.SHUT_WR)
 finally:
