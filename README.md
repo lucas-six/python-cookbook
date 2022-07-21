@@ -61,9 +61,9 @@
   - [Synchronization Primitives - Mutex Lock `Lock` (For Threads)](recipes/core/synchronization_lock_threads)
   - [Synchronization Primitives - Mutex Lock `Lock` (For Processes)](recipes/core/synchronization_lock_processes)
 - Networks
-  - [Create TCP Server](recipes/core/tcp_server)
-  - [Create UDP Server](recipes/core/udp_server)
-  - [Create Threaded TCP/UDP Server](recipes/core/threaded_server)
+  - [Create TCP Server with Standard Framework](recipes/core/tcp_server_std)
+  - [Create UDP Server with Standard Framework](recipes/core/udp_server_std)
+  - [Create Threaded TCP/UDP Server with Standard Framework](recipes/core/threaded_server_std)
 
 ## License
 
