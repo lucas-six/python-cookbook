@@ -39,6 +39,7 @@
   - [RFC 3339 Format](recipes/core/rfc_3339_fmt)
   - [Format Date & Time String](recipes/core/time_str_fmt)
 - Type Hint
+  - [Type Hint for Any](recipes/core/type_hint_for_any)
   - [Type Hint for `Callable`](recipes/core/type_hint_for_callable)
   - [Type Hint for Constants and Class Attributes: `typing.Final`](recipes/core/type_hint_for_constant)
   - [Type Hint for Restricting Inheritance and Overriding: `@typing.final`](recipes/core/type_hint_for_inheritance)
