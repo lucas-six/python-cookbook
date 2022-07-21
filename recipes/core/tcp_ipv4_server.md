@@ -13,6 +13,7 @@ from typing import Optional
 # params
 accept_queue_size: Optional[int] = None
 recv_buf_size: Optional[int] = None
+send_buf_size: Optional[int] = None
 
 
 logger = logging.getLogger(__name__)
@@ -65,15 +66,19 @@ if send_buf_size is not None:
 send_buf_size = sock.getsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF)
 logger.debug(f'Server send buffer size: {send_buf_size}')
 
-# socket.INADDR_LOOPBACK: 'localhost'
-# socket.INADDR_ANY: '' or '0.0.0.0'
-# socket.INADDR_BROADCAST
+# Bind
+#
+# - socket.INADDR_LOOPBACK: 'localhost'
+# - socket.INADDR_ANY: '' or '0.0.0.0'
+# - socket.INADDR_BROADCAST
 #
 # Port 0 means to select an arbitrary unused port
 sock.bind(('localhost', 0))
 server_address: tuple[str, int] = sock.getsockname()
 logger.debug(f'Server address: {server_address}')
 
+# Set queue size and listen
+#
 # On Linux 2.2+, there are two queues: SYN queue and accept queue
 # max syn queue size: /proc/sys/net/ipv4/tcp_max_syn_backlog
 # max accept queue size: /proc/sys/net/core/somaxconn
@@ -93,16 +98,17 @@ else:
     sock.listen(accept_queue_size)
 logger.debug(f'Server accept queue size: {accept_queue_size} (max={socket.SOMAXCONN})')
 
-# accept and handle incoming client requests
+# Accept and handle incoming client requests
 try:
     while True:
         conn, client_address = sock.accept()
         with conn:
             while True:
-                data = conn.recv(1024)
-                if data:
-                    logger.debug(f'receive data from {client_address}')
-                    conn.sendall(data)
+                raw_data = conn.recv(1024)
+                if raw_data:
+                    data = raw_data.decode('utf-8')
+                    logger.debug(f'receive data {data} from {client_address}')
+                    conn.sendall(raw_data)
                 else:
                     logger.debug(f'no data from {client_address}')
                     break
