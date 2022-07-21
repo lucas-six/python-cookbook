@@ -62,6 +62,7 @@
   - [Synchronization Primitives - Mutex Lock `Lock` (For Processes)](recipes/core/synchronization_lock_processes)
 - Networks
   - [Create TCP Server](recipes/core/tcp_server)
+  - [Create UDP Server](recipes/core/udp_server)
 
 ## License
 
