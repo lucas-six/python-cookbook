@@ -12,11 +12,7 @@ import socket
 logger = logging.getLogger(__name__)
 
 sock: socket.SocketType = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-```
 
-### Bind
-
-```python
 # The `SO_REUSEADDR` flag tells the kernel to reuse a local socket in
 # `TIME_WAIT` state, without waiting for its natural timeout to expire
 sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -28,12 +24,11 @@ sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 # Port 0 means to select an arbitrary unused port
 sock.bind(('localhost', 0))
 server_address: tuple[str, int] = sock.getsockname()
-```
+logger.debug(f'Server running on {server_address}')
 
-### Listen
-
-```python
 # On Linux 2.2+, there are two queues: SYN queue and accept queue
+# max syn queue size: /proc/sys/net/ipv4/tcp_max_syn_backlog
+# max accept queue size: /proc/sys/net/core/somaxconn
 _uname = os.uname()
 os_version_info = tuple(_uname.release.split('.'))
 if _uname.sysname == 'Linux' and os_version_info >= ('2', '2', '0'):  # Linux 2.2+
@@ -43,17 +38,16 @@ if _uname.sysname == 'Linux' and os_version_info >= ('2', '2', '0'):  # Linux 2.
     max_syn_queue_size: int = int(
         Path('/proc/sys/net/ipv4/tcp_max_syn_backlog').read_text().strip()
     )
+    logger.debug(f'Server info: max syn queue size = {max_syn_queue_size}')
 
 if accept_queue_size is None:
     sock.listen()
 else:
     accept_queue_size = min(accept_queue_size, socket.SOMAXCONN)
     sock.listen(accept_queue_size)
-```
+logger.debug(f'Server info: accept queue size = {accept_queue_size} (max={socket.SOMAXCONN})')
 
-### Accept and Handle Requests
-
-```python
+# accept and handle incoming client requests
 try:
     while True:
         conn, client_address = sock.accept()
