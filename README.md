@@ -39,6 +39,7 @@
   - [RFC 3339 Format](recipes/core/rfc_3339_fmt)
   - [Format Date & Time String](recipes/core/time_str_fmt)
 - Type Hint
+  - [Type Hint for `dict` and Items](recipes/core/type_hint_for_dict_items)
   - [Type Hint for Any](recipes/core/type_hint_for_any)
   - [Type Hint for type object](recipes/core/type_hint_for_type)
   - [Type Hint for callable object](recipes/core/type_hint_for_callable)
