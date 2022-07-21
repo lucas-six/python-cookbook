@@ -41,6 +41,7 @@
 - Type Hint
   - [Type Hint for `Callable`](recipes/core/type_hint_for_callable)
   - [Type Hint for Constants and Class Attributes: `typing.Final`](recipes/core/type_hint_for_constant)
+  - [Type Hint for Restricting Inheritance and Overriding: `@typing.final`](recipes/core/type_hint_for_inheritance)
 - I/O, File-Like Object
   - [Access Text Files](recipes/core/text_io)
   - [Access Binary Files](recipes/core/binary_io)
