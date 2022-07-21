@@ -14,4 +14,6 @@ Callable[[Arg1Type, Arg2Type], ReturnType]
 Callable[[...], ReturnType]  # variable arguements
 ```
 
+## References
+
 More details to see [Type Hint on Python Handbook](https://leven-cn.github.io/python-handbook/recipes/core/type_hint).
