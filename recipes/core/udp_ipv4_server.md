@@ -10,7 +10,21 @@ import socket
 from typing import Optional
 
 
+# params
+max_recv_buf_size: Optional[int] = None
+max_send_buf_size: Optional[int] = None
+
+
 logger = logging.getLogger(__name__)
+
+# platform info
+_uname = os.uname()
+os_name = _uname.sysname
+os_version_info = tuple(_uname.release.split('.'))
+if os_name == 'Linux':
+    assert socket.SOMAXCONN == int(
+        Path('/proc/sys/net/core/somaxconn').read_text().strip()
+    )
 
 sock: socket.SocketType = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
@@ -21,11 +35,33 @@ sock: socket.SocketType = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
 
-# R/W buffer size
-recv_buf_size = sock.getsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF)
-logger.debug(f'Server recv buffer size: {recv_buf_size}')
-send_buf_size = sock.getsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF)
-logger.debug(f'Server send buffer size: {send_buf_size}')
+# Get max UDP recv/send buffer size in system (Linux)
+# - read(recv): /proc/sys/net/core/rmem_max
+# - write(send): /proc/sys/net/core/wmem_max
+if os_name == 'Linux':
+    max_recv_buf_size = int(
+        Path('/proc/sys/net/core/rmem_max').read_text().strip()
+    )
+    max_send_buf_size = int(
+        Path('/proc/sys/net/core/wmem_max').read_text().strip()
+    )
+
+# Set recv/send buffer size
+for pair in (
+    (recv_buf_size, max_recv_buf_size, 'recv', socket.SO_RCVBUF),
+    (send_buf_size, max_send_buf_size, 'send', socket.SO_SNDBUF),
+):
+    if pair[0] is not None:
+        if pair[1] and pair[0] > pair[1]:
+            self.logger.warning(
+                f'invalid {pair[2]} buf ({pair[0]}): '
+                f'exceeds max value ({pair[1]}).'
+            )
+            # kernel do this already!
+            # pair[0] = min(pair[0], pair[1])
+        self.socket.setsockopt(socket.SOL_SOCKET, pair[3], pair[0])
+    pair[0] = sock.getsockopt(socket.SOL_SOCKET, pair[3])
+    logger.debug(f'Server {pair[2]} buffer size: {pair[0]}')
 
 
 # Bind

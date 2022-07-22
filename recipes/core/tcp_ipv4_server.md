@@ -14,6 +14,8 @@ from typing import Optional
 accept_queue_size: Optional[int] = None
 recv_buf_size: Optional[int] = None
 send_buf_size: Optional[int] = None
+max_recv_buf_size: Optional[int] = None
+max_send_buf_size: Optional[int] = None
 
 
 logger = logging.getLogger(__name__)
@@ -22,6 +24,10 @@ logger = logging.getLogger(__name__)
 _uname = os.uname()
 os_name = _uname.sysname
 os_version_info = tuple(_uname.release.split('.'))
+if os_name == 'Linux':
+    assert socket.SOMAXCONN == int(
+        Path('/proc/sys/net/core/somaxconn').read_text().strip()
+    )
 
 sock: socket.SocketType = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -31,9 +37,10 @@ sock: socket.SocketType = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 # `TIME_WAIT` state, without waiting for its natural timeout to expire
 sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
-# Get max TCP recv/send buffer size in system (Linux)
-# max TCP read(recv) buffer size: /proc/sys/net/ipv4/tcp_rmem
-# max TCP write(send) buffer size: /proc/sys/net/ipv4/tcp_wmem
+
+# Get max TCP (IPv4) recv/send buffer size in system (Linux)
+# - read(recv): /proc/sys/net/ipv4/tcp_rmem
+# - write(send): /proc/sys/net/ipv4/tcp_wmem
 if os_name == 'Linux':
     max_recv_buf_size = int(
         Path('/proc/sys/net/ipv4/tcp_rmem')
@@ -50,21 +57,23 @@ if os_name == 'Linux':
         .strip()
     )
 
-# Set TCP recv buffer size
-if recv_buf_size is not None:
-    if os_name == 'Linux':
-        recv_buf_size = min(recv_buf_size, max_recv_buf_size)
-    sock.setsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF, recv_buf_size)
-recv_buf_size = sock.getsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF)
-logger.debug(f'Server recv buffer size: {recv_buf_size}')
+# Set recv/send buffer size
+for pair in (
+    (recv_buf_size, max_recv_buf_size, 'recv', socket.SO_RCVBUF),
+    (send_buf_size, max_send_buf_size, 'send', socket.SO_SNDBUF),
+):
+    if pair[0] is not None:
+        if pair[1] and pair[0] > pair[1]:
+            self.logger.warning(
+                f'invalid {pair[2]} buf ({pair[0]}): '
+                f'exceeds max value ({pair[1]}).'
+            )
+            # kernel do this already!
+            # pair[0] = min(pair[0], pair[1])
+        self.socket.setsockopt(socket.SOL_SOCKET, pair[3], pair[0])
+    pair[0] = sock.getsockopt(socket.SOL_SOCKET, pair[3])
+    logger.debug(f'Server {pair[2]} buffer size: {pair[0]}')
 
-# Set TCP send buffer size
-if send_buf_size is not None:
-    if os_name == 'Linux':
-        send_buf_size = min(send_buf_size, max_send_buf_size)
-    sock.setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, send_buf_size)
-send_buf_size = sock.getsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF)
-logger.debug(f'Server send buffer size: {send_buf_size}')
 
 # Bind
 #
