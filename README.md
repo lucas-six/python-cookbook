@@ -68,6 +68,7 @@
   - [Create TCP (IPv4) Client](recipes/core/tcp_ipv4_client)
   - [Create TCP (IPv4) Server](recipes/core/tcp_ipv4_server)
   - [Create UDP (IPv4) Client](recipes/core/udp_ipv4_client)
+  - [Create UDP (IPv4) Server](recipes/core/udp_ipv4_server)
 
 ## License
 
