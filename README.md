@@ -28,6 +28,7 @@
   - [Create Function Decorator With Optional Arguments](recipes/core/function_decorator_args_optional)
 - Context Manager
   - [Create Context Manager](recipes/core/context_manager)
+  - [Suppress Exception](https://leven-cn.github.io/python-cookbook/recipes/core/suppress_exception)
 - [Regex Patterns](recipes/core/regex_patterns)
 - Time
   - [Timestamp (UNIX Time)](recipes/core/timestamp)
