@@ -29,3 +29,7 @@ try:
 except FileNotFoundError:
     pass
 ```
+
+## References
+
+More details to see [Suppress Exception on Python Handbook](https://leven-cn.github.io/python-handbook/recipes/core/suppress_exception).
