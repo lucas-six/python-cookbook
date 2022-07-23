@@ -52,7 +52,7 @@
   - [Access Text Files](https://leven-cn.github.io/python-cookbook/recipes/core/text_io)
   - [Access Binary Files](https://leven-cn.github.io/python-cookbook/recipes/core/binary_io)
 - [Logging Dictionary Configuration](https://leven-cn.github.io/python-cookbook/recipes/core/logging_config)
-- Parallelism & Concurrent
+- Parallelism and Concurrent
   - [Multi-Threads Parallelism for **I/O-bound** tasks](https://leven-cn.github.io/python-cookbook/recipes/core/multi_threads)
   - [Multi-Processes Parallelism for **CPU-bound** tasks](https://leven-cn.github.io/python-cookbook/recipes/core/multi_processes)
   - [Process Pool](https://leven-cn.github.io/python-cookbook/recipes/core/process_pool)
@@ -62,7 +62,7 @@
   - [Synchronization Primitives - `Event` (For Processes)](https://leven-cn.github.io/python-cookbook/recipes/core/synchronization_event_processes)
   - [Synchronization Primitives - Mutex Lock `Lock` (For Threads)](https://leven-cn.github.io/python-cookbook/recipes/core/synchronization_lock_threads)
   - [Synchronization Primitives - Mutex Lock `Lock` (For Processes)](https://leven-cn.github.io/python-cookbook/recipes/core/synchronization_lock_processes)
-- Networks
+- Networks and Communications
   - [Create TCP Server with Standard Framework](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_server_std)
   - [Create UDP Server with Standard Framework](https://leven-cn.github.io/python-cookbook/recipes/core/udp_server_std)
   - [Create Threaded TCP/UDP Server with Standard Framework](https://leven-cn.github.io/python-cookbook/recipes/core/threaded_server_std)
@@ -72,6 +72,7 @@
   - [Create UDP (IPv4) Server](https://leven-cn.github.io/python-cookbook/recipes/core/udp_ipv4_server)
   - [Create Unix Domain Socket (UDS) (IPv4) Client](https://leven-cn.github.io/python-cookbook/recipes/core/uds_ipv4_client)
   - [Create Unix Domain Socket (UDS) (IPv4) Server](https://leven-cn.github.io/python-cookbook/recipes/core/uds_ipv4_server)
+  - [IPC - Socket Pair](https://leven-cn.github.io/python-cookbook/recipes/core/ipc_socketpair)
 
 ## License
 
