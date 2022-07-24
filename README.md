@@ -72,8 +72,7 @@
   - [Create TCP (IPv4) Server](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_ipv4_server)
   - [Create UDP (IPv4) Client](https://leven-cn.github.io/python-cookbook/recipes/core/udp_ipv4_client)
   - [Create UDP (IPv4) Server](https://leven-cn.github.io/python-cookbook/recipes/core/udp_ipv4_server)
-  - [Create Unix Domain Socket (UDS) (IPv4) Client](https://leven-cn.github.io/python-cookbook/recipes/core/uds_ipv4_client)
-  - [Create Unix Domain Socket (UDS) (IPv4) Server](https://leven-cn.github.io/python-cookbook/recipes/core/uds_ipv4_server)
+  - [IPC - UNIX Domain Socket (UDS) Server and Client (IPv4)](https://leven-cn.github.io/python-cookbook/recipes/core/ipc_unix_domain_socket)
   - [IPC - Socket Pair](https://leven-cn.github.io/python-cookbook/recipes/core/ipc_socketpair)
 - [Setup Python Project](https://leven-cn.github.io/python-cookbook/recipes/core/python_project)
 
