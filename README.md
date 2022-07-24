@@ -73,7 +73,7 @@
   - [Create Unix Domain Socket (UDS) (IPv4) Client](https://leven-cn.github.io/python-cookbook/recipes/core/uds_ipv4_client)
   - [Create Unix Domain Socket (UDS) (IPv4) Server](https://leven-cn.github.io/python-cookbook/recipes/core/uds_ipv4_server)
   - [IPC - Socket Pair](https://leven-cn.github.io/python-cookbook/recipes/core/ipc_socketpair)
-- Setup Python Project[https://leven-cn.github.io/python-cookbook/recipes/core/python_project]
+- [Setup Python Project](https://leven-cn.github.io/python-cookbook/recipes/core/python_project)
 
 ## License
 
