@@ -24,11 +24,11 @@
 
 ### Core
 
-- Function Decorator
+- Function Decorator (函数装饰器)
   - [Create Function Decorator Without Argument](https://leven-cn.github.io/python-cookbook/recipes/core/function_decorator_no_args)
   - [Create Function Decorator With Required Arguments](https://leven-cn.github.io/python-cookbook/recipes/core/function_decorator_args_required)
   - [Create Function Decorator With Optional Arguments](https://leven-cn.github.io/python-cookbook/recipes/core/function_decorator_args_optional)
-- Context Manager
+- Context Manager (上下文管理器)
   - [Create Context Manager](https://leven-cn.github.io/python-cookbook/recipes/core/context_manager)
   - [Suppress Exception](https://leven-cn.github.io/python-cookbook/recipes/core/suppress_exception)
 - [Regex Patterns](https://leven-cn.github.io/python-cookbook/recipes/core/regex_patterns)
@@ -54,7 +54,7 @@
   - [Access Text Files](https://leven-cn.github.io/python-cookbook/recipes/core/text_io)
   - [Access Binary Files](https://leven-cn.github.io/python-cookbook/recipes/core/binary_io)
 - [Logging Dictionary Configuration](https://leven-cn.github.io/python-cookbook/recipes/core/logging_config)
-- Parallelism and Concurrent
+- Parallelism and Concurrent (并发)
   - [Multi-Threads Parallelism for **I/O-bound** tasks](https://leven-cn.github.io/python-cookbook/recipes/core/multi_threads)
   - [Multi-Processes Parallelism for **CPU-bound** tasks](https://leven-cn.github.io/python-cookbook/recipes/core/multi_processes)
   - [Process Pool](https://leven-cn.github.io/python-cookbook/recipes/core/process_pool)
@@ -64,14 +64,14 @@
   - [Synchronization Primitives - `Event` (For Processes)](https://leven-cn.github.io/python-cookbook/recipes/core/synchronization_event_processes)
   - [Synchronization Primitives - Mutex Lock `Lock` (For Threads)](https://leven-cn.github.io/python-cookbook/recipes/core/synchronization_lock_threads)
   - [Synchronization Primitives - Mutex Lock `Lock` (For Processes)](https://leven-cn.github.io/python-cookbook/recipes/core/synchronization_lock_processes)
-- Networks and Communications
+- Networks and Communications (网络通信)
   - [Create TCP Server with Standard Framework](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_server_std)
   - [Create UDP Server with Standard Framework](https://leven-cn.github.io/python-cookbook/recipes/core/udp_server_std)
   - [Create Threaded TCP/UDP Server with Standard Framework](https://leven-cn.github.io/python-cookbook/recipes/core/threaded_server_std)
   - [Create TCP (IPv4) Client](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_ipv4_client)
   - [Create TCP (IPv4) Server](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_ipv4_server)
   - [Create UDP Server and Client](https://leven-cn.github.io/python-cookbook/recipes/core/udp)
-  - [Create IP Multicast Server and Client (UDP)](https://leven-cn.github.io/python-cookbook/recipes/core/ip_multicast)
+  - [Create IP Multicast (组播) Server and Client (UDP)](https://leven-cn.github.io/python-cookbook/recipes/core/ip_multicast)
   - [IPC - UNIX Domain Socket (UDS) Server and Client](https://leven-cn.github.io/python-cookbook/recipes/core/ipc_unix_domain_socket)
   - [IPC - Socket Pair](https://leven-cn.github.io/python-cookbook/recipes/core/ipc_socketpair)
 - [Setup Python Project](https://leven-cn.github.io/python-cookbook/recipes/core/python_project)
