@@ -24,13 +24,13 @@ if pid:
     data = b'data'
     parent.sendall(data)
     logging.debug(f'parent sent: {data!r}')
-    data: bytes = parent.recv(1024)
+    data = parent.recv(1024)
     logging.debug(f'parent recv: {data!r}')
     parent.close()
 else:
     # child process
     parent.close()
-    data: bytes = child.recv(1024)
+    data = child.recv(1024)
     logging.debug(f'child recv: {data!r}')
     child.sendall(data)
     logging.debug(f'child sent: {data!r}')
