@@ -37,6 +37,8 @@ else:
     child.close()
 ```
 
+See [source code](https://github.com/leven-cn/python-cookbook).
+
 ## References
 
 - [Python - `socket.socketpair()`](https://docs.python.org/3/library/socket.html#socket.socketpair)
