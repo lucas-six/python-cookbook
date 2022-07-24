@@ -37,7 +37,7 @@ else:
     child.close()
 ```
 
-See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples/core/ipc_socketpair.py)).
+See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples/core/ipc_socketpair.py).
 
 ## References
 
