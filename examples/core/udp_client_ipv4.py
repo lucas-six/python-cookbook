@@ -1,4 +1,4 @@
-"""IPC - Unix Domain Socket (UDS) Client, based on IPv4
+"""UDP Client, based on IPv4
 """
 
 import logging
