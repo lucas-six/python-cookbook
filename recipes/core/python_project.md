@@ -225,6 +225,7 @@ on:
       - 'main'
 
 jobs:
+  # Skip it when GitHub Actions of pre-commit has been configured.
   pre-commit:
     name: Run pre-commit
     runs-on: ubuntu-latest
