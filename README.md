@@ -79,6 +79,10 @@
 
 <!-- markdownlint-enable line-length -->
 
+## More
+
+See [full-version documentation](https://leven-cn.github.io/)
+
 ## License
 
 [Apache 2.0 License](https://github.com/leven-cn/python-cookbook/blob/main/LICENSE)
