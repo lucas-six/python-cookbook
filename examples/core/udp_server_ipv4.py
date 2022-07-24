@@ -34,8 +34,8 @@ else:
 
 
 def run_server(
-    host: str = 'localhost',  # '' for all interfaces
-    port: int = 0,  # Port 0 means to select an arbitrary unused port
+    host: str = '',
+    port: int = 0,
     recv_buf_size: Optional[int] = None,
     send_buf_size: Optional[int] = None,
 ):
@@ -46,6 +46,11 @@ def run_server(
     # The `SO_REUSEADDR` flag tells the kernel to reuse a local socket in
     # `TIME_WAIT` state, without waiting for its natural timeout to expire
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+
+    # Bind
+    sock.bind((host, port))
+    server_address: tuple[str, int] = sock.getsockname()
+    logger.debug(f'Server address: {server_address}')
 
     # Set recv/send buffer size
     if recv_buf_size:
@@ -63,15 +68,6 @@ def run_server(
     send_buf_size = sock.getsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF)
     logger.debug(f'Server send buffer size: {send_buf_size} (max={max_send_buf_size})')
 
-    # Bind
-    #
-    # - socket.INADDR_LOOPBACK: 'localhost'
-    # - socket.INADDR_ANY: '' or '0.0.0.0'
-    # - socket.INADDR_BROADCAST
-    sock.bind((host, port))
-    server_address: tuple[str, int] = sock.getsockname()
-    logger.debug(f'Server address: {server_address}')
-
     # Accept and handle incoming client requests
     try:
         while True:
@@ -87,4 +83,9 @@ def run_server(
         sock.close()
 
 
-run_server(port=9999)
+# host
+# - 'localhost': socket.INADDR_LOOPBACK
+# - '' or '0.0.0.0': socket.INADDR_ANY
+# - socket.INADDR_BROADCAST
+# Port 0 means to select an arbitrary unused port
+run_server('localhost', 9999)
