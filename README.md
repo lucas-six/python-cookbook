@@ -66,7 +66,6 @@
   - [Synchronization Primitives - Mutex Lock `Lock` (For Processes)](https://leven-cn.github.io/python-cookbook/recipes/core/synchronization_lock_processes)
 - Networks and Communications (网络通信)
   - [Create TCP Server with Standard Framework](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_server_std)
-  - [Create UDP Server with Standard Framework](https://leven-cn.github.io/python-cookbook/recipes/core/udp_server_std)
   - [Create Threaded TCP/UDP Server with Standard Framework](https://leven-cn.github.io/python-cookbook/recipes/core/threaded_server_std)
   - [Create TCP (IPv4) Client](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_ipv4_client)
   - [Create TCP (IPv4) Server](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_ipv4_server)
