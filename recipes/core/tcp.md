@@ -50,7 +50,7 @@ def run_server(
     send_buf_size: Optional[int] = None,
     accept_queue_size: Optional[int] = None,
 ):
-    sock: socket.SocketType = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     # Reuse address
     #
