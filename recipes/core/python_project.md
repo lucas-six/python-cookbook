@@ -135,9 +135,9 @@ skip_empty = true
 # chmod u+x .git/hooks/pre-commit
 
 pipenv run isort .
+pipenv run mypy .
 
 # IDE may included
-#pipenv run mypy .
 #pipenv run flake8 .
 ```
 

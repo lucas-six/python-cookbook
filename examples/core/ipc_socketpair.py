@@ -1,10 +1,8 @@
-# IPC - Socket Pair
+"""IPC - Socket Pair
 
 IPC between parent and child processes.
+"""
 
-## Solution
-
-```python
 import logging
 import os
 import socket
@@ -35,10 +33,3 @@ else:
     child.sendall(data)
     logging.debug(f'child sent: {data!r}')
     child.close()
-```
-
-See [source code](https://github.com/leven-cn/python-cookbook).
-
-## References
-
-- [Python - `socket.socketpair()`](https://docs.python.org/3/library/socket.html#socket.socketpair)
