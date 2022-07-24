@@ -131,7 +131,107 @@ skip_empty = true
 ## Git Pre-Commit
 
 ```bash
+# .git/hooks/pre-commit
+# chmod u+x .git/hooks/pre-commit
+
 pipenv run isort .
+
+# IDE may included
+#pipenv run mypy .
+#pipenv run flake8 .
+```
+
+## GitHub Actions
+
+### `pre-commit`
+
+```yaml
+# .pre-commit-config.yaml
+
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.3.0
+    hooks:
+      - id: trailing-whitespace
+        args: [--markdown-linebreak-ext=md]
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-json
+      - id: check-toml
+      - id: check-added-large-files
+        args: ['--maxkb=500']
+      - id: mixed-line-ending
+      - id: fix-byte-order-marker
+      - id: detect-private-key
+      - id: double-quote-string-fixer
+      - id: name-tests-test
+        args: [--django]
+  - repo: https://github.com/psf/black
+    rev: 22.6.0
+    hooks:
+      - id: black
+        args: ['--verbose']
+        # It is recommended to specify the latest version of Python
+        # supported by your project here, or alternatively use
+        # pre-commit's default_language_version, see
+        # https://pre-commit.com/#top_level-default_language_version
+        language_version: python3.9
+  - repo: https://github.com/pycqa/isort
+    rev: 5.10.1
+    hooks:
+      - id: isort
+        name: isort (python)
+        language_version: python3.9
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v0.961
+    hooks:
+      - id: mypy
+  - repo: https://github.com/PyCQA/flake8
+    rev: 4.0.1
+    hooks:
+      - id: flake8
+        args: ['--max-complexity', '20', '--max-line-length', '88']
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v2.37.1
+    hooks:
+      - id: pyupgrade
+
+default_language_version:
+  # force all unspecified python hooks to run python3
+  python: python3
+
+ci:
+  autofix_prs: true
+  autofix_commit_msg: '[pre-commit.ci] auto fixes from pre-commit.com hooks'
+  autoupdate_branch: ''
+  autoupdate_commit_msg: '[pre-commit.ci] pre-commit autoupdate'
+  autoupdate_schedule: weekly
+  skip: []
+  submodules: false
+```
+
+### GitHub Workflows
+
+```yaml
+# .github/workflows/lint.yml
+
+name: lint
+
+on:
+  pull_request:
+    branches:
+      - 'main'
+
+jobs:
+  # Skip it when GitHub Actions of pre-commit has been configured.
+  pre-commit:
+    name: Run pre-commit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pre-commit/action@v3.0.0
 ```
 
 ## References
