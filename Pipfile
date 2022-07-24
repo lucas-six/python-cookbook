@@ -1,0 +1,19 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+
+[dev-packages]
+black = "*"
+isort = "*"
+mypy = "*"
+flake8 = ">=4.0"
+pyupgrade = "*"
+pytest = ">=7.1"
+coverage = {version = ">=6.4", extras = ["toml"]}
+pytest-cov = ">=3.0"
+
+[requires]
+python_version = "3.9"

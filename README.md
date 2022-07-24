@@ -14,7 +14,7 @@
       alt="pre-commit" style="max-width:100%;">
     </a>
   </p>
-  <p>Recipes for daily working with <code>Python</code>.</p>
+  <p>Recipes for <code>Python</code>. Hands-on code examples and snippets for daily work.</p>
   <p><a href="https://leven-cn.github.io/python-cookbook/">https://leven-cn.github.io/python-cookbook/</a></p>
 </section>
 
@@ -73,6 +73,7 @@
   - [Create Unix Domain Socket (UDS) (IPv4) Client](https://leven-cn.github.io/python-cookbook/recipes/core/uds_ipv4_client)
   - [Create Unix Domain Socket (UDS) (IPv4) Server](https://leven-cn.github.io/python-cookbook/recipes/core/uds_ipv4_server)
   - [IPC - Socket Pair](https://leven-cn.github.io/python-cookbook/recipes/core/ipc_socketpair)
+- Setup Python Project[https://leven-cn.github.io/python-cookbook/recipes/core/python_project]
 
 ## License
 
