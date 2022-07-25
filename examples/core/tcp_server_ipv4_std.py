@@ -1,12 +1,16 @@
-# Create TCP Server with Standard Framework
+"""TCP Server with Standard Framework, based on IPv4
+"""
 
-## Solution
-
-```python
+import logging
 import socketserver
 
+logging.basicConfig(
+    level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
+)
+logger = logging.getLogger()
 
-class MyTCPHandler(socketserver.BaseRequestHandler):
+
+class MyTCPHandler1(socketserver.BaseRequestHandler):
     """
     The request handler class for our server.
 
@@ -18,18 +22,17 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
     def handle(self):
         # self.request is the TCP socket connected to the client
         self.data = self.request.recv(1024).strip()
-        print(f'{self.client_address[0]} wrote: {self.data}')
+        logger.debug(f'{self.client_address[0]} wrote: {self.data}')
         # just send back the same data, but upper-cased
         self.request.sendall(self.data.upper())
 
 
-class MyTCPHandler(socketserver.StreamRequestHandler):
-
+class MyTCPHandler2(socketserver.StreamRequestHandler):
     def handle(self):
         # self.rfile is a file-like object created by the handler;
         # we can now use e.g. readline() instead of raw recv() calls
         self.data = self.rfile.readline().strip()
-        print(f'{self.client_address[0]} wrote: {self.data}')
+        logger.debug(f'{self.client_address[0]} wrote: {self.data}')
         # Likewise, self.wfile is a file-like object used to write back
         # to the client
         self.wfile.write(self.data.upper())
@@ -37,12 +40,7 @@ class MyTCPHandler(socketserver.StreamRequestHandler):
 
 if __name__ == '__main__':
     # Create the server, binding to localhost on port 9999
-    with socketserver.TCPServer(('localhost', 9999), MyTCPHandler) as server:
+    with socketserver.TCPServer(('localhost', 9999), MyTCPHandler1) as server:
         # Activate the server; this will keep running until you
         # interrupt the program with Ctrl-C
         server.serve_forever()
-```
-
-## References
-
-More details to see [`socketserver`- Standard Networks Server Framework on Python Handbook](https://leven-cn.github.io/python-handbook/recipes/core/socketserver).

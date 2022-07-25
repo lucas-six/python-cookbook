@@ -43,8 +43,8 @@
   - [Format Date & Time String](https://leven-cn.github.io/python-cookbook/recipes/core/time_str_fmt)
 - Type Hint
   - [Type Hint for `dict` and Items](https://leven-cn.github.io/python-cookbook/recipes/core/type_hint_for_dict_items)
-  - [Type Hint for Union Types](https://leven-cn.github.io/python-cookbook/recipes/core/type_hint_for_union)
-  - [Type Hint for Any](https://leven-cn.github.io/python-cookbook/recipes/core/type_hint_for_any)
+  - [Type Hint for Union Types: `|`, `typing.Union`, `typing.Optional`](https://leven-cn.github.io/python-cookbook/recipes/core/type_hint_for_union)
+  - [Type Hint for Any: `typing.Any` and `object`](https://leven-cn.github.io/python-cookbook/recipes/core/type_hint_for_any)
   - [Type Hint for type objects](https://leven-cn.github.io/python-cookbook/recipes/core/type_hint_for_type)
   - [Type Hint for callable objects](https://leven-cn.github.io/python-cookbook/recipes/core/type_hint_for_callable)
   - [Type Hint for Regex](https://leven-cn.github.io/python-cookbook/recipes/core/type_hint_for_regex)
@@ -66,7 +66,6 @@
   - [Synchronization Primitives - Mutex Lock `Lock` (For Threads)](https://leven-cn.github.io/python-cookbook/recipes/core/synchronization_lock_threads)
   - [Synchronization Primitives - Mutex Lock `Lock` (For Processes)](https://leven-cn.github.io/python-cookbook/recipes/core/synchronization_lock_processes)
 - Networks and Communications (网络通信)
-  - [Create TCP Server with Standard Framework](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_server_std)
   - [Create Threaded TCP/UDP Server with Standard Framework](https://leven-cn.github.io/python-cookbook/recipes/core/threaded_server_std)
   - [Create TCP Server and Client](https://leven-cn.github.io/python-cookbook/recipes/core/tcp)
   - [Create UDP Server and Client](https://leven-cn.github.io/python-cookbook/recipes/core/udp)
