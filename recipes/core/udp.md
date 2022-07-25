@@ -7,11 +7,13 @@ UDP = User Datagram Protocol
 ### Server (IPv4)
 
 ```python
+# PEP 604, Allow writing union types as X | Y
+from __future__ import annotations
+
 import logging
 import os
 import socket
 from pathlib import Path
-from typing import Optional
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
@@ -40,8 +42,8 @@ else:
 def run_server(
     host: str = 'localhost',  # '' for all interfaces
     port: int = 0,  # Port 0 means to select an arbitrary unused port
-    recv_buf_size: Optional[int] = None,
-    send_buf_size: Optional[int] = None,
+    recv_buf_size: int | None = None,
+    send_buf_size: int | None = None,
 ):
     sock: socket.SocketType = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 

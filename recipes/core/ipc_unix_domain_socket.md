@@ -30,6 +30,7 @@ try:
     while True:
         logging.debug('wait for request ...')
         conn, client_address = sock.accept()
+        assert isinstance(conn, socket.socket)
         assert client_address == ''
 
         logging.debug('start to handle request ...')

@@ -14,8 +14,8 @@ logging.basicConfig(
 )
 
 parent, child = socket.socketpair()  # AF_UNIX by default
-assert isinstance(parent, socket.SocketType)
-assert isinstance(child, socket.SocketType)
+assert isinstance(parent, socket.socket)
+assert isinstance(child, socket.socket)
 
 pid = os.fork()
 if pid:
