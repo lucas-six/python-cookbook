@@ -88,3 +88,4 @@ See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples
 
 - [Python - `socket` module](https://docs.python.org/3/library/socket.html)
 - [PEP 3151 – Reworking the OS and IO exception hierarchy](https://peps.python.org/pep-3151/)
+- [Linux Programmer's Manual - `unix`(7)](https://manpages.debian.org/bullseye/manpages/unix.7.en.html)

@@ -15,16 +15,41 @@ logging.basicConfig(
 logger = logging.getLogger()
 
 
+def linux_connect_timeout(tcp_synack_retries: int) -> int:
+    retries = tcp_synack_retries
+    timeout = 1
+    while retries:
+        retries -= 1
+        timeout += 2 ** (tcp_synack_retries - retries)
+    return timeout
+
+
 # system info
 _uname = os.uname()
 os_name = _uname.sysname
 os_version_info = tuple(_uname.release.split('.'))
-max_recv_buf_size: int | None
-max_send_buf_size: int | None
+
+max_connect_timeout: float | None = None
+max_recv_buf_size: int | None = None
+max_send_buf_size: int | None = None
+
 if os_name == 'Linux':
     assert socket.SOMAXCONN == int(
         Path('/proc/sys/net/core/somaxconn').read_text().strip()
     )
+
+    # Get max connect timeout
+    #
+    # On Linux 2.2+,
+    # max syn/ack retry times: /proc/sys/net/ipv4/tcp_synack_retries
+    #
+    # See https://leven-cn.github.io/python-handbook/recipes/core/tcp_ipv4
+    if os_version_info >= ('2', '2', '0'):  # Linux 2.2+
+        tcp_synack_retries = int(
+            Path('/proc/sys/net/ipv4/tcp_synack_retries').read_text().strip()
+        )
+        logging.debug(f'max syn/ack retries: {tcp_synack_retries}')
+        max_connect_timeout = linux_connect_timeout(tcp_synack_retries)
 
     # Get max TCP (IPv4) recv/send buffer size in system (Linux)
     # - read(recv): /proc/sys/net/ipv4/tcp_rmem
@@ -35,13 +60,13 @@ if os_name == 'Linux':
     max_send_buf_size = int(
         Path('/proc/sys/net/ipv4/tcp_wmem').read_text().strip().split()[2].strip()
     )
-else:
-    max_recv_buf_size = max_send_buf_size = None
 
 
 def run_server(
     host: str = '',
     port: int = 0,
+    *,
+    timeout: float | None = None,
     recv_buf_size: int | None = None,
     send_buf_size: int | None = None,
     accept_queue_size: int | None = None,
@@ -58,6 +83,8 @@ def run_server(
     sock.bind((host, port))
     server_address: tuple[str, int] = sock.getsockname()
     logger.debug(f'Server address: {server_address}')
+
+    logger.debug(f'Server max connect timeout: {max_connect_timeout}')
 
     # Set recv/send buffer size
     if recv_buf_size:
@@ -80,6 +107,8 @@ def run_server(
     # On Linux 2.2+, there are two queues: SYN queue and accept queue
     # max syn queue size: /proc/sys/net/ipv4/tcp_max_syn_backlog
     # max accept queue size: /proc/sys/net/core/somaxconn
+    #
+    # See https://leven-cn.github.io/python-handbook/recipes/core/tcp_ipv4
     if os_name == 'Linux' and os_version_info >= ('2', '2', '0'):  # Linux 2.2+
         max_syn_queue_size = int(
             Path('/proc/sys/net/ipv4/tcp_max_syn_backlog').read_text().strip()
@@ -102,6 +131,11 @@ def run_server(
             conn, client_address = sock.accept()
             assert isinstance(conn, socket.socket)
             with conn:
+                # Set both recv/send timeouts
+                # set `SO_RCVTIMEO` and `SO_SNDTIMEO` socket options
+                conn.settimeout(timeout)  # both recv/send
+                logger.debug(f'Server recv/send timeout: {conn.gettimeout()} seconds')
+
                 while True:
                     data: bytes = conn.recv(1024)
                     if data:
@@ -121,4 +155,4 @@ def run_server(
 # - '' or '0.0.0.0': socket.INADDR_ANY
 # - socket.INADDR_BROADCAST
 # Port 0 means to select an arbitrary unused port
-run_server('localhost', 9999)
+run_server('localhost', 9999, timeout=5)

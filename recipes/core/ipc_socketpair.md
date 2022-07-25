@@ -42,3 +42,4 @@ See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples
 ## References
 
 - [Python - `socket.socketpair()`](https://docs.python.org/3/library/socket.html#socket.socketpair)
+- [Linux Programmer's Manual - `socketpair`(2)](https://manpages.debian.org/bullseye/manpages-dev/socketpair.2.en.html)

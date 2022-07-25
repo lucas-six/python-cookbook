@@ -12,8 +12,11 @@ data: bytes = b'data'
 server_address = ('localhost', 9999)
 
 with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as client:
-    try:
 
+    client.settimeout(5.0)
+    logging.debug(f'recv/send timeout: {client.gettimeout()} seconds')
+
+    try:
         client.sendto(data, server_address)
         logging.debug(f'sent: {data!r}, to: {server_address}')
 
