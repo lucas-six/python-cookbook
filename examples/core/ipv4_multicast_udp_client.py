@@ -1,9 +1,11 @@
 """IPv4 Multicast (UDP Client)
 """
 
+# PEP 604, Allow writing union types as X | Y
+from __future__ import annotations
+
 import logging
 import socket
-from typing import Optional
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
@@ -12,8 +14,8 @@ logging.basicConfig(
 # params
 data: bytes = b'data'
 group_address = ('224.3.29.71', 9999)
-multicast_ttl: Optional[int] = 1
-multicast_loopback: Optional[bool] = None
+multicast_ttl: int | None = None
+multicast_loopback: bool | None = None
 
 with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as client:
     try:
