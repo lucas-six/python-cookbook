@@ -42,6 +42,8 @@ else:
 def run_server(
     host: str = 'localhost',  # '' for all interfaces
     port: int = 0,  # Port 0 means to select an arbitrary unused port
+    *,
+    timeout: float | None = None,
     recv_buf_size: int | None = None,
     send_buf_size: int | None = None,
 ):
@@ -80,6 +82,9 @@ def run_server(
 
     # Accept and handle incoming client requests
     try:
+        sock.settimeout(timeout)
+        logger.debug(f'Server recv/send timeout: {sock.gettimeout()} seconds')
+
         while True:
             data, client_address = sock.recvfrom(1024)
             if data:
@@ -93,7 +98,7 @@ def run_server(
         sock.close()
 
 
-run_server(port=9999)
+run_server(port=9999, timeout=5.0)
 ```
 
 See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples/core/udp_server_ipv4.py)
@@ -112,8 +117,11 @@ data: bytes = b'data'
 server_address = ('localhost', 9999)
 
 with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as client:
-    try:
 
+    client.settimeout(5.0)
+    logging.debug(f'recv/send timeout: {client.gettimeout()} seconds')
+
+    try:
         client.sendto(data, server_address)
         logging.debug(f'sent: {data!r}, to: {server_address}')
 
@@ -166,5 +174,9 @@ See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples
 - [Python - `socket` module](https://docs.python.org/3/library/socket.html)
 - [Python - `socketserver` module](https://docs.python.org/3/library/socketserver.html)
 - [PEP 3151 – Reworking the OS and IO exception hierarchy](https://peps.python.org/pep-3151/)
-- [Linux Programmer's Manual - `recv`(2)](https://manpages.debian.org/bullseye/manpages-dev/recv.2.en.html)
-- [Linux Programmer's Manual - `send`(2)](https://manpages.debian.org/bullseye/manpages-dev/send.2.en.html)
+- [Linux Programmer's Manual - udp(7)](https://manpages.debian.org/bullseye/manpages/udp.7.en.html)
+- [Linux Programmer's Manual - `socket`(2)](https://manpages.debian.org/bullseye/manpages-dev/socket.2.en.html)
+- [Linux Programmer's Manual - `bind`(2)](https://manpages.debian.org/bullseye/manpages-dev/bind.2.en.html)
+- [Linux Programmer's Manual - `getsockname`(2)](https://manpages.debian.org/bullseye/manpages-dev/getsockname.2.en.html)
+- [Linux Programmer's Manual - `recvfrom`(2)](https://manpages.debian.org/bullseye/manpages-dev/recv.2.en.html)
+- [Linux Programmer's Manual - `sendto`(2)](https://manpages.debian.org/bullseye/manpages-dev/send.2.en.html)

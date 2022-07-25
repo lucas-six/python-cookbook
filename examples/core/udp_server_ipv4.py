@@ -1,11 +1,13 @@
 """UDP Server, based on IPv4
 """
 
+# PEP 604, Allow writing union types as X | Y
+from __future__ import annotations
+
 import logging
 import os
 import socket
 from pathlib import Path
-from typing import Optional
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
@@ -17,8 +19,8 @@ logger = logging.getLogger()
 _uname = os.uname()
 os_name = _uname.sysname
 os_version_info = tuple(_uname.release.split('.'))
-max_recv_buf_size: Optional[int]
-max_send_buf_size: Optional[int]
+max_recv_buf_size: int | None
+max_send_buf_size: int | None
 if os_name == 'Linux':
     assert socket.SOMAXCONN == int(
         Path('/proc/sys/net/core/somaxconn').read_text().strip()
@@ -36,8 +38,10 @@ else:
 def run_server(
     host: str = '',
     port: int = 0,
-    recv_buf_size: Optional[int] = None,
-    send_buf_size: Optional[int] = None,
+    *,
+    timeout: float | None = None,
+    recv_buf_size: int | None = None,
+    send_buf_size: int | None = None,
 ):
     sock: socket.SocketType = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
@@ -70,6 +74,10 @@ def run_server(
 
     # Accept and handle incoming client requests
     try:
+
+        sock.settimeout(timeout)
+        logger.debug(f'Server recv/send timeout: {sock.gettimeout()} seconds')
+
         while True:
             data, client_address = sock.recvfrom(1024)
             if data:
@@ -88,4 +96,4 @@ def run_server(
 # - '' or '0.0.0.0': socket.INADDR_ANY
 # - socket.INADDR_BROADCAST
 # Port 0 means to select an arbitrary unused port
-run_server('localhost', 9999)
+run_server('localhost', 9999, timeout=5.0)
