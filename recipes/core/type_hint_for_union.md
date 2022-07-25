@@ -42,4 +42,3 @@ More details to see [Type Hint on Python Handbook](https://leven-cn.github.io/py
 - [PEP 483 – The Theory of Type Hints](https://peps.python.org/pep-0483/)
 - [PEP 563 – Postponed Evaluation of Annotations](https://peps.python.org/pep-0563/)
 - [GitHub - `typeshed`](https://github.com/python/typeshed)
-- [PyPI - `typing-extensions` package](https://pypi.org/project/typing-extensions/)
