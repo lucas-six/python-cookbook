@@ -101,6 +101,14 @@ import logging.config
 logging.config.dictConfig(LOGGING)
 ```
 
-## References
+## More
 
 More details to see [Logging on Python Handbook](https://leven-cn.github.io/python-handbook/recipes/core/logging).
+
+## References
+
+- [Python - `logging` module](https://docs.python.org/3/library/logging.html)
+- [Python - `logging.config` module](https://docs.python.org/3/library/logging.config.html)
+- [Python - `logging.handlers` module](https://docs.python.org/3/library/logging.handlers.html)
+- [Python - Logging HOWTO](https://docs.python.org/3/howto/logging.html)
+- [PEP 391 – Dictionary-Based Configuration For Logging](https://peps.python.org/pep-0391/)
