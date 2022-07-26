@@ -46,6 +46,7 @@
   - [Type Hint for Regex](https://leven-cn.github.io/python-cookbook/recipes/core/type_hint_for_regex)
   - [Type Hint for socket](https://leven-cn.github.io/python-cookbook/recipes/core/type_hint_for_socket)
   - [Type Hint for Constants and Class Attributes: `typing.Final`](https://leven-cn.github.io/python-cookbook/recipes/core/type_hint_for_constant)
+  - [Type Hint for Class Variables: `typing.ClassVar`](https://leven-cn.github.io/python-cookbook/recipes/core/type_hint_for_class_var)
   - [Type Hint for Restricting Inheritance and Overriding: `@typing.final`](https://leven-cn.github.io/python-cookbook/recipes/core/type_hint_for_inheritance)
 - I/O, File-Like Object
   - [Access Text Files](https://leven-cn.github.io/python-cookbook/recipes/core/text_io)
