@@ -193,7 +193,6 @@ import os
 import socket
 import struct
 from pathlib import Path
-from typing import Any
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
@@ -350,43 +349,6 @@ if __name__ == '__main__':
 ```
 
 See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples/core/tcp_server_ipv4_std.py)
-
-### Client (IPv4) with Standard Framework
-
-```python
-# PEP 604, Allow writing union types as X | Y
-from __future__ import annotations
-
-import logging
-import socket
-
-logging.basicConfig(
-    level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
-)
-
-
-def run_client(host: str, port: int, *, timeout: float | None = None):
-    try:
-        with socket.create_connection(('localhost', 9999), timeout=timeout) as client:
-            data: bytes = b'data'
-
-            client.sendall(data)
-            logging.debug(f'sent: {data!r}')
-
-            data = client.recv(1024)
-            logging.debug(f'recv: {data!r}')
-    except OSError as err:
-        logging.error(err)
-
-
-run_client(
-    'localhost',
-    9999,
-    timeout=3.5,
-)
-```
-
-See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples/core/tcp_client_ipv4.py)
 
 ## More
 

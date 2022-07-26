@@ -9,7 +9,6 @@ import os
 import socket
 import struct
 from pathlib import Path
-from typing import Any
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
