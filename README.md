@@ -38,7 +38,7 @@
   - [RFC 3339 Format](https://leven-cn.github.io/python-cookbook/recipes/core/rfc_3339_fmt)
   - [Format Date & Time String](https://leven-cn.github.io/python-cookbook/recipes/core/time_str_fmt)
 - Type Hint
-  - [Type Hint for `dict` and Items](https://leven-cn.github.io/python-cookbook/recipes/core/type_hint_for_dict_items)
+  - [Type Hint for Basic Types](https://leven-cn.github.io/python-cookbook/recipes/core/type_hint_for_basic_type)
   - [Type Hint for Union Types: `|`, `typing.Union`, `typing.Optional`](https://leven-cn.github.io/python-cookbook/recipes/core/type_hint_for_union)
   - [Type Hint for Any: `typing.Any` and `object`](https://leven-cn.github.io/python-cookbook/recipes/core/type_hint_for_any)
   - [Type Hint for type objects](https://leven-cn.github.io/python-cookbook/recipes/core/type_hint_for_type)
