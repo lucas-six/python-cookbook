@@ -7,7 +7,9 @@ from __future__ import annotations
 import logging
 import os
 import socket
+import struct
 from pathlib import Path
+from typing import Any
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
@@ -73,8 +75,9 @@ def run_server(
     logger.debug(f'Server send buffer size: {send_buf_size} (max={max_send_buf_size})')
 
     # Accept and handle incoming client requests
+    binary_fmt: str = '! I 2s Q 2h f'
+    unpacker = struct.Struct(binary_fmt)
     try:
-
         sock.settimeout(timeout)
         logger.debug(f'Server recv/send timeout: {sock.gettimeout()} seconds')
 
@@ -87,6 +90,12 @@ def run_server(
             else:
                 logger.debug(f'no data from {client_address}')
                 break
+
+            data, client_address = sock.recvfrom(unpacker.size)
+            if data:
+                logger.debug(f'recv: {data!r}, from {client_address}')
+                unpacked_data: tuple[Any, ...] = unpacker.unpack(data)
+                logger.debug(f'recv unpacked: {unpacked_data}')
     finally:
         sock.close()
 

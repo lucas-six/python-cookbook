@@ -7,7 +7,9 @@ from __future__ import annotations
 import logging
 import os
 import socket
+import struct
 from pathlib import Path
+from typing import Any
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
@@ -126,6 +128,8 @@ def run_server(
     )
 
     # Accept and handle incoming client requests
+    binary_fmt: str = '! I 2s Q 2h f'
+    unpacker = struct.Struct(binary_fmt)
     try:
         while True:
             conn, client_address = sock.accept()
@@ -145,6 +149,13 @@ def run_server(
                     else:
                         logger.debug(f'no data from {client_address}')
                         break
+
+                    data = conn.recv(unpacker.size)
+                    if data:
+                        logger.debug(f'recv: {data!r}, from {client_address}')
+                        unpacked_data: tuple[Any, ...] = unpacker.unpack(data)
+                        logger.debug(f'recv unpacked: {unpacked_data}')
+
                 conn.shutdown(socket.SHUT_WR)
     finally:
         sock.close()

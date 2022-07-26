@@ -3,6 +3,7 @@
 
 import logging
 import socket
+import struct
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
@@ -10,6 +11,10 @@ logging.basicConfig(
 
 data: bytes = b'data'
 server_address = ('localhost', 9999)
+
+binary_fmt: str = '! I 2s Q 2h f'
+binary_value: tuple = (1, b'ab', 2, 3, 3, 2.5)
+packer = struct.Struct(binary_fmt)
 
 with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as client:
 
@@ -22,5 +27,10 @@ with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as client:
 
         data, server_address = client.recvfrom(1024)
         logging.debug(f'recv: {data!r}, from: {server_address}')
+
+        data = packer.pack(*binary_value)
+        client.sendto(data, server_address)
+        logging.debug(f'sent: {data!r}')
+
     except OSError as err:
         logging.error(err)
