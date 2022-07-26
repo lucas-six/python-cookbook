@@ -24,4 +24,8 @@ YYYY-MM-DD hh:mm:ss.sss+hh:mm  # eg. 2022-01-01 12:00:00.123+08:00
 
 ## References
 
-More details to see [RFC 3339 Format on Python Handbook](https://leven-cn.github.io/python-handbook/recipes/core/rfc_3339_fmt).
+- [RFC 3339 - Date and Time on the Internet: Timestamps](https://datatracker.ietf.org/doc/html/rfc3339.html)
+- [GitHub - RFC 3339 vs ISO 8601](https://ijmacd.github.io/rfc3339-iso8601/)
+- [Python Cookbook - Time: Timestamp (UNIX Time), UTC, Local Time](time)
+- [Python Cookbook - Format Date & Time String](time_str_fmt)
+- [Python Cookbook - Representation of Dates and Times: ISO 8601 Format](iso_8601_fmt)

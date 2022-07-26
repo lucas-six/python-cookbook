@@ -39,4 +39,11 @@ YYYY-MM-DDThh:mm:ss.sss+hh:mm  # time offsets from UTC
 
 ## References
 
-More details to see [ISO 8601 Format on Python Handbook](https://leven-cn.github.io/python-handbook/recipes/core/iso_8601_fmt).
+- [Wikipedia - ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+- [ISO 8601-1:2009](https://www.iso.org/obp/ui/#iso:std:iso:8601:-1:ed-1:v1:en)
+- [ISO 8601-2:2009](https://www.iso.org/obp/ui/#iso:std:iso:8601:-2:ed-1:v1:en)
+- [GitHub - RFC 3339 vs ISO 8601](https://ijmacd.github.io/rfc3339-iso8601/)
+- [Python Handbook - Representation of Dates and Times: ISO 8601 Format](https://leven-cn.github.io/python-handbook/recipes/core/iso_8601_fmt)
+- [Python Cookbook - Time: Timestamp (UNIX Time), UTC, Local Time](time)
+- [Python Cookbook - Format Date & Time String](time_str_fmt)
+- [Python Cookbook - Representation of Dates and Times: RFC 3339 Format](rfc_3339_fmt)
