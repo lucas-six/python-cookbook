@@ -51,7 +51,7 @@
 - I/O, File-Like Object
   - [Access Text Files](https://leven-cn.github.io/python-cookbook/recipes/core/text_io)
   - [Access Binary Files](https://leven-cn.github.io/python-cookbook/recipes/core/binary_io)
-- Logging Configuration
+- Logging (日志)
   - [Logging Usage](https://leven-cn.github.io/python-cookbook/recipes/core/logging_usage)
   - [Logging Dictionary Configuration](https://leven-cn.github.io/python-cookbook/recipes/core/logging_dict_config)
 - Parallelism and Concurrent (并发)
