@@ -7,12 +7,16 @@ TCP = Transmission Control Protocol
 ### Server (IPv4)
 
 ```python
+"""TCP Server, based on IPv4
+"""
+
 # PEP 604, Allow writing union types as X | Y
 from __future__ import annotations
 
 import logging
 import os
 import socket
+import struct
 from pathlib import Path
 
 logging.basicConfig(
@@ -132,6 +136,8 @@ def run_server(
     )
 
     # Accept and handle incoming client requests
+    binary_fmt: str = '! I 2s Q 2h f'
+    unpacker = struct.Struct(binary_fmt)
     try:
         while True:
             conn, client_address = sock.accept()
@@ -151,6 +157,13 @@ def run_server(
                     else:
                         logger.debug(f'no data from {client_address}')
                         break
+
+                    data = conn.recv(unpacker.size)
+                    if data:
+                        logger.debug(f'recv: {data!r}, from {client_address}')
+                        unpacked_data: tuple = unpacker.unpack(data)
+                        logger.debug(f'recv unpacked: {unpacked_data}')
+
                 conn.shutdown(socket.SHUT_WR)
     finally:
         sock.close()
@@ -178,6 +191,7 @@ from __future__ import annotations
 import logging
 import os
 import socket
+import struct
 from pathlib import Path
 
 logging.basicConfig(
@@ -215,16 +229,34 @@ if os_name == 'Linux' and os_version_info >= ('2', '2', '0'):  # Linux 2.2+
     max_connect_timeout = linux_connect_timeout(tcp_syn_retries)
 
 
-def run_client(
+def run_client_1(host: str, port: int, *, timeout: float | None = None):
+    try:
+        with socket.create_connection(('localhost', 9999), timeout=timeout) as client:
+            data: bytes = b'data'
+
+            client.sendall(data)
+            logging.debug(f'sent: {data!r}')
+
+            data = client.recv(1024)
+            logging.debug(f'recv: {data!r}')
+    except OSError as err:
+        logging.error(err)
+
+
+def run_client_2(
     host: str,
     port: int,
     *,
     conn_timeout: float | None = None,
     recv_send_timeout: float | None = None,
 ):
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client:
-        data: bytes = b'data'
+    data: bytes = b'data'
 
+    binary_fmt: str = '! I 2s Q 2h f'
+    binary_value: tuple = (1, b'ab', 2, 3, 3, 2.5)
+    packer = struct.Struct(binary_fmt)
+
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client:
         try:
             client.settimeout(conn_timeout)
             logging.debug(
@@ -243,17 +275,27 @@ def run_client(
 
             data = client.recv(1024)
             logging.debug(f'recv: {data!r}')
+
+            data = packer.pack(*binary_value)
+            client.sendall(data)
+            logging.debug(f'sent: {data!r}')
+
         except OSError as err:
             logging.error(err)
 
 
-run_client(
+run_client_1(
+    'localhost',
+    9999,
+    timeout=3.5,
+)
+
+run_client_2(
     'localhost',
     9999,
     conn_timeout=3.5,
     recv_send_timeout=5,
 )
-
 ```
 
 See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples/core/tcp_client_ipv4.py)
@@ -308,54 +350,19 @@ if __name__ == '__main__':
 
 See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples/core/tcp_server_ipv4_std.py)
 
-### Client (IPv4) with Standard Framework
-
-```python
-# PEP 604, Allow writing union types as X | Y
-from __future__ import annotations
-
-import logging
-import socket
-
-logging.basicConfig(
-    level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
-)
-
-
-def run_client(host: str, port: int, *, timeout: float | None = None):
-    try:
-        with socket.create_connection(('localhost', 9999), timeout=timeout) as client:
-            data: bytes = b'data'
-
-            client.sendall(data)
-            logging.debug(f'sent: {data!r}')
-
-            data = client.recv(1024)
-            logging.debug(f'recv: {data!r}')
-    except OSError as err:
-        logging.error(err)
-
-
-run_client(
-    'localhost',
-    9999,
-    timeout=3.5,
-)
-```
-
-See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples/core/tcp_client_ipv4.py)
-
 ## More
 
 More details to see [TCP (IPv4) on Python Handbook](https://leven-cn.github.io/python-handbook/recipes/core/tcp_ipv4).
 
 - [Python Handbook - `listen` Queue](https://leven-cn.github.io/python-handbook/recipes/core/tcp_ipv4#codelistencode-queue)
 - [Python Handbook - Timeout](https://leven-cn.github.io/python-handbook/recipes/core/tcp_ipv4#timeout)
+- [Pack/Unpack Binary Data: `struct` (on Python Cookbook)](struct)
 
 ## References
 
 - [Python - `socket` module](https://docs.python.org/3/library/socket.html)
 - [Python - `socketserver` module](https://docs.python.org/3/library/socketserver.html)
+- [Python - `struct` module](https://docs.python.org/3/library/struct.html)
 - [PEP 3151 – Reworking the OS and IO exception hierarchy](https://peps.python.org/pep-3151/)
 - [Linux Programmer's Manual - tcp(7)](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html)
 - [Linux Programmer's Manual - tcp(7) - `tcp_syn_retries`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_syn_retries)

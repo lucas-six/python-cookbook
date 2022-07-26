@@ -7,6 +7,7 @@ from __future__ import annotations
 import logging
 import os
 import socket
+import struct
 from pathlib import Path
 
 logging.basicConfig(
@@ -65,9 +66,13 @@ def run_client_2(
     conn_timeout: float | None = None,
     recv_send_timeout: float | None = None,
 ):
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client:
-        data: bytes = b'data'
+    data: bytes = b'data'
 
+    binary_fmt: str = '! I 2s Q 2h f'
+    binary_value: tuple = (1, b'ab', 2, 3, 3, 2.5)
+    packer = struct.Struct(binary_fmt)
+
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client:
         try:
             client.settimeout(conn_timeout)
             logging.debug(
@@ -86,6 +91,11 @@ def run_client_2(
 
             data = client.recv(1024)
             logging.debug(f'recv: {data!r}')
+
+            data = packer.pack(*binary_value)
+            client.sendall(data)
+            logging.debug(f'sent: {data!r}')
+
         except OSError as err:
             logging.error(err)
 
