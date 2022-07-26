@@ -32,11 +32,7 @@
   - [Create Context Manager](https://leven-cn.github.io/python-cookbook/recipes/core/context_manager)
   - [Suppress Exception](https://leven-cn.github.io/python-cookbook/recipes/core/suppress_exception)
 - [Regex Patterns](https://leven-cn.github.io/python-cookbook/recipes/core/regex_patterns)
-- Time
-  - [Timestamp (UNIX Time)](https://leven-cn.github.io/python-cookbook/recipes/core/timestamp)
-  - [UTC Time](https://leven-cn.github.io/python-cookbook/recipes/core/utc_time)
-  - [Local Time](https://leven-cn.github.io/python-cookbook/recipes/core/local_time)
-  - [Convert Local Time To Timestamp](https://leven-cn.github.io/python-cookbook/recipes/core/local_time_to_timestamp)
+- [Time: Timestamp (UNIX Time), UTC, Local Time](https://leven-cn.github.io/python-cookbook/recipes/core/time)
 - Representation of Dates and Times
   - [ISO 8601 Format](https://leven-cn.github.io/python-cookbook/recipes/core/iso_8601_fmt)
   - [RFC 3339 Format](https://leven-cn.github.io/python-cookbook/recipes/core/rfc_3339_fmt)
