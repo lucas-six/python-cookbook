@@ -1,4 +1,4 @@
-# Create TCP Server and Client with Standard Framework (IPv4)
+# Create TCP Server with Standard Framework (IPv4)
 
 ## Solution
 
@@ -87,49 +87,6 @@ if __name__ == '__main__':
 ```
 
 See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples/core/tcp_server_ipv4_std_stream.py)
-
-### Client
-
-```python
-"""TCP Client: Standard Framework (IPv4)
-"""
-
-# PEP 604, Allow writing union types as X | Y
-from __future__ import annotations
-
-import logging
-import socket
-
-logging.basicConfig(
-    level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
-)
-
-
-def run_client(host: str, port: int, *, timeout: float | None = None):
-
-    data: bytes = b'data\n'
-
-    try:
-        with socket.create_connection((host, port), timeout=timeout) as client:
-
-            client.sendall(data)
-            logging.debug(f'sent: {data!r}')
-
-            data = client.recv(1024)
-            logging.debug(f'recv: {data!r}')
-
-    except OSError as err:
-        logging.error(err)
-
-
-run_client(
-    'localhost',
-    9999,
-    timeout=3.5,
-)
-```
-
-See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples/core/tcp_client_ipv4_std.py)
 
 ## More
 
