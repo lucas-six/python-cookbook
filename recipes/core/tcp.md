@@ -232,21 +232,7 @@ if os_name == 'Linux' and os_version_info >= ('2', '2', '0'):  # Linux 2.2+
     max_connect_timeout = linux_connect_timeout(tcp_syn_retries)
 
 
-def run_client_1(host: str, port: int, *, timeout: float | None = None):
-    try:
-        with socket.create_connection((host, port), timeout=timeout) as client:
-            data: bytes = b'data'
-
-            client.sendall(data)
-            logging.debug(f'sent: {data!r}')
-
-            data = client.recv(1024)
-            logging.debug(f'recv: {data!r}')
-    except OSError as err:
-        logging.error(err)
-
-
-def run_client_2(
+def run_client(
     host: str,
     port: int,
     *,
@@ -287,13 +273,7 @@ def run_client_2(
             logging.error(err)
 
 
-run_client_1(
-    'localhost',
-    9999,
-    timeout=3.5,
-)
-
-run_client_2(
+run_client(
     'localhost',
     9999,
     conn_timeout=3.5,
