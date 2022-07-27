@@ -1,11 +1,4 @@
-# Create TCP Server (IPv4) - Blocking Mode
-
-TCP = Transmission Control Protocol
-
-## Solution
-
-```python
-"""TCP Server (IPv4) - Blocking Mode
+"""TCP Server (IPv4) - Timeout Mode
 """
 
 # PEP 604, Allow writing union types as X | Y
@@ -22,20 +15,7 @@ logging.basicConfig(
 logger = logging.getLogger()
 
 
-def run_server(host: str = '', port: int = 0, *, accept_queue_size: int | None = None):
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-    # Reuse address
-    #
-    # The `SO_REUSEADDR` flag tells the kernel to reuse a local socket in
-    # `TIME_WAIT` state, without waiting for its natural timeout to expire
-    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-
-    # Bind
-    sock.bind((host, port))
-    server_address: tuple[str, int] = sock.getsockname()
-    logger.debug(f'Server address: {server_address}')
-
+def handle_listen(sock: socket.socket, accept_queue_size: int | None):
     # Set backlog (accept queue size) for `listen()`.
     #
     # On Linux 2.2+, there are two queues: SYN queue and accept queue
@@ -63,6 +43,58 @@ def run_server(host: str = '', port: int = 0, *, accept_queue_size: int | None =
     )
     sock.listen()
 
+
+def get_linux_tcp_max_connect_timeout(tcp_synack_retries: int) -> int:
+    retries = tcp_synack_retries
+    timeout = 1
+    while retries:
+        retries -= 1
+        timeout += 2 ** (tcp_synack_retries - retries)
+    return timeout
+
+
+def get_tcp_max_connect_timeout() -> int | None:
+    # Max connect timeout
+    #
+    # On Linux 2.2+,
+    # max syn/ack retry times: /proc/sys/net/ipv4/tcp_synack_retries
+    #
+    # See https://leven-cn.github.io/python-handbook/recipes/core/tcp_ipv4
+    if sys.platform == 'linux':  # Linux 2.2+
+        tcp_synack_retries = int(
+            Path('/proc/sys/net/ipv4/tcp_synack_retries').read_text().strip()
+        )
+        logger.debug(f'max syn/ack retries: {tcp_synack_retries}')
+        return get_linux_tcp_max_connect_timeout(tcp_synack_retries)
+
+    return None
+
+
+def run_server(
+    host: str = '',
+    port: int = 0,
+    *,
+    accept_queue_size: int | None = None,
+    timeout: float | None = None,
+):
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+    # Reuse address
+    #
+    # The `SO_REUSEADDR` flag tells the kernel to reuse a local socket in
+    # `TIME_WAIT` state, without waiting for its natural timeout to expire
+    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+
+    # Bind
+    sock.bind((host, port))
+    server_address: tuple[str, int] = sock.getsockname()
+    logger.debug(f'Server address: {server_address}')
+
+    handle_listen(sock, accept_queue_size)
+
+    max_connect_timeout = get_tcp_max_connect_timeout()
+    logger.debug(f'Server max connect timeout: {max_connect_timeout}')
+
     # Accept and handle incoming client requests
     try:
         while True:
@@ -73,12 +105,17 @@ def run_server(host: str = '', port: int = 0, *, accept_queue_size: int | None =
             logger.debug(f'connected by {client_address}')
 
             with conn:
+                # Set timeout of data transimission
+                # set `SO_RCVTIMEO` and `SO_SNDTIMEO` socket options
+                conn.settimeout(timeout)
+                logger.debug(f'Server recv/send timeout: {conn.gettimeout()} seconds')
+
                 while True:
                     data: bytes = conn.recv(1024)
                     if data:
-                        logger.debug(f'recv: {data}')
+                        logger.debug(f'recv: {data!r}')
                         conn.sendall(data)
-                        logger.debug(f'sent: {data}')
+                        logger.debug(f'sent: {data!r}')
                     else:
                         logger.debug('no data')
 
@@ -97,27 +134,4 @@ def run_server(host: str = '', port: int = 0, *, accept_queue_size: int | None =
 # - '' or '0.0.0.0': socket.INADDR_ANY
 # - socket.INADDR_BROADCAST
 # Port 0 means to select an arbitrary unused port
-run_server('localhost', 9999)
-```
-
-See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples/core/tcp_server_ipv4_blocking.py)
-
-## More
-
-More details to see [TCP (IPv4) on Python Handbook](https://leven-cn.github.io/python-handbook/recipes/core/tcp_ipv4):
-
-- [`listen` Queue](https://leven-cn.github.io/python-handbook/recipes/core/tcp_ipv4#codelistencode-queue)
-
-## References
-
-- [Python - `socket` module](https://docs.python.org/3/library/socket.html)
-- [Python - `socketserver` module](https://docs.python.org/3/library/socketserver.html)
-- [PEP 3151 – Reworking the OS and IO exception hierarchy](https://peps.python.org/pep-3151/)
-- [Linux Programmer's Manual - tcp(7)](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html)
-- [Linux Programmer's Manual - `socket`(2)](https://manpages.debian.org/bullseye/manpages-dev/socket.2.en.html)
-- [Linux Programmer's Manual - `bind`(2)](https://manpages.debian.org/bullseye/manpages-dev/bind.2.en.html)
-- [Linux Programmer's Manual - `getsockname`(2)](https://manpages.debian.org/bullseye/manpages-dev/getsockname.2.en.html)
-- [Linux Programmer's Manual - `listen`(2)](https://manpages.debian.org/bullseye/manpages-dev/listen.2.en.html)
-- [Linux Programmer's Manual - `accept`(2)](https://manpages.debian.org/bullseye/manpages-dev/accept.2.en.html)
-- [Linux Programmer's Manual - `recv`(2)](https://manpages.debian.org/bullseye/manpages-dev/recv.2.en.html)
-- [Linux Programmer's Manual - `send`(2)](https://manpages.debian.org/bullseye/manpages-dev/send.2.en.html)
+run_server('localhost', 9999, timeout=5.5)
