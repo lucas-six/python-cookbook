@@ -140,8 +140,11 @@ def run_server(
     unpacker = struct.Struct(binary_fmt)
     try:
         while True:
+            # `socket.accept()` cannot be interrupted by the signal
+            # `EINTR` or `KeyboardInterrupt` in blocking mode on Windows.
             conn, client_address = sock.accept()
             assert isinstance(conn, socket.socket)
+
             with conn:
                 # Set both recv/send timeouts
                 # set `SO_RCVTIMEO` and `SO_SNDTIMEO` socket options
@@ -231,7 +234,7 @@ if os_name == 'Linux' and os_version_info >= ('2', '2', '0'):  # Linux 2.2+
 
 def run_client_1(host: str, port: int, *, timeout: float | None = None):
     try:
-        with socket.create_connection(('localhost', 9999), timeout=timeout) as client:
+        with socket.create_connection((host, port), timeout=timeout) as client:
             data: bytes = b'data'
 
             client.sendall(data)
@@ -299,56 +302,6 @@ run_client_2(
 ```
 
 See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples/core/tcp_client_ipv4.py)
-
-### Server (IPv4) with Standard Framework
-
-```python
-import logging
-import socketserver
-
-logging.basicConfig(
-    level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
-)
-logger = logging.getLogger()
-
-
-class MyTCPHandler1(socketserver.BaseRequestHandler):
-    """
-    The request handler class for our server.
-
-    It is instantiated once per connection to the server, and must
-    override the handle() method to implement communication to the
-    client.
-    """
-
-    def handle(self):
-        # self.request is the TCP socket connected to the client
-        self.data = self.request.recv(1024).strip()
-        logger.debug(f'{self.client_address[0]} wrote: {self.data}')
-        # just send back the same data, but upper-cased
-        self.request.sendall(self.data.upper())
-
-
-class MyTCPHandler2(socketserver.StreamRequestHandler):
-    def handle(self):
-        # self.rfile is a file-like object created by the handler;
-        # we can now use e.g. readline() instead of raw recv() calls
-        self.data = self.rfile.readline().strip()
-        logger.debug(f'{self.client_address[0]} wrote: {self.data}')
-        # Likewise, self.wfile is a file-like object used to write back
-        # to the client
-        self.wfile.write(self.data.upper())
-
-
-if __name__ == '__main__':
-    # Create the server, binding to localhost on port 9999
-    with socketserver.TCPServer(('localhost', 9999), MyTCPHandler1) as server:
-        # Activate the server; this will keep running until you
-        # interrupt the program with Ctrl-C
-        server.serve_forever()
-```
-
-See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples/core/tcp_server_ipv4_std.py)
 
 ## More
 
