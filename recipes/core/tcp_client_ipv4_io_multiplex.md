@@ -1,24 +1,33 @@
-# Create TCP Client (IPv4) - Timeout Mode
+# Create TCP Client (IPv4) - Non-Blocking Mode (I/O Multiplex)
 
 ## Solution
 
 ```python
-"""TCP Client (IPv4): Timeout
+"""TCP Client (IPv4) - Non-Blocking Mode (I/O Multiplex)
 """
 
 # PEP 604, Allow writing union types as X | Y
 from __future__ import annotations
 
 import logging
+import selectors
 import socket
-import struct
 import sys
 from pathlib import Path
-from typing import Any
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
 )
+
+
+# In non-blocking mode: I/O multiplex
+# on Windows and POSIX: select()
+# on Linux 2.5.44+: epoll()
+# on most UNIX system: poll()
+# on BSD (including macOS): kqueue()
+#
+# @see select
+selector = selectors.DefaultSelector()
 
 
 def get_linux_tcp_max_connect_timeout(tcp_syn_retries: int) -> int:
@@ -92,14 +101,11 @@ def run_client(
     port: int,
     *,
     conn_timeout: float | None = None,
-    recv_send_timeout: float | None = None,
+    io_multiplex_timeout: float | None = None,
     recv_buf_size: int | None = None,
     send_buf_size: int | None = None,
 ):
-    binary_fmt: str = '! I 2s Q 2h f'
-    packer = struct.Struct(binary_fmt)
-    binary_value: tuple[Any, ...] = (1, b'ab', 2, 3, 3, 2.5)
-    data: list[bytes] = [b'data\n', packer.pack(*binary_value)]
+    data: list[bytes] = [b'data2\n', b'data1\n']
 
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client:
         client.settimeout(conn_timeout)
@@ -114,43 +120,69 @@ def run_client(
         try:
             client.connect((host, port))
 
-            # back to blocking or timeout mode
-            # settimeout(None) == setblocking(True)
-            client.settimeout(recv_send_timeout)
-            logging.debug(f'recv/send timeout: {client.gettimeout()} seconds')
+            # setblocking(False) == settimeout(0.0)
+            client.setblocking(False)
+            logging.debug('switch to non-blocking mode')
 
-            client.sendall(data[0])
-            logging.debug(f'sent: {data[0]!r}')
+            # set up the selector to watch for when the socket is ready
+            # to send data as well as when there is data to read.
+            selector.register(client, selectors.EVENT_READ | selectors.EVENT_WRITE)
 
-            recv_data = client.recv(1024)
-            logging.debug(f'recv: {recv_data!r}')
+            conn = None
+            finished = False
+            sent_bytes = 0
+            recv_bytes = 0
+            while not finished:
+                for key, mask in selector.select(timeout=io_multiplex_timeout):
+                    conn = key.fileobj
 
-            client.sendall(data[1])
-            logging.debug(f'sent: {data[1]!r}')
+                    if mask & selectors.EVENT_WRITE:
+                        if not data:
+                            # no data need to send, swith to read-only
+                            selector.modify(client, selectors.EVENT_READ)
+                        else:
+                            x = data.pop()
+                            conn.sendall(x)  # type: ignore
+                            logging.debug(f'sent: {x!r}')
+                            sent_bytes += len(x)
+
+                    if mask & selectors.EVENT_READ:
+                        recv_data: bytes = conn.recv(1024)  # type: ignore
+                        logging.debug(f'recv: {recv_data!r}')
+                        recv_bytes += len(recv_data)
+
+                        finished = not data and recv_bytes == sent_bytes
+
+            if conn:
+                selector.unregister(conn)
+                conn.shutdown(socket.SHUT_WR)  # type: ignore
+                conn.close()  # type: ignore
+
         except OSError as err:
             logging.error(err)
+
+    selector.close()
 
 
 run_client(
     'localhost',
     9999,
     conn_timeout=3.5,
-    recv_send_timeout=5.5,
+    io_multiplex_timeout=5.5,
 )
 ```
 
-See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples/core/tcp_client_ipv4_timeout.py)
+See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples/core/tcp_client_ipv4_io_multiplex.py)
 
 ## More
 
-More details to see [TCP (IPv4) on Python Handbook](https://leven-cn.github.io/python-handbook/recipes/core/tcp_ipv4)
-and [Pack/Unpack Binary Data: `struct` (on Python Cookbook)](struct).
+More details to see [TCP (IPv4) on Python Handbook](https://leven-cn.github.io/python-handbook/recipes/core/tcp_ipv4).
 
 ## References
 
 - [Python - `socket` module](https://docs.python.org/3/library/socket.html)
-- [Python - `socketserver` module](https://docs.python.org/3/library/socketserver.html)
-- [Python - `struct` module](https://docs.python.org/3/library/struct.html)
+- [Python - `selectors` module](https://docs.python.org/3/library/selectors.html)
+- [Python - `select` module](https://docs.python.org/3/library/select.html)
 - [PEP 3151 – Reworking the OS and IO exception hierarchy](https://peps.python.org/pep-3151/)
 - [Linux Programmer's Manual - tcp(7)](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html)
 - [Linux Programmer's Manual - tcp(7) - `tcp_syn_retries`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_syn_retries)
@@ -158,6 +190,9 @@ and [Pack/Unpack Binary Data: `struct` (on Python Cookbook)](struct).
 - [Linux Programmer's Manual - tcp(7) - `tcp_retries2`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_retries2)
 - [Linux Programmer's Manual - `socket`(2)](https://manpages.debian.org/bullseye/manpages-dev/socket.2.en.html)
 - [Linux Programmer's Manual - `connect`(2)](https://manpages.debian.org/bullseye/manpages-dev/connect.2.en.html)
+- [Linux Programmer's Manual - `select`(2)](https://manpages.debian.org/bullseye/manpages-dev/select.2.en.html)
+- [Linux Programmer's Manual - `poll`(2)](https://manpages.debian.org/bullseye/manpages-dev/poll.2.en.html)
+- [Linux Programmer's Manual - `epoll`(7)](https://manpages.debian.org/bullseye/manpages-dev/epoll.7.en.html)
 - [Linux Programmer's Manual - `recv`(2)](https://manpages.debian.org/bullseye/manpages-dev/recv.2.en.html)
 - [Linux Programmer's Manual - `send`(2)](https://manpages.debian.org/bullseye/manpages-dev/send.2.en.html)
 - [RFC 6298 - Computing TCP's Retransmission Timer](https://datatracker.ietf.org/doc/html/rfc6298.html)
