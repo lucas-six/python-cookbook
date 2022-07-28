@@ -75,12 +75,54 @@ def get_tcp_max_connect_timeout() -> int | None:
     return None
 
 
+def get_tcp_max_bufsize() -> tuple[int | None, int | None]:
+    """Get max limitation of recv/send buffer size of TCP (IPv4)."""
+    if sys.platform == 'linux':
+        # - read(recv): /proc/sys/net/ipv4/tcp_rmem
+        # - write(send): /proc/sys/net/ipv4/tcp_wmem
+        max_recv_buf_size = int(
+            Path('/proc/sys/net/ipv4/tcp_rmem').read_text().strip().split()[2].strip()
+        )
+        max_send_buf_size = int(
+            Path('/proc/sys/net/ipv4/tcp_wmem').read_text().strip().split()[2].strip()
+        )
+        return max_recv_buf_size, max_send_buf_size
+
+    return (None, None)
+
+
+def handle_tcp_bufsize(
+    sock: socket.socket,
+    recv_buf_size: int | None,
+    send_buf_size: int | None,
+):
+    max_recv_buf_size, max_send_buf_size = get_tcp_max_bufsize()
+
+    if recv_buf_size:
+        # kernel do this already!
+        # if max_recv_buf_size:
+        #    recv_buf_size = min(recv_buf_size, max_recv_buf_size)
+        sock.setsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF, recv_buf_size)
+    recv_buf_size = sock.getsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF)
+    logger.debug(f'Server recv buffer size: {recv_buf_size} (max={max_recv_buf_size})')
+
+    if send_buf_size:
+        # kernel do this already!
+        # if max_send_buf_size:
+        #    send_buf_size = min(send_buf_size, max_send_buf_size)
+        sock.setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, send_buf_size)
+    send_buf_size = sock.getsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF)
+    logger.debug(f'Server send buffer size: {send_buf_size} (max={max_send_buf_size})')
+
+
 def run_server(
     host: str = '',
     port: int = 0,
     *,
     accept_queue_size: int | None = None,
     timeout: float | None = None,
+    recv_buf_size: int | None = None,
+    send_buf_size: int | None = None,
 ):
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -115,6 +157,8 @@ def run_server(
                 conn.settimeout(timeout)
                 logger.debug(f'Server recv/send timeout: {conn.gettimeout()} seconds')
 
+                handle_tcp_bufsize(conn, recv_buf_size, send_buf_size)
+
                 while True:
                     data: bytes = conn.recv(1024)
                     if data:
@@ -148,7 +192,9 @@ See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples
 
 More details to see [TCP (IPv4) on Python Handbook](https://leven-cn.github.io/python-handbook/recipes/core/tcp_ipv4):
 
-- [`listen` Queue](https://leven-cn.github.io/python-handbook/recipes/core/tcp_ipv4#codelistencode-queue)
+- accept queue size for `listen()`
+- connect and recv/send timeout
+- recv/send buffer size
 
 ## References
 

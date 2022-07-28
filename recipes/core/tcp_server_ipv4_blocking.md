@@ -22,20 +22,7 @@ logging.basicConfig(
 logger = logging.getLogger()
 
 
-def run_server(host: str = '', port: int = 0, *, accept_queue_size: int | None = None):
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-    # Reuse address
-    #
-    # The `SO_REUSEADDR` flag tells the kernel to reuse a local socket in
-    # `TIME_WAIT` state, without waiting for its natural timeout to expire
-    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-
-    # Bind
-    sock.bind((host, port))
-    server_address: tuple[str, int] = sock.getsockname()
-    logger.debug(f'Server address: {server_address}')
-
+def handle_listen(sock: socket.socket, accept_queue_size: int | None):
     # Set backlog (accept queue size) for `listen()`.
     #
     # On Linux 2.2+, there are two queues: SYN queue and accept queue
@@ -63,6 +50,70 @@ def run_server(host: str = '', port: int = 0, *, accept_queue_size: int | None =
     )
     sock.listen()
 
+
+def get_tcp_max_bufsize() -> tuple[int | None, int | None]:
+    """Get max limitation of recv/send buffer size of TCP (IPv4)."""
+    if sys.platform == 'linux':
+        # - read(recv): /proc/sys/net/ipv4/tcp_rmem
+        # - write(send): /proc/sys/net/ipv4/tcp_wmem
+        max_recv_buf_size = int(
+            Path('/proc/sys/net/ipv4/tcp_rmem').read_text().strip().split()[2].strip()
+        )
+        max_send_buf_size = int(
+            Path('/proc/sys/net/ipv4/tcp_wmem').read_text().strip().split()[2].strip()
+        )
+        return max_recv_buf_size, max_send_buf_size
+
+    return (None, None)
+
+
+def handle_tcp_bufsize(
+    sock: socket.socket,
+    recv_buf_size: int | None,
+    send_buf_size: int | None,
+):
+    max_recv_buf_size, max_send_buf_size = get_tcp_max_bufsize()
+
+    if recv_buf_size:
+        # kernel do this already!
+        # if max_recv_buf_size:
+        #    recv_buf_size = min(recv_buf_size, max_recv_buf_size)
+        sock.setsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF, recv_buf_size)
+    recv_buf_size = sock.getsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF)
+    logger.debug(f'Server recv buffer size: {recv_buf_size} (max={max_recv_buf_size})')
+
+    if send_buf_size:
+        # kernel do this already!
+        # if max_send_buf_size:
+        #    send_buf_size = min(send_buf_size, max_send_buf_size)
+        sock.setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, send_buf_size)
+    send_buf_size = sock.getsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF)
+    logger.debug(f'Server send buffer size: {send_buf_size} (max={max_send_buf_size})')
+
+
+def run_server(
+    host: str = '',
+    port: int = 0,
+    *,
+    accept_queue_size: int | None = None,
+    recv_buf_size: int | None = None,
+    send_buf_size: int | None = None,
+):
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+    # Reuse address
+    #
+    # The `SO_REUSEADDR` flag tells the kernel to reuse a local socket in
+    # `TIME_WAIT` state, without waiting for its natural timeout to expire
+    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+
+    # Bind
+    sock.bind((host, port))
+    server_address: tuple[str, int] = sock.getsockname()
+    logger.debug(f'Server address: {server_address}')
+
+    handle_listen(sock, accept_queue_size)
+
     # Accept and handle incoming client requests
     try:
         while True:
@@ -72,13 +123,15 @@ def run_server(host: str = '', port: int = 0, *, accept_queue_size: int | None =
             assert isinstance(conn, socket.socket)
             logger.debug(f'connected by {client_address}')
 
+            handle_tcp_bufsize(conn, recv_buf_size, send_buf_size)
+
             with conn:
                 while True:
                     data: bytes = conn.recv(1024)
                     if data:
-                        logger.debug(f'recv: {data}')
+                        logger.debug(f'recv: {data!r}')
                         conn.sendall(data)
-                        logger.debug(f'sent: {data}')
+                        logger.debug(f'sent: {data!r}')
                     else:
                         logger.debug('no data')
 
@@ -106,7 +159,8 @@ See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples
 
 More details to see [TCP (IPv4) on Python Handbook](https://leven-cn.github.io/python-handbook/recipes/core/tcp_ipv4):
 
-- [`listen` Queue](https://leven-cn.github.io/python-handbook/recipes/core/tcp_ipv4#codelistencode-queue)
+- `listen` queue
+- recv/send buffer size
 
 ## References
 

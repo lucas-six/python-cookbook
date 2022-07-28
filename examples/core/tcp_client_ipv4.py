@@ -5,44 +5,15 @@
 from __future__ import annotations
 
 import logging
-import os
 import socket
 import struct
-from pathlib import Path
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
 )
 
 
-def linux_connect_timeout(tcp_syn_retries: int) -> int:
-    r = tcp_syn_retries
-    timeout = 1
-    while r:
-        r -= 1
-        timeout += 2 ** (tcp_syn_retries - r)
-    return timeout
-
-
-# system info
-_uname = os.uname()
-os_name = _uname.sysname
-os_version_info = tuple(_uname.release.split('.'))
-
 max_connect_timeout: float | None = None
-
-# Get max connect timeout
-#
-# On Linux 2.2+,
-# max syn retry times: /proc/sys/net/ipv4/tcp_syn_retries
-#
-# See https://leven-cn.github.io/python-handbook/recipes/core/tcp_ipv4
-if os_name == 'Linux' and os_version_info >= ('2', '2', '0'):  # Linux 2.2+
-    tcp_syn_retries = int(
-        Path('/proc/sys/net/ipv4/tcp_syn_retries').read_text().strip()
-    )
-    logging.debug(f'max syn retries: {tcp_syn_retries}')
-    max_connect_timeout = linux_connect_timeout(tcp_syn_retries)
 
 
 def run_client(
