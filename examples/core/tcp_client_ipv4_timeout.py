@@ -6,8 +6,10 @@ from __future__ import annotations
 
 import logging
 import socket
+import struct
 import sys
 from pathlib import Path
+from typing import Any
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
@@ -80,6 +82,12 @@ def handle_tcp_bufsize(
     logging.debug(f'Server send buffer size: {send_buf_size} (max={max_send_buf_size})')
 
 
+def send_bin_data(sock: socket.socket, packer: struct.Struct, value: tuple[Any, ...]):
+    data = packer.pack(*value)
+    sock.sendall(data)
+    logging.debug(f'sent: {data!r}')
+
+
 def run_client(
     host: str,
     port: int,
@@ -91,6 +99,10 @@ def run_client(
 ):
 
     data: bytes = b'data\n'
+
+    binary_fmt: str = '! I 2s Q 2h f'
+    binary_value: tuple = (1, b'ab', 2, 3, 3, 2.5)
+    packer = struct.Struct(binary_fmt)
 
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client:
         client.settimeout(conn_timeout)
@@ -115,6 +127,8 @@ def run_client(
 
             data = client.recv(1024)
             logging.debug(f'recv: {data!r}')
+
+            send_bin_data(client, packer, binary_value)
         except OSError as err:
             logging.error(err)
 

@@ -13,8 +13,10 @@ from __future__ import annotations
 
 import logging
 import socket
+import struct
 import sys
 from pathlib import Path
+from typing import Any
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
@@ -91,6 +93,14 @@ def handle_tcp_bufsize(
     logger.debug(f'Server send buffer size: {send_buf_size} (max={max_send_buf_size})')
 
 
+def recv_bin_data(sock: socket.socket, unpacker: struct.Struct):
+    data = sock.recv(unpacker.size)
+    if data:
+        logger.debug(f'recv: {data!r}')
+        unpacked_data: tuple[Any, ...] = unpacker.unpack(data)
+        logger.debug(f'recv unpacked: {unpacked_data}')
+
+
 def run_server(
     host: str = '',
     port: int = 0,
@@ -113,6 +123,9 @@ def run_server(
     logger.debug(f'Server address: {server_address}')
 
     handle_listen(sock, accept_queue_size)
+
+    binary_fmt: str = '! I 2s Q 2h f'
+    unpacker = struct.Struct(binary_fmt)
 
     # Accept and handle incoming client requests
     try:
@@ -141,6 +154,8 @@ def run_server(
                         conn.shutdown(socket.SHUT_WR)
                         break
 
+                    recv_bin_data(conn, unpacker)
+
     finally:
         sock.close()
 
@@ -159,15 +174,19 @@ See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples
 
 More details to see [TCP (IPv4) on Python Handbook](https://leven-cn.github.io/python-handbook/recipes/core/tcp_ipv4):
 
-- `listen` queue
+- accept queue size for `listen()`
 - recv/send buffer size
+- [Pack/Unpack Binary Data: `struct` (on Python Cookbook)](struct)
 
 ## References
 
 - [Python - `socket` module](https://docs.python.org/3/library/socket.html)
 - [Python - `socketserver` module](https://docs.python.org/3/library/socketserver.html)
+- [Python - `struct` module](https://docs.python.org/3/library/struct.html)
 - [PEP 3151 – Reworking the OS and IO exception hierarchy](https://peps.python.org/pep-3151/)
 - [Linux Programmer's Manual - tcp(7)](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html)
+- [Linux Programmer's Manual - tcp(7) - `tcp_retries1`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_retries1)
+- [Linux Programmer's Manual - tcp(7) - `tcp_retries2`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_retries2)
 - [Linux Programmer's Manual - `socket`(2)](https://manpages.debian.org/bullseye/manpages-dev/socket.2.en.html)
 - [Linux Programmer's Manual - `bind`(2)](https://manpages.debian.org/bullseye/manpages-dev/bind.2.en.html)
 - [Linux Programmer's Manual - `getsockname`(2)](https://manpages.debian.org/bullseye/manpages-dev/getsockname.2.en.html)
@@ -175,3 +194,5 @@ More details to see [TCP (IPv4) on Python Handbook](https://leven-cn.github.io/p
 - [Linux Programmer's Manual - `accept`(2)](https://manpages.debian.org/bullseye/manpages-dev/accept.2.en.html)
 - [Linux Programmer's Manual - `recv`(2)](https://manpages.debian.org/bullseye/manpages-dev/recv.2.en.html)
 - [Linux Programmer's Manual - `send`(2)](https://manpages.debian.org/bullseye/manpages-dev/send.2.en.html)
+- [RFC 6298 - Computing TCP's Retransmission Timer](https://datatracker.ietf.org/doc/html/rfc6298.html)
+- [RFC 2018 - TCP Selective Acknowledgment Options](https://datatracker.ietf.org/doc/html/rfc2018.html)

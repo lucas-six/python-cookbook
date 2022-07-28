@@ -70,7 +70,6 @@
   - [Create TCP Client (IPv4) - Basic](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_client_ipv4_basic)
   - [Create TCP Client (IPv4) - Timeout](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_client_ipv4_timeout)
   - [Create Threaded TCP/UDP Server with Standard Framework](https://leven-cn.github.io/python-cookbook/recipes/core/threaded_server_std)
-  - [Create TCP Server and Client](https://leven-cn.github.io/python-cookbook/recipes/core/tcp)
   - [Create UDP Server and Client](https://leven-cn.github.io/python-cookbook/recipes/core/udp)
   - [Create IP Multicast (组播) Server and Client (UDP)](https://leven-cn.github.io/python-cookbook/recipes/core/ip_multicast)
   - [IPC - UNIX Domain Socket (UDS) Server and Client](https://leven-cn.github.io/python-cookbook/recipes/core/ipc_unix_domain_socket)

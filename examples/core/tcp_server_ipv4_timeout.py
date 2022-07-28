@@ -6,8 +6,10 @@ from __future__ import annotations
 
 import logging
 import socket
+import struct
 import sys
 from pathlib import Path
+from typing import Any
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
@@ -110,6 +112,14 @@ def handle_tcp_bufsize(
     logger.debug(f'Server send buffer size: {send_buf_size} (max={max_send_buf_size})')
 
 
+def recv_bin_data(sock: socket.socket, unpacker: struct.Struct):
+    data = sock.recv(unpacker.size)
+    if data:
+        logger.debug(f'recv: {data!r}')
+        unpacked_data: tuple[Any, ...] = unpacker.unpack(data)
+        logger.debug(f'recv unpacked: {unpacked_data}')
+
+
 def run_server(
     host: str = '',
     port: int = 0,
@@ -136,6 +146,9 @@ def run_server(
 
     max_connect_timeout = get_tcp_max_connect_timeout()
     logger.debug(f'Server max connect timeout: {max_connect_timeout}')
+
+    binary_fmt: str = '! I 2s Q 2h f'
+    unpacker = struct.Struct(binary_fmt)
 
     # Accept and handle incoming client requests
     try:
@@ -169,6 +182,7 @@ def run_server(
                         conn.shutdown(socket.SHUT_WR)
                         break
 
+                    recv_bin_data(conn, unpacker)
     finally:
         sock.close()
 
