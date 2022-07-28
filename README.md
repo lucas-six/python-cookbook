@@ -63,6 +63,7 @@
   - [High-Level Processes-Based Concurrent](https://leven-cn.github.io/python-cookbook/recipes/core/concurrent_processes)
   - [Synchronization Primitives - `Event` (For Processes and Threads)](https://leven-cn.github.io/python-cookbook/recipes/core/synchronization_event)
   - [Synchronization Primitives - Mutex Lock (互斥锁) `Lock` (For Processes and Threads)](https://leven-cn.github.io/python-cookbook/recipes/core/synchronization_lock)
+  - [Synchronization Primitives - Condition Variable (条件变量) `Condition` (For Processes and Threads)](https://leven-cn.github.io/python-cookbook/recipes/core/synchronization_condition)
 - Networks and Communications (网络通信)
   - [Create TCP Server with Standard Framework (IPv4)](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_server_ipv4_std)
   - [Create TCP Server (IPv4) - Blocking Mode](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_server_ipv4_blocking)
