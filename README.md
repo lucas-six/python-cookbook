@@ -34,9 +34,9 @@
 - [Regex Patterns](https://leven-cn.github.io/python-cookbook/recipes/core/regex_patterns)
 - [Time: Timestamp (UNIX Time), UTC, Local Time](https://leven-cn.github.io/python-cookbook/recipes/core/time)
 - Representation of Dates and Times
-  - [ISO 8601 Format](https://leven-cn.github.io/python-cookbook/recipes/core/iso_8601_fmt)
-  - [RFC 3339 Format](https://leven-cn.github.io/python-cookbook/recipes/core/rfc_3339_fmt)
-  - [Format Date & Time String](https://leven-cn.github.io/python-cookbook/recipes/core/time_str_fmt)
+  - [ISO 8601 Format](https://leven-cn.github.io/python-cookbook/recipes/core/datetime_fmt_iso_8601)
+  - [RFC 3339 Format](https://leven-cn.github.io/python-cookbook/recipes/core/datetime_fmt_rfc_3339)
+  - [Format Date & Time String](https://leven-cn.github.io/python-cookbook/recipes/core/datetime_fmt_str)
 - Type Hint
   - [Type Hint for Basic Types](https://leven-cn.github.io/python-cookbook/recipes/core/type_hint_for_basic_type)
   - [Type Hint for Union Types: `|`, `typing.Union`, `typing.Optional`](https://leven-cn.github.io/python-cookbook/recipes/core/type_hint_for_union)
