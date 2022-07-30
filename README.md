@@ -70,6 +70,7 @@
   - [Asynchronous I/O (异步 I/O) - Create chain coroutines (串链协程)](https://leven-cn.github.io/python-cookbook/recipes/core/asyncio_coroutine_chain)
   - [Asynchronous I/O (异步 I/O) - Run coroutines Concurrently (并发执行协程)](https://leven-cn.github.io/python-cookbook/recipes/core/asyncio_coroutine_chain)
   - [Asynchronous I/O (异步 I/O) - Scheduled Tasks (调度任务)](https://leven-cn.github.io/python-cookbook/recipes/core/asyncio_schedule)
+  - [Asynchronous I/O (异步 I/O) - Wait](https://leven-cn.github.io/python-cookbook/recipes/core/asyncio_wait)
 - Networks and Communications (网络通信)
   - [Create TCP Server with Standard Framework (IPv4)](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_server_ipv4_std)
   - [Create TCP Server (IPv4) - Blocking Mode](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_server_ipv4_blocking)
