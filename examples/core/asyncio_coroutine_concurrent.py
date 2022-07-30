@@ -52,7 +52,7 @@ async def coroutine_gather(arg: int):
 
 async def coroutine_as_completed(arg: int):
     """run coroutines concurrently: return result each task."""
-    logging.debug(f'run coroutine_gather: {arg}')
+    logging.debug(f'run coroutine_as_completed: {arg}')
 
     rs: list[str] = []
 
