@@ -59,12 +59,21 @@ async def coroutine_as_completed(arg: int):
     """run coroutines concurrently: return result each task."""
     logging.debug(f'run coroutine_gather: {arg}')
 
-    tasks = (task(7, 1.0), task(8, 1.5))
     rs: list[str] = []
 
-    for t in asyncio.as_completed(tasks):
-        r = await t
+    tasks1 = (task(7, 1.0), task(8, 1.5))
+    for coroutine in asyncio.as_completed(tasks1):
+        r = await coroutine
         rs.append(r)
+
+    tasks2 = (task(9, 1.0), task(10, 1.5))
+    for coroutine in asyncio.as_completed(tasks2, timeout=1.2):
+        try:
+            r = await coroutine
+        except asyncio.TimeoutError:
+            logging.warning('timeout')
+        else:
+            rs.append(r)
 
     return rs
 
