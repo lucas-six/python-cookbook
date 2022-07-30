@@ -72,6 +72,7 @@
   - [Asynchronous I/O (异步 I/O) - Scheduled Tasks (调度任务)](https://leven-cn.github.io/python-cookbook/recipes/core/asyncio_schedule)
   - [Asynchronous I/O (异步 I/O) - Wait](https://leven-cn.github.io/python-cookbook/recipes/core/asyncio_wait)
   - [Asynchronous I/O (异步 I/O) - Nonblocking Main Thread](https://leven-cn.github.io/python-cookbook/recipes/core/asyncio_nonblocking)
+  - [Asynchronous I/O (异步 I/O) - Synchronization Primitives: Lock](https://leven-cn.github.io/python-cookbook/recipes/core/asyncio_synchronization_lock)
 - Networks and Communications (网络通信)
   - [Create TCP Server with Standard Framework (IPv4)](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_server_ipv4_std)
   - [Create TCP Server (IPv4) - Blocking Mode](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_server_ipv4_blocking)
