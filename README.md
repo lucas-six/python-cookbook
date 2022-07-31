@@ -64,6 +64,7 @@
   - [Synchronization Primitives - `Event` (For Processes and Threads)](https://leven-cn.github.io/python-cookbook/recipes/core/synchronization_event)
   - [Synchronization Primitives - Mutex Lock (互斥锁) `Lock` (For Processes and Threads)](https://leven-cn.github.io/python-cookbook/recipes/core/synchronization_lock)
   - [Synchronization Primitives - Condition Variable (条件变量) `Condition` (For Processes and Threads)](https://leven-cn.github.io/python-cookbook/recipes/core/synchronization_condition)
+  - [Synchronization Primitives - Semaphore (信号量) `Semaphore` / `BoundedSemaphore` (For Processes and Threads)](https://leven-cn.github.io/python-cookbook/recipes/core/synchronization_semaphore)
   - [IPC - Socket Pair](https://leven-cn.github.io/python-cookbook/recipes/core/ipc_socketpair)
   - [IPC - UNIX Domain Socket (UDS, UNIX 域套接字) Server and Client](https://leven-cn.github.io/python-cookbook/recipes/core/ipc_unix_domain_socket)
   - [Asynchronous I/O (异步 I/O) - Create coroutine (协程)](https://leven-cn.github.io/python-cookbook/recipes/core/asyncio_coroutine)
