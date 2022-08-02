@@ -1,4 +1,4 @@
-"""TCP Client (IPv4): Timeout Mode
+"""TCP Client (IPv4) - Timeout Mode
 """
 
 # PEP 604, Allow writing union types as X | Y

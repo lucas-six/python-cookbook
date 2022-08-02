@@ -1,9 +1,9 @@
-# Create TCP Client (IPv4) - Timeout Mode
+# TCP Client (IPv4) - Timeout Mode
 
 ## Solution
 
 ```python
-"""TCP Client (IPv4): Timeout
+"""TCP Client (IPv4) - Timeout
 """
 
 # PEP 604, Allow writing union types as X | Y

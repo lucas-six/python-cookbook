@@ -1,11 +1,11 @@
-# Create TCP Server with Standard Framework (IPv4)
+# TCP Server (IPv4) - Standard Framework
 
 ## Solution
 
 ### BaseRequestHandler
 
 ```python
-"""TCP Server: Standard Framework (IPv4) - BaseRequestHandler
+"""TCP Server (IPv4) - Standard Framework: BaseRequestHandler
 """
 
 import logging
@@ -51,7 +51,7 @@ See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples
 ### StreamRequestHandler
 
 ```python
-"""TCP Server: Standard Framework (IPv4) - StreamRequestHandler
+"""TCP Server (IPv4) - Standard Framework: StreamRequestHandler
 """
 
 import logging
@@ -91,7 +91,7 @@ See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples
 ### Threading
 
 ```python
-"""TCP Server: Standard Framework (IPv4) - Threading
+"""TCP Server (IPv4) - Standard Framework: Threading
 """
 
 import logging
