@@ -1,4 +1,4 @@
-"""TCP Server: Standard Framework (IPv4) - Threading
+"""TCP Server (IPv4) - Standard Framework: Threading
 """
 
 import logging
