@@ -21,7 +21,9 @@ if sys.version_info >= (3, 7):  # Python 3.7+
     logging.debug(f'result: {result}')
 else:
     # Low-level APIs
-    loop = asyncio.get_event_loop()
+    # `get_running_loop()` has been added since Python 3.7.
+    # `get_event_loop()` has been deprecated since Python 3.10.
+    loop = asyncio.get_running_loop()
     try:
         logging.debug('starting event loop')
         result = loop.run_until_complete(coro)
