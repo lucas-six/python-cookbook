@@ -1,10 +1,10 @@
-# UDP Server and Client
+# UDP Server and Client (IPv4)
 
 UDP = User Datagram Protocol
 
 ## Solution
 
-### Server (IPv4)
+### Server
 
 ```python
 """UDP Server, based on IPv4
@@ -119,7 +119,7 @@ run_server('localhost', 9999, timeout=5.0)
 
 See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples/core/udp_server_ipv4.py)
 
-### Client (IPv4)
+### Client
 
 ```python
 """UDP Client, based on IPv4
@@ -161,42 +161,6 @@ with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as client:
 ```
 
 See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples/core/udp_client_ipv4.py)
-
-### Server (IPv4) with Standard Framework
-
-```python
-import logging
-import socketserver
-
-logging.basicConfig(
-    level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
-)
-logger = logging.getLogger()
-
-
-class MyUDPHandler(socketserver.BaseRequestHandler):
-    """
-    This class works similar to the TCP handler class, except that
-    self.request consists of a pair of data and client socket, and since
-    there is no connection the client address must be given explicitly
-    when sending data back via sendto().
-    """
-
-    def handle(self):
-        data = self.request[0].strip()
-        sock = self.request[1]
-        logger.debug(f'{self.client_address[0]} recv: {data}')
-
-        data = data.upper()
-        sock.sendto(data, self.client_address)
-        logger.debug(f'sent: {data}')
-
-
-with socketserver.UDPServer(('localhost', 9999), MyUDPHandler) as server:
-    server.serve_forever()
-```
-
-See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples/core/udp_server_ipv4_std.py)
 
 ## More
 
