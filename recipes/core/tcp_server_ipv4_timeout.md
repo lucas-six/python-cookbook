@@ -1,4 +1,4 @@
-# Create TCP Server (IPv4) - Timeout Mode
+# TCP Server (IPv4) - Timeout Mode
 
 ## Solution
 

@@ -1,4 +1,4 @@
-"""TCP Server: Standard Framework (IPv4) - BaseRequestHandler
+"""TCP Server (IPv4) - Standard Framework: BaseRequestHandler
 """
 
 import logging

@@ -1,4 +1,4 @@
-"""TCP Client (IPv4): Basic
+"""TCP Client (IPv4) - Basic
 """
 
 # PEP 604, Allow writing union types as X | Y

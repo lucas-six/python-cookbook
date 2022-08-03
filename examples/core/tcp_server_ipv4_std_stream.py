@@ -1,4 +1,4 @@
-"""TCP Server: Standard Framework (IPv4) - StreamRequestHandler
+"""TCP Server (IPv4) - Standard Framework: StreamRequestHandler
 """
 
 import logging

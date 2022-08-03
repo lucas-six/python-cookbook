@@ -1,4 +1,4 @@
-# Create TCP Server (IPv4) - Blocking Mode
+# TCP Server (IPv4) - Blocking Mode
 
 TCP = Transmission Control Protocol
 
