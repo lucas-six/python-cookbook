@@ -40,3 +40,6 @@ See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples
 ## References
 
 - [Python - `asyncio` module](https://docs.python.org/3/library/asyncio.html)
+- [PEP 3156 – Asynchronous IO Support Rebooted: the "asyncio" Module](https://peps.python.org/pep-3156/)
+- [PEP 380 – Syntax for Delegating to a Subgenerator](https://peps.python.org/pep-0380/)
+- [PEP 492 – Coroutines with async and await syntax](https://peps.python.org/pep-0492/)
