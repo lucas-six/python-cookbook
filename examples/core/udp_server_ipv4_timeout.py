@@ -17,6 +17,17 @@ logging.basicConfig(
 logger = logging.getLogger()
 
 
+def handle_reuse_address(sock: socket.socket, reuse_address: bool):
+    # Reuse address
+    #
+    # The `SO_REUSEADDR` flag tells the kernel to reuse a local socket in
+    # `TIME_WAIT` state, without waiting for its natural timeout to expire
+    if reuse_address:
+        sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    reuse_address = sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR) != 0
+    logger.debug(f'reuse_address: {reuse_address}')
+
+
 def get_udp_max_bufsize() -> tuple[int | None, int | None]:
     """Get max limitation of recv/send buffer size of UDP (IPv4)."""
     if sys.platform == 'linux':

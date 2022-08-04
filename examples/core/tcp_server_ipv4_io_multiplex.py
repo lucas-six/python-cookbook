@@ -36,7 +36,25 @@ def handle_reuse_address(sock: socket.socket, reuse_address: bool):
     if reuse_address:
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     reuse_address = sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR) != 0
-    logger.debug(f'reuse_address: {reuse_address}')
+    logger.debug(f'reuse address: {reuse_address}')
+
+
+def handle_reuse_port(sock: socket.socket, reuse_port: bool):
+    # Reuse port
+    #
+    # The option `SO_REUSEPORT` allows `accept()` load distribution
+    # in a multi-threaded server to be improved by using a distinct
+    # listener socket for each thread. This provides improved load
+    # distribution as compared to traditional techniques such using
+    # a single `accept()`ing thread that distributes connections, or
+    # having multiple threads that compete to `accept()` from the
+    # same socket.
+    #
+    # Since Linux 3.9
+    if reuse_port:
+        sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+    reuse_port = sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT) != 0
+    logger.debug(f'reuse port: {reuse_port}')
 
 
 def handle_listen(sock: socket.socket, accept_queue_size: int | None):
@@ -165,16 +183,15 @@ def run_server(
     host: str = '',
     port: int = 0,
     *,
+    reuse_address: bool = True,
+    reuse_port: bool = True,
     accept_queue_size: int | None = None,
     timeout: float | None = None,
 ):
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-    # Reuse address
-    #
-    # The `SO_REUSEADDR` flag tells the kernel to reuse a local socket in
-    # `TIME_WAIT` state, without waiting for its natural timeout to expire
-    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    handle_reuse_address(sock, reuse_address)
+    handle_reuse_port(sock, reuse_port)
 
     # non-blocking mode: == sock.settimeout(0.0)
     sock.setblocking(False)
