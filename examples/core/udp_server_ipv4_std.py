@@ -21,12 +21,20 @@ class MyUDPHandler(socketserver.BaseRequestHandler):
     def handle(self):
         data = self.request[0].strip()
         sock = self.request[1]
-        logger.debug(f'{self.client_address[0]} recv: {data}')
+        logger.debug(f'recv: {data}, from: {self.client_address[0]}')
 
         data = data.upper()
         sock.sendto(data, self.client_address)
-        logger.debug(f'sent: {data}')
+        logger.debug(f'sent: {data}, to: {self.client_address[0]}')
 
 
-with socketserver.UDPServer(('localhost', 9999), MyUDPHandler) as server:
+with socketserver.UDPServer(
+    ('localhost', 9999), MyUDPHandler, bind_and_activate=False  # type: ignore
+) as server:
+    # When multiple processes with differing UIDs assign sockets
+    # to an identical UDP socket address with `SO_REUSEADDR`,
+    # incoming packets can become randomly distributed among the sockets.
+    server.allow_reuse_address = False
+    server.server_bind()
+
     server.serve_forever()

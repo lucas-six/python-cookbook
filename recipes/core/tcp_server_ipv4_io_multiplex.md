@@ -33,6 +33,35 @@ recv_buf_size: int | None = None
 send_buf_size: int | None = None
 
 
+def handle_reuse_address(sock: socket.socket, reuse_address: bool):
+    # Reuse address
+    #
+    # The `SO_REUSEADDR` flag tells the kernel to reuse a local socket in
+    # `TIME_WAIT` state, without waiting for its natural timeout to expire
+    if reuse_address:
+        sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    reuse_address = sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR) != 0
+    logger.debug(f'reuse address: {reuse_address}')
+
+
+def handle_reuse_port(sock: socket.socket, reuse_port: bool):
+    # Reuse port
+    #
+    # The option `SO_REUSEPORT` allows `accept()` load distribution
+    # in a multi-threaded server to be improved by using a distinct
+    # listener socket for each thread. This provides improved load
+    # distribution as compared to traditional techniques such using
+    # a single `accept()`ing thread that distributes connections, or
+    # having multiple threads that compete to `accept()` from the
+    # same socket.
+    #
+    # Since Linux 3.9
+    if reuse_port:
+        sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+    reuse_port = sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT) != 0
+    logger.debug(f'reuse port: {reuse_port}')
+
+
 def handle_listen(sock: socket.socket, accept_queue_size: int | None):
     # Set backlog (accept queue size) for `listen()`.
     #
@@ -48,7 +77,7 @@ def handle_listen(sock: socket.socket, accept_queue_size: int | None):
         max_syn_queue_size = int(
             Path('/proc/sys/net/ipv4/tcp_max_syn_backlog').read_text().strip()
         )
-        logger.debug(f'Server max syn queue size: {max_syn_queue_size}')
+        logger.debug(f'max syn queue size: {max_syn_queue_size}')
 
     if accept_queue_size is None:
         sock.listen()
@@ -56,9 +85,7 @@ def handle_listen(sock: socket.socket, accept_queue_size: int | None):
         # kernel do this already!
         # accept_queue_size = min(accept_queue_size, socket.SOMAXCONN)
         sock.listen(accept_queue_size)
-    logger.debug(
-        f'Server accept queue size: {accept_queue_size} (max={socket.SOMAXCONN})'
-    )
+    logger.debug(f'accept queue size: {accept_queue_size} (max={socket.SOMAXCONN})')
     sock.listen()
 
 
@@ -88,28 +115,18 @@ def get_tcp_max_connect_timeout() -> int | None:
     return None
 
 
-def get_tcp_max_bufsize() -> tuple[int | None, int | None]:
-    """Get max limitation of recv/send buffer size of TCP (IPv4)."""
-    if sys.platform == 'linux':
-        # - read(recv): /proc/sys/net/ipv4/tcp_rmem
-        # - write(send): /proc/sys/net/ipv4/tcp_wmem
-        max_recv_buf_size = int(
-            Path('/proc/sys/net/ipv4/tcp_rmem').read_text().strip().split()[2].strip()
-        )
-        max_send_buf_size = int(
-            Path('/proc/sys/net/ipv4/tcp_wmem').read_text().strip().split()[2].strip()
-        )
-        return max_recv_buf_size, max_send_buf_size
-
-    return (None, None)
-
-
-def handle_tcp_bufsize(
+def handle_socket_bufsize(
     sock: socket.socket,
     recv_buf_size: int | None,
     send_buf_size: int | None,
 ):
-    max_recv_buf_size, max_send_buf_size = get_tcp_max_bufsize()
+    # Get the maximum socket receive/send buffer in bytes.
+    max_recv_buf_size = max_send_buf_size = None
+    if sys.platform == 'linux':
+        # - read(recv): /proc/sys/net/core/rmem_max
+        # - write(send): /proc/sys/net/core/wmem_max
+        max_recv_buf_size = int(Path('/proc/sys/net/core/rmem_max').read_text().strip())
+        max_send_buf_size = int(Path('/proc/sys/net/core/wmem_max').read_text().strip())
 
     if recv_buf_size:
         # kernel do this already!
@@ -117,7 +134,7 @@ def handle_tcp_bufsize(
         #    recv_buf_size = min(recv_buf_size, max_recv_buf_size)
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF, recv_buf_size)
     recv_buf_size = sock.getsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF)
-    logger.debug(f'Server recv buffer size: {recv_buf_size} (max={max_recv_buf_size})')
+    logger.debug(f'recv buffer size: {recv_buf_size} (max={max_recv_buf_size})')
 
     if send_buf_size:
         # kernel do this already!
@@ -125,7 +142,7 @@ def handle_tcp_bufsize(
         #    send_buf_size = min(send_buf_size, max_send_buf_size)
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, send_buf_size)
     send_buf_size = sock.getsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF)
-    logger.debug(f'Server send buffer size: {send_buf_size} (max={max_send_buf_size})')
+    logger.debug(f'send buffer size: {send_buf_size} (max={max_send_buf_size})')
 
 
 def handle_read(conn: socket.socket, mask: int):
@@ -161,7 +178,7 @@ def handle_requests(sock: socket.socket, mask: int):
     assert isinstance(conn, socket.socket)
     logger.debug(f'recv request from {client_address}')
 
-    handle_tcp_bufsize(conn, recv_buf_size, send_buf_size)
+    handle_socket_bufsize(conn, recv_buf_size, send_buf_size)
 
     conn.setblocking(False)
     selector.register(conn, selectors.EVENT_READ, handle_read)
@@ -171,16 +188,15 @@ def run_server(
     host: str = '',
     port: int = 0,
     *,
+    reuse_address: bool = True,
+    reuse_port: bool = True,
     accept_queue_size: int | None = None,
     timeout: float | None = None,
 ):
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-    # Reuse address
-    #
-    # The `SO_REUSEADDR` flag tells the kernel to reuse a local socket in
-    # `TIME_WAIT` state, without waiting for its natural timeout to expire
-    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    handle_reuse_address(sock, reuse_address)
+    handle_reuse_port(sock, reuse_port)
 
     # non-blocking mode: == sock.settimeout(0.0)
     sock.setblocking(False)
@@ -195,7 +211,7 @@ def run_server(
     selector.register(sock, selectors.EVENT_READ, handle_requests)
 
     max_connect_timeout = get_tcp_max_connect_timeout()
-    logger.debug(f'Server max connect timeout: {max_connect_timeout}')
+    logger.debug(f'max connect timeout: {max_connect_timeout}')
 
     # Accept and handle incoming client requests
     try:
@@ -225,6 +241,7 @@ More details to see [TCP (IPv4) on Python Handbook](https://leven-cn.github.io/p
 - accept queue size for `listen()`
 - connect timeout
 - recv/send buffer size
+- reuse port
 
 ## References
 
@@ -244,6 +261,7 @@ More details to see [TCP (IPv4) on Python Handbook](https://leven-cn.github.io/p
 - [Linux Programmer's Manual - `send`(2)](https://manpages.debian.org/bullseye/manpages-dev/send.2.en.html)
 - [Linux Programmer's Manual - socket(7)](https://manpages.debian.org/bullseye/manpages/socket.7.en.html)
 - [Linux Programmer's Manual - socket(7) - `SO_REUSEADDR`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_REUSEADDR)
+- [Linux Programmer's Manual - socket(7) - `SO_REUSEPORT`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_REUSEPORT)
 - [Linux Programmer's Manual - socket(7) - `SO_RCVBUF`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_RCVBUF)
 - [Linux Programmer's Manual - socket(7) - `SO_SNDBUF`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_SNDBUF)
 - [Linux Programmer's Manual - tcp(7)](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html)
