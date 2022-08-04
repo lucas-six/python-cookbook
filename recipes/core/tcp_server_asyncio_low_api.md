@@ -92,6 +92,14 @@ asyncio.run(tcp_echo_server('127.0.0.1', 8888))  # Python 3.7+
 
 See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples/core/tcp_server_asyncio_low_api.py)
 
+## More
+
+More details to see [TCP (IPv4) on Python Handbook](https://leven-cn.github.io/python-handbook/recipes/core/tcp_ipv4):
+
+- accept queue size for `listen()`
+- recv/send buffer size
+- reuse port
+
 ## References
 
 - [Python - `asyncio` module](https://docs.python.org/3/library/asyncio.html)
