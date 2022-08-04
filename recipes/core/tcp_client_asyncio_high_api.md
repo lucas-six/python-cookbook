@@ -37,3 +37,6 @@ See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples
 ## References
 
 - [Python - `asyncio` module](https://docs.python.org/3/library/asyncio.html)
+- [Linux Programmer's Manual - socket(7)](https://manpages.debian.org/bullseye/manpages/socket.7.en.html)
+- [Linux Programmer's Manual - socket(7) - `SO_RCVBUF`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_RCVBUF)
+- [Linux Programmer's Manual - socket(7) - `SO_SNDBUF`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_SNDBUF)
