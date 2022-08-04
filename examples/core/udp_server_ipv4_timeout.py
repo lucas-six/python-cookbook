@@ -1,4 +1,4 @@
-"""UDP Server (IPv4) - Tinmeout Mode
+"""UDP Server (IPv4) - Timeout Mode
 """
 
 # PEP 604, Allow writing union types as X | Y
@@ -20,6 +20,10 @@ logger = logging.getLogger()
 def handle_reuse_address(sock: socket.socket, reuse_address: bool):
     # Reuse address
     #
+    # When multiple processes with differing UIDs assign sockets
+    # to an identical UDP socket address with `SO_REUSEADDR`,
+    # incoming packets can become randomly distributed among the sockets.
+    #
     # The `SO_REUSEADDR` flag tells the kernel to reuse a local socket in
     # `TIME_WAIT` state, without waiting for its natural timeout to expire
     if reuse_address:
@@ -28,24 +32,32 @@ def handle_reuse_address(sock: socket.socket, reuse_address: bool):
     logger.debug(f'reuse_address: {reuse_address}')
 
 
-def get_udp_max_bufsize() -> tuple[int | None, int | None]:
-    """Get max limitation of recv/send buffer size of UDP (IPv4)."""
+def handle_reuse_port(sock: socket.socket, reuse_port: bool):
+    # Reuse port
+    #
+    # The option `SO_REUSEPORT` can provide better distribution of incoming datagrams
+    # to multiple processes (or threads) as compared to the traditional technique of
+    # having multiple processes compete to receive datagrams on the same socket.
+    #
+    # Since Linux 3.9
+    if reuse_port:
+        sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+    reuse_port = sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT) != 0
+    logger.debug(f'reuse port: {reuse_port}')
+
+
+def handle_socket_bufsize(
+    sock: socket.socket,
+    recv_buf_size: int | None,
+    send_buf_size: int | None,
+):
+    # Get the maximum socket receive/send buffer in bytes.
+    max_recv_buf_size = max_send_buf_size = None
     if sys.platform == 'linux':
         # - read(recv): /proc/sys/net/core/rmem_max
         # - write(send): /proc/sys/net/core/wmem_max
         max_recv_buf_size = int(Path('/proc/sys/net/core/rmem_max').read_text().strip())
         max_send_buf_size = int(Path('/proc/sys/net/core/wmem_max').read_text().strip())
-        return max_recv_buf_size, max_send_buf_size
-
-    return (None, None)
-
-
-def handle_udp_bufsize(
-    sock: socket.socket,
-    recv_buf_size: int | None,
-    send_buf_size: int | None,
-):
-    max_recv_buf_size, max_send_buf_size = get_udp_max_bufsize()
 
     if recv_buf_size:
         # kernel do this already!
@@ -53,7 +65,7 @@ def handle_udp_bufsize(
         #    recv_buf_size = min(recv_buf_size, max_recv_buf_size)
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF, recv_buf_size)
     recv_buf_size = sock.getsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF)
-    logger.debug(f'Server recv buffer size: {recv_buf_size} (max={max_recv_buf_size})')
+    logger.debug(f'recv buffer size: {recv_buf_size} (max={max_recv_buf_size})')
 
     if send_buf_size:
         # kernel do this already!
@@ -61,7 +73,7 @@ def handle_udp_bufsize(
         #    send_buf_size = min(send_buf_size, max_send_buf_size)
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, send_buf_size)
     send_buf_size = sock.getsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF)
-    logger.debug(f'Server send buffer size: {send_buf_size} (max={max_send_buf_size})')
+    logger.debug(f'send buffer size: {send_buf_size} (max={max_send_buf_size})')
 
 
 def recv_bin_data(sock: socket.socket, unpacker: struct.Struct):
@@ -76,24 +88,23 @@ def run_server(
     host: str = '',
     port: int = 0,
     *,
+    reuse_address: bool = False,
+    reuse_port: bool = True,
     timeout: float | None = None,
     recv_buf_size: int | None = None,
     send_buf_size: int | None = None,
 ):
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-    # Reuse address
-    #
-    # The `SO_REUSEADDR` flag tells the kernel to reuse a local socket in
-    # `TIME_WAIT` state, without waiting for its natural timeout to expire
-    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    handle_reuse_address(sock, reuse_address)
+    handle_reuse_port(sock, reuse_port)
 
     # Bind
     sock.bind((host, port))
     server_address: tuple[str, int] = sock.getsockname()
     logger.debug(f'Server address: {server_address}')
 
-    handle_udp_bufsize(sock, recv_buf_size, send_buf_size)
+    handle_socket_bufsize(sock, recv_buf_size, send_buf_size)
 
     binary_fmt: str = '! I 2s Q 2h f'
     unpacker = struct.Struct(binary_fmt)
