@@ -17,6 +17,17 @@ logging.basicConfig(
 logger = logging.getLogger()
 
 
+def handle_reuse_address(sock: socket.socket, reuse_address: bool):
+    # Reuse address
+    #
+    # The `SO_REUSEADDR` flag tells the kernel to reuse a local socket in
+    # `TIME_WAIT` state, without waiting for its natural timeout to expire
+    if reuse_address:
+        sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    reuse_address = sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR) != 0
+    logger.debug(f'reuse_address: {reuse_address}')
+
+
 def handle_listen(sock: socket.socket, accept_queue_size: int | None):
     # Set backlog (accept queue size) for `listen()`.
     #
@@ -32,7 +43,7 @@ def handle_listen(sock: socket.socket, accept_queue_size: int | None):
         max_syn_queue_size = int(
             Path('/proc/sys/net/ipv4/tcp_max_syn_backlog').read_text().strip()
         )
-        logger.debug(f'Server max syn queue size: {max_syn_queue_size}')
+        logger.debug(f'max syn queue size: {max_syn_queue_size}')
 
     if accept_queue_size is None:
         sock.listen()
@@ -40,9 +51,7 @@ def handle_listen(sock: socket.socket, accept_queue_size: int | None):
         # kernel do this already!
         # accept_queue_size = min(accept_queue_size, socket.SOMAXCONN)
         sock.listen(accept_queue_size)
-    logger.debug(
-        f'Server accept queue size: {accept_queue_size} (max={socket.SOMAXCONN})'
-    )
+    logger.debug(f'accept queue size: {accept_queue_size} (max={socket.SOMAXCONN})')
     sock.listen()
 
 
@@ -72,28 +81,18 @@ def get_tcp_max_connect_timeout() -> int | None:
     return None
 
 
-def get_tcp_max_bufsize() -> tuple[int | None, int | None]:
-    """Get max limitation of recv/send buffer size of TCP (IPv4)."""
-    if sys.platform == 'linux':
-        # - read(recv): /proc/sys/net/ipv4/tcp_rmem
-        # - write(send): /proc/sys/net/ipv4/tcp_wmem
-        max_recv_buf_size = int(
-            Path('/proc/sys/net/ipv4/tcp_rmem').read_text().strip().split()[2].strip()
-        )
-        max_send_buf_size = int(
-            Path('/proc/sys/net/ipv4/tcp_wmem').read_text().strip().split()[2].strip()
-        )
-        return max_recv_buf_size, max_send_buf_size
-
-    return (None, None)
-
-
-def handle_tcp_bufsize(
+def handle_socket_bufsize(
     sock: socket.socket,
     recv_buf_size: int | None,
     send_buf_size: int | None,
 ):
-    max_recv_buf_size, max_send_buf_size = get_tcp_max_bufsize()
+    # Get the maximum socket receive/send buffer in bytes.
+    max_recv_buf_size = max_send_buf_size = None
+    if sys.platform == 'linux':
+        # - read(recv): /proc/sys/net/core/rmem_max
+        # - write(send): /proc/sys/net/core/wmem_max
+        max_recv_buf_size = int(Path('/proc/sys/net/core/rmem_max').read_text().strip())
+        max_send_buf_size = int(Path('/proc/sys/net/core/wmem_max').read_text().strip())
 
     if recv_buf_size:
         # kernel do this already!
@@ -101,7 +100,7 @@ def handle_tcp_bufsize(
         #    recv_buf_size = min(recv_buf_size, max_recv_buf_size)
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF, recv_buf_size)
     recv_buf_size = sock.getsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF)
-    logger.debug(f'Server recv buffer size: {recv_buf_size} (max={max_recv_buf_size})')
+    logger.debug(f'recv buffer size: {recv_buf_size} (max={max_recv_buf_size})')
 
     if send_buf_size:
         # kernel do this already!
@@ -109,7 +108,7 @@ def handle_tcp_bufsize(
         #    send_buf_size = min(send_buf_size, max_send_buf_size)
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, send_buf_size)
     send_buf_size = sock.getsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF)
-    logger.debug(f'Server send buffer size: {send_buf_size} (max={max_send_buf_size})')
+    logger.debug(f'send buffer size: {send_buf_size} (max={max_send_buf_size})')
 
 
 def recv_bin_data(sock: socket.socket, unpacker: struct.Struct):
@@ -124,6 +123,7 @@ def run_server(
     host: str = '',
     port: int = 0,
     *,
+    reuse_address: bool = True,
     accept_queue_size: int | None = None,
     timeout: float | None = None,
     recv_buf_size: int | None = None,
@@ -131,11 +131,7 @@ def run_server(
 ):
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-    # Reuse address
-    #
-    # The `SO_REUSEADDR` flag tells the kernel to reuse a local socket in
-    # `TIME_WAIT` state, without waiting for its natural timeout to expire
-    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    handle_reuse_address(sock, reuse_address)
 
     # Bind
     sock.bind((host, port))
@@ -145,7 +141,7 @@ def run_server(
     handle_listen(sock, accept_queue_size)
 
     max_connect_timeout = get_tcp_max_connect_timeout()
-    logger.debug(f'Server max connect timeout: {max_connect_timeout}')
+    logger.debug(f'max connect timeout: {max_connect_timeout}')
 
     binary_fmt: str = '! I 2s Q 2h f'
     unpacker = struct.Struct(binary_fmt)
@@ -157,32 +153,36 @@ def run_server(
             # `EINTR` or `KeyboardInterrupt` in blocking mode on Windows.
             conn, client_address = sock.accept()
             assert isinstance(conn, socket.socket)
-            logger.debug(f'connected by {client_address}')
+            logger.debug(f'connected from {client_address}')
 
             with conn:
                 # Set timeout of data transimission
                 # set `SO_RCVTIMEO` and `SO_SNDTIMEO` socket options
                 conn.settimeout(timeout)
-                logger.debug(f'Server recv/send timeout: {conn.gettimeout()} seconds')
+                logger.debug(f'recv/send timeout: {conn.gettimeout()} seconds')
 
-                handle_tcp_bufsize(conn, recv_buf_size, send_buf_size)
+                handle_socket_bufsize(conn, recv_buf_size, send_buf_size)
 
                 while True:
-                    data: bytes = conn.recv(1024)
-                    if data:
-                        logger.debug(f'recv: {data!r}')
-                        conn.sendall(data)
-                        logger.debug(f'sent: {data!r}')
-                    else:
-                        logger.debug('no data')
+                    try:
+                        data: bytes = conn.recv(1024)
+                        if data:
+                            logger.debug(f'recv: {data!r}')
+                            conn.sendall(data)
+                            logger.debug(f'sent: {data!r}')
+                        else:
+                            logger.debug('no data')
 
-                        # explicitly shutdown.
-                        # `socket.close()` merely releases the socket
-                        # and waits for GC to perform the actual close.
-                        conn.shutdown(socket.SHUT_WR)
-                        break
+                            # explicitly shutdown.
+                            # `socket.close()` merely releases the socket
+                            # and waits for GC to perform the actual close.
+                            conn.shutdown(socket.SHUT_WR)
+                            break
 
-                    recv_bin_data(conn, unpacker)
+                        recv_bin_data(conn, unpacker)
+
+                    except OSError as err:
+                        logger.error(err)
     finally:
         sock.close()
 
