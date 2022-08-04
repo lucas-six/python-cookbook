@@ -75,7 +75,7 @@
   - [Asynchronous I/O (异步 I/O) - Synchronization Primitives: Event](https://leven-cn.github.io/python-cookbook/recipes/core/asyncio_synchronization_event)
   - [Asynchronous I/O (异步 I/O) - Synchronization Primitives: Condition](https://leven-cn.github.io/python-cookbook/recipes/core/asyncio_synchronization_condition)
   - [Asynchronous I/O (异步 I/O) - Synchronization Primitives: Semapore (信号量)](https://leven-cn.github.io/python-cookbook/recipes/core/asyncio_synchronization_semapore)
-  - [Asynchronous I/O (异步 I/O) - Queue (队列))](https://leven-cn.github.io/python-cookbook/recipes/core/asyncio_queue)
+  - [Asynchronous I/O (异步 I/O) - Queue (队列)](https://leven-cn.github.io/python-cookbook/recipes/core/asyncio_queue)
 - Networks and Communications (网络通信)
   - [TCP Server (IPv4) - Standard Framework](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_server_ipv4_std)
   - [TCP Server (IPv4) - Blocking Mode (阻塞模式)](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_server_ipv4_blocking)
