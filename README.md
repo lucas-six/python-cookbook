@@ -24,6 +24,7 @@
 
 ### Core
 
+- [String format specification](https://leven-cn.github.io/python-cookbook/recipes/core/str_fmt_spec)
 - Function Decorator (函数装饰器)
   - [Create Function Decorator Without Argument](https://leven-cn.github.io/python-cookbook/recipes/core/function_decorator_no_args)
   - [Create Function Decorator With Required Arguments](https://leven-cn.github.io/python-cookbook/recipes/core/function_decorator_args_required)
