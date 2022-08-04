@@ -33,6 +33,9 @@ class EchoServerProtocol(asyncio.Protocol):
         assert sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR)
         assert sock.gettimeout() == 0.0
         logging.debug(
+            f'reuse_address: {sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR)}'
+        )
+        logging.debug(
             f'reuse_port: {sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT)}'
         )
         logging.debug(
@@ -61,6 +64,7 @@ async def main():
         '127.0.0.1',
         8888,
         reuse_address=True,
+        reuse_port=True,
         backlog=100,
         start_serving=True,
     )
