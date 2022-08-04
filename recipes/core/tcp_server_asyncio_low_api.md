@@ -38,7 +38,6 @@ class EchoServerProtocol(asyncio.Protocol):
         assert sock.type is socket.SOCK_STREAM
         assert sock.getpeername() == client_address
         assert sock.getsockname() == transport.get_extra_info('sockname')
-        assert sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR)
         assert sock.gettimeout() == 0.0
         logging.debug(
             f'reuse_address: {sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR)}'
@@ -63,17 +62,17 @@ class EchoServerProtocol(asyncio.Protocol):
         self.transport.close()
 
 
-async def main():
+async def tcp_echo_server(host: str, port: int, *, backlog: int = 100):
     loop = asyncio.get_running_loop()
 
     # The socket option `TCP_NODELAY` is set by default in Python 3.6+
     server = await loop.create_server(
         lambda: EchoServerProtocol(),
-        '127.0.0.1',
-        8888,
+        host,
+        port,
         reuse_address=True,
         reuse_port=True,
-        backlog=100,
+        backlog=backlog,
         start_serving=True,
     )
 
@@ -88,7 +87,7 @@ async def main():
         await server.serve_forever()
 
 
-asyncio.run(main())  # Python 3.7+
+asyncio.run(tcp_echo_server('127.0.0.1', 8888))  # Python 3.7+
 ```
 
 See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples/core/tcp_server_asyncio_low_api.py)
