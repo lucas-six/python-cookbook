@@ -16,7 +16,7 @@ class ThreadingTCPRequestHandler(socketserver.BaseRequestHandler):
     def handle(self):
         cur_thread = threading.current_thread()
         logger.debug(
-            f'connected by {self.client_address} '
+            f'connected from {self.client_address} '
             f'({cur_thread.name}, {cur_thread.native_id})'
         )
 
@@ -35,14 +35,20 @@ def client(host: str, port: int, message: bytes):
         sock.connect((host, port))
         sock.sendall(message)
         response = sock.recv(1024)
-        print(f'Received: {response!r}')
+        logging.debug(f'recv: {response!r}')
 
 
 if __name__ == '__main__':
     # Port 0 means to select an arbitrary unused port
     with socketserver.ThreadingTCPServer(
-        ('localhost', 0), ThreadingTCPRequestHandler
+        ('localhost', 0), ThreadingTCPRequestHandler, bind_and_activate=False
     ) as server:
+        server.allow_reuse_address = True  # `SO_REUSEADDR` socket option
+        server.request_queue_size = 100  # param `backlog` for `listen()`
+
+        server.server_bind()
+        server.server_activate()
+
         host, port = server.server_address
 
         # Start a thread with the server -- that thread will then start one
@@ -50,7 +56,7 @@ if __name__ == '__main__':
         # daemon: exit the server thread when the main thread terminates
         server_thread = threading.Thread(target=server.serve_forever, daemon=True)
         server_thread.start()
-        print('Server loop running in thread:', server_thread.name)
+        logging.debug(f'Server loop running in thread: {server_thread.name}')
 
         client(host, port, b'Hello World 1')
         client(host, port, b'Hello World 2')
