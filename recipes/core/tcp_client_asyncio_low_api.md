@@ -85,6 +85,8 @@ More details to see [TCP (IPv4) on Python Handbook](https://leven-cn.github.io/p
 ## References
 
 - [Python - `asyncio` module](https://docs.python.org/3/library/asyncio.html)
+- [Python - `socket` module](https://docs.python.org/3/library/socket.html)
+- [PEP 3151 – Reworking the OS and IO exception hierarchy](https://peps.python.org/pep-3151/)
 - [Linux Programmer's Manual - socket(7)](https://manpages.debian.org/bullseye/manpages/socket.7.en.html)
 - [Linux Programmer's Manual - socket(7) - `SO_RCVBUF`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_RCVBUF)
 - [Linux Programmer's Manual - socket(7) - `SO_SNDBUF`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_SNDBUF)
