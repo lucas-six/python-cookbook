@@ -9,7 +9,7 @@ name = "pypi"
 black = "*"
 isort = "*"
 mypy = "*"
-flake8 = ">=4.0"
+flake8 = ">=5.0"
 pyupgrade = "*"
 pytest = ">=7.1"
 coverage = {version = ">=6.4", extras = ["toml"]}

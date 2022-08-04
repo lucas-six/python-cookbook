@@ -31,7 +31,7 @@ test = [
     "black",
     "isort",
     "mymy",
-    "flake8 >= 4.0",
+    "flake8 >= 5.0",
     "pyupgrade",
     "pytest >= 7.1",
     "coverage >= 6.4",
