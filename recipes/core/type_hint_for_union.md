@@ -4,7 +4,7 @@
 
 ```python
 # PEP 604, Allow writing union types as X | Y
-from __future__ import annotations
+from __future__ import annotations   # no need in Python 3.10+
 
 
 x1: int | str
@@ -33,8 +33,10 @@ More details to see [Type Hint on Python Handbook](https://leven-cn.github.io/py
 
 ## References
 
-- [PEP 604 – Allow writing union types as `X | Y`](https://peps.python.org/pep-0604/)
 - [Python - `typing` module](https://docs.python.org/3/library/typing.html)
+- [Python - `typing.Union` module](https://docs.python.org/3/library/typing.html#typing.Union)
+- [Python - `typing.Optional` module](https://docs.python.org/3/library/typing.html#typing.Optional)
+- [PEP 604 – Allow writing union types as `X | Y`](https://peps.python.org/pep-0604/)
 - [`mypy` Documentation](https://mypy.readthedocs.io/en/latest/)
 - [PEP 526 - Syntax for Variable Annotations](https://peps.python.org/pep-0526/)
 - [PEP 3107 – Function Annotations](https://peps.python.org/pep-3107/)
