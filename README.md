@@ -60,6 +60,7 @@
 - Parallelism and Concurrent (并发)
   - [Multi-Threads Parallelism for **I/O-bound** tasks](https://leven-cn.github.io/python-cookbook/recipes/core/multi_threads)
   - [Multi-Processes Parallelism for **CPU-bound** tasks](https://leven-cn.github.io/python-cookbook/recipes/core/multi_processes)
+  - [Multi-Processes - Queue (队列)](https://leven-cn.github.io/python-cookbook/recipes/core/multi_processes_queue)
   - [Process Pool](https://leven-cn.github.io/python-cookbook/recipes/core/process_pool)
   - [High-Level Threads-Based Concurrent](https://leven-cn.github.io/python-cookbook/recipes/core/concurrent_threads)
   - [High-Level Processes-Based Concurrent](https://leven-cn.github.io/python-cookbook/recipes/core/concurrent_processes)
