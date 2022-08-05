@@ -1,4 +1,4 @@
-# Suppress Exception
+# Suppress Exceptions
 
 New in Python *3.4*.
 
@@ -11,9 +11,12 @@ from contextlib import suppress
 # This context manager is reentrant.
 with suppress(FileNotFoundError):
     os.remove('somefile.tmp')
-
 with suppress(FileNotFoundError):
     os.remove('someotherfile.tmp')
+
+# Multiple Exceptions
+with suppress(FileNotFoundError, RuntimeError):
+    os.remove('somefile.tmp')
 ```
 
 This code is equivalent to:
@@ -23,13 +26,17 @@ try:
     os.remove('somefile.tmp')
 except FileNotFoundError:
     pass
-
 try:
     os.remove('someotherfile.tmp')
 except FileNotFoundError:
+    pass
+
+try:
+    os.remove('someotherfile.tmp')
+except (FileNotFoundError, RuntimeError):
     pass
 ```
 
 ## References
 
-More details to see [Suppress Exception on Python Handbook](https://leven-cn.github.io/python-handbook/recipes/core/suppress_exception).
+- [Python - `@contextlib.suppress` decorator](https://docs.python.org/3/library/contextlib.html#contextlib.suppress)
