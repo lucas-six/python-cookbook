@@ -39,4 +39,5 @@ with ThreadPoolExecutor(max_workers=2) as executor:
 
 ## References
 
-More details to see [`concurrent.futures` - High-Level Concurrent on Python Handbook](https://leven-cn.github.io/python-handbook/recipes/core/concurrent).
+- [Python Documentation - `concurrent.futures` module](https://docs.python.org/3/library/concurrent.futures.html)
+- [PEP 3148 – futures - execute computations asynchronously](https://peps.python.org/pep-3148/)
