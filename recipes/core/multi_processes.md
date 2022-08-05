@@ -52,9 +52,29 @@ if __name__ == '__main__':
 
     # enumerate active child processes
     for p in multiprocessing.active_children():
-        p.join()
+        p.join()  # or p.join(5.0) for timeout of 5.0 seconds
 ```
+
+### Subclass Process
+
+```python
+import multiprocessing
+
+class MyProcess(multiprocessing.Process):
+
+    def run(self):
+        print('run')
+
+if __name__ == '__main__':
+    p = MyProcess()
+    p.start()
+    p.join()
+```
+
+## More
+
+More details to see [Multi-Processes on Python Handbook](https://leven-cn.github.io/python-handbook/recipes/core/multi_processes).
 
 ## References
 
-More details to see [Multi-Processes on Python Handbook](https://leven-cn.github.io/python-handbook/recipes/core/multi_processes).
+- [Python - `multiprocessing` module](https://docs.python.org/3/library/multiprocessing.html)
