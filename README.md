@@ -100,8 +100,8 @@
   - [IPC - Socket Pair](https://leven-cn.github.io/python-cookbook/recipes/core/ipc_socketpair)
   - [IPC - UNIX Domain Socket (UDS, UNIX 域套接字) Server and Client](https://leven-cn.github.io/python-cookbook/recipes/core/ipc_unix_domain_socket)
 - Test
-  - [`unittest` - Standard Unit Testing Framework](https://leven-cn.github.io/python-cookbook/recipes/core/unittest)
-  - [`pytest` - Testing Framework](https://leven-cn.github.io/python-cookbook/recipes/core/pytest)
+  - [Standard Unit Testing Framework: `unittest`](https://leven-cn.github.io/python-cookbook/recipes/core/unittest)
+  - [Testing Framework: `pytest`](https://leven-cn.github.io/python-cookbook/recipes/core/pytest)
 - [Setup Python Project](https://leven-cn.github.io/python-cookbook/recipes/core/python_project)
 - [Performance Measurement](https://leven-cn.github.io/python-cookbook/recipes/core/perf)
 
