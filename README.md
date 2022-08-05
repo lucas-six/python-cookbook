@@ -24,7 +24,7 @@
 
 ### Core
 
-- [String format specification](https://leven-cn.github.io/python-cookbook/recipes/core/str_fmt_spec)
+- [String format specification (字符串格式规范)](https://leven-cn.github.io/python-cookbook/recipes/core/str_fmt_spec)
 - Function Decorator (函数装饰器)
   - [Create Function Decorator Without Argument](https://leven-cn.github.io/python-cookbook/recipes/core/function_decorator_no_args)
   - [Create Function Decorator With Required Arguments](https://leven-cn.github.io/python-cookbook/recipes/core/function_decorator_args_required)
@@ -38,7 +38,7 @@
   - [ISO 8601 Format](https://leven-cn.github.io/python-cookbook/recipes/core/datetime_fmt_iso_8601)
   - [RFC 3339 Format](https://leven-cn.github.io/python-cookbook/recipes/core/datetime_fmt_rfc_3339)
   - [Format Date & Time String](https://leven-cn.github.io/python-cookbook/recipes/core/datetime_fmt_str)
-- Type Hint
+- Type Hint (类型提示)
   - [Type Hint for Basic Types](https://leven-cn.github.io/python-cookbook/recipes/core/type_hint_for_basic_type)
   - [Type Hint for Literal: `typing.Literal`](https://leven-cn.github.io/python-cookbook/recipes/core/type_hint_for_literal)
   - [Type Hint for Union Types: `|`, `typing.Union`, `typing.Optional`](https://leven-cn.github.io/python-cookbook/recipes/core/type_hint_for_union)
