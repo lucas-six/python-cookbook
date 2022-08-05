@@ -28,4 +28,4 @@ if __name__ == '__main__':
 
 ## References
 
-More details to see [Process Pool on Python Handbook](https://leven-cn.github.io/python-handbook/recipes/core/process_pool).
+- [Python - `multiprocessing` module](https://docs.python.org/3/library/multiprocessing.html)
