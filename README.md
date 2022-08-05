@@ -103,6 +103,7 @@
   - [`unittest` - Standard Unit Testing Framework](https://leven-cn.github.io/python-cookbook/recipes/core/unittest)
   - [`pytest` - Testing Framework](https://leven-cn.github.io/python-cookbook/recipes/core/pytest)
 - [Setup Python Project](https://leven-cn.github.io/python-cookbook/recipes/core/python_project)
+- [Performance Measurement](https://leven-cn.github.io/python-cookbook/recipes/core/perf)
 
 <!-- markdownlint-enable line-length -->
 
