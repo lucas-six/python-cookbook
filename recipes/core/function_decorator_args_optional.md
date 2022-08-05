@@ -18,7 +18,7 @@ def decorator(func=None, *, arg1=None, arg2=None):
     return wrapper
 ```
 
-## Usage
+### Usage
 
 ```python
 @decorator(1, 2)
@@ -27,4 +27,11 @@ def func(*args, **kwargs):
     print('run func')
 ```
 
+## More
+
 More details to see [Function (Method) Decorator on Python Handbook](https://leven-cn.github.io/python-handbook/recipes/core/function_decorator).
+
+## References
+
+- [PEP 318 - Decorators for Functions and Methods](https://peps.python.org/pep-0318/)
+- [PEP 614 – Relaxing Grammar Restrictions On Decorators](https://peps.python.org/pep-0614/)
