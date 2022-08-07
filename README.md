@@ -26,6 +26,7 @@
 
 - [String format specification (字符串格式规范)](https://leven-cn.github.io/python-cookbook/recipes/core/str_fmt_spec)
 - [Tuples with Named Fields - `namedtuple` (命名元组)](https://leven-cn.github.io/python-cookbook/recipes/core/namedtuple)
+- [Ordered Dictionary - `OrderedDict`](https://leven-cn.github.io/python-cookbook/recipes/core/ordereddict)
 - Function Decorator (函数装饰器)
   - [Create Function Decorator Without Argument](https://leven-cn.github.io/python-cookbook/recipes/core/function_decorator_no_args)
   - [Create Function Decorator With Required Arguments](https://leven-cn.github.io/python-cookbook/recipes/core/function_decorator_args_required)
