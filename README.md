@@ -108,6 +108,10 @@
 - [Setup Python Project](https://leven-cn.github.io/python-cookbook/recipes/core/python_project)
 - [Performance Measurement](https://leven-cn.github.io/python-cookbook/recipes/core/perf)
 
+## Web Development
+
+- [URL Parsing - `urllib.parse`](https://leven-cn.github.io/python-cookbook/recipes/web/url_parse)
+
 <!-- markdownlint-enable line-length -->
 
 ## More
