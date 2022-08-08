@@ -2,6 +2,7 @@
 """
 
 import logging
+import socket
 import socketserver
 
 logging.basicConfig(
@@ -33,6 +34,9 @@ if __name__ == '__main__':
 
         server.allow_reuse_address = True  # `SO_REUSEADDR` socket option
         server.request_queue_size = 100  # param `backlog` for `listen()`
+
+        # the `TCP_NODELAY` option disables Nagle algorithm.
+        server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
 
         server.server_bind()
         server.server_activate()

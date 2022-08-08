@@ -9,6 +9,7 @@
 """
 
 import logging
+import socket
 import socketserver
 
 logging.basicConfig(
@@ -46,6 +47,9 @@ if __name__ == '__main__':
         server.allow_reuse_address = True  # `SO_REUSEADDR` socket option
         server.request_queue_size = 100  # param `backlog` for `listen()`
 
+        # the `TCP_NODELAY` option disables Nagle algorithm.
+        server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+
         server.server_bind()
         server.server_activate()
 
@@ -63,6 +67,7 @@ See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples
 """
 
 import logging
+import socket
 import socketserver
 
 logging.basicConfig(
@@ -94,6 +99,9 @@ if __name__ == '__main__':
 
         server.allow_reuse_address = True  # `SO_REUSEADDR` socket option
         server.request_queue_size = 100  # param `backlog` for `listen()`
+
+        # the `TCP_NODELAY` option disables Nagle algorithm.
+        server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
 
         server.server_bind()
         server.server_activate()
@@ -142,6 +150,9 @@ class ThreadingTCPRequestHandler(socketserver.BaseRequestHandler):
 
 def client(host: str, port: int, message: bytes):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+        # The `TCP_NODELAY` option disables Nagle algorithm.
+        sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+
         sock.connect((host, port))
         sock.sendall(message)
         response = sock.recv(1024)
@@ -165,6 +176,9 @@ if __name__ == '__main__':
         # same socket.
         # Since Linux 3.9
         server.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+
+        # The `TCP_NODELAY` option disables Nagle algorithm.
+        server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
 
         server.server_bind()
         server.server_activate()
@@ -205,3 +219,5 @@ on Python Handbook.
 - [Linux Programmer's Manual - socket(7)](https://manpages.debian.org/bullseye/manpages/socket.7.en.html)
 - [Linux Programmer's Manual - socket(7) - `SO_REUSEADDR`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_REUSEADDR)
 - [Linux Programmer's Manual - socket(7) - `SO_REUSEPORT`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_REUSEPORT)
+- [Linux Programmer's Manual - tcp(7)](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html)
+- [Linux Programmer's Manual - tcp(7) - `TCP_NODELAY`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#TCP_NODELAY)

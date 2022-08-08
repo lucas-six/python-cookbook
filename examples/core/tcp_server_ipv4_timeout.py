@@ -46,6 +46,14 @@ def handle_reuse_port(sock: socket.socket, reuse_port: bool):
     logger.debug(f'reuse port: {reuse_port}')
 
 
+def handle_tcp_nodelay(sock: socket.socket, tcp_nodelay: bool):
+    # The `TCP_NODELAY` option disables Nagle algorithm.
+    if tcp_nodelay:
+        sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+    tcp_nodelay = sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY) != 0
+    logger.debug(f'TCP Nodelay: {tcp_nodelay}')
+
+
 def handle_listen(sock: socket.socket, accept_queue_size: int | None):
     # Set backlog (accept queue size) for `listen()`.
     #
@@ -143,6 +151,7 @@ def run_server(
     *,
     reuse_address: bool = True,
     reuse_port: bool = True,
+    tcp_nodelay: bool = True,
     accept_queue_size: int | None = None,
     timeout: float | None = None,
     recv_buf_size: int | None = None,
@@ -152,6 +161,7 @@ def run_server(
 
     handle_reuse_address(sock, reuse_address)
     handle_reuse_port(sock, reuse_port)
+    handle_tcp_nodelay(sock, tcp_nodelay)
 
     # Bind
     sock.bind((host, port))
@@ -180,6 +190,8 @@ def run_server(
                 # set `SO_RCVTIMEO` and `SO_SNDTIMEO` socket options
                 conn.settimeout(timeout)
                 logger.debug(f'recv/send timeout: {conn.gettimeout()} seconds')
+
+                handle_tcp_nodelay(conn, tcp_nodelay)
 
                 handle_socket_bufsize(conn, recv_buf_size, send_buf_size)
 

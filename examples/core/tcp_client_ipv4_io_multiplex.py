@@ -51,6 +51,14 @@ def get_tcp_max_connect_timeout() -> int | None:
     return None
 
 
+def handle_tcp_nodelay(sock: socket.socket, tcp_nodelay: bool):
+    # The `TCP_NODELAY` option disables Nagle algorithm.
+    if tcp_nodelay:
+        sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+    tcp_nodelay = sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY) != 0
+    logging.debug(f'TCP Nodelay: {tcp_nodelay}')
+
+
 def get_tcp_max_bufsize() -> tuple[int | None, int | None]:
     """Get max limitation of recv/send buffer size of TCP (IPv4)."""
     if sys.platform == 'linux':
@@ -97,6 +105,7 @@ def run_client(
     *,
     conn_timeout: float | None = None,
     io_multiplex_timeout: float | None = None,
+    tcp_nodelay: bool = True,
     recv_buf_size: int | None = None,
     send_buf_size: int | None = None,
 ):
@@ -110,6 +119,7 @@ def run_client(
             f' (max={max_connect_timeout})'
         )
 
+        handle_tcp_nodelay(client, tcp_nodelay)
         handle_tcp_bufsize(client, recv_buf_size, send_buf_size)
 
         try:

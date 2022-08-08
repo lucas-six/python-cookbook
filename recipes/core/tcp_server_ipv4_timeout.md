@@ -51,6 +51,14 @@ def handle_reuse_port(sock: socket.socket, reuse_port: bool):
     logger.debug(f'reuse port: {reuse_port}')
 
 
+def handle_tcp_nodelay(sock: socket.socket, tcp_nodelay: bool):
+    # The `TCP_NODELAY` option disables Nagle algorithm.
+    if tcp_nodelay:
+        sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+    tcp_nodelay = sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY) != 0
+    logger.debug(f'TCP Nodelay: {tcp_nodelay}')
+
+
 def handle_listen(sock: socket.socket, accept_queue_size: int | None):
     # Set backlog (accept queue size) for `listen()`.
     #
@@ -148,6 +156,7 @@ def run_server(
     *,
     reuse_address: bool = True,
     reuse_port: bool = True,
+    tcp_nodelay: bool = True,
     accept_queue_size: int | None = None,
     timeout: float | None = None,
     recv_buf_size: int | None = None,
@@ -157,6 +166,7 @@ def run_server(
 
     handle_reuse_address(sock, reuse_address)
     handle_reuse_port(sock, reuse_port)
+    handle_tcp_nodelay(sock, tcp_nodelay)
 
     # Bind
     sock.bind((host, port))
@@ -185,6 +195,8 @@ def run_server(
                 # set `SO_RCVTIMEO` and `SO_SNDTIMEO` socket options
                 conn.settimeout(timeout)
                 logger.debug(f'recv/send timeout: {conn.gettimeout()} seconds')
+
+                handle_tcp_nodelay(conn, tcp_nodelay)
 
                 handle_socket_bufsize(conn, recv_buf_size, send_buf_size)
 
@@ -251,6 +263,7 @@ More details to see [TCP (IPv4) on Python Handbook](https://leven-cn.github.io/p
 - [Linux Programmer's Manual - socket(7) - `SO_RCVBUF`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_RCVBUF)
 - [Linux Programmer's Manual - socket(7) - `SO_SNDBUF`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_SNDBUF)
 - [Linux Programmer's Manual - tcp(7)](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html)
+- [Linux Programmer's Manual - tcp(7) - `TCP_NODELAY`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#TCP_NODELAY)
 - [Linux Programmer's Manual - tcp(7) - `tcp_synack_retries`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_synack_retries)
 - [Linux Programmer's Manual - tcp(7) - `tcp_retries1`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_retries1)
 - [Linux Programmer's Manual - tcp(7) - `tcp_retries2`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_retries2)

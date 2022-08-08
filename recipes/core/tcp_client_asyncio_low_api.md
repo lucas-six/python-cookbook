@@ -23,10 +23,24 @@ logging.basicConfig(
 )
 
 
+def handle_tcp_nodelay(sock: socket.socket, tcp_nodelay: bool):
+    # The `TCP_NODELAY` option disables Nagle algorithm.
+    if tcp_nodelay:
+        sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+    tcp_nodelay = sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY) != 0
+    logging.debug(f'TCP Nodelay: {tcp_nodelay}')
+
+
 class EchoClientProtocol(asyncio.Protocol):
-    def __init__(self, message: bytes, on_con_lost: asyncio.Future[bool]):
+    def __init__(
+        self,
+        message: bytes,
+        on_con_lost: asyncio.Future[bool],
+        tcp_nodelay: bool = True,
+    ):
         self.message = message
         self.on_con_lost = on_con_lost
+        self.tcp_nodelay = tcp_nodelay
 
     def connection_made(self, transport: asyncio.BaseTransport):
         assert isinstance(transport, asyncio.Transport)
@@ -36,6 +50,7 @@ class EchoClientProtocol(asyncio.Protocol):
         logging.debug(f'connected to {server_address}')
 
         sock = transport.get_extra_info('socket')
+        handle_tcp_nodelay(sock, self.tcp_nodelay)
         assert sock.gettimeout() == 0.0
         logging.debug(
             f'recv_buf_size: {sock.getsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF)}'
