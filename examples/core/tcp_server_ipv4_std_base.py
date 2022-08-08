@@ -4,6 +4,7 @@
 import logging
 import socket
 import socketserver
+import sys
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
@@ -40,8 +41,14 @@ if __name__ == '__main__':
         server.allow_reuse_address = True  # `SO_REUSEADDR` socket option
         server.request_queue_size = 100  # param `backlog` for `listen()`
 
-        # the `TCP_NODELAY` option disables Nagle algorithm.
+        # `TCP_NODELAY` disables Nagle algorithm.
+        # `TCP_QUICKACK` enables quick ACK mode (disabling delayed ACKs)
+        #       Since Linux 2.4.4
         server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+        logger.debug('enable TCP_NODELAY')
+        if sys.platform == 'linux':  # Linux 2.4.4
+            server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_QUICKACK, 1)
+            logger.debug('enable TCP_QUICKACK')
 
         server.server_bind()
         server.server_activate()

@@ -55,10 +55,19 @@ def handle_reuse_port(sock: socket.socket, reuse_port: bool):
 
 def handle_tcp_nodelay(sock: socket.socket, tcp_nodelay: bool):
     # The `TCP_NODELAY` option disables Nagle algorithm.
-    if enable_tcp_nodelay:
+    if tcp_nodelay:
         sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
     tcp_nodelay = sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY) != 0
     logger.debug(f'TCP Nodelay: {tcp_nodelay}')
+
+
+def handle_tcp_quickack(sock: socket.socket, tcp_quickack: bool):
+    if sys.platform == 'linux':  # Linux 2.4.4+
+        # The `TCP_QUICKACK` option enable TCP quick ACK, disabling delayed ACKs.
+        if tcp_quickack:
+            sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_QUICKACK, 1)
+        tcp_quickack = sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_QUICKACK) != 0
+        logger.debug(f'TCP Quick ACK: {tcp_quickack}')
 
 
 def handle_listen(sock: socket.socket, accept_queue_size: int | None):
@@ -133,6 +142,7 @@ def run_server(
     reuse_address: bool = True,
     reuse_port: bool = True,
     tcp_nodelay: bool = True,
+    tcp_quickack: bool = True,
     accept_queue_size: int | None = None,
     recv_buf_size: int | None = None,
     send_buf_size: int | None = None,
@@ -142,6 +152,7 @@ def run_server(
     handle_reuse_address(sock, reuse_address)
     handle_reuse_port(sock, reuse_port)
     handle_tcp_nodelay(sock, tcp_nodelay)
+    handle_tcp_quickack(sock, tcp_quickack)
 
     # Bind
     sock.bind((host, port))
@@ -166,6 +177,7 @@ def run_server(
 
             with conn:
                 handle_tcp_nodelay(conn, tcp_nodelay)
+                handle_tcp_quickack(conn, tcp_quickack)
 
                 while True:
                     data: bytes = conn.recv(1024)
@@ -204,7 +216,9 @@ More details to see [TCP (IPv4) on Python Handbook](https://leven-cn.github.io/p
 
 - accept queue size for `listen()`
 - recv/send buffer size
-- reuse port
+- reuse port (`SO_REUSEPORT`)
+- Nagle Algorithm (`TCP_NODELAY`)
+- Delayed ACK (延迟确认) (`TCP_QUICKACK`)
 - [Pack/Unpack Binary Data: `struct` (on Python Cookbook)](struct)
 
 ## References
@@ -227,6 +241,7 @@ More details to see [TCP (IPv4) on Python Handbook](https://leven-cn.github.io/p
 - [Linux Programmer's Manual - socket(7) - `SO_SNDBUF`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_SNDBUF)
 - [Linux Programmer's Manual - tcp(7)](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html)
 - [Linux Programmer's Manual - tcp(7) - `TCP_NODELAY`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#TCP_NODELAY)
+- [Linux Programmer's Manual - tcp(7) - `TCP_QUICKACK`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#TCP_QUICKACK)
 - [Linux Programmer's Manual - tcp(7) - `tcp_retries1`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_retries1)
 - [Linux Programmer's Manual - tcp(7) - `tcp_retries2`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_retries2)
 - [RFC 6298 - Computing TCP's Retransmission Timer](https://datatracker.ietf.org/doc/html/rfc6298.html)

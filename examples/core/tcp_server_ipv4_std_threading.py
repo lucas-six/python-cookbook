@@ -4,6 +4,7 @@
 import logging
 import socket
 import socketserver
+import sys
 import threading
 
 logging.basicConfig(
@@ -59,8 +60,14 @@ if __name__ == '__main__':
         # Since Linux 3.9
         server.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
 
-        # The `TCP_NODELAY` option disables Nagle algorithm.
+        # `TCP_NODELAY` disables Nagle algorithm.
+        # `TCP_QUICKACK` enables quick ACK mode (disabling delayed ACKs)
+        #       Since Linux 2.4.4
         server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+        logger.debug('enable TCP_NODELAY')
+        if sys.platform == 'linux':  # Linux 2.4.4
+            server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_QUICKACK, 1)
+            logger.debug('enable TCP_QUICKACK')
 
         server.server_bind()
         server.server_activate()
