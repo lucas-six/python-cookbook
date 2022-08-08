@@ -26,6 +26,7 @@ selector = selectors.DefaultSelector()
 
 recv_buf_size: int | None = None
 send_buf_size: int | None = None
+g_tcp_nodelay: bool = True
 
 
 def handle_reuse_address(sock: socket.socket, reuse_address: bool):
@@ -55,6 +56,14 @@ def handle_reuse_port(sock: socket.socket, reuse_port: bool):
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
     reuse_port = sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT) != 0
     logger.debug(f'reuse port: {reuse_port}')
+
+
+def handle_tcp_nodelay(sock: socket.socket, tcp_nodelay: bool):
+    # The `TCP_NODELAY` option disables Nagle algorithm.
+    if tcp_nodelay:
+        sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+    tcp_nodelay = sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY) != 0
+    logger.debug(f'TCP Nodelay: {tcp_nodelay}')
 
 
 def handle_listen(sock: socket.socket, accept_queue_size: int | None):
@@ -174,6 +183,7 @@ def handle_requests(sock: socket.socket, mask: int):
     logger.debug(f'recv request from {client_address}')
 
     handle_socket_bufsize(conn, recv_buf_size, send_buf_size)
+    handle_tcp_nodelay(conn, g_tcp_nodelay)
 
     conn.setblocking(False)
     selector.register(conn, selectors.EVENT_READ, handle_read)
@@ -185,6 +195,7 @@ def run_server(
     *,
     reuse_address: bool = True,
     reuse_port: bool = True,
+    tcp_nodelay: bool = True,
     accept_queue_size: int | None = None,
     timeout: float | None = None,
 ):
@@ -192,6 +203,9 @@ def run_server(
 
     handle_reuse_address(sock, reuse_address)
     handle_reuse_port(sock, reuse_port)
+    handle_tcp_nodelay(sock, tcp_nodelay)
+    global g_tcp_nodelay
+    g_tcp_nodelay = tcp_nodelay
 
     # non-blocking mode: == sock.settimeout(0.0)
     sock.setblocking(False)
