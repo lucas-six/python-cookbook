@@ -9,10 +9,31 @@
 import asyncio
 import logging
 import socket
+import sys
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}'
 )
+
+tcp_nodelay = True
+tcp_quickack = True
+
+
+def handle_tcp_nodelay(sock: socket.socket, tcp_nodelay: bool):
+    # The `TCP_NODELAY` option disables Nagle algorithm.
+    if tcp_nodelay:
+        sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+    tcp_nodelay = sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY) != 0
+    logging.debug(f'TCP Nodelay: {tcp_nodelay}')
+
+
+def handle_tcp_quickack(sock: socket.socket, tcp_quickack: bool):
+    if sys.platform == 'linux':  # Linux 2.4.4+
+        # The `TCP_QUICKACK` option enable TCP quick ACK, disabling delayed ACKs.
+        if tcp_quickack:
+            sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_QUICKACK, 1)
+        tcp_quickack = sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_QUICKACK) != 0
+        logging.debug(f'TCP Quick ACK: {tcp_quickack}')
 
 
 async def handle_echo(reader: asyncio.StreamReader, writer: asyncio.StreamWriter):
@@ -41,6 +62,8 @@ async def handle_echo(reader: asyncio.StreamReader, writer: asyncio.StreamWriter
     logging.debug(
         f'send_buf_size: {sock.getsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF)}'
     )
+    handle_tcp_nodelay(sock, tcp_nodelay)
+    handle_tcp_quickack(sock, tcp_quickack)
     # logging.debug(dir(sock))
 
     # Recv
@@ -90,7 +113,9 @@ More details to see [TCP (IPv4) on Python Handbook](https://leven-cn.github.io/p
 
 - accept queue size for `listen()`
 - recv/send buffer size
-- reuse port
+- reuse port (`SO_REUSEPORT`)
+- Nagle Algorithm (`TCP_NODELAY`)
+- Delayed ACK (延迟确认) (`TCP_QUICKACK`)
 
 ## References
 
@@ -103,3 +128,6 @@ More details to see [TCP (IPv4) on Python Handbook](https://leven-cn.github.io/p
 - [Linux Programmer's Manual - socket(7) - `SO_REUSEPORT`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_REUSEPORT)
 - [Linux Programmer's Manual - socket(7) - `SO_RCVBUF`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_RCVBUF)
 - [Linux Programmer's Manual - socket(7) - `SO_SNDBUF`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_SNDBUF)
+- [Linux Programmer's Manual - tcp(7)](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html)
+- [Linux Programmer's Manual - tcp(7) - `TCP_NODELAY`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#TCP_NODELAY)
+- [Linux Programmer's Manual - tcp(7) - `TCP_QUICKACK`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#TCP_QUICKACK)

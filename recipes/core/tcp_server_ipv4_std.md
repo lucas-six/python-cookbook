@@ -11,6 +11,7 @@
 import logging
 import socket
 import socketserver
+import sys
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
@@ -28,7 +29,7 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
     """
 
     def handle(self):
-        logger.debug(f'connected by {self.client_address}')
+        logger.debug(f'connected from {self.client_address}')
 
         # self.request is the TCP socket connected to the client
         data = self.request.recv(1024)
@@ -47,8 +48,14 @@ if __name__ == '__main__':
         server.allow_reuse_address = True  # `SO_REUSEADDR` socket option
         server.request_queue_size = 100  # param `backlog` for `listen()`
 
-        # the `TCP_NODELAY` option disables Nagle algorithm.
+        # `TCP_NODELAY` disables Nagle algorithm.
+        # `TCP_QUICKACK` enables quick ACK mode (disabling delayed ACKs)
+        #       Since Linux 2.4.4
         server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+        logger.debug('enable TCP_NODELAY')
+        if sys.platform == 'linux':  # Linux 2.4.4
+            server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_QUICKACK, 1)
+            logger.debug('enable TCP_QUICKACK')
 
         server.server_bind()
         server.server_activate()
@@ -69,6 +76,7 @@ See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples
 import logging
 import socket
 import socketserver
+import sys
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
@@ -78,7 +86,7 @@ logger = logging.getLogger()
 
 class MyTCPHandler(socketserver.StreamRequestHandler):
     def handle(self):
-        logger.debug(f'connected by {self.client_address}')
+        logger.debug(f'connected from {self.client_address}')
 
         # self.rfile is a file-like object created by the handler;
         # we can now use e.g. readline() instead of raw recv() calls
@@ -100,8 +108,14 @@ if __name__ == '__main__':
         server.allow_reuse_address = True  # `SO_REUSEADDR` socket option
         server.request_queue_size = 100  # param `backlog` for `listen()`
 
-        # the `TCP_NODELAY` option disables Nagle algorithm.
+        # `TCP_NODELAY` disables Nagle algorithm.
+        # `TCP_QUICKACK` enables quick ACK mode (disabling delayed ACKs)
+        #       Since Linux 2.4.4
         server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+        logger.debug('enable TCP_NODELAY')
+        if sys.platform == 'linux':  # Linux 2.4.4
+            server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_QUICKACK, 1)
+            logger.debug('enable TCP_QUICKACK')
 
         server.server_bind()
         server.server_activate()
@@ -122,6 +136,7 @@ See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples
 import logging
 import socket
 import socketserver
+import sys
 import threading
 
 logging.basicConfig(
@@ -177,8 +192,14 @@ if __name__ == '__main__':
         # Since Linux 3.9
         server.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
 
-        # The `TCP_NODELAY` option disables Nagle algorithm.
+        # `TCP_NODELAY` disables Nagle algorithm.
+        # `TCP_QUICKACK` enables quick ACK mode (disabling delayed ACKs)
+        #       Since Linux 2.4.4
         server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+        logger.debug('enable TCP_NODELAY')
+        if sys.platform == 'linux':  # Linux 2.4.4
+            server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_QUICKACK, 1)
+            logger.debug('enable TCP_QUICKACK')
 
         server.server_bind()
         server.server_activate()
@@ -221,3 +242,4 @@ on Python Handbook.
 - [Linux Programmer's Manual - socket(7) - `SO_REUSEPORT`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_REUSEPORT)
 - [Linux Programmer's Manual - tcp(7)](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html)
 - [Linux Programmer's Manual - tcp(7) - `TCP_NODELAY`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#TCP_NODELAY)
+- [Linux Programmer's Manual - tcp(7) - `TCP_QUICKACK`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#TCP_QUICKACK)

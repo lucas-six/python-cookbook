@@ -26,7 +26,8 @@ selector = selectors.DefaultSelector()
 
 recv_buf_size: int | None = None
 send_buf_size: int | None = None
-g_tcp_nodelay: bool = True
+g_tcp_nodelay: bool | None = None
+g_tcp_quickack: bool | None = None
 
 
 def handle_reuse_address(sock: socket.socket, reuse_address: bool):
@@ -64,6 +65,15 @@ def handle_tcp_nodelay(sock: socket.socket, tcp_nodelay: bool):
         sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
     tcp_nodelay = sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY) != 0
     logger.debug(f'TCP Nodelay: {tcp_nodelay}')
+
+
+def handle_tcp_quickack(sock: socket.socket, tcp_quickack: bool):
+    if sys.platform == 'linux':  # Linux 2.4.4+
+        # The `TCP_QUICKACK` option enable TCP quick ACK, disabling delayed ACKs.
+        if tcp_quickack:
+            sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_QUICKACK, 1)
+        tcp_quickack = sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_QUICKACK) != 0
+        logger.debug(f'TCP Quick ACK: {tcp_quickack}')
 
 
 def handle_listen(sock: socket.socket, accept_queue_size: int | None):
@@ -183,7 +193,10 @@ def handle_requests(sock: socket.socket, mask: int):
     logger.debug(f'recv request from {client_address}')
 
     handle_socket_bufsize(conn, recv_buf_size, send_buf_size)
-    handle_tcp_nodelay(conn, g_tcp_nodelay)
+    if g_tcp_nodelay is not None:
+        handle_tcp_nodelay(conn, g_tcp_nodelay)
+    if g_tcp_quickack is not None:
+        handle_tcp_quickack(conn, g_tcp_quickack)
 
     conn.setblocking(False)
     selector.register(conn, selectors.EVENT_READ, handle_read)
@@ -196,6 +209,7 @@ def run_server(
     reuse_address: bool = True,
     reuse_port: bool = True,
     tcp_nodelay: bool = True,
+    tcp_quickack: bool = True,
     accept_queue_size: int | None = None,
     timeout: float | None = None,
 ):
@@ -206,6 +220,9 @@ def run_server(
     handle_tcp_nodelay(sock, tcp_nodelay)
     global g_tcp_nodelay
     g_tcp_nodelay = tcp_nodelay
+    handle_tcp_quickack(sock, tcp_quickack)
+    global g_tcp_quickack
+    g_tcp_quickack = tcp_quickack
 
     # non-blocking mode: == sock.settimeout(0.0)
     sock.setblocking(False)
