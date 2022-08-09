@@ -290,7 +290,7 @@ run_server(
     9999,
     timeout=5.5,
     tcp_keepalive_idle=1800,
-    tcp_keepalive_cnt=9,
+    tcp_keepalive_cnt=5,
     tcp_keepalive_intvl=15,
 )
 ```
