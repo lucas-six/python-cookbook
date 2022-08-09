@@ -42,6 +42,17 @@ def get_tcp_max_connect_timeout() -> int | None:
     return None
 
 
+def handle_reuse_address(sock: socket.socket, reuse_address: bool):
+    # Reuse address
+    #
+    # The `SO_REUSEADDR` flag tells the kernel to reuse a local socket in
+    # `TIME_WAIT` state, without waiting for its natural timeout to expire
+    if reuse_address:
+        sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    reuse_address = sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR) != 0
+    logging.debug(f'reuse address: {reuse_address}')
+
+
 def handle_tcp_nodelay(sock: socket.socket, tcp_nodelay: bool):
     # The `TCP_NODELAY` option disables Nagle algorithm.
     if tcp_nodelay:
@@ -96,6 +107,7 @@ def run_client(
     *,
     conn_timeout: float | None = None,
     recv_send_timeout: float | None = None,
+    reuse_address: bool = False,
     tcp_nodelay: bool = True,
     recv_buf_size: int | None = None,
     send_buf_size: int | None = None,
@@ -113,6 +125,7 @@ def run_client(
             f' (max={max_connect_timeout})'
         )
 
+        handle_reuse_address(client, reuse_address)
         handle_tcp_nodelay(client, tcp_nodelay)
         handle_tcp_bufsize(client, recv_buf_size, send_buf_size)
 

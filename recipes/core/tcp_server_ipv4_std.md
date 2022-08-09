@@ -48,14 +48,28 @@ if __name__ == '__main__':
         server.allow_reuse_address = True  # `SO_REUSEADDR` socket option
         server.request_queue_size = 100  # param `backlog` for `listen()`
 
+        # `SO_REUSEPORT` enables reuse port.
         # `TCP_NODELAY` disables Nagle algorithm.
-        # `TCP_QUICKACK` enables quick ACK mode (disabling delayed ACKs)
-        #       Since Linux 2.4.4
+        server.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
         server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
         logger.debug('enable TCP_NODELAY')
-        if sys.platform == 'linux':  # Linux 2.4.4
+
+        # `TCP_QUICKACK` enables quick ACK mode (disabling delayed ACKs)
+        # since Linux 2.4.4
+        if sys.platform == 'linux':  # Linux 2.4.4+
             server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_QUICKACK, 1)
             logger.debug('enable TCP_QUICKACK')
+
+        # `SO_KEEPALIVE` enables TCP Keep-Alive
+        #     - `TCP_KEEPIDLE` (since Linux 2.4)
+        #     - `TCP_KEEPCNT` (since Linux 2.4)
+        #     - `TCP_KEEPINTVL` (since Linux 2.4)
+        server.socket.setsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)
+        if sys.platform == 'linux':  # Linux 2.4+
+            server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPIDLE, 1800)
+            server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPCNT, 9)
+            server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPINTVL, 15)
+        logger.debug('enable TCP Keep-Alive')
 
         server.server_bind()
         server.server_activate()
@@ -108,14 +122,28 @@ if __name__ == '__main__':
         server.allow_reuse_address = True  # `SO_REUSEADDR` socket option
         server.request_queue_size = 100  # param `backlog` for `listen()`
 
+        # `SO_REUSEPORT` enables reuse port.
         # `TCP_NODELAY` disables Nagle algorithm.
-        # `TCP_QUICKACK` enables quick ACK mode (disabling delayed ACKs)
-        #       Since Linux 2.4.4
+        server.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
         server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
         logger.debug('enable TCP_NODELAY')
-        if sys.platform == 'linux':  # Linux 2.4.4
+
+        # `TCP_QUICKACK` enables quick ACK mode (disabling delayed ACKs)
+        # since Linux 2.4.4
+        if sys.platform == 'linux':  # Linux 2.4.4+
             server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_QUICKACK, 1)
             logger.debug('enable TCP_QUICKACK')
+
+        # `SO_KEEPALIVE` enables TCP Keep-Alive
+        #     - `TCP_KEEPIDLE` (since Linux 2.4)
+        #     - `TCP_KEEPCNT` (since Linux 2.4)
+        #     - `TCP_KEEPINTVL` (since Linux 2.4)
+        server.socket.setsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)
+        if sys.platform == 'linux':  # Linux 2.4+
+            server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPIDLE, 1800)
+            server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPCNT, 9)
+            server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPINTVL, 15)
+        logger.debug('enable TCP Keep-Alive')
 
         server.server_bind()
         server.server_activate()
@@ -192,14 +220,28 @@ if __name__ == '__main__':
         # Since Linux 3.9
         server.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
 
+        # `SO_REUSEPORT` enables reuse port.
         # `TCP_NODELAY` disables Nagle algorithm.
-        # `TCP_QUICKACK` enables quick ACK mode (disabling delayed ACKs)
-        #       Since Linux 2.4.4
+        server.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
         server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
         logger.debug('enable TCP_NODELAY')
-        if sys.platform == 'linux':  # Linux 2.4.4
+
+        # `TCP_QUICKACK` enables quick ACK mode (disabling delayed ACKs)
+        # since Linux 2.4.4
+        if sys.platform == 'linux':  # Linux 2.4.4+
             server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_QUICKACK, 1)
             logger.debug('enable TCP_QUICKACK')
+
+        # `SO_KEEPALIVE` enables TCP Keep-Alive
+        #     - `TCP_KEEPIDLE` (since Linux 2.4)
+        #     - `TCP_KEEPCNT` (since Linux 2.4)
+        #     - `TCP_KEEPINTVL` (since Linux 2.4)
+        server.socket.setsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)
+        if sys.platform == 'linux':  # Linux 2.4+
+            server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPIDLE, 1800)
+            server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPCNT, 9)
+            server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPINTVL, 15)
+        logger.debug('enable TCP Keep-Alive')
 
         server.server_bind()
         server.server_activate()
@@ -240,6 +282,13 @@ on Python Handbook.
 - [Linux Programmer's Manual - socket(7)](https://manpages.debian.org/bullseye/manpages/socket.7.en.html)
 - [Linux Programmer's Manual - socket(7) - `SO_REUSEADDR`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_REUSEADDR)
 - [Linux Programmer's Manual - socket(7) - `SO_REUSEPORT`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_REUSEPORT)
+- [Linux Programmer's Manual - socket(7) - `SO_KEEPALIVE`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_KEEPALIVE)
 - [Linux Programmer's Manual - tcp(7)](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html)
 - [Linux Programmer's Manual - tcp(7) - `TCP_NODELAY`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#TCP_NODELAY)
 - [Linux Programmer's Manual - tcp(7) - `TCP_QUICKACK`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#TCP_QUICKACK)
+- [Linux Programmer's Manual - tcp(7) - `TCP_KEEPIDLE`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#TCP_KEEPIDLE)
+- [Linux Programmer's Manual - tcp(7) - `TCP_KEEPCNT`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#TCP_KEEPCNT)
+- [Linux Programmer's Manual - tcp(7) - `TCP_KEEPINTVL`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#TCP_KEEPINTVL)
+- [Linux Programmer's Manual - tcp(7) - `tcp_keepalive_time`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_keepalive_time)
+- [Linux Programmer's Manual - tcp(7) - `tcp_keepalive_probes`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_keepalive_probes)
+- [Linux Programmer's Manual - tcp(7) - `tcp_keepalive_intvl`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_keepalive_intvl)

@@ -4,6 +4,9 @@ Essentially, transports and protocols should only be used in libraries and frame
 and never in high-level asyncio applications.
 """
 
+# PEP 604, Allow writing union types as X | Y
+from __future__ import annotations
+
 import asyncio
 import logging
 import socket
@@ -15,6 +18,9 @@ logging.basicConfig(
 
 tcp_nodelay = True
 tcp_quickack = True
+tcp_keepalive_idle = 1800
+tcp_keepalive_cnt = 9
+tcp_keepalive_intvl = 15
 
 
 def handle_tcp_nodelay(sock: socket.socket, tcp_nodelay: bool):
@@ -32,6 +38,45 @@ def handle_tcp_quickack(sock: socket.socket, tcp_quickack: bool):
             sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_QUICKACK, 1)
         tcp_quickack = sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_QUICKACK) != 0
         logging.debug(f'TCP Quick ACK: {tcp_quickack}')
+
+
+def handle_tcp_keepalive(
+    sock: socket.socket,
+    tcp_keepalive_idle: int | None,
+    tcp_keepalive_cnt: int | None,
+    tcp_keepalive_intvl: int | None,
+):
+    # `SO_KEEPALIVE` enables TCP Keep-Alive
+    #     - `TCP_KEEPIDLE` (since Linux 2.4)
+    #     - `TCP_KEEPCNT` (since Linux 2.4)
+    #     - `TCP_KEEPINTVL` (since Linux 2.4)
+    if (
+        tcp_keepalive_idle is None
+        and tcp_keepalive_cnt is None
+        and tcp_keepalive_intvl is None
+    ):
+        tcp_keepalive = sock.getsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE)
+        logging.debug(f'TCP Keep-Alive: {tcp_keepalive}')
+        return
+
+    sock.setsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)
+    if sys.platform == 'linux':  # Linux 2.4+
+        if tcp_keepalive_idle is not None:
+            sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPIDLE, tcp_keepalive_idle)
+        tcp_keepalive_idle = sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPIDLE)
+        logging.debug(f'TCP Keep-Alive idle time (seconds): {tcp_keepalive_idle}')
+        if tcp_keepalive_cnt is not None:
+            sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPCNT, tcp_keepalive_cnt)
+        tcp_keepalive_cnt = sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPCNT)
+        logging.debug(f'TCP Keep-Alive retries: {tcp_keepalive_cnt}')
+        if tcp_keepalive_intvl is not None:
+            sock.setsockopt(
+                socket.IPPROTO_TCP, socket.TCP_KEEPINTVL, tcp_keepalive_intvl
+            )
+        tcp_keepalive_intvl = sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPINTVL)
+        logging.debug(f'TCP Keep-Alive interval time (seconds): {tcp_keepalive_intvl}')
+    tcp_keepalive = sock.getsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE)
+    logging.debug(f'TCP Keep-Alive: {tcp_keepalive}')
 
 
 class EchoServerProtocol(asyncio.Protocol):
@@ -66,6 +111,9 @@ class EchoServerProtocol(asyncio.Protocol):
         )
         handle_tcp_nodelay(sock, tcp_nodelay)
         handle_tcp_quickack(sock, tcp_quickack)
+        handle_tcp_keepalive(
+            sock, tcp_keepalive_idle, tcp_keepalive_cnt, tcp_keepalive_intvl
+        )
         # logging.debug(dir(sock))
 
     def data_received(self, data: bytes):

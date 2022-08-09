@@ -159,6 +159,45 @@ def handle_socket_bufsize(
     logger.debug(f'send buffer size: {send_buf_size} (max={max_send_buf_size})')
 
 
+def handle_tcp_keepalive(
+    sock: socket.socket,
+    tcp_keepalive_idle: int | None,
+    tcp_keepalive_cnt: int | None,
+    tcp_keepalive_intvl: int | None,
+):
+    # `SO_KEEPALIVE` enables TCP Keep-Alive
+    #     - `TCP_KEEPIDLE` (since Linux 2.4)
+    #     - `TCP_KEEPCNT` (since Linux 2.4)
+    #     - `TCP_KEEPINTVL` (since Linux 2.4)
+    if (
+        tcp_keepalive_idle is None
+        and tcp_keepalive_cnt is None
+        and tcp_keepalive_intvl is None
+    ):
+        tcp_keepalive = sock.getsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE)
+        logger.debug(f'TCP Keep-Alive: {tcp_keepalive}')
+        return
+
+    sock.setsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)
+    if sys.platform == 'linux':  # Linux 2.4+
+        if tcp_keepalive_idle is not None:
+            sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPIDLE, tcp_keepalive_idle)
+        tcp_keepalive_idle = sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPIDLE)
+        logger.debug(f'TCP Keep-Alive idle time (seconds): {tcp_keepalive_idle}')
+        if tcp_keepalive_cnt is not None:
+            sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPCNT, tcp_keepalive_cnt)
+        tcp_keepalive_cnt = sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPCNT)
+        logger.debug(f'TCP Keep-Alive retries: {tcp_keepalive_cnt}')
+        if tcp_keepalive_intvl is not None:
+            sock.setsockopt(
+                socket.IPPROTO_TCP, socket.TCP_KEEPINTVL, tcp_keepalive_intvl
+            )
+        tcp_keepalive_intvl = sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPINTVL)
+        logger.debug(f'TCP Keep-Alive interval time (seconds): {tcp_keepalive_intvl}')
+    tcp_keepalive = sock.getsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE)
+    logger.debug(f'TCP Keep-Alive: {tcp_keepalive}')
+
+
 def handle_read(conn: socket.socket, mask: int):
     """Callback for read events."""
     assert mask == selectors.EVENT_READ
@@ -212,6 +251,9 @@ def run_server(
     tcp_quickack: bool = True,
     accept_queue_size: int | None = None,
     timeout: float | None = None,
+    tcp_keepalive_idle: int | None = None,
+    tcp_keepalive_cnt: int | None = None,
+    tcp_keepalive_intvl: int | None = None,
 ):
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -223,6 +265,9 @@ def run_server(
     handle_tcp_quickack(sock, tcp_quickack)
     global g_tcp_quickack
     g_tcp_quickack = tcp_quickack
+    handle_tcp_keepalive(
+        sock, tcp_keepalive_idle, tcp_keepalive_cnt, tcp_keepalive_intvl
+    )
 
     # non-blocking mode: == sock.settimeout(0.0)
     sock.setblocking(False)
@@ -255,4 +300,11 @@ def run_server(
 # - '' or '0.0.0.0': socket.INADDR_ANY
 # - socket.INADDR_BROADCAST
 # Port 0 means to select an arbitrary unused port
-run_server('localhost', 9999, timeout=5.5)
+run_server(
+    'localhost',
+    9999,
+    timeout=5.5,
+    tcp_keepalive_idle=1800,
+    tcp_keepalive_cnt=9,
+    tcp_keepalive_intvl=15,
+)
