@@ -11,18 +11,37 @@ from __future__ import annotations
 
 import logging
 import socket
+import time
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
 )
 
 
-def run_client(host: str, port: int, *, timeout: float | None = None):
+def handle_reuse_address(sock: socket.socket, reuse_address: bool):
+    # Reuse address
+    #
+    # The `SO_REUSEADDR` flag tells the kernel to reuse a local socket in
+    # `TIME_WAIT` state, without waiting for its natural timeout to expire
+    if reuse_address:
+        sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    reuse_address = sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR) != 0
+    logging.debug(f'reuse address: {reuse_address}')
 
-    data: bytes = b'data\n'
 
+def run_client(
+    host: str,
+    port: int,
+    *,
+    data: bytes,
+    timeout: float | None = None,
+    reuse_address: bool = False,
+):
     try:
         with socket.create_connection((host, port), timeout=timeout) as client:
+            handle_reuse_address(client, reuse_address)
+
+            time.sleep(6)
 
             client.sendall(data)
             logging.debug(f'sent: {data!r}')
@@ -37,6 +56,7 @@ def run_client(host: str, port: int, *, timeout: float | None = None):
 run_client(
     'localhost',
     9999,
+    data=b'data\n',
     timeout=3.5,
 )
 ```
@@ -56,3 +76,5 @@ More details to see [TCP (IPv4) on Python Handbook](https://leven-cn.github.io/p
 - [Linux Programmer's Manual - `connect`(2)](https://manpages.debian.org/bullseye/manpages-dev/connect.2.en.html)
 - [Linux Programmer's Manual - `recv`(2)](https://manpages.debian.org/bullseye/manpages-dev/recv.2.en.html)
 - [Linux Programmer's Manual - `send`(2)](https://manpages.debian.org/bullseye/manpages-dev/send.2.en.html)
+- [Linux Programmer's Manual - socket(7)](https://manpages.debian.org/bullseye/manpages/socket.7.en.html)
+- [Linux Programmer's Manual - socket(7) - `SO_REUSEADDR`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_REUSEADDR)
