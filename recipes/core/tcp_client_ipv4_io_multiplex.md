@@ -30,7 +30,7 @@ logging.basicConfig(
 selector = selectors.DefaultSelector()
 
 
-def get_linux_tcp_max_connect_timeout(tcp_syn_retries: int) -> int:
+def get_tcp_linux_connect_timeout(tcp_syn_retries: int) -> int:
     retries = tcp_syn_retries
     timeout = 1
     while retries:
@@ -39,21 +39,34 @@ def get_linux_tcp_max_connect_timeout(tcp_syn_retries: int) -> int:
     return timeout
 
 
-def get_tcp_max_connect_timeout() -> int | None:
-    # Max connect timeout
+def handle_connect_timeout(
+    sock: socket.socket, timeout: float | None, tcp_syn_retries: int | None
+):
+    # system connect timeout
     #
-    # On Linux 2.2+,
-    # max syn/ack retry times: /proc/sys/net/ipv4/tcp_syn_retries
+    # On Linux 2.2+: /proc/sys/net/ipv4/tcp_syn_retries
+    # On Linux 2.4+: `TCP_SYNCNT`
     #
     # See https://leven-cn.github.io/python-handbook/recipes/core/tcp_ipv4
+    sys_connect_timeout: int | None = None
+    if tcp_syn_retries is not None:
+        if sys.platform == 'linux':  # Linux 2.4+
+            sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_SYNCNT, tcp_syn_retries)
     if sys.platform == 'linux':
-        tcp_synack_retries = int(
+        _tcp_syn_retries = int(
             Path('/proc/sys/net/ipv4/tcp_syn_retries').read_text().strip()
         )
-        logging.debug(f'max syn/ack retries: {tcp_synack_retries}')
-        return get_linux_tcp_max_connect_timeout(tcp_synack_retries)
+        assert (
+            sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_SYNCNT) == _tcp_syn_retries
+        )
+        logging.debug(f'max syn retries: {_tcp_syn_retries}')
+        sys_connect_timeout = get_tcp_linux_connect_timeout(_tcp_syn_retries)
 
-    return None
+    sock.settimeout(timeout)
+    logging.debug(
+        f'connect timeout: {sock.gettimeout()} seconds'
+        f' (system={sys_connect_timeout})'
+    )
 
 
 def handle_reuse_address(sock: socket.socket, reuse_address: bool):
@@ -120,6 +133,7 @@ def run_client(
     port: int,
     *,
     conn_timeout: float | None = None,
+    tcp_syn_retries: int | None = None,
     io_multiplex_timeout: float | None = None,
     reuse_address: bool = False,
     tcp_nodelay: bool = True,
@@ -129,13 +143,8 @@ def run_client(
     data: list[bytes] = [b'data2\n', b'data1\n']
 
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client:
-        client.settimeout(conn_timeout)
-        max_connect_timeout = get_tcp_max_connect_timeout()
-        logging.debug(
-            f'connect timeout: {client.gettimeout()} seconds'
-            f' (max={max_connect_timeout})'
-        )
 
+        handle_connect_timeout(client, conn_timeout, tcp_syn_retries)
         handle_reuse_address(client, reuse_address)
         handle_tcp_nodelay(client, tcp_nodelay)
         handle_tcp_bufsize(client, recv_buf_size, send_buf_size)
@@ -191,6 +200,7 @@ run_client(
     'localhost',
     9999,
     conn_timeout=3.5,
+    tcp_syn_retries=2,
     io_multiplex_timeout=5.5,
 )
 ```
@@ -224,6 +234,7 @@ More details to see [TCP (IPv4) on Python Handbook](https://leven-cn.github.io/p
 - [Linux Programmer's Manual - socket(7) - `wmem_default`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#wmem_default)
 - [Linux Programmer's Manual - socket(7) - `wmem_max`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#wmem_max)
 - [Linux Programmer's Manual - tcp(7)](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html)
+- [Linux Programmer's Manual - tcp(7) - `TCP_SYNCNT`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#TCP_SYNCNT)
 - [Linux Programmer's Manual - tcp(7) - `TCP_NODELAY`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#TCP_NODELAY)
 - [Linux Programmer's Manual - tcp(7) - `tcp_syn_retries`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_syn_retries)
 - [Linux Programmer's Manual - tcp(7) - `tcp_retries1`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_retries1)
