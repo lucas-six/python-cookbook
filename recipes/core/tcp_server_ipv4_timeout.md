@@ -17,6 +17,7 @@ from pathlib import Path
 from typing import Any
 
 from net import (
+    get_tcp_server_max_connect_timeout,
     handle_reuse_address,
     handle_reuse_port,
     handle_tcp_keepalive,
@@ -55,32 +56,6 @@ def handle_listen(sock: socket.socket, accept_queue_size: int | None):
         sock.listen(accept_queue_size)
     logger.debug(f'accept queue size: {accept_queue_size} (max={socket.SOMAXCONN})')
     sock.listen()
-
-
-def get_linux_tcp_max_connect_timeout(tcp_synack_retries: int) -> int:
-    retries = tcp_synack_retries
-    timeout = 1
-    while retries:
-        retries -= 1
-        timeout += 2 ** (tcp_synack_retries - retries)
-    return timeout
-
-
-def get_tcp_max_connect_timeout() -> int | None:
-    # Max connect timeout
-    #
-    # On Linux 2.2+,
-    # max syn/ack retry times: /proc/sys/net/ipv4/tcp_synack_retries
-    #
-    # See https://leven-cn.github.io/python-handbook/recipes/core/tcp_ipv4
-    if sys.platform == 'linux':  # Linux 2.2+
-        tcp_synack_retries = int(
-            Path('/proc/sys/net/ipv4/tcp_synack_retries').read_text().strip()
-        )
-        logger.debug(f'max syn/ack retries: {tcp_synack_retries}')
-        return get_linux_tcp_max_connect_timeout(tcp_synack_retries)
-
-    return None
 
 
 def handle_socket_bufsize(
@@ -155,8 +130,7 @@ def run_server(
 
     handle_listen(sock, accept_queue_size)
 
-    max_connect_timeout = get_tcp_max_connect_timeout()
-    logger.debug(f'max connect timeout: {max_connect_timeout}')
+    logger.debug(f'max connect timeout: {get_tcp_server_max_connect_timeout()}')
 
     binary_fmt: str = '! I 2s Q 2h f'
     unpacker = struct.Struct(binary_fmt)
@@ -226,6 +200,7 @@ See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples
 
 - [TCP/UDP Reuse Address](net_reuse_address)
 - [TCP/UDP Reuse Port](net_reuse_port)
+- [TCP Server Connect Timeout](tcp_server_connect_timeout)
 - [TCP Nodelay (Dsiable Nagle's Algorithm)](tcp_nodelay)
 - [TCP Keep-Alive](tcp_keepalive)
 - [TCP Quick ACK (Disable Delayed ACK (延迟确认))](tcp_quickack)
@@ -234,7 +209,7 @@ See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples
 More details to see [TCP (IPv4) on Python Handbook](https://leven-cn.github.io/python-handbook/recipes/core/tcp_ipv4):
 
 - accept queue size for `listen()`
-- connect and recv/send timeout
+- recv/send timeout
 - recv/send buffer size
 - Slow Start (慢启动)
 
@@ -258,11 +233,9 @@ More details to see [TCP (IPv4) on Python Handbook](https://leven-cn.github.io/p
 - [Linux Programmer's Manual - socket(7) - `wmem_default`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#wmem_default)
 - [Linux Programmer's Manual - socket(7) - `wmem_max`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#wmem_max)
 - [Linux Programmer's Manual - tcp(7)](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html)
-- [Linux Programmer's Manual - tcp(7) - `tcp_synack_retries`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_synack_retries)
 - [Linux Programmer's Manual - tcp(7) - `tcp_retries1`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_retries1)
 - [Linux Programmer's Manual - tcp(7) - `tcp_retries2`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_retries2)
 - [Linux Programmer's Manual - tcp(7) - `tcp_rmem`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_rmem)
 - [Linux Programmer's Manual - tcp(7) - `tcp_wmem`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_wmem)
 - [Linux Programmer's Manual - tcp(7) - `tcp_window_scaling`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_window_scaling)
-- [RFC 6298 - Computing TCP's Retransmission Timer](https://datatracker.ietf.org/doc/html/rfc6298.html)
 - [RFC 2018 - TCP Selective Acknowledgment Options](https://datatracker.ietf.org/doc/html/rfc2018.html)

@@ -1,4 +1,4 @@
-# TCP Nodelay (Nagle Algorithm)
+# TCP Nodelay (Nagle's Algorithm)
 
 The **`TCP_NODELAY`** socket option.
 
