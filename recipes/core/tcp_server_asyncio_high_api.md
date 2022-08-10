@@ -12,9 +12,8 @@ from __future__ import annotations
 import asyncio
 import logging
 import socket
-import sys
 
-from net import handle_tcp_keepalive, handle_tcp_nodelay
+from net import handle_tcp_keepalive, handle_tcp_nodelay, handle_tcp_quickack
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}'
@@ -28,16 +27,9 @@ g_tcp_keepalive_cnt = None
 g_tcp_keepalive_intvl = None
 
 
-def handle_tcp_quickack(sock: socket.socket, tcp_quickack: bool):
-    if sys.platform == 'linux':  # Linux 2.4.4+
-        # The `TCP_QUICKACK` option enable TCP quick ACK, disabling delayed ACKs.
-        if tcp_quickack:
-            sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_QUICKACK, 1)
-        tcp_quickack = sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_QUICKACK) != 0
-        logging.debug(f'TCP Quick ACK: {tcp_quickack}')
-
-
 async def handle_echo(reader: asyncio.StreamReader, writer: asyncio.StreamWriter):
+
+    loop = asyncio.get_running_loop()
 
     # `socket.getpeername()`
     client_address = writer.get_extra_info('peername')
@@ -63,15 +55,16 @@ async def handle_echo(reader: asyncio.StreamReader, writer: asyncio.StreamWriter
     logging.debug(
         f'send_buf_size: {sock.getsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF)}'
     )
-    handle_tcp_nodelay(sock, tcp_nodelay)
-    handle_tcp_quickack(sock, tcp_quickack)
-    handle_tcp_keepalive(
+    loop.call_soon(handle_tcp_nodelay, sock, tcp_nodelay)
+    loop.call_soon(
+        handle_tcp_keepalive,
         sock,
         g_tcp_keepalive_enabled,
         g_tcp_keepalive_idle,
         g_tcp_keepalive_cnt,
         g_tcp_keepalive_intvl,
     )
+    loop.call_soon(handle_tcp_quickack, sock, tcp_quickack)
     # logging.debug(dir(sock))
 
     # Recv
@@ -144,15 +137,16 @@ See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples
 
 ## More
 
+- [TCP/UDP Reuse Address](net_reuse_address)
 - [TCP/UDP Reuse Port](net_reuse_port)
-- [TCP Nodelay](tcp_nodelay)
+- [TCP Nodelay (Dsiable Nagle's Algorithm)](tcp_nodelay)
 - [TCP Keep-Alive](tcp_keepalive)
+- [TCP Quick ACK (Disable Delayed ACK (延迟确认))](tcp_quickack)
 
 More details to see [TCP (IPv4) on Python Handbook](https://leven-cn.github.io/python-handbook/recipes/core/tcp_ipv4):
 
 - accept queue size for `listen()`
 - recv/send buffer size
-- Delayed ACK (延迟确认) (`TCP_QUICKACK`)
 - Slow Start (慢启动)
 
 ## References
@@ -171,7 +165,6 @@ More details to see [TCP (IPv4) on Python Handbook](https://leven-cn.github.io/p
 - [Linux Programmer's Manual - socket(7) - `wmem_default`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#wmem_default)
 - [Linux Programmer's Manual - socket(7) - `wmem_max`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#wmem_max)
 - [Linux Programmer's Manual - tcp(7)](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html)
-- [Linux Programmer's Manual - tcp(7) - `TCP_QUICKACK`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#TCP_QUICKACK)
 - [Linux Programmer's Manual - tcp(7) - `tcp_synack_retries`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_synack_retries)
 - [Linux Programmer's Manual - tcp(7) - `tcp_rmem`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_rmem)
 - [Linux Programmer's Manual - tcp(7) - `tcp_wmem`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_wmem)

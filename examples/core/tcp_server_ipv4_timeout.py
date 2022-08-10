@@ -16,21 +16,13 @@ from net import (
     handle_reuse_port,
     handle_tcp_keepalive,
     handle_tcp_nodelay,
+    handle_tcp_quickack,
 )
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
 )
 logger = logging.getLogger()
-
-
-def handle_tcp_quickack(sock: socket.socket, tcp_quickack: bool):
-    if sys.platform == 'linux':  # Linux 2.4.4+
-        # The `TCP_QUICKACK` option enable TCP quick ACK, disabling delayed ACKs.
-        if tcp_quickack:
-            sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_QUICKACK, 1)
-        tcp_quickack = sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_QUICKACK) != 0
-        logger.debug(f'TCP Quick ACK: {tcp_quickack}')
 
 
 def handle_listen(sock: socket.socket, accept_queue_size: int | None):

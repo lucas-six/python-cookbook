@@ -2,11 +2,14 @@
 """
 
 import logging
-import socket
 import socketserver
-import sys
 
-from net import handle_reuse_port, handle_tcp_keepalive, handle_tcp_nodelay
+from net import (
+    handle_reuse_port,
+    handle_tcp_keepalive,
+    handle_tcp_nodelay,
+    handle_tcp_quickack,
+)
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
@@ -40,14 +43,8 @@ if __name__ == '__main__':
 
         handle_reuse_port(server.socket, True)
         handle_tcp_nodelay(server.socket, True)
-
-        # `TCP_QUICKACK` enables quick ACK mode (disabling delayed ACKs)
-        # since Linux 2.4.4
-        if sys.platform == 'linux':  # Linux 2.4.4+
-            server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_QUICKACK, 1)
-            logger.debug('enable TCP_QUICKACK')
-
         handle_tcp_keepalive(server.socket, True, 1800, 9, 15)
+        handle_tcp_quickack(server.socket, True)
 
         server.server_bind()
         server.server_activate()

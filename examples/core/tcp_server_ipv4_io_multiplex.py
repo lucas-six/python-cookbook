@@ -15,6 +15,7 @@ from net import (
     handle_reuse_port,
     handle_tcp_keepalive,
     handle_tcp_nodelay,
+    handle_tcp_quickack,
 )
 
 logging.basicConfig(
@@ -39,15 +40,6 @@ g_tcp_keepalive_enabled = None
 g_tcp_keepalive_idle = None
 g_tcp_keepalive_cnt = None
 g_tcp_keepalive_intvl = None
-
-
-def handle_tcp_quickack(sock: socket.socket, tcp_quickack: bool):
-    if sys.platform == 'linux':  # Linux 2.4.4+
-        # The `TCP_QUICKACK` option enable TCP quick ACK, disabling delayed ACKs.
-        if tcp_quickack:
-            sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_QUICKACK, 1)
-        tcp_quickack = sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_QUICKACK) != 0
-        logger.debug(f'TCP Quick ACK: {tcp_quickack}')
 
 
 def handle_listen(sock: socket.socket, accept_queue_size: int | None):
@@ -206,9 +198,6 @@ def run_server(
     handle_tcp_nodelay(sock, tcp_nodelay)
     global g_tcp_nodelay
     g_tcp_nodelay = tcp_nodelay
-    handle_tcp_quickack(sock, tcp_quickack)
-    global g_tcp_quickack
-    g_tcp_quickack = tcp_quickack
 
     global g_tcp_keepalive_enabled
     global g_tcp_keepalive_idle
@@ -221,6 +210,10 @@ def run_server(
     handle_tcp_keepalive(
         sock, tcp_keepalive, tcp_keepalive_idle, tcp_keepalive_cnt, tcp_keepalive_intvl
     )
+
+    handle_tcp_quickack(sock, tcp_quickack)
+    global g_tcp_quickack
+    g_tcp_quickack = tcp_quickack
 
     # non-blocking mode: == sock.settimeout(0.0)
     sock.setblocking(False)

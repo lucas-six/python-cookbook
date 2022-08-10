@@ -13,7 +13,12 @@ import socket
 import socketserver
 import sys
 
-from net import handle_reuse_port, handle_tcp_keepalive, handle_tcp_nodelay
+from net import (
+    handle_reuse_port,
+    handle_tcp_keepalive,
+    handle_tcp_nodelay,
+    handle_tcp_quickack,
+)
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
@@ -52,14 +57,8 @@ if __name__ == '__main__':
 
         handle_reuse_port(server.socket, True)
         handle_tcp_nodelay(server.socket, True)
-
-        # `TCP_QUICKACK` enables quick ACK mode (disabling delayed ACKs)
-        # since Linux 2.4.4
-        if sys.platform == 'linux':  # Linux 2.4.4+
-            server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_QUICKACK, 1)
-            logger.debug('enable TCP_QUICKACK')
-
         handle_tcp_keepalive(server.socket, True, 1800, 9, 15)
+        handle_tcp_quickack(server.socket, True)
 
         server.server_bind()
         server.server_activate()
@@ -82,7 +81,12 @@ import socket
 import socketserver
 import sys
 
-from net import handle_reuse_port, handle_tcp_keepalive, handle_tcp_nodelay
+from net import (
+    handle_reuse_port,
+    handle_tcp_keepalive,
+    handle_tcp_nodelay,
+    handle_tcp_quickack,
+)
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
@@ -116,14 +120,8 @@ if __name__ == '__main__':
 
         handle_reuse_port(server.socket, True)
         handle_tcp_nodelay(server.socket, True)
-
-        # `TCP_QUICKACK` enables quick ACK mode (disabling delayed ACKs)
-        # since Linux 2.4.4
-        if sys.platform == 'linux':  # Linux 2.4.4+
-            server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_QUICKACK, 1)
-            logger.debug('enable TCP_QUICKACK')
-
         handle_tcp_keepalive(server.socket, True, 1800, 9, 15)
+        handle_tcp_quickack(server.socket, True)
 
         server.server_bind()
         server.server_activate()
@@ -147,7 +145,12 @@ import socketserver
 import sys
 import threading
 
-from net import handle_reuse_port, handle_tcp_keepalive, handle_tcp_nodelay
+from net import (
+    handle_reuse_port,
+    handle_tcp_keepalive,
+    handle_tcp_nodelay,
+    handle_tcp_quickack,
+)
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}'
@@ -193,14 +196,8 @@ if __name__ == '__main__':
 
         handle_reuse_port(server.socket, True)
         handle_tcp_nodelay(server.socket, True)
-
-        # `TCP_QUICKACK` enables quick ACK mode (disabling delayed ACKs)
-        # since Linux 2.4.4
-        if sys.platform == 'linux':  # Linux 2.4.4+
-            server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_QUICKACK, 1)
-            logger.debug('enable TCP_QUICKACK')
-
         handle_tcp_keepalive(server.socket, True, 1800, 9, 15)
+        handle_tcp_quickack(server.socket, True)
 
         server.server_bind()
         server.server_activate()
@@ -227,8 +224,9 @@ See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples
 
 - [TCP/UDP Reuse Address](net_reuse_address)
 - [TCP/UDP Reuse Port](net_reuse_port)
-- [TCP Nodelay (Nagle's Algorithm)](tcp_nodelay)
+- [TCP Nodelay (Dsiable Nagle's Algorithm)](tcp_nodelay)
 - [TCP Keep-Alive](tcp_keepalive)
+- [TCP Quick ACK (Disable Delayed ACK (延迟确认))](tcp_quickack)
 
 More details to see [TCP (IPv4)](https://leven-cn.github.io/python-handbook/recipes/core/tcp_ipv4)
 and [Standard Networks Server Framework](https://leven-cn.github.io/python-handbook/recipes/core/socketserver)
@@ -243,5 +241,3 @@ on Python Handbook.
 - [Linux Programmer's Manual - `socket`(2)](https://manpages.debian.org/bullseye/manpages-dev/socket.2.en.html)
 - [Linux Programmer's Manual - `recv`(2)](https://manpages.debian.org/bullseye/manpages-dev/recv.2.en.html)
 - [Linux Programmer's Manual - `send`(2)](https://manpages.debian.org/bullseye/manpages-dev/send.2.en.html)
-- [Linux Programmer's Manual - tcp(7)](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html)
-- [Linux Programmer's Manual - tcp(7) - `TCP_QUICKACK`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#TCP_QUICKACK)

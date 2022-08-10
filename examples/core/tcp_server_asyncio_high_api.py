@@ -7,9 +7,8 @@ from __future__ import annotations
 import asyncio
 import logging
 import socket
-import sys
 
-from net import handle_tcp_keepalive, handle_tcp_nodelay
+from net import handle_tcp_keepalive, handle_tcp_nodelay, handle_tcp_quickack
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}'
@@ -23,16 +22,9 @@ g_tcp_keepalive_cnt = None
 g_tcp_keepalive_intvl = None
 
 
-def handle_tcp_quickack(sock: socket.socket, tcp_quickack: bool):
-    if sys.platform == 'linux':  # Linux 2.4.4+
-        # The `TCP_QUICKACK` option enable TCP quick ACK, disabling delayed ACKs.
-        if tcp_quickack:
-            sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_QUICKACK, 1)
-        tcp_quickack = sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_QUICKACK) != 0
-        logging.debug(f'TCP Quick ACK: {tcp_quickack}')
-
-
 async def handle_echo(reader: asyncio.StreamReader, writer: asyncio.StreamWriter):
+
+    loop = asyncio.get_running_loop()
 
     # `socket.getpeername()`
     client_address = writer.get_extra_info('peername')
@@ -58,15 +50,16 @@ async def handle_echo(reader: asyncio.StreamReader, writer: asyncio.StreamWriter
     logging.debug(
         f'send_buf_size: {sock.getsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF)}'
     )
-    handle_tcp_nodelay(sock, tcp_nodelay)
-    handle_tcp_quickack(sock, tcp_quickack)
-    handle_tcp_keepalive(
+    loop.call_soon(handle_tcp_nodelay, sock, tcp_nodelay)
+    loop.call_soon(
+        handle_tcp_keepalive,
         sock,
         g_tcp_keepalive_enabled,
         g_tcp_keepalive_idle,
         g_tcp_keepalive_cnt,
         g_tcp_keepalive_intvl,
     )
+    loop.call_soon(handle_tcp_quickack, sock, tcp_quickack)
     # logging.debug(dir(sock))
 
     # Recv
