@@ -26,17 +26,23 @@ icsk->icsk_rto = min(icsk->icsk_rto << 1, TCP_RTO_MAX)
 
 ### Application Level
 
+- **blocking mode** (default): `socket.settimeout(None)` or `socket.setblocking(True)`
+- **timeout mode**: `socket.settimeout(3.5)`
+- **non-blocking mode**: `socket.settimeout(0.0)` or `socket.setblocking(False)`
+
+affect `connect()`, `accept()`, `send()`/`sendall()`, `recv()`.
+
 ```python
-def _get_linux_tcp_max_connect_timeout(tcp_synack_retries: int) -> int:
+def _get_linux_tcp_max_connect_timeout(retries: int) -> int:
     """See RFC 6298 - Computing TCP's Retransmission Timer
 
     https://datatracker.ietf.org/doc/html/rfc6298.htm
     """
-    retries = tcp_synack_retries
+    r = retries
     timeout = 1
-    while retries:
-        retries -= 1
-        timeout += 2 ** (tcp_synack_retries - retries)
+    while r:
+        r -= 1
+        timeout += 2 ** (retries - r)
     return timeout
 
 

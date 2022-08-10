@@ -10,16 +10,16 @@ import sys
 from pathlib import Path
 
 
-def _get_linux_tcp_max_connect_timeout(tcp_synack_retries: int) -> int:
+def _get_linux_tcp_max_connect_timeout(retries: int) -> int:
     """See RFC 6298 - Computing TCP's Retransmission Timer
 
     https://datatracker.ietf.org/doc/html/rfc6298.htm
     """
-    retries = tcp_synack_retries
+    r = retries
     timeout = 1
-    while retries:
-        retries -= 1
-        timeout += 2 ** (tcp_synack_retries - retries)
+    while r:
+        r -= 1
+        timeout += 2 ** (retries - r)
     return timeout
 
 
@@ -39,6 +39,54 @@ def get_tcp_server_max_connect_timeout() -> int | None:
         return _get_linux_tcp_max_connect_timeout(tcp_synack_retries)
 
     return None
+
+
+def get_tcp_client_max_connect_timeout() -> int | None:
+    """Max TCP connect timeout (client-side)
+
+    On Linux 2.2+,
+    max syn retry times: /proc/sys/net/ipv4/tcp_syn_retries
+
+    See https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_syn_retries
+    """
+    if sys.platform == 'linux':  # Linux 2.2+
+        tcp_syn_retries = int(
+            Path('/proc/sys/net/ipv4/tcp_syn_retries').read_text().strip()
+        )
+        logging.debug(f'max syn retries: {tcp_syn_retries}')
+        return _get_linux_tcp_max_connect_timeout(tcp_syn_retries)
+
+    return None
+
+
+def handle_connect_timeout(
+    sock: socket.socket, timeout: float | None, tcp_syn_retries: int | None
+):
+    # system connect timeout (client side)
+    #
+    # On Linux 2.2+: /proc/sys/net/ipv4/tcp_syn_retries
+    # On Linux 2.4+: `TCP_SYNCNT`
+    #
+    # See https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_syn_retries
+    sys_connect_timeout: int | None = None
+    if tcp_syn_retries is not None:
+        if sys.platform == 'linux':  # Linux 2.4+
+            sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_SYNCNT, tcp_syn_retries)
+    if sys.platform == 'linux':
+        _tcp_syn_retries = int(
+            Path('/proc/sys/net/ipv4/tcp_syn_retries').read_text().strip()
+        )
+        assert (
+            sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_SYNCNT) == _tcp_syn_retries
+        )
+        logging.debug(f'max syn retries: {_tcp_syn_retries}')
+        sys_connect_timeout = _get_linux_tcp_max_connect_timeout(_tcp_syn_retries)
+
+    sock.settimeout(timeout)
+    logging.debug(
+        f'connect timeout: {sock.gettimeout()} seconds'
+        f' (system={sys_connect_timeout})'
+    )
 
 
 def handle_reuse_address(sock: socket.socket, reuse_address: bool | None = None):

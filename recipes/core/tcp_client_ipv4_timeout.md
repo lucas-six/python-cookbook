@@ -6,7 +6,7 @@
 """TCP Client (IPv4) - Timeout Mode
 """
 
-# PEP 604, Allow writing union types as X | Y
+# PEP 604, Allow writing union types as X | Y (Python 3.10+)
 from __future__ import annotations
 
 import logging
@@ -16,50 +16,11 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from net import handle_reuse_address, handle_tcp_nodelay
+from net import handle_connect_timeout, handle_reuse_address, handle_tcp_nodelay
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
 )
-
-
-def get_tcp_linux_connect_timeout(tcp_syn_retries: int) -> int:
-    retries = tcp_syn_retries
-    timeout = 1
-    while retries:
-        retries -= 1
-        timeout += 2 ** (tcp_syn_retries - retries)
-    return timeout
-
-
-def handle_connect_timeout(
-    sock: socket.socket, timeout: float | None, tcp_syn_retries: int | None
-):
-    # system connect timeout
-    #
-    # On Linux 2.2+: /proc/sys/net/ipv4/tcp_syn_retries
-    # On Linux 2.4+: `TCP_SYNCNT`
-    #
-    # See https://leven-cn.github.io/python-handbook/recipes/core/tcp_ipv4
-    sys_connect_timeout: int | None = None
-    if tcp_syn_retries is not None:
-        if sys.platform == 'linux':  # Linux 2.4+
-            sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_SYNCNT, tcp_syn_retries)
-    if sys.platform == 'linux':
-        _tcp_syn_retries = int(
-            Path('/proc/sys/net/ipv4/tcp_syn_retries').read_text().strip()
-        )
-        assert (
-            sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_SYNCNT) == _tcp_syn_retries
-        )
-        logging.debug(f'max syn retries: {_tcp_syn_retries}')
-        sys_connect_timeout = get_tcp_linux_connect_timeout(_tcp_syn_retries)
-
-    sock.settimeout(timeout)
-    logging.debug(
-        f'connect timeout: {sock.gettimeout()} seconds'
-        f' (system={sys_connect_timeout})'
-    )
 
 
 def get_tcp_max_bufsize() -> tuple[int | None, int | None]:
@@ -160,6 +121,7 @@ See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples
 ## More
 
 - [TCP/UDP Reuse Address](net_reuse_address)
+- [TCP Connect Timeout (Client Side)](tcp_connect_timeout_client)
 - [TCP Nodelay (Nagle's Algorithm)](tcp_nodelay)
 - [Pack/Unpack Binary Data: `struct`](struct)
 
@@ -168,7 +130,6 @@ More details to see [TCP (IPv4) on Python Handbook](https://leven-cn.github.io/p
 ## References
 
 - [Python - `socket` module](https://docs.python.org/3/library/socket.html)
-- [Python - `socketserver` module](https://docs.python.org/3/library/socketserver.html)
 - [Python - `struct` module](https://docs.python.org/3/library/struct.html)
 - [PEP 3151 – Reworking the OS and IO exception hierarchy](https://peps.python.org/pep-3151/)
 - [Linux Programmer's Manual - `socket`(2)](https://manpages.debian.org/bullseye/manpages-dev/socket.2.en.html)
@@ -183,12 +144,9 @@ More details to see [TCP (IPv4) on Python Handbook](https://leven-cn.github.io/p
 - [Linux Programmer's Manual - socket(7) - `wmem_default`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#wmem_default)
 - [Linux Programmer's Manual - socket(7) - `wmem_max`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#wmem_max)
 - [Linux Programmer's Manual - tcp(7)](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html)
-- [Linux Programmer's Manual - tcp(7) - `TCP_SYNCNT`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#TCP_SYNCNT)
-- [Linux Programmer's Manual - tcp(7) - `tcp_syn_retries`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_syn_retries)
 - [Linux Programmer's Manual - tcp(7) - `tcp_retries1`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_retries1)
 - [Linux Programmer's Manual - tcp(7) - `tcp_retries2`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_retries2)
 - [Linux Programmer's Manual - tcp(7) - `tcp_rmem`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_rmem)
 - [Linux Programmer's Manual - tcp(7) - `tcp_wmem`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_wmem)
 - [Linux Programmer's Manual - tcp(7) - `tcp_window_scaling`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_window_scaling)
-- [RFC 6298 - Computing TCP's Retransmission Timer](https://datatracker.ietf.org/doc/html/rfc6298.html)
 - [RFC 2018 - TCP Selective Acknowledgment Options](https://datatracker.ietf.org/doc/html/rfc2018.html)
