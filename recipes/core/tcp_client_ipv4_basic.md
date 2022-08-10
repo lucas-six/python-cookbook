@@ -58,6 +58,8 @@ See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples
 
 ## More
 
+- [TCP Connect Timeout (Client Side)](tcp_connect_timeout_client)
+- [TCP Data Transmission Timeout](tcp_transmission_timeout)
 - [TCP/UDP Reuse Address](net_reuse_address)
 - [TCP Nodelay (Nagle's Algorithm)](tcp_nodelay)
 
