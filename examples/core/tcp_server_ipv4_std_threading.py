@@ -35,8 +35,7 @@ class ThreadingTCPRequestHandler(socketserver.BaseRequestHandler):
 
 def client(host: str, port: int, message: bytes):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-        # The `TCP_NODELAY` option disables Nagle algorithm.
-        sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+        handle_tcp_nodelay(sock, True)
 
         sock.connect((host, port))
         sock.sendall(message)

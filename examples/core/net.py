@@ -9,18 +9,47 @@ import socket
 import sys
 
 
+def handle_reuse_address(sock: socket.socket, reuse_address: bool | None = None):
+    # Reuse address
+    #
+    # The `SO_REUSEADDR` flag tells the kernel to reuse a local socket in
+    # `TIME_WAIT` state, without waiting for its natural timeout to expire
+    #
+    # When multiple processes with differing UIDs assign sockets
+    # to an identical UDP socket address with `SO_REUSEADDR`,
+    # incoming packets can become randomly distributed among the sockets.
+    if sock.type is socket.SOCK_DGRAM and reuse_address:
+        raise ValueError('DONOT use SO_REUSEADDR on UDP')
+
+    if reuse_address is not None:
+        val = 1 if reuse_address else 0
+        sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, val)
+    reuse_address = sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR) != 0
+    logging.debug(f'reuse address: {reuse_address}')
+
+
 def handle_reuse_port(sock: socket.socket, reuse_port: bool | None = None):
-    # Reuse port
-    #
-    # The option `SO_REUSEPORT` allows `accept()` load distribution
-    # in a multi-threaded server to be improved by using a distinct
-    # listener socket for each thread. This provides improved load
-    # distribution as compared to traditional techniques such using
-    # a single `accept()`ing thread that distributes connections, or
-    # having multiple threads that compete to `accept()` from the
-    # same socket.
-    #
-    # Since Linux 3.9
+    """Reuse port
+
+    For TCP
+
+        The option `SO_REUSEPORT` allows `accept()` load distribution
+        in a multi-threaded server to be improved by using a distinct
+        listener socket for each thread. This provides improved load
+        distribution as compared to traditional techniques such using
+        a single `accept()`ing thread that distributes connections, or
+        having multiple threads that compete to `accept()` from the
+        same socket.
+
+    For UDP
+
+        The socket option `SO_REUSEPORT` can provide better distribution
+        of incoming datagrams to multiple processes (or threads) as
+        compared to the traditional technique of having multiple processes
+        compete to receive datagrams on the same socket.
+
+    Since Linux 3.9
+    """
     if reuse_port is not None:
         val = 1 if reuse_port else 0
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, val)

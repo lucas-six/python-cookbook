@@ -10,7 +10,12 @@ import socket
 import sys
 from pathlib import Path
 
-from net import handle_reuse_port, handle_tcp_keepalive, handle_tcp_nodelay
+from net import (
+    handle_reuse_address,
+    handle_reuse_port,
+    handle_tcp_keepalive,
+    handle_tcp_nodelay,
+)
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
@@ -34,17 +39,6 @@ g_tcp_keepalive_enabled = None
 g_tcp_keepalive_idle = None
 g_tcp_keepalive_cnt = None
 g_tcp_keepalive_intvl = None
-
-
-def handle_reuse_address(sock: socket.socket, reuse_address: bool):
-    # Reuse address
-    #
-    # The `SO_REUSEADDR` flag tells the kernel to reuse a local socket in
-    # `TIME_WAIT` state, without waiting for its natural timeout to expire
-    if reuse_address:
-        sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    reuse_address = sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR) != 0
-    logger.debug(f'reuse address: {reuse_address}')
 
 
 def handle_tcp_quickack(sock: socket.socket, tcp_quickack: bool):

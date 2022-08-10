@@ -89,6 +89,8 @@ See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples
 
 ## More
 
+- [TCP/UDP Reuse Address](net_reuse_address)
+- [TCP/UDP Reuse Port](net_reuse_port)
 - [UDP (IPv4) (on Python Handbook)](https://leven-cn.github.io/python-handbook/recipes/core/udp_ipv4).
 
 ## References

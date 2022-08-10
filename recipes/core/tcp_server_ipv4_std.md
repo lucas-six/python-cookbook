@@ -175,8 +175,7 @@ class ThreadingTCPRequestHandler(socketserver.BaseRequestHandler):
 
 def client(host: str, port: int, message: bytes):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-        # The `TCP_NODELAY` option disables Nagle algorithm.
-        sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+        handle_tcp_nodelay(sock, True)
 
         sock.connect((host, port))
         sock.sendall(message)
@@ -226,6 +225,7 @@ See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples
 
 ## More
 
+- [TCP/UDP Reuse Address](net_reuse_address)
 - [TCP/UDP Reuse Port](net_reuse_port)
 - [TCP Nodelay (Nagle's Algorithm)](tcp_nodelay)
 - [TCP Keep-Alive](tcp_keepalive)
@@ -243,7 +243,5 @@ on Python Handbook.
 - [Linux Programmer's Manual - `socket`(2)](https://manpages.debian.org/bullseye/manpages-dev/socket.2.en.html)
 - [Linux Programmer's Manual - `recv`(2)](https://manpages.debian.org/bullseye/manpages-dev/recv.2.en.html)
 - [Linux Programmer's Manual - `send`(2)](https://manpages.debian.org/bullseye/manpages-dev/send.2.en.html)
-- [Linux Programmer's Manual - socket(7)](https://manpages.debian.org/bullseye/manpages/socket.7.en.html)
-- [Linux Programmer's Manual - socket(7) - `SO_REUSEADDR`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_REUSEADDR)
 - [Linux Programmer's Manual - tcp(7)](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html)
 - [Linux Programmer's Manual - tcp(7) - `TCP_QUICKACK`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#TCP_QUICKACK)
