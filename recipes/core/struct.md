@@ -71,11 +71,10 @@ See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples
 
 ## More
 
-More details about [Endianness (on Python Handbook)](https://leven-cn.github.io/python-handbook/recipes/core/endianness).
+More details about [Endianness](../../more/core/endianness).
 
 ## References
 
 - [Python - `struct` module](https://docs.python.org/3/library/struct.html)
 - [RFC 1700 - ASSIGNED NUMBERS](https://datatracker.ietf.org/doc/html/rfc1700)
 - [RFC 3232 - Assigned Numbers: RFC 1700 is Replaced by an On-line Database](https://datatracker.ietf.org/doc/html/rfc3232)
-- [Python Handbook - Endianness](https://leven-cn.github.io/python-handbook/recipes/core/endianness)
