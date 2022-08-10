@@ -6,7 +6,7 @@ import socket
 import socketserver
 import sys
 
-from net import handle_reuse_port, handle_tcp_keepalive
+from net import handle_reuse_port, handle_tcp_keepalive, handle_tcp_nodelay
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
@@ -39,10 +39,7 @@ if __name__ == '__main__':
         server.request_queue_size = 100  # param `backlog` for `listen()`
 
         handle_reuse_port(server.socket, True)
-
-        # `TCP_NODELAY` disables Nagle algorithm.
-        server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
-        logger.debug('enable TCP_NODELAY')
+        handle_tcp_nodelay(server.socket, True)
 
         # `TCP_QUICKACK` enables quick ACK mode (disabling delayed ACKs)
         # since Linux 2.4.4
