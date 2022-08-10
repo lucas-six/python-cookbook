@@ -11,6 +11,7 @@ import sys
 from pathlib import Path
 
 from net import (
+    get_tcp_server_max_connect_timeout,
     handle_reuse_address,
     handle_reuse_port,
     handle_tcp_keepalive,
@@ -67,32 +68,6 @@ def handle_listen(sock: socket.socket, accept_queue_size: int | None):
         sock.listen(accept_queue_size)
     logger.debug(f'accept queue size: {accept_queue_size} (max={socket.SOMAXCONN})')
     sock.listen()
-
-
-def get_linux_tcp_max_connect_timeout(tcp_synack_retries: int) -> int:
-    retries = tcp_synack_retries
-    timeout = 1
-    while retries:
-        retries -= 1
-        timeout += 2 ** (tcp_synack_retries - retries)
-    return timeout
-
-
-def get_tcp_max_connect_timeout() -> int | None:
-    # Max connect timeout
-    #
-    # On Linux 2.2+,
-    # max syn/ack retry times: /proc/sys/net/ipv4/tcp_synack_retries
-    #
-    # See https://leven-cn.github.io/python-handbook/recipes/core/tcp_ipv4
-    if sys.platform == 'linux':  # Linux 2.2+
-        tcp_synack_retries = int(
-            Path('/proc/sys/net/ipv4/tcp_synack_retries').read_text().strip()
-        )
-        logger.debug(f'max syn/ack retries: {tcp_synack_retries}')
-        return get_linux_tcp_max_connect_timeout(tcp_synack_retries)
-
-    return None
 
 
 def handle_socket_bufsize(
@@ -227,8 +202,7 @@ def run_server(
 
     selector.register(sock, selectors.EVENT_READ, handle_requests)
 
-    max_connect_timeout = get_tcp_max_connect_timeout()
-    logger.debug(f'max connect timeout: {max_connect_timeout}')
+    logger.debug(f'max connect timeout: {get_tcp_server_max_connect_timeout()}')
 
     # Accept and handle incoming client requests
     try:

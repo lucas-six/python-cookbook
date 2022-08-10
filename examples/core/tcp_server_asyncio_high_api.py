@@ -23,9 +23,6 @@ g_tcp_keepalive_intvl = None
 
 
 async def handle_echo(reader: asyncio.StreamReader, writer: asyncio.StreamWriter):
-
-    loop = asyncio.get_running_loop()
-
     # `socket.getpeername()`
     client_address = writer.get_extra_info('peername')
     logging.debug(f'connected from {client_address}')
@@ -50,16 +47,15 @@ async def handle_echo(reader: asyncio.StreamReader, writer: asyncio.StreamWriter
     logging.debug(
         f'send_buf_size: {sock.getsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF)}'
     )
-    loop.call_soon(handle_tcp_nodelay, sock, tcp_nodelay)
-    loop.call_soon(
-        handle_tcp_keepalive,
+    handle_tcp_nodelay(sock, tcp_nodelay)
+    handle_tcp_keepalive(
         sock,
         g_tcp_keepalive_enabled,
         g_tcp_keepalive_idle,
         g_tcp_keepalive_cnt,
         g_tcp_keepalive_intvl,
     )
-    loop.call_soon(handle_tcp_quickack, sock, tcp_quickack)
+    handle_tcp_quickack(sock, tcp_quickack)
     # logging.debug(dir(sock))
 
     # Recv
