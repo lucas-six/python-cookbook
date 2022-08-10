@@ -6,7 +6,7 @@
 """TCP Server - Asynchronous I/O (High-Level APIs).
 """
 
-# PEP 604, Allow writing union types as X | Y
+# PEP 604, Allow writing union types as X | Y (Python 3.10+)
 from __future__ import annotations
 
 import asyncio
@@ -14,15 +14,18 @@ import logging
 import socket
 import sys
 
+from net import handle_tcp_keepalive
+
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}'
 )
 
 tcp_nodelay = True
 tcp_quickack = True
-tcp_keepalive_idle = 1800
-tcp_keepalive_cnt = 5
-tcp_keepalive_intvl = 15
+g_tcp_keepalive_enabled = None
+g_tcp_keepalive_idle = None
+g_tcp_keepalive_cnt = None
+g_tcp_keepalive_intvl = None
 
 
 def handle_tcp_nodelay(sock: socket.socket, tcp_nodelay: bool):
@@ -42,45 +45,6 @@ def handle_tcp_quickack(sock: socket.socket, tcp_quickack: bool):
         logging.debug(f'TCP Quick ACK: {tcp_quickack}')
 
 
-def handle_tcp_keepalive(
-    sock: socket.socket,
-    tcp_keepalive_idle: int | None,
-    tcp_keepalive_cnt: int | None,
-    tcp_keepalive_intvl: int | None,
-):
-    # `SO_KEEPALIVE` enables TCP Keep-Alive
-    #     - `TCP_KEEPIDLE` (since Linux 2.4)
-    #     - `TCP_KEEPCNT` (since Linux 2.4)
-    #     - `TCP_KEEPINTVL` (since Linux 2.4)
-    if (
-        tcp_keepalive_idle is None
-        and tcp_keepalive_cnt is None
-        and tcp_keepalive_intvl is None
-    ):
-        tcp_keepalive = sock.getsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE)
-        logging.debug(f'TCP Keep-Alive: {tcp_keepalive}')
-        return
-
-    sock.setsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)
-    if sys.platform == 'linux':  # Linux 2.4+
-        if tcp_keepalive_idle is not None:
-            sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPIDLE, tcp_keepalive_idle)
-        tcp_keepalive_idle = sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPIDLE)
-        logging.debug(f'TCP Keep-Alive idle time (seconds): {tcp_keepalive_idle}')
-        if tcp_keepalive_cnt is not None:
-            sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPCNT, tcp_keepalive_cnt)
-        tcp_keepalive_cnt = sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPCNT)
-        logging.debug(f'TCP Keep-Alive retries: {tcp_keepalive_cnt}')
-        if tcp_keepalive_intvl is not None:
-            sock.setsockopt(
-                socket.IPPROTO_TCP, socket.TCP_KEEPINTVL, tcp_keepalive_intvl
-            )
-        tcp_keepalive_intvl = sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPINTVL)
-        logging.debug(f'TCP Keep-Alive interval time (seconds): {tcp_keepalive_intvl}')
-    tcp_keepalive = sock.getsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE)
-    logging.debug(f'TCP Keep-Alive: {tcp_keepalive}')
-
-
 async def handle_echo(reader: asyncio.StreamReader, writer: asyncio.StreamWriter):
 
     # `socket.getpeername()`
@@ -96,10 +60,10 @@ async def handle_echo(reader: asyncio.StreamReader, writer: asyncio.StreamWriter
     assert sock.getsockname() == writer.get_extra_info('sockname')
     assert sock.gettimeout() == 0.0
     logging.debug(
-        f'reuse_address: {sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR)}'
+        f'reuse_address: {sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR) != 0}'
     )
     logging.debug(
-        f'reuse_port: {sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT)}'
+        f'reuse_port: {sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT) != 0}'
     )
     logging.debug(
         f'recv_buf_size: {sock.getsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF)}'
@@ -110,7 +74,11 @@ async def handle_echo(reader: asyncio.StreamReader, writer: asyncio.StreamWriter
     handle_tcp_nodelay(sock, tcp_nodelay)
     handle_tcp_quickack(sock, tcp_quickack)
     handle_tcp_keepalive(
-        sock, tcp_keepalive_idle, tcp_keepalive_cnt, tcp_keepalive_intvl
+        sock,
+        g_tcp_keepalive_enabled,
+        g_tcp_keepalive_idle,
+        g_tcp_keepalive_cnt,
+        g_tcp_keepalive_intvl,
     )
     # logging.debug(dir(sock))
 
@@ -126,7 +94,25 @@ async def handle_echo(reader: asyncio.StreamReader, writer: asyncio.StreamWriter
     writer.close()
 
 
-async def tcp_echo_server(host: str, port: int, *, backlog: int = 100):
+async def tcp_echo_server(
+    host: str,
+    port: int,
+    *,
+    backlog: int = 100,
+    tcp_keepalive: bool = False,
+    tcp_keepalive_idle: int | None = None,
+    tcp_keepalive_cnt: int | None = None,
+    tcp_keepalive_intvl: int | None = None,
+):
+    global g_tcp_keepalive_enabled
+    global g_tcp_keepalive_idle
+    global g_tcp_keepalive_cnt
+    global g_tcp_keepalive_intvl
+    g_tcp_keepalive_enabled = tcp_keepalive
+    g_tcp_keepalive_idle = tcp_keepalive_idle
+    g_tcp_keepalive_cnt = tcp_keepalive_cnt
+    g_tcp_keepalive_intvl = tcp_keepalive_intvl
+
     # Low-level APIs: loop.create_server()
     # The socket option `TCP_NODELAY` is set by default in Python 3.6+
     server = await asyncio.start_server(
@@ -150,12 +136,23 @@ async def tcp_echo_server(host: str, port: int, *, backlog: int = 100):
         await server.serve_forever()
 
 
-asyncio.run(tcp_echo_server('127.0.0.1', 8888))  # Python 3.7+
+asyncio.run(
+    tcp_echo_server(
+        '127.0.0.1',
+        8888,
+        tcp_keepalive=True,
+        tcp_keepalive_idle=1800,
+        tcp_keepalive_cnt=5,
+        tcp_keepalive_intvl=15,
+    )
+)  # Python 3.7+
 ```
 
 See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples/core/tcp_server_asyncio_high_api.py)
 
 ## More
+
+- [TCP Keep-Alive](tcp_keepalive)
 
 More details to see [TCP (IPv4) on Python Handbook](https://leven-cn.github.io/python-handbook/recipes/core/tcp_ipv4):
 
@@ -165,7 +162,6 @@ More details to see [TCP (IPv4) on Python Handbook](https://leven-cn.github.io/p
 - Nagle Algorithm (`TCP_NODELAY`)
 - Delayed ACK (延迟确认) (`TCP_QUICKACK`)
 - Slow Start (慢启动)
-- Keep Alive (`SO_KEEPALIVE`)
 
 ## References
 
@@ -178,7 +174,6 @@ More details to see [TCP (IPv4) on Python Handbook](https://leven-cn.github.io/p
 - [Linux Programmer's Manual - socket(7) - `SO_REUSEPORT`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_REUSEPORT)
 - [Linux Programmer's Manual - socket(7) - `SO_RCVBUF`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_RCVBUF)
 - [Linux Programmer's Manual - socket(7) - `SO_SNDBUF`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_SNDBUF)
-- [Linux Programmer's Manual - socket(7) - `SO_KEEPALIVE`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_KEEPALIVE)
 - [Linux Programmer's Manual - socket(7) - `rmem_default`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#rmem_default)
 - [Linux Programmer's Manual - socket(7) - `rmem_max`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#rmem_max)
 - [Linux Programmer's Manual - socket(7) - `wmem_default`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#wmem_default)
@@ -186,13 +181,7 @@ More details to see [TCP (IPv4) on Python Handbook](https://leven-cn.github.io/p
 - [Linux Programmer's Manual - tcp(7)](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html)
 - [Linux Programmer's Manual - tcp(7) - `TCP_NODELAY`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#TCP_NODELAY)
 - [Linux Programmer's Manual - tcp(7) - `TCP_QUICKACK`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#TCP_QUICKACK)
-- [Linux Programmer's Manual - tcp(7) - `TCP_KEEPIDLE`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#TCP_KEEPIDLE)
-- [Linux Programmer's Manual - tcp(7) - `TCP_KEEPCNT`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#TCP_KEEPCNT)
-- [Linux Programmer's Manual - tcp(7) - `TCP_KEEPINTVL`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#TCP_KEEPINTVL)
 - [Linux Programmer's Manual - tcp(7) - `tcp_synack_retries`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_synack_retries)
 - [Linux Programmer's Manual - tcp(7) - `tcp_rmem`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_rmem)
 - [Linux Programmer's Manual - tcp(7) - `tcp_wmem`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_wmem)
 - [Linux Programmer's Manual - tcp(7) - `tcp_window_scaling`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_window_scaling)
-- [Linux Programmer's Manual - tcp(7) - `tcp_keepalive_time`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_keepalive_time)
-- [Linux Programmer's Manual - tcp(7) - `tcp_keepalive_probes`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_keepalive_probes)
-- [Linux Programmer's Manual - tcp(7) - `tcp_keepalive_intvl`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_keepalive_intvl)

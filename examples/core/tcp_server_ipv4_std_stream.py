@@ -6,6 +6,8 @@ import socket
 import socketserver
 import sys
 
+from net import handle_tcp_keepalive
+
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
 )
@@ -48,16 +50,7 @@ if __name__ == '__main__':
             server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_QUICKACK, 1)
             logger.debug('enable TCP_QUICKACK')
 
-        # `SO_KEEPALIVE` enables TCP Keep-Alive
-        #     - `TCP_KEEPIDLE` (since Linux 2.4)
-        #     - `TCP_KEEPCNT` (since Linux 2.4)
-        #     - `TCP_KEEPINTVL` (since Linux 2.4)
-        server.socket.setsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)
-        if sys.platform == 'linux':  # Linux 2.4+
-            server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPIDLE, 1800)
-            server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPCNT, 9)
-            server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPINTVL, 15)
-        logger.debug('enable TCP Keep-Alive')
+        handle_tcp_keepalive(server.socket, True, 1800, 9, 15)
 
         server.server_bind()
         server.server_activate()
