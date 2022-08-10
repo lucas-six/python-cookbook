@@ -15,7 +15,7 @@ import socket
 import sys
 from pathlib import Path
 
-from net import handle_tcp_keepalive
+from net import handle_reuse_port, handle_tcp_keepalive
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
@@ -50,24 +50,6 @@ def handle_reuse_address(sock: socket.socket, reuse_address: bool):
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     reuse_address = sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR) != 0
     logger.debug(f'reuse address: {reuse_address}')
-
-
-def handle_reuse_port(sock: socket.socket, reuse_port: bool):
-    # Reuse port
-    #
-    # The option `SO_REUSEPORT` allows `accept()` load distribution
-    # in a multi-threaded server to be improved by using a distinct
-    # listener socket for each thread. This provides improved load
-    # distribution as compared to traditional techniques such using
-    # a single `accept()`ing thread that distributes connections, or
-    # having multiple threads that compete to `accept()` from the
-    # same socket.
-    #
-    # Since Linux 3.9
-    if reuse_port:
-        sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
-    reuse_port = sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT) != 0
-    logger.debug(f'reuse port: {reuse_port}')
 
 
 def handle_tcp_nodelay(sock: socket.socket, tcp_nodelay: bool):
@@ -305,6 +287,7 @@ See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples
 
 ## More
 
+- [TCP/UDP Reuse Port](net_reuse_port)
 - [TCP Keep-Alive](tcp_keepalive)
 
 More details to see [TCP (IPv4) on Python Handbook](https://leven-cn.github.io/python-handbook/recipes/core/tcp_ipv4):
@@ -312,7 +295,6 @@ More details to see [TCP (IPv4) on Python Handbook](https://leven-cn.github.io/p
 - accept queue size for `listen()`
 - connect timeout
 - recv/send buffer size
-- reuse port (`SO_REUSEPORT`)
 - Nagle Algorithm (`TCP_NODELAY`)
 - Delayed ACK (延迟确认) (`TCP_QUICKACK`)
 - Slow Start (慢启动)
@@ -335,7 +317,6 @@ More details to see [TCP (IPv4) on Python Handbook](https://leven-cn.github.io/p
 - [Linux Programmer's Manual - `send`(2)](https://manpages.debian.org/bullseye/manpages-dev/send.2.en.html)
 - [Linux Programmer's Manual - socket(7)](https://manpages.debian.org/bullseye/manpages/socket.7.en.html)
 - [Linux Programmer's Manual - socket(7) - `SO_REUSEADDR`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_REUSEADDR)
-- [Linux Programmer's Manual - socket(7) - `SO_REUSEPORT`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_REUSEPORT)
 - [Linux Programmer's Manual - socket(7) - `SO_RCVBUF`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_RCVBUF)
 - [Linux Programmer's Manual - socket(7) - `SO_SNDBUF`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_SNDBUF)
 - [Linux Programmer's Manual - socket(7) - `rmem_default`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#rmem_default)

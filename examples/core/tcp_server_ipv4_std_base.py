@@ -6,7 +6,7 @@ import socket
 import socketserver
 import sys
 
-from net import handle_tcp_keepalive
+from net import handle_reuse_port, handle_tcp_keepalive
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
@@ -43,9 +43,9 @@ if __name__ == '__main__':
         server.allow_reuse_address = True  # `SO_REUSEADDR` socket option
         server.request_queue_size = 100  # param `backlog` for `listen()`
 
-        # `SO_REUSEPORT` enables reuse port.
+        handle_reuse_port(server.socket, True)
+
         # `TCP_NODELAY` disables Nagle algorithm.
-        server.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
         server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
         logger.debug('enable TCP_NODELAY')
 

@@ -13,7 +13,7 @@ import socket
 import socketserver
 import sys
 
-from net import handle_tcp_keepalive
+from net import handle_reuse_port, handle_tcp_keepalive
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
@@ -50,9 +50,9 @@ if __name__ == '__main__':
         server.allow_reuse_address = True  # `SO_REUSEADDR` socket option
         server.request_queue_size = 100  # param `backlog` for `listen()`
 
-        # `SO_REUSEPORT` enables reuse port.
+        handle_reuse_port(server.socket, True)
+
         # `TCP_NODELAY` disables Nagle algorithm.
-        server.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
         server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
         logger.debug('enable TCP_NODELAY')
 
@@ -85,7 +85,7 @@ import socket
 import socketserver
 import sys
 
-from net import handle_tcp_keepalive
+from net import handle_reuse_port, handle_tcp_keepalive
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
@@ -117,9 +117,9 @@ if __name__ == '__main__':
         server.allow_reuse_address = True  # `SO_REUSEADDR` socket option
         server.request_queue_size = 100  # param `backlog` for `listen()`
 
-        # `SO_REUSEPORT` enables reuse port.
+        handle_reuse_port(server.socket, True)
+
         # `TCP_NODELAY` disables Nagle algorithm.
-        server.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
         server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
         logger.debug('enable TCP_NODELAY')
 
@@ -153,7 +153,7 @@ import socketserver
 import sys
 import threading
 
-from net import handle_tcp_keepalive
+from net import handle_reuse_port, handle_tcp_keepalive
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}'
@@ -198,19 +198,9 @@ if __name__ == '__main__':
         server.allow_reuse_address = True  # `SO_REUSEADDR` socket option
         server.request_queue_size = 100  # param `backlog` for `listen()`
 
-        # The option `SO_REUSEPORT` allows `accept()` load distribution
-        # in a multi-threaded server to be improved by using a distinct
-        # listener socket for each thread. This provides improved load
-        # distribution as compared to traditional techniques such using
-        # a single `accept()`ing thread that distributes connections, or
-        # having multiple threads that compete to `accept()` from the
-        # same socket.
-        # Since Linux 3.9
-        server.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+        handle_reuse_port(server.socket, True)
 
-        # `SO_REUSEPORT` enables reuse port.
         # `TCP_NODELAY` disables Nagle algorithm.
-        server.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
         server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
         logger.debug('enable TCP_NODELAY')
 
@@ -245,6 +235,7 @@ See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples
 
 ## More
 
+- [TCP/UDP Reuse Port](net_reuse_port)
 - [TCP Keep-Alive](tcp_keepalive)
 
 More details to see [TCP (IPv4)](https://leven-cn.github.io/python-handbook/recipes/core/tcp_ipv4)
@@ -262,7 +253,6 @@ on Python Handbook.
 - [Linux Programmer's Manual - `send`(2)](https://manpages.debian.org/bullseye/manpages-dev/send.2.en.html)
 - [Linux Programmer's Manual - socket(7)](https://manpages.debian.org/bullseye/manpages/socket.7.en.html)
 - [Linux Programmer's Manual - socket(7) - `SO_REUSEADDR`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_REUSEADDR)
-- [Linux Programmer's Manual - socket(7) - `SO_REUSEPORT`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_REUSEPORT)
 - [Linux Programmer's Manual - tcp(7)](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html)
 - [Linux Programmer's Manual - tcp(7) - `TCP_NODELAY`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#TCP_NODELAY)
 - [Linux Programmer's Manual - tcp(7) - `TCP_QUICKACK`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#TCP_QUICKACK)

@@ -11,6 +11,8 @@ import sys
 from pathlib import Path
 from typing import Any
 
+from net import handle_reuse_port
+
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
 )
@@ -30,20 +32,6 @@ def handle_reuse_address(sock: socket.socket, reuse_address: bool):
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     reuse_address = sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR) != 0
     logger.debug(f'reuse_address: {reuse_address}')
-
-
-def handle_reuse_port(sock: socket.socket, reuse_port: bool):
-    # Reuse port
-    #
-    # The option `SO_REUSEPORT` can provide better distribution of incoming datagrams
-    # to multiple processes (or threads) as compared to the traditional technique of
-    # having multiple processes compete to receive datagrams on the same socket.
-    #
-    # Since Linux 3.9
-    if reuse_port:
-        sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
-    reuse_port = sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT) != 0
-    logger.debug(f'reuse port: {reuse_port}')
 
 
 def handle_socket_bufsize(
