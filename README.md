@@ -117,13 +117,18 @@
 - [Setup Python Project](https://leven-cn.github.io/python-cookbook/recipes/core/python_project)
 - [Performance Measurement](https://leven-cn.github.io/python-cookbook/recipes/core/perf)
 
-## Web Development
+### Web Development
 
 - [URL Parsing - `urllib.parse`](https://leven-cn.github.io/python-cookbook/recipes/web/url_parse)
 
 <!-- markdownlint-enable line-length -->
 
 ## More
+
+### Core
+
+- Networks and Communications (网络通信)
+  - [Endianness](https://leven-cn.github.io/python-handbook/recipes/core/endianness)
 
 See [full-version documentation](https://leven-cn.github.io/)
 
