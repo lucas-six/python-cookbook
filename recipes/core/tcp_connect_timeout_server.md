@@ -1,4 +1,4 @@
-# TCP Server Connect Timeout
+# TCP Connect Timeout (Server-Side)
 
 The **`tcp_synack_retries`** variable. Since Linux *2.2*.
 

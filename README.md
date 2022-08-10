@@ -79,7 +79,7 @@
   - [TCP Client (IPv4) - Basic](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_client_ipv4_basic)
   - [TCP Client (IPv4) - Timeout Mode](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_client_ipv4_timeout)
   - [TCP Client (IPv4) - Non-Blocking Mode (I/O Multiplex, I/O多路复用)](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_client_ipv4_io_multiplex)
-  - [TCP Server Connect Timeout](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_server_connect_timeout)
+  - [TCP Connect Timeout (Server Side)](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_connect_timeout_server)
   - [TCP Nodelay (Disable Nagle's Algorithm)](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_nodelay)
   - [TCP Keep-Alive](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_keepalive)
   - [TCP Quick ACK (Disable Delayed ACK (延迟确认))](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_quickack)
