@@ -1,7 +1,7 @@
 """TCP Server (IPv4) - Blocking Mode
 """
 
-# PEP 604, Allow writing union types as X | Y
+# PEP 604, Allow writing union types as X | Y (Python 3.10+)
 from __future__ import annotations
 
 import logging
@@ -10,6 +10,8 @@ import struct
 import sys
 from pathlib import Path
 from typing import Any
+
+from net import handle_tcp_keepalive
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
@@ -120,45 +122,6 @@ def handle_socket_bufsize(
     logger.debug(f'send buffer size: {send_buf_size} (max={max_send_buf_size})')
 
 
-def handle_tcp_keepalive(
-    sock: socket.socket,
-    tcp_keepalive_idle: int | None,
-    tcp_keepalive_cnt: int | None,
-    tcp_keepalive_intvl: int | None,
-):
-    # `SO_KEEPALIVE` enables TCP Keep-Alive
-    #     - `TCP_KEEPIDLE` (since Linux 2.4)
-    #     - `TCP_KEEPCNT` (since Linux 2.4)
-    #     - `TCP_KEEPINTVL` (since Linux 2.4)
-    if (
-        tcp_keepalive_idle is None
-        and tcp_keepalive_cnt is None
-        and tcp_keepalive_intvl is None
-    ):
-        tcp_keepalive = sock.getsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE)
-        logger.debug(f'TCP Keep-Alive: {tcp_keepalive}')
-        return
-
-    sock.setsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)
-    if sys.platform == 'linux':  # Linux 2.4+
-        if tcp_keepalive_idle is not None:
-            sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPIDLE, tcp_keepalive_idle)
-        tcp_keepalive_idle = sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPIDLE)
-        logger.debug(f'TCP Keep-Alive idle time (seconds): {tcp_keepalive_idle}')
-        if tcp_keepalive_cnt is not None:
-            sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPCNT, tcp_keepalive_cnt)
-        tcp_keepalive_cnt = sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPCNT)
-        logger.debug(f'TCP Keep-Alive retries: {tcp_keepalive_cnt}')
-        if tcp_keepalive_intvl is not None:
-            sock.setsockopt(
-                socket.IPPROTO_TCP, socket.TCP_KEEPINTVL, tcp_keepalive_intvl
-            )
-        tcp_keepalive_intvl = sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPINTVL)
-        logger.debug(f'TCP Keep-Alive interval time (seconds): {tcp_keepalive_intvl}')
-    tcp_keepalive = sock.getsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE)
-    logger.debug(f'TCP Keep-Alive: {tcp_keepalive}')
-
-
 def recv_bin_data(sock: socket.socket, unpacker: struct.Struct):
     data = sock.recv(unpacker.size)
     if data:
@@ -178,6 +141,7 @@ def run_server(
     accept_queue_size: int | None = None,
     recv_buf_size: int | None = None,
     send_buf_size: int | None = None,
+    tcp_keepalive: bool | None = None,
     tcp_keepalive_idle: int | None = None,
     tcp_keepalive_cnt: int | None = None,
     tcp_keepalive_intvl: int | None = None,
@@ -189,7 +153,7 @@ def run_server(
     handle_tcp_nodelay(sock, tcp_nodelay)
     handle_tcp_quickack(sock, tcp_quickack)
     handle_tcp_keepalive(
-        sock, tcp_keepalive_idle, tcp_keepalive_cnt, tcp_keepalive_intvl
+        sock, tcp_keepalive, tcp_keepalive_idle, tcp_keepalive_cnt, tcp_keepalive_intvl
     )
 
     # Bind
@@ -243,4 +207,4 @@ def run_server(
 # - '' or '0.0.0.0': socket.INADDR_ANY
 # - socket.INADDR_BROADCAST
 # Port 0 means to select an arbitrary unused port
-run_server('localhost', 9999, tcp_keepalive_cnt=9)
+run_server('localhost', 9999, tcp_keepalive=True, tcp_keepalive_cnt=9)
