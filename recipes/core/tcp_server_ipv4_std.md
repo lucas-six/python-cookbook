@@ -13,7 +13,7 @@ import socket
 import socketserver
 import sys
 
-from net import handle_reuse_port, handle_tcp_keepalive
+from net import handle_reuse_port, handle_tcp_keepalive, handle_tcp_nodelay
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
@@ -51,10 +51,7 @@ if __name__ == '__main__':
         server.request_queue_size = 100  # param `backlog` for `listen()`
 
         handle_reuse_port(server.socket, True)
-
-        # `TCP_NODELAY` disables Nagle algorithm.
-        server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
-        logger.debug('enable TCP_NODELAY')
+        handle_tcp_nodelay(server.socket, True)
 
         # `TCP_QUICKACK` enables quick ACK mode (disabling delayed ACKs)
         # since Linux 2.4.4
@@ -85,7 +82,7 @@ import socket
 import socketserver
 import sys
 
-from net import handle_reuse_port, handle_tcp_keepalive
+from net import handle_reuse_port, handle_tcp_keepalive, handle_tcp_nodelay
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
@@ -118,10 +115,7 @@ if __name__ == '__main__':
         server.request_queue_size = 100  # param `backlog` for `listen()`
 
         handle_reuse_port(server.socket, True)
-
-        # `TCP_NODELAY` disables Nagle algorithm.
-        server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
-        logger.debug('enable TCP_NODELAY')
+        handle_tcp_nodelay(server.socket, True)
 
         # `TCP_QUICKACK` enables quick ACK mode (disabling delayed ACKs)
         # since Linux 2.4.4
@@ -153,7 +147,7 @@ import socketserver
 import sys
 import threading
 
-from net import handle_reuse_port, handle_tcp_keepalive
+from net import handle_reuse_port, handle_tcp_keepalive, handle_tcp_nodelay
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}'
@@ -199,10 +193,7 @@ if __name__ == '__main__':
         server.request_queue_size = 100  # param `backlog` for `listen()`
 
         handle_reuse_port(server.socket, True)
-
-        # `TCP_NODELAY` disables Nagle algorithm.
-        server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
-        logger.debug('enable TCP_NODELAY')
+        handle_tcp_nodelay(server.socket, True)
 
         # `TCP_QUICKACK` enables quick ACK mode (disabling delayed ACKs)
         # since Linux 2.4.4
@@ -236,6 +227,7 @@ See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples
 ## More
 
 - [TCP/UDP Reuse Port](net_reuse_port)
+- [TCP Nodelay (Nagle's Algorithm)](tcp_nodelay)
 - [TCP Keep-Alive](tcp_keepalive)
 
 More details to see [TCP (IPv4)](https://leven-cn.github.io/python-handbook/recipes/core/tcp_ipv4)
@@ -254,5 +246,4 @@ on Python Handbook.
 - [Linux Programmer's Manual - socket(7)](https://manpages.debian.org/bullseye/manpages/socket.7.en.html)
 - [Linux Programmer's Manual - socket(7) - `SO_REUSEADDR`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_REUSEADDR)
 - [Linux Programmer's Manual - tcp(7)](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html)
-- [Linux Programmer's Manual - tcp(7) - `TCP_NODELAY`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#TCP_NODELAY)
 - [Linux Programmer's Manual - tcp(7) - `TCP_QUICKACK`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#TCP_QUICKACK)

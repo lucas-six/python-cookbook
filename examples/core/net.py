@@ -28,6 +28,28 @@ def handle_reuse_port(sock: socket.socket, reuse_port: bool | None = None):
     logging.debug(f'reuse port: {reuse_port}')
 
 
+def handle_tcp_nodelay(sock: socket.socket, tcp_nodelay: bool | None = None):
+    """The `TCP_NODELAY` option disables Nagle algorithm.
+
+    Nagle's algorithm works by combining a number of small outgoing messages
+    and sending them all at once. It was designed to solve "small-packet problem".
+
+    See Linux Programmer's Manual - tcp(7) - `TCP_NODELAY`
+    https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#TCP_NODELAY
+
+    Original algorithm was described in
+    RFC 896 - Congestion Control in IP/TCP Internetworks (1984.1)
+    https://www.rfc-editor.org/rfc/rfc896
+
+    See RFC 5681 - TCP Congestion Control (2009.9)
+    https://www.rfc-editor.org/rfc/rfc5681
+    """
+    if tcp_nodelay is not None:
+        sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+    tcp_nodelay = sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY) != 0
+    logging.debug(f'TCP Nodelay: {tcp_nodelay}')
+
+
 def handle_tcp_keepalive(
     sock: socket.socket,
     enable: bool | None = None,

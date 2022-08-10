@@ -10,6 +10,8 @@ import socket
 import sys
 from pathlib import Path
 
+from net import handle_tcp_nodelay
+
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
 )
@@ -73,14 +75,6 @@ def handle_reuse_address(sock: socket.socket, reuse_address: bool):
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     reuse_address = sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR) != 0
     logging.debug(f'reuse address: {reuse_address}')
-
-
-def handle_tcp_nodelay(sock: socket.socket, tcp_nodelay: bool):
-    # The `TCP_NODELAY` option disables Nagle algorithm.
-    if tcp_nodelay:
-        sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
-    tcp_nodelay = sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY) != 0
-    logging.debug(f'TCP Nodelay: {tcp_nodelay}')
 
 
 def get_tcp_max_bufsize() -> tuple[int | None, int | None]:
