@@ -7,7 +7,7 @@ import socketserver
 import sys
 import threading
 
-from net import handle_tcp_keepalive
+from net import handle_reuse_port, handle_tcp_keepalive
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}'
@@ -52,19 +52,9 @@ if __name__ == '__main__':
         server.allow_reuse_address = True  # `SO_REUSEADDR` socket option
         server.request_queue_size = 100  # param `backlog` for `listen()`
 
-        # The option `SO_REUSEPORT` allows `accept()` load distribution
-        # in a multi-threaded server to be improved by using a distinct
-        # listener socket for each thread. This provides improved load
-        # distribution as compared to traditional techniques such using
-        # a single `accept()`ing thread that distributes connections, or
-        # having multiple threads that compete to `accept()` from the
-        # same socket.
-        # Since Linux 3.9
-        server.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+        handle_reuse_port(server.socket, True)
 
-        # `SO_REUSEPORT` enables reuse port.
         # `TCP_NODELAY` disables Nagle algorithm.
-        server.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
         server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
         logger.debug('enable TCP_NODELAY')
 

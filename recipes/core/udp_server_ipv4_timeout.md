@@ -18,6 +18,8 @@ import sys
 from pathlib import Path
 from typing import Any
 
+from net import handle_reuse_port
+
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
 )
@@ -37,24 +39,6 @@ def handle_reuse_address(sock: socket.socket, reuse_address: bool):
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     reuse_address = sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR) != 0
     logger.debug(f'reuse_address: {reuse_address}')
-
-
-def handle_reuse_port(sock: socket.socket, reuse_port: bool):
-    # Reuse port
-    #
-    # The option `SO_REUSEPORT` allows `accept()` load distribution
-    # in a multi-threaded server to be improved by using a distinct
-    # listener socket for each thread. This provides improved load
-    # distribution as compared to traditional techniques such using
-    # a single `accept()`ing thread that distributes connections, or
-    # having multiple threads that compete to `accept()` from the
-    # same socket.
-    #
-    # Since Linux 3.9
-    if reuse_port:
-        sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
-    reuse_port = sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT) != 0
-    logger.debug(f'reuse port: {reuse_port}')
 
 
 def handle_socket_bufsize(
@@ -152,6 +136,7 @@ See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples
 
 ## More
 
+- [TCP/UDP Reuse Port](net_reuse_port)
 - [UDP (IPv4) (on Python Handbook)](https://leven-cn.github.io/python-handbook/recipes/core/udp_ipv4).
 - [Pack/Unpack Binary Data: `struct` (on Python Cookbook)](struct)
 
@@ -167,5 +152,4 @@ See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples
 - [Linux Programmer's Manual - `sendto`(2)](https://manpages.debian.org/bullseye/manpages-dev/send.2.en.html)
 - [Linux Programmer's Manual - socket(7)](https://manpages.debian.org/bullseye/manpages/socket.7.en.html)
 - [Linux Programmer's Manual - socket(7) - `SO_REUSEADDR`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_REUSEADDR)
-- [Linux Programmer's Manual - socket(7) - `SO_REUSEPORT`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_REUSEPORT)
 - [Linux Programmer's Manual - udp(7)](https://manpages.debian.org/bullseye/manpages/udp.7.en.html)

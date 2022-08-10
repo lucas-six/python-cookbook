@@ -11,6 +11,8 @@ UDP = User Datagram Protocol
 import logging
 import socketserver
 
+from net import handle_reuse_port
+
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
 )
@@ -42,6 +44,7 @@ with socketserver.UDPServer(
     # to an identical UDP socket address with `SO_REUSEADDR`,
     # incoming packets can become randomly distributed among the sockets.
     server.allow_reuse_address = False
+    handle_reuse_port(server.socket, True)  # SO_REUSEPORT
     server.server_bind()
 
     server.serve_forever()
@@ -51,6 +54,7 @@ See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples
 
 ## More
 
+- [TCP/UDP Reuse Port](net_reuse_port)
 - [UDP (IPv4) (on Python Handbook)](https://leven-cn.github.io/python-handbook/recipes/core/udp_ipv4).
 
 ## References
