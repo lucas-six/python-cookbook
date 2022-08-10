@@ -2,9 +2,7 @@
 """
 
 import logging
-import socket
 import socketserver
-import sys
 
 from net import (
     handle_reuse_port,

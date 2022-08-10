@@ -4,7 +4,6 @@
 import logging
 import socket
 import socketserver
-import sys
 import threading
 
 from net import (
