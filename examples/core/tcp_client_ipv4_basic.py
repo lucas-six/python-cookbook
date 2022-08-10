@@ -8,22 +8,11 @@ import logging
 import socket
 import time
 
-from net import handle_tcp_nodelay
+from net import handle_reuse_address, handle_tcp_nodelay
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
 )
-
-
-def handle_reuse_address(sock: socket.socket, reuse_address: bool):
-    # Reuse address
-    #
-    # The `SO_REUSEADDR` flag tells the kernel to reuse a local socket in
-    # `TIME_WAIT` state, without waiting for its natural timeout to expire
-    if reuse_address:
-        sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    reuse_address = sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR) != 0
-    logging.debug(f'reuse address: {reuse_address}')
 
 
 def run_client(

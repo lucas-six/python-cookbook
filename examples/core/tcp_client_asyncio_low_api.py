@@ -10,17 +10,11 @@ import asyncio
 import logging
 import socket
 
+from net import handle_tcp_nodelay
+
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}'
 )
-
-
-def handle_tcp_nodelay(sock: socket.socket, tcp_nodelay: bool):
-    # The `TCP_NODELAY` option disables Nagle algorithm.
-    if tcp_nodelay:
-        sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
-    tcp_nodelay = sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY) != 0
-    logging.debug(f'TCP Nodelay: {tcp_nodelay}')
 
 
 class EchoClientProtocol(asyncio.Protocol):

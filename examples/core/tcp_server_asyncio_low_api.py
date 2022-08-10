@@ -12,7 +12,7 @@ import logging
 import socket
 import sys
 
-from net import handle_tcp_keepalive
+from net import handle_tcp_keepalive, handle_tcp_nodelay
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}'
@@ -24,14 +24,6 @@ g_tcp_keepalive_enabled = None
 g_tcp_keepalive_idle = None
 g_tcp_keepalive_cnt = None
 g_tcp_keepalive_intvl = None
-
-
-def handle_tcp_nodelay(sock: socket.socket, tcp_nodelay: bool):
-    # The `TCP_NODELAY` option disables Nagle algorithm.
-    if tcp_nodelay:
-        sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
-    tcp_nodelay = sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY) != 0
-    logging.debug(f'TCP Nodelay: {tcp_nodelay}')
 
 
 def handle_tcp_quickack(sock: socket.socket, tcp_quickack: bool):

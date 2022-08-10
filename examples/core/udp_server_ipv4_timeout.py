@@ -11,27 +11,12 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from net import handle_reuse_port
+from net import handle_reuse_address, handle_reuse_port
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
 )
 logger = logging.getLogger()
-
-
-def handle_reuse_address(sock: socket.socket, reuse_address: bool):
-    # Reuse address
-    #
-    # When multiple processes with differing UIDs assign sockets
-    # to an identical UDP socket address with `SO_REUSEADDR`,
-    # incoming packets can become randomly distributed among the sockets.
-    #
-    # The `SO_REUSEADDR` flag tells the kernel to reuse a local socket in
-    # `TIME_WAIT` state, without waiting for its natural timeout to expire
-    if reuse_address:
-        sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    reuse_address = sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR) != 0
-    logger.debug(f'reuse_address: {reuse_address}')
 
 
 def handle_socket_bufsize(

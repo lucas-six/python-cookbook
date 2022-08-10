@@ -11,7 +11,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from net import handle_tcp_nodelay
+from net import handle_reuse_address, handle_tcp_nodelay
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
@@ -55,17 +55,6 @@ def handle_connect_timeout(
         f'connect timeout: {sock.gettimeout()} seconds'
         f' (system={sys_connect_timeout})'
     )
-
-
-def handle_reuse_address(sock: socket.socket, reuse_address: bool):
-    # Reuse address
-    #
-    # The `SO_REUSEADDR` flag tells the kernel to reuse a local socket in
-    # `TIME_WAIT` state, without waiting for its natural timeout to expire
-    if reuse_address:
-        sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    reuse_address = sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR) != 0
-    logging.debug(f'reuse address: {reuse_address}')
 
 
 def get_tcp_max_bufsize() -> tuple[int | None, int | None]:

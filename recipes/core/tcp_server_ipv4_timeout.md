@@ -16,23 +16,17 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from net import handle_reuse_port, handle_tcp_keepalive, handle_tcp_nodelay
+from net import (
+    handle_reuse_address,
+    handle_reuse_port,
+    handle_tcp_keepalive,
+    handle_tcp_nodelay,
+)
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
 )
 logger = logging.getLogger()
-
-
-def handle_reuse_address(sock: socket.socket, reuse_address: bool):
-    # Reuse address
-    #
-    # The `SO_REUSEADDR` flag tells the kernel to reuse a local socket in
-    # `TIME_WAIT` state, without waiting for its natural timeout to expire
-    if reuse_address:
-        sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    reuse_address = sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR) != 0
-    logger.debug(f'reuse address: {reuse_address}')
 
 
 def handle_tcp_quickack(sock: socket.socket, tcp_quickack: bool):
@@ -238,6 +232,7 @@ See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples
 
 ## More
 
+- [TCP/UDP Reuse Address](net_reuse_address)
 - [TCP/UDP Reuse Port](net_reuse_port)
 - [TCP Nodelay (Nagle's Algorithm)](tcp_nodelay)
 - [TCP Keep-Alive](tcp_keepalive)
@@ -264,7 +259,6 @@ More details to see [TCP (IPv4) on Python Handbook](https://leven-cn.github.io/p
 - [Linux Programmer's Manual - `recv`(2)](https://manpages.debian.org/bullseye/manpages-dev/recv.2.en.html)
 - [Linux Programmer's Manual - `send`(2)](https://manpages.debian.org/bullseye/manpages-dev/send.2.en.html)
 - [Linux Programmer's Manual - socket(7)](https://manpages.debian.org/bullseye/manpages/socket.7.en.html)
-- [Linux Programmer's Manual - socket(7) - `SO_REUSEADDR`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_REUSEADDR)
 - [Linux Programmer's Manual - socket(7) - `SO_RCVBUF`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_RCVBUF)
 - [Linux Programmer's Manual - socket(7) - `SO_SNDBUF`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_SNDBUF)
 - [Linux Programmer's Manual - socket(7) - `rmem_default`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#rmem_default)
