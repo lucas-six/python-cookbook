@@ -31,12 +31,13 @@ class EchoClientProtocol(asyncio.Protocol):
     def connection_made(self, transport: asyncio.BaseTransport):
         assert isinstance(transport, asyncio.Transport)
 
+        loop = asyncio.get_running_loop()
+
         # `socket.getpeername()`
         server_address = transport.get_extra_info('peername')
         logging.debug(f'connected to {server_address}')
 
         sock = transport.get_extra_info('socket')
-        handle_tcp_nodelay(sock, self.tcp_nodelay)
         assert sock.gettimeout() == 0.0
         logging.debug(
             f'recv_buf_size: {sock.getsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF)}'
@@ -44,6 +45,7 @@ class EchoClientProtocol(asyncio.Protocol):
         logging.debug(
             f'send_buf_size: {sock.getsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF)}'
         )
+        loop.call_soon(handle_tcp_nodelay, sock, self.tcp_nodelay)
 
         transport.write(self.message)
         logging.debug(f'sent: {self.message!r}')
