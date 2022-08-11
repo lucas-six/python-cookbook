@@ -122,6 +122,7 @@
 ### Web Development
 
 - [URL Parsing - `urllib.parse`](https://leven-cn.github.io/python-cookbook/recipes/web/url_parse)
+- [HTTP Caching](https://leven-cn.github.io/python-cookbook/recipes/web/http_caching)
 
 <!-- markdownlint-enable line-length -->
 
