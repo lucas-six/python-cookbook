@@ -137,6 +137,7 @@
 
 ### Web
 
+- [URL, URI, URN](https://leven-cn.github.io/python-cookbook/more/web/uri_url_urn)
 - [HTTP Basic](https://leven-cn.github.io/python-cookbook/more/web/http_basic)
 - [HTTP Connection Management](https://leven-cn.github.io/python-cookbook/more/web/http_connection)
 
