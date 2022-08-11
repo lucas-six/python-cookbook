@@ -4,14 +4,20 @@ Essentially, transports and protocols should only be used in libraries and frame
 and never in high-level asyncio applications.
 """
 
-# PEP 604, Allow writing union types as X | Y (Python 3.10+)
 from __future__ import annotations
 
 import asyncio
 import logging
 import socket
 
-from net import handle_tcp_keepalive, handle_tcp_nodelay, handle_tcp_quickack
+from net import (
+    handle_reuse_address,
+    handle_reuse_port,
+    handle_socket_bufsize,
+    handle_tcp_keepalive,
+    handle_tcp_nodelay,
+    handle_tcp_quickack,
+)
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}'
@@ -19,10 +25,12 @@ logging.basicConfig(
 
 tcp_nodelay = True
 tcp_quickack = True
-g_tcp_keepalive_enabled = None
-g_tcp_keepalive_idle = None
-g_tcp_keepalive_cnt = None
-g_tcp_keepalive_intvl = None
+tcp_keepalive_enabled = True
+tcp_keepalive_idle = 1800
+tcp_keepalive_cnt = 5
+tcp_keepalive_intvl = 15
+recv_bufsize: int | None = None
+send_bufsize: int | None = None
 
 
 class EchoServerProtocol(asyncio.Protocol):
@@ -43,27 +51,16 @@ class EchoServerProtocol(asyncio.Protocol):
         assert sock.getpeername() == client_address
         assert sock.getsockname() == transport.get_extra_info('sockname')
         assert sock.gettimeout() == 0.0
-        logging.debug(
-            'reuse_address: '
-            f'{sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR) != 0}'
-        )
-        logging.debug(
-            'reuse_port: '
-            f'{sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT) != 0}'
-        )
-        logging.debug(
-            f'recv_buf_size: {sock.getsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF)}'
-        )
-        logging.debug(
-            f'send_buf_size: {sock.getsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF)}'
-        )
+        handle_reuse_address(sock)
+        handle_reuse_port(sock)
+        handle_socket_bufsize(sock, recv_bufsize, send_bufsize)
         handle_tcp_nodelay(sock, tcp_nodelay)
         handle_tcp_keepalive(
             sock,
-            g_tcp_keepalive_enabled,
-            g_tcp_keepalive_idle,
-            g_tcp_keepalive_cnt,
-            g_tcp_keepalive_intvl,
+            tcp_keepalive_enabled,
+            tcp_keepalive_idle,
+            tcp_keepalive_cnt,
+            tcp_keepalive_intvl,
         )
         handle_tcp_quickack(sock, tcp_quickack)
         # logging.debug(dir(sock))
@@ -82,20 +79,7 @@ async def tcp_echo_server(
     port: int,
     *,
     backlog: int = 100,
-    tcp_keepalive: bool = False,
-    tcp_keepalive_idle: int | None = None,
-    tcp_keepalive_cnt: int | None = None,
-    tcp_keepalive_intvl: int | None = None,
 ):
-    global g_tcp_keepalive_enabled
-    global g_tcp_keepalive_idle
-    global g_tcp_keepalive_cnt
-    global g_tcp_keepalive_intvl
-    g_tcp_keepalive_enabled = tcp_keepalive
-    g_tcp_keepalive_idle = tcp_keepalive_idle
-    g_tcp_keepalive_cnt = tcp_keepalive_cnt
-    g_tcp_keepalive_intvl = tcp_keepalive_intvl
-
     loop = asyncio.get_running_loop()
 
     # The socket option `TCP_NODELAY` is set by default in Python 3.6+
@@ -120,13 +104,4 @@ async def tcp_echo_server(
         await server.serve_forever()
 
 
-asyncio.run(
-    tcp_echo_server(
-        '127.0.0.1',
-        8888,
-        tcp_keepalive=True,
-        tcp_keepalive_idle=1800,
-        tcp_keepalive_cnt=5,
-        tcp_keepalive_intvl=15,
-    )
-)  # Python 3.7+
+asyncio.run(tcp_echo_server('127.0.0.1', 8888))  # Python 3.7+

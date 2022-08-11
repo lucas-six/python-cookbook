@@ -1,9 +1,13 @@
 """UDP Client, based on IPv4
 """
 
+from __future__ import annotations
+
 import logging
 import socket
 import struct
+
+from net import handle_socket_bufsize
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
@@ -12,6 +16,8 @@ logging.basicConfig(
 data: bytes = b'data'
 server_address = ('localhost', 9999)
 timeout = 5.0
+recv_bufsize: int | None = None
+send_bufsize: int | None = None
 
 binary_fmt: str = '! I 2s Q 2h f'
 binary_value: tuple = (1, b'ab', 2, 3, 3, 2.5)
@@ -21,6 +27,8 @@ with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as client:
 
     client.settimeout(timeout)
     logging.debug(f'recv/send timeout: {client.gettimeout()} seconds')
+
+    handle_socket_bufsize(client, recv_bufsize, send_bufsize)
 
     try:
         client.sendto(data, server_address)

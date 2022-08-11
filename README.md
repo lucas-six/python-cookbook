@@ -91,6 +91,7 @@
   - [UDP Client (IPv4) - Timeout Mode](https://leven-cn.github.io/python-cookbook/recipes/core/udp_client_ipv4_timeout)
   - [TCP/UDP Reuse Address](https://leven-cn.github.io/python-cookbook/recipes/core/net_reuse_address)
   - [TCP/UDP Reuse Port](https://leven-cn.github.io/python-cookbook/recipes/core/net_reuse_port)
+  - [TCP/UDP (Recv/Send) Buffer Size](https://leven-cn.github.io/python-cookbook/recipes/core/net_buffer_size)
   - [Create IP Multicast (组播) Server and Client (UDP)](https://leven-cn.github.io/python-cookbook/recipes/core/ip_multicast)
   - [IPC - Socket Pair](https://leven-cn.github.io/python-cookbook/recipes/core/ipc_socketpair)
   - [IPC - UNIX Domain Socket (UDS, UNIX 域套接字) Server and Client](https://leven-cn.github.io/python-cookbook/recipes/core/ipc_unix_domain_socket)
@@ -124,7 +125,7 @@
 
 <!-- markdownlint-enable line-length -->
 
-## More Topics
+## More Details
 
 ### Core
 

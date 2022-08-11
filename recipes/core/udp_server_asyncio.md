@@ -11,13 +11,20 @@ Essentially, transports and protocols should only be used in libraries and frame
 and never in high-level asyncio applications.
 """
 
+from __future__ import annotations
+
 import asyncio
 import logging
 import socket
 
+from net import handle_reuse_port, handle_socket_bufsize
+
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}'
 )
+
+recv_bufsize: int | None = None
+send_bufsize: int | None = None
 
 
 class EchoServerProtocol(asyncio.DatagramProtocol):
@@ -36,16 +43,10 @@ class EchoServerProtocol(asyncio.DatagramProtocol):
         assert sock.type is socket.SOCK_DGRAM
         assert not sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR)
         assert sock.gettimeout() == 0.0
-        logging.debug(
-            f'reuse_port: {sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT)}'
-        )
-        logging.debug(
-            f'recv_buf_size: {sock.getsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF)}'
-        )
-        logging.debug(
-            f'send_buf_size: {sock.getsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF)}'
-        )
         # logging.debug(dir(sock))
+
+        handle_reuse_port(sock)
+        handle_socket_bufsize(sock, recv_bufsize, send_bufsize)
 
         logging.debug(f'recv: {data!r}, from: {addr}')
 
@@ -91,7 +92,7 @@ See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples
 
 - [TCP/UDP Reuse Address](net_reuse_address)
 - [TCP/UDP Reuse Port](net_reuse_port)
-- [UDP (IPv4) (on Python Handbook)](https://leven-cn.github.io/python-handbook/recipes/core/udp_ipv4).
+- [TCP/UDP (Recv/Send) Buffer Size](net_buffer_size)
 
 ## References
 
@@ -100,11 +101,7 @@ See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples
 - [PEP 3151 – Reworking the OS and IO exception hierarchy](https://peps.python.org/pep-3151/)
 - [PEP 3156 – Asynchronous IO Support Rebooted: the "asyncio" Module](https://peps.python.org/pep-3156/)
 - [Linux Programmer's Manual - `socket`(2)](https://manpages.debian.org/bullseye/manpages-dev/socket.2.en.html)
-- [Linux Programmer's Manual - `bind`(2)](https://manpages.debian.org/bullseye/manpages-dev/bind.2.en.html)
 - [Linux Programmer's Manual - `getsockname`(2)](https://manpages.debian.org/bullseye/manpages-dev/getsockname.2.en.html)
 - [Linux Programmer's Manual - `recvfrom`(2)](https://manpages.debian.org/bullseye/manpages-dev/recv.2.en.html)
 - [Linux Programmer's Manual - `sendto`(2)](https://manpages.debian.org/bullseye/manpages-dev/send.2.en.html)
-- [Linux Programmer's Manual - socket(7)](https://manpages.debian.org/bullseye/manpages/socket.7.en.html)
-- [Linux Programmer's Manual - socket(7) - `SO_REUSEADDR`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_REUSEADDR)
-- [Linux Programmer's Manual - socket(7) - `SO_REUSEPORT`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_REUSEPORT)
 - [Linux Programmer's Manual - udp(7)](https://manpages.debian.org/bullseye/manpages/udp.7.en.html)
