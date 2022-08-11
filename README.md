@@ -130,7 +130,8 @@
 ### Core
 
 - Networks and Communications (网络通信)
-  - [Endianness](https://leven-cn.github.io/python-cookbook/recipes/core/endianness)
+  - [Endianness](https://leven-cn.github.io/python-cookbook/more/core/endianness)
+  - [TCP Slow Start (慢启动)](https://leven-cn.github.io/python-cookbook/more/core/tcp_slowstart)
 
 See [full-version documentation](https://leven-cn.github.io/)
 

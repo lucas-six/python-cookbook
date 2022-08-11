@@ -149,11 +149,8 @@ See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples
 - [TCP Nodelay (Dsiable Nagle's Algorithm)](tcp_nodelay)
 - [TCP Keep-Alive](tcp_keepalive)
 - [TCP Quick ACK (Disable Delayed ACK (延迟确认))](tcp_quickack)
+- [TCP Slow Start (慢启动)](../../more/core/tcp_slowstart)
 - [Pack/Unpack Binary Data: `struct`](struct)
-
-More details to see [TCP (IPv4) on Python Handbook](https://leven-cn.github.io/python-handbook/recipes/core/tcp_ipv4):
-
-- Slow Start (慢启动)
 
 ## References
 
@@ -162,4 +159,3 @@ More details to see [TCP (IPv4) on Python Handbook](https://leven-cn.github.io/p
 - [PEP 3151 – Reworking the OS and IO exception hierarchy](https://peps.python.org/pep-3151/)
 - [Linux Programmer's Manual - `recv`(2)](https://manpages.debian.org/bullseye/manpages-dev/recv.2.en.html)
 - [Linux Programmer's Manual - `send`(2)](https://manpages.debian.org/bullseye/manpages-dev/send.2.en.html)
-- [RFC 2018 - TCP Selective Acknowledgment Options](https://datatracker.ietf.org/doc/html/rfc2018.html)

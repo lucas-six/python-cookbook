@@ -126,10 +126,7 @@ See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples
 - [TCP Nodelay (Dsiable Nagle's Algorithm)](tcp_nodelay)
 - [TCP Keep-Alive](tcp_keepalive)
 - [TCP Quick ACK (Disable Delayed ACK (延迟确认))](tcp_quickack)
-
-More details to see [TCP (IPv4) on Python Handbook](https://leven-cn.github.io/python-handbook/recipes/core/tcp_ipv4):
-
-- Slow Start (慢启动)
+- [TCP Slow Start (慢启动)](../../more/core/tcp_slowstart)
 
 ## References
 

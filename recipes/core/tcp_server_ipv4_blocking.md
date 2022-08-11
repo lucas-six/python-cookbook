@@ -131,10 +131,7 @@ See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples
 - [TCP Keep-Alive](tcp_keepalive)
 - [TCP Quick ACK (Disable Delayed ACK (延迟确认))](tcp_quickack)
 - [Pack/Unpack Binary Data: `struct`](struct)
-
-More details to see [TCP (IPv4) on Python Handbook](https://leven-cn.github.io/python-handbook/recipes/core/tcp_ipv4):
-
-- Slow Start (慢启动)
+- [TCP Slow Start (慢启动)](../../more/core/tcp_slowstart)
 
 ## References
 
@@ -145,4 +142,3 @@ More details to see [TCP (IPv4) on Python Handbook](https://leven-cn.github.io/p
 - [Linux Programmer's Manual - `getsockname`(2)](https://manpages.debian.org/bullseye/manpages-dev/getsockname.2.en.html)
 - [Linux Programmer's Manual - `recv`(2)](https://manpages.debian.org/bullseye/manpages-dev/recv.2.en.html)
 - [Linux Programmer's Manual - `send`(2)](https://manpages.debian.org/bullseye/manpages-dev/send.2.en.html)
-- [RFC 2018 - TCP Selective Acknowledgment Options](https://datatracker.ietf.org/doc/html/rfc2018.html)
