@@ -106,7 +106,7 @@ from urllib.parse import parse_qsl
 
 ## More
 
-More details to see [URL, URI, URN (on Python Handbook)](https://leven-cn.github.io/python-handbook/recipes/web/uri_url_urn).
+More details to see [URL, URI, URN](https://leven-cn.github.io/python-cookbook/more/web/uri_url_urn).
 
 ## References
 
