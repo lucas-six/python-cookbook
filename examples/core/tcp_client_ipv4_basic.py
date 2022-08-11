@@ -1,14 +1,13 @@
 """TCP Client (IPv4) - Basic
 """
 
-# PEP 604, Allow writing union types as X | Y
 from __future__ import annotations
 
 import logging
 import socket
 import time
 
-from net import handle_reuse_address, handle_tcp_nodelay
+from net import handle_reuse_address, handle_socket_bufsize, handle_tcp_nodelay
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
@@ -23,11 +22,14 @@ def run_client(
     timeout: float | None = None,
     reuse_address: bool = False,
     tcp_nodelay: bool = True,
+    recv_buf_size: int | None = None,
+    send_buf_size: int | None = None,
 ):
     try:
         with socket.create_connection((host, port), timeout=timeout) as client:
             handle_reuse_address(client, reuse_address)
             handle_tcp_nodelay(client, tcp_nodelay)
+            handle_socket_bufsize(client, recv_buf_size, send_buf_size)
 
             time.sleep(6)
 

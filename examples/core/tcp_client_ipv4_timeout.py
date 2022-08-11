@@ -1,61 +1,23 @@
 """TCP Client (IPv4) - Timeout Mode
 """
 
-# PEP 604, Allow writing union types as X | Y (Python 3.10+)
 from __future__ import annotations
 
 import logging
 import socket
 import struct
-import sys
-from pathlib import Path
 from typing import Any
 
-from net import handle_connect_timeout, handle_reuse_address, handle_tcp_nodelay
+from net import (
+    handle_connect_timeout,
+    handle_reuse_address,
+    handle_socket_bufsize,
+    handle_tcp_nodelay,
+)
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
 )
-
-
-def get_tcp_max_bufsize() -> tuple[int | None, int | None]:
-    """Get max limitation of recv/send buffer size of TCP (IPv4)."""
-    if sys.platform == 'linux':
-        # - read(recv): /proc/sys/net/ipv4/tcp_rmem
-        # - write(send): /proc/sys/net/ipv4/tcp_wmem
-        max_recv_buf_size = int(
-            Path('/proc/sys/net/ipv4/tcp_rmem').read_text().strip().split()[2].strip()
-        )
-        max_send_buf_size = int(
-            Path('/proc/sys/net/ipv4/tcp_wmem').read_text().strip().split()[2].strip()
-        )
-        return max_recv_buf_size, max_send_buf_size
-
-    return (None, None)
-
-
-def handle_tcp_bufsize(
-    sock: socket.socket,
-    recv_buf_size: int | None,
-    send_buf_size: int | None,
-):
-    max_recv_buf_size, max_send_buf_size = get_tcp_max_bufsize()
-
-    if recv_buf_size:
-        # kernel do this already!
-        # if max_recv_buf_size:
-        #    recv_buf_size = min(recv_buf_size, max_recv_buf_size)
-        sock.setsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF, recv_buf_size)
-    recv_buf_size = sock.getsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF)
-    logging.debug(f'Server recv buffer size: {recv_buf_size} (max={max_recv_buf_size})')
-
-    if send_buf_size:
-        # kernel do this already!
-        # if max_send_buf_size:
-        #    send_buf_size = min(send_buf_size, max_send_buf_size)
-        sock.setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, send_buf_size)
-    send_buf_size = sock.getsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF)
-    logging.debug(f'Server send buffer size: {send_buf_size} (max={max_send_buf_size})')
 
 
 def run_client(
@@ -80,7 +42,7 @@ def run_client(
         handle_connect_timeout(client, conn_timeout, tcp_syn_retries)
         handle_reuse_address(client, reuse_address)
         handle_tcp_nodelay(client, tcp_nodelay)
-        handle_tcp_bufsize(client, recv_buf_size, send_buf_size)
+        handle_socket_bufsize(client, recv_buf_size, send_buf_size)
 
         try:
             client.connect((host, port))

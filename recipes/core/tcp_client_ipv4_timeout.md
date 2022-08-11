@@ -6,61 +6,23 @@
 """TCP Client (IPv4) - Timeout Mode
 """
 
-# PEP 604, Allow writing union types as X | Y (Python 3.10+)
 from __future__ import annotations
 
 import logging
 import socket
 import struct
-import sys
-from pathlib import Path
 from typing import Any
 
-from net import handle_connect_timeout, handle_reuse_address, handle_tcp_nodelay
+from net import (
+    handle_connect_timeout,
+    handle_reuse_address,
+    handle_socket_bufsize,
+    handle_tcp_nodelay,
+)
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
 )
-
-
-def get_tcp_max_bufsize() -> tuple[int | None, int | None]:
-    """Get max limitation of recv/send buffer size of TCP (IPv4)."""
-    if sys.platform == 'linux':
-        # - read(recv): /proc/sys/net/ipv4/tcp_rmem
-        # - write(send): /proc/sys/net/ipv4/tcp_wmem
-        max_recv_buf_size = int(
-            Path('/proc/sys/net/ipv4/tcp_rmem').read_text().strip().split()[2].strip()
-        )
-        max_send_buf_size = int(
-            Path('/proc/sys/net/ipv4/tcp_wmem').read_text().strip().split()[2].strip()
-        )
-        return max_recv_buf_size, max_send_buf_size
-
-    return (None, None)
-
-
-def handle_tcp_bufsize(
-    sock: socket.socket,
-    recv_buf_size: int | None,
-    send_buf_size: int | None,
-):
-    max_recv_buf_size, max_send_buf_size = get_tcp_max_bufsize()
-
-    if recv_buf_size:
-        # kernel do this already!
-        # if max_recv_buf_size:
-        #    recv_buf_size = min(recv_buf_size, max_recv_buf_size)
-        sock.setsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF, recv_buf_size)
-    recv_buf_size = sock.getsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF)
-    logging.debug(f'Server recv buffer size: {recv_buf_size} (max={max_recv_buf_size})')
-
-    if send_buf_size:
-        # kernel do this already!
-        # if max_send_buf_size:
-        #    send_buf_size = min(send_buf_size, max_send_buf_size)
-        sock.setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, send_buf_size)
-    send_buf_size = sock.getsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF)
-    logging.debug(f'Server send buffer size: {send_buf_size} (max={max_send_buf_size})')
 
 
 def run_client(
@@ -85,7 +47,7 @@ def run_client(
         handle_connect_timeout(client, conn_timeout, tcp_syn_retries)
         handle_reuse_address(client, reuse_address)
         handle_tcp_nodelay(client, tcp_nodelay)
-        handle_tcp_bufsize(client, recv_buf_size, send_buf_size)
+        handle_socket_bufsize(client, recv_buf_size, send_buf_size)
 
         try:
             client.connect((host, port))
@@ -121,6 +83,7 @@ See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples
 ## More
 
 - [TCP/UDP Reuse Address](net_reuse_address)
+- [TCP/UDP (Recv/Send) Buffer Size](net_buffer_size)
 - [TCP Connect Timeout (Client Side)](tcp_connect_timeout_client)
 - [TCP Data Transmission Timeout](tcp_transmission_timeout)
 - [TCP Nodelay (Nagle's Algorithm)](tcp_nodelay)
@@ -137,15 +100,4 @@ More details to see [TCP (IPv4) on Python Handbook](https://leven-cn.github.io/p
 - [Linux Programmer's Manual - `connect`(2)](https://manpages.debian.org/bullseye/manpages-dev/connect.2.en.html)
 - [Linux Programmer's Manual - `recv`(2)](https://manpages.debian.org/bullseye/manpages-dev/recv.2.en.html)
 - [Linux Programmer's Manual - `send`(2)](https://manpages.debian.org/bullseye/manpages-dev/send.2.en.html)
-- [Linux Programmer's Manual - socket(7)](https://manpages.debian.org/bullseye/manpages/socket.7.en.html)
-- [Linux Programmer's Manual - socket(7) - `SO_RCVBUF`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_RCVBUF)
-- [Linux Programmer's Manual - socket(7) - `SO_SNDBUF`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_SNDBUF)
-- [Linux Programmer's Manual - socket(7) - `rmem_default`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#rmem_default)
-- [Linux Programmer's Manual - socket(7) - `rmem_max`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#rmem_max)
-- [Linux Programmer's Manual - socket(7) - `wmem_default`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#wmem_default)
-- [Linux Programmer's Manual - socket(7) - `wmem_max`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#wmem_max)
-- [Linux Programmer's Manual - tcp(7)](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html)
-- [Linux Programmer's Manual - tcp(7) - `tcp_rmem`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_rmem)
-- [Linux Programmer's Manual - tcp(7) - `tcp_wmem`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_wmem)
-- [Linux Programmer's Manual - tcp(7) - `tcp_window_scaling`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_window_scaling)
 - [RFC 2018 - TCP Selective Acknowledgment Options](https://datatracker.ietf.org/doc/html/rfc2018.html)

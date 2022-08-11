@@ -12,14 +12,20 @@ Essentially, transports and protocols should only be used in libraries and frame
 and never in high-level asyncio applications.
 """
 
-# PEP 604, Allow writing union types as X | Y (Python 3.10+)
 from __future__ import annotations
 
 import asyncio
 import logging
 import socket
 
-from net import handle_tcp_keepalive, handle_tcp_nodelay, handle_tcp_quickack
+from net import (
+    handle_reuse_address,
+    handle_reuse_port,
+    handle_socket_bufsize,
+    handle_tcp_keepalive,
+    handle_tcp_nodelay,
+    handle_tcp_quickack,
+)
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}'
@@ -27,10 +33,12 @@ logging.basicConfig(
 
 tcp_nodelay = True
 tcp_quickack = True
-g_tcp_keepalive_enabled = None
-g_tcp_keepalive_idle = None
-g_tcp_keepalive_cnt = None
-g_tcp_keepalive_intvl = None
+tcp_keepalive_enabled = True
+tcp_keepalive_idle = 1800
+tcp_keepalive_cnt = 5
+tcp_keepalive_intvl = 15
+recv_bufsize: int | None = None
+send_bufsize: int | None = None
 
 
 class EchoServerProtocol(asyncio.Protocol):
@@ -51,27 +59,16 @@ class EchoServerProtocol(asyncio.Protocol):
         assert sock.getpeername() == client_address
         assert sock.getsockname() == transport.get_extra_info('sockname')
         assert sock.gettimeout() == 0.0
-        logging.debug(
-            'reuse_address: '
-            f'{sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR) != 0}'
-        )
-        logging.debug(
-            'reuse_port: '
-            f'{sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT) != 0}'
-        )
-        logging.debug(
-            f'recv_buf_size: {sock.getsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF)}'
-        )
-        logging.debug(
-            f'send_buf_size: {sock.getsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF)}'
-        )
+        handle_reuse_address(sock)
+        handle_reuse_port(sock)
+        handle_socket_bufsize(sock, recv_bufsize, send_bufsize)
         handle_tcp_nodelay(sock, tcp_nodelay)
         handle_tcp_keepalive(
             sock,
-            g_tcp_keepalive_enabled,
-            g_tcp_keepalive_idle,
-            g_tcp_keepalive_cnt,
-            g_tcp_keepalive_intvl,
+            tcp_keepalive_enabled,
+            tcp_keepalive_idle,
+            tcp_keepalive_cnt,
+            tcp_keepalive_intvl,
         )
         handle_tcp_quickack(sock, tcp_quickack)
         # logging.debug(dir(sock))
@@ -90,20 +87,7 @@ async def tcp_echo_server(
     port: int,
     *,
     backlog: int = 100,
-    tcp_keepalive: bool = False,
-    tcp_keepalive_idle: int | None = None,
-    tcp_keepalive_cnt: int | None = None,
-    tcp_keepalive_intvl: int | None = None,
 ):
-    global g_tcp_keepalive_enabled
-    global g_tcp_keepalive_idle
-    global g_tcp_keepalive_cnt
-    global g_tcp_keepalive_intvl
-    g_tcp_keepalive_enabled = tcp_keepalive
-    g_tcp_keepalive_idle = tcp_keepalive_idle
-    g_tcp_keepalive_cnt = tcp_keepalive_cnt
-    g_tcp_keepalive_intvl = tcp_keepalive_intvl
-
     loop = asyncio.get_running_loop()
 
     # The socket option `TCP_NODELAY` is set by default in Python 3.6+
@@ -128,16 +112,7 @@ async def tcp_echo_server(
         await server.serve_forever()
 
 
-asyncio.run(
-    tcp_echo_server(
-        '127.0.0.1',
-        8888,
-        tcp_keepalive=True,
-        tcp_keepalive_idle=1800,
-        tcp_keepalive_cnt=5,
-        tcp_keepalive_intvl=15,
-    )
-)  # Python 3.7+
+asyncio.run(tcp_echo_server('127.0.0.1', 8888))  # Python 3.7+
 ```
 
 See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples/core/tcp_server_asyncio_low_api.py)
@@ -146,6 +121,7 @@ See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples
 
 - [TCP/UDP Reuse Address](net_reuse_address)
 - [TCP/UDP Reuse Port](net_reuse_port)
+- [TCP/UDP (Recv/Send) Buffer Size](net_buffer_size)
 - [TCP `listen()` Queue](tcp_listen_queue)
 - [TCP Nodelay (Dsiable Nagle's Algorithm)](tcp_nodelay)
 - [TCP Keep-Alive](tcp_keepalive)
@@ -153,7 +129,6 @@ See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples
 
 More details to see [TCP (IPv4) on Python Handbook](https://leven-cn.github.io/python-handbook/recipes/core/tcp_ipv4):
 
-- recv/send buffer size
 - Slow Start (慢启动)
 
 ## References
@@ -162,16 +137,3 @@ More details to see [TCP (IPv4) on Python Handbook](https://leven-cn.github.io/p
 - [Python - `socket` module](https://docs.python.org/3/library/socket.html)
 - [PEP 3156 – Asynchronous IO Support Rebooted: the "asyncio" Module](https://peps.python.org/pep-3156/)
 - [PEP 3151 – Reworking the OS and IO exception hierarchy](https://peps.python.org/pep-3151/)
-- [Linux Programmer's Manual - socket(7)](https://manpages.debian.org/bullseye/manpages/socket.7.en.html)
-- [Linux Programmer's Manual - socket(7) - `SO_REUSEADDR`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_REUSEADDR)
-- [Linux Programmer's Manual - socket(7) - `SO_REUSEPORT`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_REUSEPORT)
-- [Linux Programmer's Manual - socket(7) - `SO_RCVBUF`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_RCVBUF)
-- [Linux Programmer's Manual - socket(7) - `SO_SNDBUF`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_SNDBUF)
-- [Linux Programmer's Manual - socket(7) - `rmem_default`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#rmem_default)
-- [Linux Programmer's Manual - socket(7) - `rmem_max`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#rmem_max)
-- [Linux Programmer's Manual - socket(7) - `wmem_default`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#wmem_default)
-- [Linux Programmer's Manual - socket(7) - `wmem_max`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#wmem_max)
-- [Linux Programmer's Manual - tcp(7)](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html)
-- [Linux Programmer's Manual - tcp(7) - `tcp_rmem`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_rmem)
-- [Linux Programmer's Manual - tcp(7) - `tcp_wmem`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_wmem)
-- [Linux Programmer's Manual - tcp(7) - `tcp_window_scaling`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_window_scaling)

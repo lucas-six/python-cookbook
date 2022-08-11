@@ -16,9 +16,8 @@ from __future__ import annotations
 
 import asyncio
 import logging
-import socket
 
-from net import handle_tcp_nodelay
+from net import handle_socket_bufsize, handle_tcp_nodelay
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}'
@@ -31,10 +30,14 @@ class EchoClientProtocol(asyncio.Protocol):
         message: bytes,
         on_con_lost: asyncio.Future[bool],
         tcp_nodelay: bool = True,
+        recv_buf_size: int | None = None,
+        send_buf_size: int | None = None,
     ):
         self.message = message
         self.on_con_lost = on_con_lost
         self.tcp_nodelay = tcp_nodelay
+        self.recv_buf_size = recv_buf_size
+        self.send_buf_size = send_buf_size
 
     def connection_made(self, transport: asyncio.BaseTransport):
         assert isinstance(transport, asyncio.Transport)
@@ -45,13 +48,8 @@ class EchoClientProtocol(asyncio.Protocol):
 
         sock = transport.get_extra_info('socket')
         assert sock.gettimeout() == 0.0
-        logging.debug(
-            f'recv_buf_size: {sock.getsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF)}'
-        )
-        logging.debug(
-            f'send_buf_size: {sock.getsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF)}'
-        )
         handle_tcp_nodelay(sock, self.tcp_nodelay)
+        handle_socket_bufsize(sock, self.recv_buf_size, self.send_buf_size)
 
         transport.write(self.message)
         logging.debug(f'sent: {self.message!r}')
@@ -89,24 +87,11 @@ See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples
 
 ## More
 
+- [TCP/UDP (Recv/Send) Buffer Size](net_buffer_size)
 - [TCP Nodelay (Dsiable Nagle's Algorithm)](tcp_nodelay)
-
-More details to see [TCP (IPv4) on Python Handbook](https://leven-cn.github.io/python-handbook/recipes/core/tcp_ipv4).
 
 ## References
 
 - [Python - `asyncio` module](https://docs.python.org/3/library/asyncio.html)
 - [Python - `socket` module](https://docs.python.org/3/library/socket.html)
 - [PEP 3151 – Reworking the OS and IO exception hierarchy](https://peps.python.org/pep-3151/)
-- [Linux Programmer's Manual - socket(7)](https://manpages.debian.org/bullseye/manpages/socket.7.en.html)
-- [Linux Programmer's Manual - socket(7) - `SO_RCVBUF`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_RCVBUF)
-- [Linux Programmer's Manual - socket(7) - `SO_SNDBUF`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_SNDBUF)
-- [Linux Programmer's Manual - socket(7) - `rmem_default`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#rmem_default)
-- [Linux Programmer's Manual - socket(7) - `rmem_max`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#rmem_max)
-- [Linux Programmer's Manual - socket(7) - `wmem_default`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#wmem_default)
-- [Linux Programmer's Manual - socket(7) - `wmem_max`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#wmem_max)
-- [Linux Programmer's Manual - tcp(7)](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html)
-- [Linux Programmer's Manual - tcp(7) - `tcp_syn_retries`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_syn_retries)
-- [Linux Programmer's Manual - tcp(7) - `tcp_rmem`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_rmem)
-- [Linux Programmer's Manual - tcp(7) - `tcp_wmem`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_wmem)
-- [Linux Programmer's Manual - tcp(7) - `tcp_window_scaling`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_window_scaling)

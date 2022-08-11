@@ -10,9 +10,14 @@ import asyncio
 import logging
 import socket
 
+from net import handle_reuse_port, handle_socket_bufsize
+
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}'
 )
+
+recv_bufsize: int | None = None
+send_bufsize: int | None = None
 
 
 class EchoClientProtocol(asyncio.DatagramProtocol):
@@ -40,15 +45,8 @@ class EchoClientProtocol(asyncio.DatagramProtocol):
         assert sock.type is socket.SOCK_DGRAM
         assert not sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR)
         assert sock.gettimeout() == 0.0
-        logging.debug(
-            f'reuse_port: {sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT)}'
-        )
-        logging.debug(
-            f'recv_buf_size: {sock.getsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF)}'
-        )
-        logging.debug(
-            f'send_buf_size: {sock.getsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF)}'
-        )
+        handle_reuse_port(sock)
+        handle_socket_bufsize(sock, recv_bufsize, send_bufsize)
         # logging.debug(dir(sock))
 
         logging.debug(f'recv: {data!r} {addr}')

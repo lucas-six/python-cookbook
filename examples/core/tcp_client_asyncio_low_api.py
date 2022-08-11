@@ -8,9 +8,8 @@ from __future__ import annotations
 
 import asyncio
 import logging
-import socket
 
-from net import handle_tcp_nodelay
+from net import handle_socket_bufsize, handle_tcp_nodelay
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}'
@@ -23,10 +22,14 @@ class EchoClientProtocol(asyncio.Protocol):
         message: bytes,
         on_con_lost: asyncio.Future[bool],
         tcp_nodelay: bool = True,
+        recv_buf_size: int | None = None,
+        send_buf_size: int | None = None,
     ):
         self.message = message
         self.on_con_lost = on_con_lost
         self.tcp_nodelay = tcp_nodelay
+        self.recv_buf_size = recv_buf_size
+        self.send_buf_size = send_buf_size
 
     def connection_made(self, transport: asyncio.BaseTransport):
         assert isinstance(transport, asyncio.Transport)
@@ -37,13 +40,8 @@ class EchoClientProtocol(asyncio.Protocol):
 
         sock = transport.get_extra_info('socket')
         assert sock.gettimeout() == 0.0
-        logging.debug(
-            f'recv_buf_size: {sock.getsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF)}'
-        )
-        logging.debug(
-            f'send_buf_size: {sock.getsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF)}'
-        )
         handle_tcp_nodelay(sock, self.tcp_nodelay)
+        handle_socket_bufsize(sock, self.recv_buf_size, self.send_buf_size)
 
         transport.write(self.message)
         logging.debug(f'sent: {self.message!r}')
