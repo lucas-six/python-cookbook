@@ -62,6 +62,7 @@ ETag: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 - [RFC 9111 - HTTP Caching (2022.6)](https://www.rfc-editor.org/rfc/rfc9111)
 - [RFC 2616 - Hypertext Transfer Protocol -- HTTP/1.1 (1999)](https://www.rfc-editor.org/rfc/rfc2616) (Obsoleted by [RFC 9112 - HTTP/1.1 (2022.6)](https://www.rfc-editor.org/rfc/rfc9112))
 - [RFC 2068 - Hypertext Transfer Protocol -- HTTP/1.1 (1997.1)](https://www.rfc-editor.org/rfc/rfc2068) (Obsoleted by [RFC 9112 - HTTP/1.1 (2022.6)](https://www.rfc-editor.org/rfc/rfc9112))
+- [RFC 7232 - Hypertext Transfer Protocol (HTTP/1.1): Conditional Requests (2014)](https://www.rfc-editor.org/rfc/rfc7232) (Obsoleted by [RFC 9110 - HTTP Semantics (2022.6)](https://www.rfc-editor.org/rfc/rfc9110))
 - [RFC 9112 - HTTP/1.1 (2022.6)](https://www.rfc-editor.org/rfc/rfc9112)
 - [W3C - HTTP - Hypertext Transfer Protocol](https://www.w3.org/Protocols/)
 - [Wikipedia - HTTP](https://en.wikipedia.org/wiki/Hypertext%20Transfer%20Protocol)
