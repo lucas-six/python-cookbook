@@ -19,6 +19,7 @@ from pathlib import Path
 from typing import Any
 
 from net import (
+    handle_listen,
     handle_reuse_address,
     handle_reuse_port,
     handle_tcp_keepalive,
@@ -30,33 +31,6 @@ logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
 )
 logger = logging.getLogger()
-
-
-def handle_listen(sock: socket.socket, accept_queue_size: int | None):
-    # Set backlog (accept queue size) for `listen()`.
-    #
-    # On Linux 2.2+, there are two queues: SYN queue and accept queue
-    # max syn queue size: /proc/sys/net/ipv4/tcp_max_syn_backlog
-    # max accept queue size: /proc/sys/net/core/somaxconn
-    #
-    # See https://leven-cn.github.io/python-handbook/recipes/core/tcp_ipv4
-    if sys.platform == 'linux':  # Linux 2.2+
-        assert socket.SOMAXCONN == int(
-            Path('/proc/sys/net/core/somaxconn').read_text().strip()
-        )
-        max_syn_queue_size = int(
-            Path('/proc/sys/net/ipv4/tcp_max_syn_backlog').read_text().strip()
-        )
-        logger.debug(f'max syn queue size: {max_syn_queue_size}')
-
-    if accept_queue_size is None:
-        sock.listen()
-    else:
-        # kernel do this already!
-        # accept_queue_size = min(accept_queue_size, socket.SOMAXCONN)
-        sock.listen(accept_queue_size)
-    logger.debug(f'accept queue size: {accept_queue_size} (max={socket.SOMAXCONN})')
-    sock.listen()
 
 
 def handle_socket_bufsize(
@@ -183,6 +157,7 @@ See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples
 
 - [TCP/UDP Reuse Address](net_reuse_address)
 - [TCP/UDP Reuse Port](net_reuse_port)
+- [TCP `listen()` Queue](tcp_listen_queue)
 - [TCP Nodelay (Dsiable Nagle's Algorithm)](tcp_nodelay)
 - [TCP Keep-Alive](tcp_keepalive)
 - [TCP Quick ACK (Disable Delayed ACK (延迟确认))](tcp_quickack)
@@ -190,7 +165,6 @@ See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples
 
 More details to see [TCP (IPv4) on Python Handbook](https://leven-cn.github.io/python-handbook/recipes/core/tcp_ipv4):
 
-- accept queue size for `listen()`
 - recv/send buffer size
 - Slow Start (慢启动)
 
@@ -200,10 +174,7 @@ More details to see [TCP (IPv4) on Python Handbook](https://leven-cn.github.io/p
 - [Python - `struct` module](https://docs.python.org/3/library/struct.html)
 - [PEP 3151 – Reworking the OS and IO exception hierarchy](https://peps.python.org/pep-3151/)
 - [Linux Programmer's Manual - `socket`(2)](https://manpages.debian.org/bullseye/manpages-dev/socket.2.en.html)
-- [Linux Programmer's Manual - `bind`(2)](https://manpages.debian.org/bullseye/manpages-dev/bind.2.en.html)
 - [Linux Programmer's Manual - `getsockname`(2)](https://manpages.debian.org/bullseye/manpages-dev/getsockname.2.en.html)
-- [Linux Programmer's Manual - `listen`(2)](https://manpages.debian.org/bullseye/manpages-dev/listen.2.en.html)
-- [Linux Programmer's Manual - `accept`(2)](https://manpages.debian.org/bullseye/manpages-dev/accept.2.en.html)
 - [Linux Programmer's Manual - `recv`(2)](https://manpages.debian.org/bullseye/manpages-dev/recv.2.en.html)
 - [Linux Programmer's Manual - `send`(2)](https://manpages.debian.org/bullseye/manpages-dev/send.2.en.html)
 - [Linux Programmer's Manual - socket(7)](https://manpages.debian.org/bullseye/manpages/socket.7.en.html)

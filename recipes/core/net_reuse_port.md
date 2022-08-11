@@ -65,5 +65,6 @@ having multiple processes compete to receive datagrams on the same socket.
 ## References
 
 - [Python - `socket` module](https://docs.python.org/3/library/socket.html)
+- [Linux Programmer's Manual - `bind`(2)](https://manpages.debian.org/bullseye/manpages-dev/bind.2.en.html)
 - [Linux Programmer's Manual - socket(7)](https://manpages.debian.org/bullseye/manpages/socket.7.en.html)
 - [Linux Programmer's Manual - socket(7) - `SO_REUSEPORT`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_REUSEPORT)

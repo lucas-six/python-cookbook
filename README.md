@@ -14,7 +14,7 @@
       alt="pre-commit" style="max-width:100%;">
     </a>
   </p>
-  <p>Recipes for <code>Python</code>. Hands-on code examples and snippets for daily work.</p>
+  <p>Recipes for <code>Python</code>. Hands-on code examples, snippets and guides for daily work.</p>
   <p><a href="https://leven-cn.github.io/python-cookbook/">https://leven-cn.github.io/python-cookbook/</a></p>
 </section>
 
@@ -82,6 +82,7 @@
   - [TCP Connect Timeout (Server Side)](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_connect_timeout_server)
   - [TCP Connect Timeout (Client Side)](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_connect_timeout_client)
   - [TCP Data Transmission Timeout](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_transmission_timeout)
+  - [TCP `listen()` Queue](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_listen_queue)
   - [TCP Nodelay (Disable Nagle's Algorithm)](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_nodelay)
   - [TCP Keep-Alive](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_keepalive)
   - [TCP Quick ACK (Disable Delayed ACK (延迟确认))](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_quickack)
@@ -123,12 +124,12 @@
 
 <!-- markdownlint-enable line-length -->
 
-## More
+## More Topics
 
 ### Core
 
 - Networks and Communications (网络通信)
-  - [Endianness](https://leven-cn.github.io/python-handbook/recipes/core/endianness)
+  - [Endianness](https://leven-cn.github.io/python-cookbook/recipes/core/endianness)
 
 See [full-version documentation](https://leven-cn.github.io/)
 

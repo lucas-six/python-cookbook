@@ -23,6 +23,14 @@ def handle_tcp_keepalive(
     """Handle TCP Keep-Alive.
 
     The `SO_KEEPALIVE` option enables TCP Keep-Alive.
+    See https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_KEEPALIVE
+
+    `TCP_KEEPIDLE`, `TCP_KEEPCNT` and `TCP_KEEPINTVL` are new in Linux 2.4.
+    https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#TCP_KEEPIDLE
+    https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#TCP_KEEPCNT
+    https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#TCP_KEEPINTVL
+
+    `TCP_KEEPALIVE` are new in Python 3.10.
     """
     if enable is not None:
         val = 1 if enable else 0
@@ -59,7 +67,7 @@ See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples
 
 ### OS Level
 
-### `tcp_keepalive_time`
+#### `tcp_keepalive_time`
 
 Since Linux *2.2*.
 
@@ -78,21 +86,7 @@ $ sudo sysctl -w net.ipv4.tcp_keepalive_time = 3600
 
 See [Linux Programmer's Manual - tcp(7) - `tcp_keepalive_time`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_keepalive_time).
 
-Since Linux *2.4*.
-
-```python
-sock.setsocketopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)
-sock.setsocketopt(socket.IPPROTO_TCP, socket.TCP_KEEPIDLE, 3600)
-
-# macOS & Python 3.10+
-if sys.platform == 'darwin' and sys.version >= (3, 10):
-    sock.setsocketopt(socket.IPPROTO_TCP, socket.TCP_KEEPALIVE, 3600)
-```
-
-See [Linux Programmer's Manual - socket(7) - `SO_KEEPALIVE`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_KEEPALIVE),
-and [Linux Programmer's Manual - tcp(7) - `TCP_KEEPIDLE`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#TCP_KEEPIDLE).
-
-### `tcp_keepalive_probes`
+#### `tcp_keepalive_probes`
 
 Since Linux *2.2*.
 
@@ -112,17 +106,7 @@ $ sudo sysctl -w net.ipv4.tcp_keepalive_probes = 9
 
 See [Linux Programmer's Manual - tcp(7) - `tcp_keepalive_probes`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_keepalive_probes).
 
-Since Linux *2.4*.
-
-```python
-sock.setsocketopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)
-sock.setsocketopt(socket.IPPROTO_TCP, socket.TCP_KEEPCNT, 9)
-```
-
-See [Linux Programmer's Manual - socket(7) - `SO_KEEPALIVE`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_KEEPALIVE),
-and [Linux Programmer's Manual - tcp(7) - `TCP_KEEPCNT`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#TCP_KEEPCNT).
-
-### `tcp_keepalive_intvl`
+#### `tcp_keepalive_intvl`
 
 Since Linux *2.4*.
 
@@ -140,16 +124,6 @@ $ sudo sysctl -w net.ipv4.tcp_keepalive_intvl = 25
 ```
 
 See [Linux Programmer's Manual - tcp(7) - `tcp_keepalive_intvl`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_keepalive_intvl).
-
-Since Linux *2.4*.
-
-```python
-sock.setsocketopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)
-sock.setsocketopt(socket.IPPROTO_TCP, socket.TCP_KEEPINTVL, 25)
-```
-
-See [Linux Programmer's Manual - socket(7) - `SO_KEEPALIVE`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_KEEPALIVE),
-and [Linux Programmer's Manual - tcp(7) - `TCP_KEEPINTVL`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#TCP_KEEPINTVL).
 
 ## References
 
