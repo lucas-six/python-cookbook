@@ -118,6 +118,7 @@
   - [Testing Framework: `pytest`](https://leven-cn.github.io/python-cookbook/recipes/core/pytest)
 - Package Management
   - [`pip` - Standard Package Manager](https://leven-cn.github.io/python-cookbook/recipes/core/pip)
+  - [`pipx` - Install and Run Python Applications](https://leven-cn.github.io/python-cookbook/recipes/core/pipx)
 - [Setup Python Project](https://leven-cn.github.io/python-cookbook/recipes/core/python_project)
 - [Performance Measurement](https://leven-cn.github.io/python-cookbook/recipes/core/perf)
 
