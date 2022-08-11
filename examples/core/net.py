@@ -137,6 +137,35 @@ def handle_reuse_port(sock: socket.socket, reuse_port: bool | None = None):
     logging.debug(f'reuse port: {reuse_port}')
 
 
+def handle_listen(sock: socket.socket, accept_queue_size: int | None):
+    """Set backlog (accept queue size) for `listen()`.
+
+    On Linux 2.2+, there are two queues: SYN queue and accept queue
+    max syn queue size: /proc/sys/net/ipv4/tcp_max_syn_backlog
+    max accept queue size: /proc/sys/net/core/somaxconn
+
+    https://manpages.debian.org/bullseye/manpages-dev/listen.2.en.html
+    https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_max_syn_backlog
+    """
+    if sys.platform == 'linux':  # Linux 2.2+
+        assert socket.SOMAXCONN == int(
+            Path('/proc/sys/net/core/somaxconn').read_text().strip()
+        )
+        max_syn_queue_size = int(
+            Path('/proc/sys/net/ipv4/tcp_max_syn_backlog').read_text().strip()
+        )
+        logging.debug(f'max syn queue size: {max_syn_queue_size}')
+
+    if accept_queue_size is None:
+        sock.listen()
+    else:
+        # kernel do this already!
+        # accept_queue_size = min(accept_queue_size, socket.SOMAXCONN)
+        sock.listen(accept_queue_size)
+    logging.debug(f'accept queue size: {accept_queue_size} (max={socket.SOMAXCONN})')
+    sock.listen()
+
+
 def handle_tcp_nodelay(sock: socket.socket, tcp_nodelay: bool | None = None):
     """The `TCP_NODELAY` option disables Nagle algorithm.
 
@@ -169,6 +198,14 @@ def handle_tcp_keepalive(
     """Handle TCP Keep-Alive.
 
     The `SO_KEEPALIVE` option enables TCP Keep-Alive.
+    See https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_KEEPALIVE
+
+    `TCP_KEEPIDLE`, `TCP_KEEPCNT` and `TCP_KEEPINTVL` are new in Linux 2.4.
+    https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#TCP_KEEPIDLE
+    https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#TCP_KEEPCNT
+    https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#TCP_KEEPINTVL
+
+    `TCP_KEEPALIVE` are new in Python 3.10.
     """
     if enable is not None:
         val = 1 if enable else 0

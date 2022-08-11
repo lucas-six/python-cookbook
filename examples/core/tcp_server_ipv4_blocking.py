@@ -12,6 +12,7 @@ from pathlib import Path
 from typing import Any
 
 from net import (
+    handle_listen,
     handle_reuse_address,
     handle_reuse_port,
     handle_tcp_keepalive,
@@ -23,33 +24,6 @@ logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
 )
 logger = logging.getLogger()
-
-
-def handle_listen(sock: socket.socket, accept_queue_size: int | None):
-    # Set backlog (accept queue size) for `listen()`.
-    #
-    # On Linux 2.2+, there are two queues: SYN queue and accept queue
-    # max syn queue size: /proc/sys/net/ipv4/tcp_max_syn_backlog
-    # max accept queue size: /proc/sys/net/core/somaxconn
-    #
-    # See https://leven-cn.github.io/python-handbook/recipes/core/tcp_ipv4
-    if sys.platform == 'linux':  # Linux 2.2+
-        assert socket.SOMAXCONN == int(
-            Path('/proc/sys/net/core/somaxconn').read_text().strip()
-        )
-        max_syn_queue_size = int(
-            Path('/proc/sys/net/ipv4/tcp_max_syn_backlog').read_text().strip()
-        )
-        logger.debug(f'max syn queue size: {max_syn_queue_size}')
-
-    if accept_queue_size is None:
-        sock.listen()
-    else:
-        # kernel do this already!
-        # accept_queue_size = min(accept_queue_size, socket.SOMAXCONN)
-        sock.listen(accept_queue_size)
-    logger.debug(f'accept queue size: {accept_queue_size} (max={socket.SOMAXCONN})')
-    sock.listen()
 
 
 def handle_socket_bufsize(

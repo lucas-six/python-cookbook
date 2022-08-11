@@ -58,6 +58,8 @@ See [RFC 6298](https://datatracker.ietf.org/doc/html/rfc6298.html).
 
 <!-- markdownlint-disable line-length -->
 
+- [Linux Programmer's Manual - `recv`(2)](https://manpages.debian.org/bullseye/manpages-dev/recv.2.en.html)
+- [Linux Programmer's Manual - `send`(2)](https://manpages.debian.org/bullseye/manpages-dev/send.2.en.html)
 - [Linux Programmer's Manual - socket(7)](https://manpages.debian.org/bullseye/manpages/socket.7.en.html)
 - [Linux Programmer's Manual - socket(7) - `SO_RCVTIMEO`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_RCVTIMEO)
 - [Linux Programmer's Manual - socket(7) - `SO_SNDTIMEO`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_SNDTIMEO)

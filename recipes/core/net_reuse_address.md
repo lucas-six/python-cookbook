@@ -27,5 +27,6 @@ See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples
 ## References
 
 - [Python - `socket` module](https://docs.python.org/3/library/socket.html)
+- [Linux Programmer's Manual - `bind`(2)](https://manpages.debian.org/bullseye/manpages-dev/bind.2.en.html)
 - [Linux Programmer's Manual - socket(7)](https://manpages.debian.org/bullseye/manpages/socket.7.en.html)
 - [Linux Programmer's Manual - socket(7) - `SO_REUSEADDR`](https://manpages.debian.org/bullseye/manpages/socket.7.en.html#SO_REUSEADDR)
