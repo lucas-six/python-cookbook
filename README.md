@@ -138,6 +138,7 @@
 ### Web
 
 - [HTTP Basic](https://leven-cn.github.io/python-cookbook/more/web/http_basic)
+- [HTTP Connection Management](https://leven-cn.github.io/python-cookbook/more/web/http_connection)
 
 See [full-version documentation](https://leven-cn.github.io/)
 
