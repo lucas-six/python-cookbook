@@ -135,6 +135,10 @@
   - [TCP RFC 1337 - TIME-WAIT Assassination Hazards (TIME-WAIT 暗杀)](https://leven-cn.github.io/python-cookbook/more/core/tcp_rfc1337)
   - [TCP Selective ACK](https://leven-cn.github.io/python-cookbook/more/core/tcp_sack)
 
+### Web
+
+- [HTTP Basic](https://leven-cn.github.io/python-cookbook/more/web/http_basic)
+
 See [full-version documentation](https://leven-cn.github.io/)
 
 ## License
