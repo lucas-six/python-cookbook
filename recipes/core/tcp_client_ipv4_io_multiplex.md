@@ -121,8 +121,6 @@ See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples
 - [TCP Data Transmission Timeout](tcp_transmission_timeout)
 - [TCP Nodelay (Nagle's Algorithm)](tcp_nodelay)
 
-More details to see [TCP (IPv4) on Python Handbook](https://leven-cn.github.io/python-handbook/recipes/core/tcp_ipv4).
-
 ## References
 
 - [Python - `socket` module](https://docs.python.org/3/library/socket.html)
@@ -136,4 +134,3 @@ More details to see [TCP (IPv4) on Python Handbook](https://leven-cn.github.io/p
 - [Linux Programmer's Manual - `epoll`(7)](https://manpages.debian.org/bullseye/manpages-dev/epoll.7.en.html)
 - [Linux Programmer's Manual - `recv`(2)](https://manpages.debian.org/bullseye/manpages-dev/recv.2.en.html)
 - [Linux Programmer's Manual - `send`(2)](https://manpages.debian.org/bullseye/manpages-dev/send.2.en.html)
-- [RFC 2018 - TCP Selective Acknowledgment Options](https://datatracker.ietf.org/doc/html/rfc2018.html)

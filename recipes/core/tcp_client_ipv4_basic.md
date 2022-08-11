@@ -66,8 +66,6 @@ See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples
 - [TCP Data Transmission Timeout](tcp_transmission_timeout)
 - [TCP Nodelay (Nagle's Algorithm)](tcp_nodelay)
 
-More details to see [TCP (IPv4) on Python Handbook](https://leven-cn.github.io/python-handbook/recipes/core/tcp_ipv4).
-
 ## References
 
 - [Python - `socket` module](https://docs.python.org/3/library/socket.html)
