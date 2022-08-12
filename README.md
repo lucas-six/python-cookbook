@@ -39,9 +39,9 @@
   - [Suppress Exceptions](https://leven-cn.github.io/python-cookbook/recipes/core/suppress_exceptions)
 - [Time: Timestamp (UNIX Time), UTC, Local Time](https://leven-cn.github.io/python-cookbook/recipes/core/time)
 - Representation of Dates and Times
+  - [Format Date & Time String](https://leven-cn.github.io/python-cookbook/recipes/core/datetime_fmt_str)
   - [ISO 8601 Format](https://leven-cn.github.io/python-cookbook/recipes/core/datetime_fmt_iso_8601)
   - [RFC 3339 Format](https://leven-cn.github.io/python-cookbook/recipes/core/datetime_fmt_rfc_3339)
-  - [Format Date & Time String](https://leven-cn.github.io/python-cookbook/recipes/core/datetime_fmt_str)
 - Type Hint (类型提示)
   - [Type Hint for Basic Types](https://leven-cn.github.io/python-cookbook/recipes/core/type_hint_for_basic_type)
   - [Type Hint for `namedtuple`: `typing.NamedTuple`](https://leven-cn.github.io/python-cookbook/recipes/core/type_hint_for_namedtuple)
@@ -137,6 +137,7 @@
 
 ### Core
 
+- [Representation of Dates and Times - ISO 8601 Format](https://leven-cn.github.io/python-cookbook/more/core/iso_8601_fmt)
 - Networks and Communications (网络通信)
   - [Endianness](https://leven-cn.github.io/python-cookbook/more/core/endianness)
   - [TCP Slow Start (慢启动)](https://leven-cn.github.io/python-cookbook/more/core/tcp_slowstart)
