@@ -35,6 +35,7 @@
   - [Create Function Decorator With Required Arguments](https://leven-cn.github.io/python-cookbook/recipes/core/function_decorator_args_required)
   - [Create Function Decorator With Optional Arguments](https://leven-cn.github.io/python-cookbook/recipes/core/function_decorator_args_optional)
 - Context Manager (上下文管理器)
+  - [`with` Statement](https://leven-cn.github.io/python-cookbook/recipes/core/with_statement)
   - [Create Context Manager](https://leven-cn.github.io/python-cookbook/recipes/core/context_manager)
   - [Suppress Exceptions](https://leven-cn.github.io/python-cookbook/recipes/core/suppress_exceptions)
 - [Time: Timestamp (UNIX Time), UTC, Local Time](https://leven-cn.github.io/python-cookbook/recipes/core/time)
