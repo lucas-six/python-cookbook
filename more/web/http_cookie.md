@@ -21,12 +21,14 @@ Cookies are mainly used for three purposes:
 Set-Cookie: id=<uid>; Domain=<domain>
 
 Set-Cookie: id=a3fWa; Expires=Thu, 21 Oct 2021 07:28:00 GMT; Secure; HttpOnly; SameSite=Strict
+Set-Cookie: id=a3fWa; Expires=Thu, 21 Oct 2021 07:28:00 GMT; Secure; HttpOnly; SameSite=Strict; csrftoken=xxxxxx
 ```
 
 - **`Domain`**: allow subdomains
 - **`Secure`**: only for https
 - **`HttpOnly`**: disallow JavaScript *`Document.cookie`* API.
 - **`SameSite`**: **`Strict`** for same origin, **`Lax`** (default) for link following
+(See [Cross-Site Request Forgery (CSRF) (跨站请求伪造)](https://leven-cn.github.io/python-cookbook/more/web/csrf)).
 
 ## Request
 
