@@ -82,6 +82,7 @@
   - [Synchronization Primitives - Mutex Lock (互斥锁): `Lock` (For Processes and Threads)](https://leven-cn.github.io/python-cookbook/recipes/core/synchronization_lock)
   - [Synchronization Primitives - Condition Variable (条件变量): `Condition` (For Processes and Threads)](https://leven-cn.github.io/python-cookbook/recipes/core/synchronization_condition)
   - [Synchronization Primitives - Semaphore (信号量): `Semaphore` / `BoundedSemaphore` (For Processes and Threads)](https://leven-cn.github.io/python-cookbook/recipes/core/synchronization_semaphore)
+  - [Synchronization Primitives - (栅栏): `Barrier`](https://leven-cn.github.io/python-cookbook/recipes/core/synchronization_barrier)
 - Networks and Communications (网络通信)
   - [TCP Server (IPv4) - Standard Framework](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_server_ipv4_std)
   - [TCP Server (IPv4) - Blocking Mode (阻塞模式)](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_server_ipv4_blocking)
