@@ -148,6 +148,7 @@
 ### Core
 
 - [Representation of Dates and Times - ISO 8601 Format](https://leven-cn.github.io/python-cookbook/more/core/iso_8601_fmt)
+- [Logging Components and Flow](https://leven-cn.github.io/python-cookbook/more/core/logging)
 - Networks and Communications (网络通信)
   - [Endianness](https://leven-cn.github.io/python-cookbook/more/core/endianness)
   - [TCP Slow Start (慢启动)](https://leven-cn.github.io/python-cookbook/more/core/tcp_slowstart)
