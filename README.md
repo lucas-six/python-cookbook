@@ -24,7 +24,10 @@
 
 ### Core
 
-- [String format specification (字符串格式规范)](https://leven-cn.github.io/python-cookbook/recipes/core/str_fmt_spec)
+- Text Processing (文本处理)
+  - [Universal Newline](https://leven-cn.github.io/python-cookbook/recipes/core/universal_newline)
+  - [String format specification (字符串格式规范)](https://leven-cn.github.io/python-cookbook/recipes/core/str_fmt_spec)
+  - [Regex Patterns](https://leven-cn.github.io/python-cookbook/recipes/core/regex_patterns)
 - [Tuples with Named Fields - `namedtuple` (命名元组)](https://leven-cn.github.io/python-cookbook/recipes/core/namedtuple)
 - [Ordered Dictionary - `OrderedDict`](https://leven-cn.github.io/python-cookbook/recipes/core/ordereddict)
 - Function Decorator (函数装饰器)
@@ -34,7 +37,6 @@
 - Context Manager (上下文管理器)
   - [Create Context Manager](https://leven-cn.github.io/python-cookbook/recipes/core/context_manager)
   - [Suppress Exceptions](https://leven-cn.github.io/python-cookbook/recipes/core/suppress_exceptions)
-- [Regex Patterns](https://leven-cn.github.io/python-cookbook/recipes/core/regex_patterns)
 - [Time: Timestamp (UNIX Time), UTC, Local Time](https://leven-cn.github.io/python-cookbook/recipes/core/time)
 - Representation of Dates and Times
   - [ISO 8601 Format](https://leven-cn.github.io/python-cookbook/recipes/core/datetime_fmt_iso_8601)
