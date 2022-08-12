@@ -141,6 +141,7 @@
 
 - [URL Parsing - `urllib.parse`](https://leven-cn.github.io/python-cookbook/recipes/web/url_parse)
 - [HTTP Caching](https://leven-cn.github.io/python-cookbook/recipes/web/http_caching)
+- [HTTP Server (Builtin)](https://leven-cn.github.io/python-cookbook/recipes/web/http_server_builtin)
 
 <!-- markdownlint-enable line-length -->
 
