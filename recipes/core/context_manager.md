@@ -42,9 +42,10 @@ with managed_resource(timeout=3600) as resource:
     pass
 ```
 
-### More
+### More Details
 
-More details to see [Context Manager on Python Handbook](https://leven-cn.github.io/python-handbook/recipes/core/context_manager).
+- [`with` Statement](https://leven-cn.github.io/python-cookbook/recipes/core/with_statement)
+- [Context Manager (on Python Handbook)](https://leven-cn.github.io/python-handbook/recipes/core/context_manager).
 
 ## References
 
