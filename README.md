@@ -57,6 +57,7 @@
   - [Type Hint for Restricting Inheritance and Overriding: `@typing.final`](https://leven-cn.github.io/python-cookbook/recipes/core/type_hint_for_inheritance)
 - [Pack/Unpack Binary Data - `struct`](https://leven-cn.github.io/python-cookbook/recipes/core/struct)
 - I/O, File-Like Object
+  - [Inheritance of File Descriptor](https://leven-cn.github.io/python-cookbook/recipes/core/fd_inheritable)
   - [Access Text Files](https://leven-cn.github.io/python-cookbook/recipes/core/text_io)
   - [Access Binary Files](https://leven-cn.github.io/python-cookbook/recipes/core/binary_io)
 - Logging (日志)
