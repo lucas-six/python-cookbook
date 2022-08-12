@@ -43,7 +43,9 @@
   - [Reentrant Context Manager](https://leven-cn.github.io/python-cookbook/recipes/core/context_manager_reentrant)
   - [Reusable Context Manager](https://leven-cn.github.io/python-cookbook/recipes/core/context_manager_reusable)
   - [Suppress Exceptions](https://leven-cn.github.io/python-cookbook/recipes/core/suppress_exceptions)
-- [Time: Timestamp (UNIX Time), UTC, Local Time](https://leven-cn.github.io/python-cookbook/recipes/core/time)
+- Time
+  - [Time: Timestamp (UNIX Time), UTC, Local Time](https://leven-cn.github.io/python-cookbook/recipes/core/time)
+  - [Time Zone](https://leven-cn.github.io/python-cookbook/recipes/core/timezone)
 - Representation of Dates and Times
   - [Format Date & Time String](https://leven-cn.github.io/python-cookbook/recipes/core/datetime_fmt_str)
   - [ISO 8601 Format](https://leven-cn.github.io/python-cookbook/recipes/core/datetime_fmt_iso_8601)
