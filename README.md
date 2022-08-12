@@ -50,6 +50,7 @@
   - [Format Date & Time String](https://leven-cn.github.io/python-cookbook/recipes/core/datetime_fmt_str)
   - [ISO 8601 Format](https://leven-cn.github.io/python-cookbook/recipes/core/datetime_fmt_iso_8601)
   - [RFC 3339 Format](https://leven-cn.github.io/python-cookbook/recipes/core/datetime_fmt_rfc_3339)
+  - [RFC 5822/2822 Format](https://leven-cn.github.io/python-cookbook/recipes/core/datetime_fmt_rfc_2822)
 - Type Hint (类型提示)
   - [Type Hint for Basic Types](https://leven-cn.github.io/python-cookbook/recipes/core/type_hint_for_basic_type)
   - [Type Hint for `namedtuple`: `typing.NamedTuple`](https://leven-cn.github.io/python-cookbook/recipes/core/type_hint_for_namedtuple)
