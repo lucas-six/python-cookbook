@@ -103,7 +103,7 @@ logging.config.dictConfig(LOGGING)
 
 ## More
 
-More details to see [Logging on Python Handbook](https://leven-cn.github.io/python-handbook/recipes/core/logging).
+More details to see [Logging Components and Flow](https://leven-cn.github.io/python-cookbook/more/core/logging).
 
 ## References
 
