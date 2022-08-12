@@ -40,6 +40,7 @@
   - [Multiple Context Managers](https://leven-cn.github.io/python-cookbook/recipes/core/context_manager_multiple)
   - [Context Manager Protocol](https://leven-cn.github.io/python-cookbook/recipes/core/context_manager_protocol)
   - [Single Use Context Manager](https://leven-cn.github.io/python-cookbook/recipes/core/context_manager_single_use)
+  - [Reentrant Context Manager](https://leven-cn.github.io/python-cookbook/recipes/core/context_manager_reentrant)
   - [Suppress Exceptions](https://leven-cn.github.io/python-cookbook/recipes/core/suppress_exceptions)
 - [Time: Timestamp (UNIX Time), UTC, Local Time](https://leven-cn.github.io/python-cookbook/recipes/core/time)
 - Representation of Dates and Times
