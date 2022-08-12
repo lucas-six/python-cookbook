@@ -163,6 +163,7 @@
 - [HTTP Connection Management](https://leven-cn.github.io/python-cookbook/more/web/http_connection)
 - [HTTP Authentication](https://leven-cn.github.io/python-cookbook/more/web/http_authentication)
 - [HTTP Cookie](https://leven-cn.github.io/python-cookbook/more/web/http_cookie)
+- [Cross-Site Request Forgery (CSRF) (跨站请求伪造)](https://leven-cn.github.io/python-cookbook/more/web/csrf)
 
 See [full-version documentation](https://leven-cn.github.io/)
 
