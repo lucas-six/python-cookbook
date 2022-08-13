@@ -85,6 +85,9 @@ urllib.request.install_opener(opener)
 `urllib` uses the *`http.client`* library, which in turn uses the `socket` library,
 and the *`http.cookiejar`* library.
 
+Currently, only the following protocols are supported:
+*HTTP/0.9*, *HTTP/1.0*, FTP, local files, and data URLs.
+
 - [URL Parsing: `urllib.parse`](https://leven-cn.github.io/python-cookbook/recipes/web/url_parse)
 - [HTTP Request: `requests`](https://requests.readthedocs.io/en/latest/)
 
