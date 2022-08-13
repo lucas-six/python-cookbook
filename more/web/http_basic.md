@@ -128,7 +128,6 @@ Content-Language: zh-Hans
 (Obsolete [RFC 7231](https://www.rfc-editor.org/rfc/rfc7231 "Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content (2014)"),
 [RFC 7232](https://www.rfc-editor.org/rfc/rfc7232 "Hypertext Transfer Protocol (HTTP/1.1): Conditional Requests (2014)"))
 - [RFC 2817 - Upgrading to TLS Within HTTP/1.1 (2000)](https://www.rfc-editor.org/rfc/rfc2817) (Obsoleted by [RFC 9112](https://www.rfc-editor.org/rfc/rfc9112 "HTTP/1.1 (2022.6)") and [RFC 9110](https://www.rfc-editor.org/rfc/rfc9110 "HTTP Semantics (2022.6)"))
-- [RFC 7233 - Hypertext Transfer Protocol (HTTP/1.1): Range Requests (2014)](https://www.rfc-editor.org/rfc/rfc7233) (Obsoleted by [RFC 9110 - HTTP Semantics (2022.6)](https://www.rfc-editor.org/rfc/rfc9110))
 - [RFC 2046 - Multipurpose Internet Mail Extensions (MIME) Part Two: Media Types (1996.11)](https://www.rfc-editor.org/rfc/rfc2046)
 - [RFC 3676 - The Text/Plain Format and DelSp Parameters (2004.2)](https://www.rfc-editor.org/rfc/rfc3676)
 (Obsolete [RFC 2646](https://www.rfc-editor.org/rfc/rfc2646 "The Text/Plain Format Parameter (1999)"))
