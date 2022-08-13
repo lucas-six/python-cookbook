@@ -58,12 +58,13 @@ ETag: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 
 - [MDN - HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP)
 - David Gourley & Brian Totty. *HTTP: The Definitive Guide* (2002) ISBN: 978-1-56592-509-0 (《HTTP权威指南》)
-- [RFC 7234 - Hypertext Transfer Protocol (HTTP/1.1): Caching (2014)](https://www.rfc-editor.org/rfc/rfc7234) (Obsoleted by [RFC 9111 - HTTP Caching (2022.6)](https://www.rfc-editor.org/rfc/rfc9111))
 - [RFC 9111 - HTTP Caching (2022.6)](https://www.rfc-editor.org/rfc/rfc9111)
-- [RFC 2616 - Hypertext Transfer Protocol -- HTTP/1.1 (1999)](https://www.rfc-editor.org/rfc/rfc2616) (Obsoleted by [RFC 9112 - HTTP/1.1 (2022.6)](https://www.rfc-editor.org/rfc/rfc9112))
-- [RFC 2068 - Hypertext Transfer Protocol -- HTTP/1.1 (1997.1)](https://www.rfc-editor.org/rfc/rfc2068) (Obsoleted by [RFC 9112 - HTTP/1.1 (2022.6)](https://www.rfc-editor.org/rfc/rfc9112))
-- [RFC 7232 - Hypertext Transfer Protocol (HTTP/1.1): Conditional Requests (2014)](https://www.rfc-editor.org/rfc/rfc7232) (Obsoleted by [RFC 9110 - HTTP Semantics (2022.6)](https://www.rfc-editor.org/rfc/rfc9110))
+(Obsolete [RFC 7234](https://www.rfc-editor.org/rfc/rfc7234 "Hypertext Transfer Protocol (HTTP/1.1): Caching (2014)"))
+- [RFC 9110 - HTTP Semantics (2022.6)](https://www.rfc-editor.org/rfc/rfc9110)
+(Obsolete [RFC 7232](https://www.rfc-editor.org/rfc/rfc7232 "Hypertext Transfer Protocol (HTTP/1.1): Conditional Requests (2014)"))
 - [RFC 9112 - HTTP/1.1 (2022.6)](https://www.rfc-editor.org/rfc/rfc9112)
+(Obsolete [RFC 2068](https://www.rfc-editor.org/rfc/rfc2068 "Hypertext Transfer Protocol -- HTTP/1.1 (1997.1)"),
+[RFC 2616](https://www.rfc-editor.org/rfc/rfc2616 "Hypertext Transfer Protocol -- HTTP/1.1 (1999)"))
 - [W3C - HTTP - Hypertext Transfer Protocol](https://www.w3.org/Protocols/)
 - [Wikipedia - HTTP](https://en.wikipedia.org/wiki/Hypertext%20Transfer%20Protocol)
 - [Wikipedia - HTTPS](https://en.wikipedia.org/wiki/HTTPS)
