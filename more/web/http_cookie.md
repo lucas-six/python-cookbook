@@ -19,16 +19,20 @@ Cookies are mainly used for three purposes:
 
 ```http
 Set-Cookie: id=<uid>; Domain=<domain>
+Set-Cookie: id=<uid>; Path=/path/to
 
 Set-Cookie: id=a3fWa; Expires=Thu, 21 Oct 2021 07:28:00 GMT; Secure; HttpOnly; SameSite=Strict
-Set-Cookie: id=a3fWa; Expires=Thu, 21 Oct 2021 07:28:00 GMT; Secure; HttpOnly; SameSite=Strict; csrftoken=xxxxxx
+Set-Cookie: id=a3fWa; Max-Age=300; Secure; HttpOnly; SameSite=Strict
+Set-Cookie: id=a3fWa; Max-Age=300; Secure; HttpOnly; SameSite=Strict; csrftoken=xxxxxx
 ```
 
 - **`Domain`**: allow subdomains
+- **`Path`**: URL path
 - **`Secure`**: only for https
 - **`HttpOnly`**: disallow JavaScript *`Document.cookie`* API.
 - **`SameSite`**: **`Strict`** for same origin, **`Lax`** (default) for link following
-(See [Cross-Site Request Forgery (CSRF) (跨站请求伪造)](https://leven-cn.github.io/python-cookbook/more/web/csrf)).
+(See [Cross-Site Request Forgery (CSRF) (跨站请求伪造)](https://leven-cn.github.io/python-cookbook/more/web/csrf))
+- **`Max-Age`** / **`Expires`**: cache
 
 ## Request
 
@@ -36,7 +40,13 @@ Set-Cookie: id=a3fWa; Expires=Thu, 21 Oct 2021 07:28:00 GMT; Secure; HttpOnly; S
 Cookie: id=<uid>
 ```
 
-See [RFC 6265 - HTTP State Management Mechanism (2011.4)](https://datatracker.ietf.org/doc/html/rfc6265).
+See [RFC 6265 - HTTP State Management Mechanism (2011.4)](https://datatracker.ietf.org/doc/html/rfc6265)
+(Obsolete [RFC 2109](https://datatracker.ietf.org/doc/html/rfc2109 "HTTP State Management Mechanism (1997.2)"),
+[RFC 2965](https://datatracker.ietf.org/doc/html/rfc2965 "HTTP State Management Mechanism (2000.10)")).
+
+## Python Examples and Recipes
+
+- [HTTP Cookie (Server Side)](https://leven-cn.github.io/python-cookbook/recipes/web/http_cookie)
 
 ## References
 
@@ -44,14 +54,15 @@ See [RFC 6265 - HTTP State Management Mechanism (2011.4)](https://datatracker.ie
 
 - [MDN - HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP)
 - David Gourley & Brian Totty. *HTTP: The Definitive Guide* (2002) ISBN: 978-1-56592-509-0 (《HTTP权威指南》)
-- [RFC 2109 - HTTP State Management Mechanism (1997.2)](https://datatracker.ietf.org/doc/html/rfc2109) (Obsoleted by [RFC 6265 - HTTP State Management Mechanism (2011.4)](https://datatracker.ietf.org/doc/html/rfc6265))
-- [RFC 2965 - HTTP State Management Mechanism (2000.10)](https://datatracker.ietf.org/doc/html/rfc2965) (Obsoleted by [RFC 6265 - HTTP State Management Mechanism (2011.4)](https://datatracker.ietf.org/doc/html/rfc6265))
 - [RFC 6265 - HTTP State Management Mechanism (2011.4)](https://datatracker.ietf.org/doc/html/rfc6265)
-- [RFC 2616 - Hypertext Transfer Protocol -- HTTP/1.1 (1999)](https://www.rfc-editor.org/rfc/rfc2616) (Obsoleted by [RFC 9112 - HTTP/1.1 (2022.6)](https://www.rfc-editor.org/rfc/rfc9112))
-- [RFC 2068 - Hypertext Transfer Protocol -- HTTP/1.1 (1997.1)](https://www.rfc-editor.org/rfc/rfc2068) (Obsoleted by [RFC 9112 - HTTP/1.1 (2022.6)](https://www.rfc-editor.org/rfc/rfc9112))
-- [RFC 7231 - Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content (2014)](https://www.rfc-editor.org/rfc/rfc7231) (Obsoleted by [RFC 9110 - HTTP Semantics (2022.6)](https://www.rfc-editor.org/rfc/rfc9110))
+(Obsolete [RFC 2109](https://datatracker.ietf.org/doc/html/rfc2109 "HTTP State Management Mechanism (1997.2)"),
+[RFC 2965](https://datatracker.ietf.org/doc/html/rfc2965 "HTTP State Management Mechanism (2000.10)"))
+- [RFC 2964 - Use of HTTP State Management (2000.10)](https://datatracker.ietf.org/doc/html/rfc2964)
 - [RFC 9110 - HTTP Semantics (2022.6)](https://www.rfc-editor.org/rfc/rfc9110)
+(Obsolete [RFC 7231](https://www.rfc-editor.org/rfc/rfc7231 "Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content (2014)"))
 - [RFC 9112 - HTTP/1.1 (2022.6)](https://www.rfc-editor.org/rfc/rfc9112)
+(Obsolete [RFC 2068](https://www.rfc-editor.org/rfc/rfc2068 "Hypertext Transfer Protocol -- HTTP/1.1 (1997.1)"),
+[RFC 2616](https://www.rfc-editor.org/rfc/rfc2616 "Hypertext Transfer Protocol -- HTTP/1.1 (1999)"))
 - [W3C - HTTP - Hypertext Transfer Protocol](https://www.w3.org/Protocols/)
 - [Wikipedia - HTTP](https://en.wikipedia.org/wiki/Hypertext%20Transfer%20Protocol)
 - [Wikipedia - HTTPS](https://en.wikipedia.org/wiki/HTTPS)

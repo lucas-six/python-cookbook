@@ -145,6 +145,7 @@
 - [HTTP Caching](https://leven-cn.github.io/python-cookbook/recipes/web/http_caching)
 - [HTTP Datetime Format](https://leven-cn.github.io/python-cookbook/recipes/web/http_datetime_fmt)
 - [HTTP Server (Builtin)](https://leven-cn.github.io/python-cookbook/recipes/web/http_server_builtin)
+- [HTTP Cookie (Server Side)](https://leven-cn.github.io/python-cookbook/recipes/web/http_cookie)
 
 <!-- markdownlint-enable line-length -->
 
