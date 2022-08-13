@@ -17,7 +17,7 @@ params = {
 }
 url_params = urllib.parse.urlencode(params, encoding='utf-8')
 headers = {
-    'User-Agent': 'Python-urllib/2.2',  # Python-urllib/x.y
+    'User-Agent': 'Python-urllib/3.9',  # Python-urllib/x.y
 }
 url = 'https://httpbin.org/#/'
 
