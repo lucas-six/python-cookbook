@@ -11,7 +11,9 @@ Accept-Ranges: none
 ## Client Request
 
 ```http
-Range: bytes=0-2048
+Range: bytes=0-2047
+Range: bytes=0-
+Range: bytes=-2048
 ```
 
 ## Server Response
@@ -19,8 +21,8 @@ Range: bytes=0-2048
 ```http
 HTTP/1.1 206 Partial Content
 
-Content-Range: bytes 0-2048/146515
-Content-Length: 1024
+Content-Range: bytes 0-2047/146515
+Content-Length: 2048
 ```
 
 or
