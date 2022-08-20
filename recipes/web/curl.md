@@ -24,7 +24,7 @@ automatically set the following headers:
 Content-Type: application/json
 ```
 
-### Form-Urlencoded
+### Form
 
 ```bash
 -d 'param1=val1&param2=val2'

@@ -147,7 +147,8 @@
 - [HTTP Server (Builtin): `http.server`](https://leven-cn.github.io/python-cookbook/recipes/web/http_server_builtin)
 - [HTTP Cookie (Server Side): `http.cookies`](https://leven-cn.github.io/python-cookbook/recipes/web/http_cookie)
 - [HTTP Request (Builtin): `urllib.request`](https://leven-cn.github.io/python-cookbook/recipes/web/http_request)
-- [HTTP Request: `curl`](https://leven-cn.github.io/python-cookbook/recipes/web/curl)
+- [HTTP Request (CLI & Lib): `curl` / `pycurl`](https://leven-cn.github.io/python-cookbook/recipes/web/curl)
+- [HTTP Request (CLI): `httpie`](https://leven-cn.github.io/python-cookbook/recipes/web/httpie)
 
 <!-- markdownlint-enable line-length -->
 
