@@ -1,6 +1,4 @@
-# Parser for Command-Line Arguments
-
-`argparse`, `optparse`, `getopt`
+# Parser for Command-Line Arguments: `argparse`
 
 ## Solution
 
@@ -74,11 +72,11 @@ if __name__ == '__main__':
 
 See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples/core/cli_args.py)
 
-### `optparse`
+## `optparse`
 
 Deprecated since Python *3.2*, using `argparse` instead.
 
-### `getopt` - C-Style
+## `getopt` - C-Style
 
 Alternative command line option and argument parsing library: `argparse`.
 

@@ -72,7 +72,9 @@
 - Logging (日志)
   - [Logging Usage](https://leven-cn.github.io/python-cookbook/recipes/core/logging_usage)
   - [Logging Dictionary Configuration](https://leven-cn.github.io/python-cookbook/recipes/core/logging_dict_config)
-- [Command-Line Arguments Parser: `argparse`, `optparse`, `getopt`](https://leven-cn.github.io/python-cookbook/recipes/core/argparse)
+- [Command-Line Arguments Parser: `argparse`](https://leven-cn.github.io/python-cookbook/recipes/core/argparse)
+  - **`optparse`** (deprecated since Python *3.2*, [use *`argparse`* instead](https://leven-cn.github.io/python-cookbook/recipes/core/argparse))
+  - **`getopt`**: C-Style Parser ([use *`argparse`* instead](https://leven-cn.github.io/python-cookbook/recipes/core/argparse))
 - Parallelism and Concurrent (并发)
   - [Multi-Threads Parallelism for **I/O-bound** tasks](https://leven-cn.github.io/python-cookbook/recipes/core/multi_threads)
   - [Multi-Processes Parallelism for **CPU-bound** tasks](https://leven-cn.github.io/python-cookbook/recipes/core/multi_processes)
@@ -150,6 +152,8 @@
 - [HTTP Request (Builtin): `urllib.request`](https://leven-cn.github.io/python-cookbook/recipes/web/http_request)
 - [HTTP Request (CLI & Lib): `curl` / `pycurl`](https://leven-cn.github.io/python-cookbook/recipes/web/curl)
 - [HTTP Request (CLI): `httpie`](https://leven-cn.github.io/python-cookbook/recipes/web/httpie)
+- [WSGI](https://leven-cn.github.io/python-cookbook/recipes/web/wsgi)
+- **CGI** (deprecated since Python *3.11*, [use WSGI instead](https://leven-cn.github.io/python-cookbook/recipes/web/wsgi))
 
 <!-- markdownlint-enable line-length -->
 
