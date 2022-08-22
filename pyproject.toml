@@ -1,5 +1,5 @@
 [project]
-name = "Python Cookbook"
+name = "python-cookbook"
 description = "Recipes for Python. Hands-on code examples and snippets for daily work."
 authors = [
     {name = "Li Yun", email = "leven.cn@gmail.com"},
@@ -10,7 +10,7 @@ license = {file = "LICENSE"}
 maintainers = [
     {name = "Li Yun", email = "leven.cn@gmail.com"},
 ]
-keywords = ["cookbook", "recipe"]
+keywords = ["cookbook", "recipe", "django"]
 classifiers = [
     "Development Status :: 1 - Planning",
     "Programming Language :: Python :: 3 :: Only",
@@ -23,6 +23,7 @@ classifiers = [
     "Typing :: Typed",
 ]
 dependencies = [
+    "django ~= 3.2",
 ]
 dynamic = ["version"]
 
@@ -36,6 +37,9 @@ test = [
     "pytest >= 7.1",
     "coverage >= 6.4",
     "pytest-cov >= 3.0",
+    "flake8-django",
+    "django-stubs[compatible-mypy] >= 1.12",
+    "django-types",
 ]
 doc = [
 ]
@@ -51,23 +55,42 @@ target-version = ['py39']
 skip-string-normalization = true
 include = '\.pyi?$'
 extend-exclude = '''
-^/.github/workflows/*.yml
+migrations/.*\.py$
 '''
 
 [tool.isort]
+atomic = true
 profile = "black"
+skip_gitignore = true
 
 [tool.mypy]
 python_version = "3.9"
 warn_unused_configs = true
 exclude = [
+    'settings.py',
+    'migrations/',
+    'models.py',
+    'admin.py',
 ]
 
+[tool.mypy-django_project]
+plugins = [
+    "mypy_django_plugin.main"
+]
+
+[tool.django-stubs]
+django_settings_module = "django_project.django_project.settings"
+
 [tool.flake8]
-max_complexity = 10
+# exclude = .svn,CVS,.bzr,.hg,.git,__pycache__,.tox,.eggs,*.egg
+extend-exclude = "**/migrations/*.py"
+# ignore = E121,E123,E126,E226,E24,E704,W503,W504
+per-file-ignores = "settings.py:E501"
+max-complexity = 10
 max-line-length = 88
 show-source = true
 benchmark = true
+require-plugins = "flake8-django"
 
 [tool.pytest.ini_options]
 markers = [
@@ -92,3 +115,20 @@ parallel = true
 
 [tool.coverage.report]
 skip_empty = true
+
+[tool.pyright]
+include = [
+    "examples",
+    "django_project",
+]
+exclude = [
+    ".git",
+    "**/__pycache__",
+    "**/migrations",
+]
+ignore = [
+    "**/models.py",
+    "**/admin.py",
+]
+stubPath = ""
+pythonVersion = "3.9"

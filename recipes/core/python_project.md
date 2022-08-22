@@ -5,7 +5,7 @@
 ```bash
 pipenv --python 3.9
 
-pipenv install --dev black isort mypy 'flake8>=4.0' pyupgrade 'pytest>=7.1' 'coverage>=6.4' 'pytest-cov>=3.0'
+pipenv install --dev black isort mypy 'flake8>=4.0' pyupgrade 'pytest>=7.1' 'coverage>=6.4' 'pytest-cov>=3.0' flake8-django 'django-stubs[compatible-mypy]>=1.12'
 ```
 
 ## `pyproject.toml`
@@ -38,6 +38,7 @@ classifiers = [
     "Typing :: Typed",
 ]
 dependencies = [
+    "django ~= 3.2",
     "requests >=2.6",
     "configparser; python_version == '2.7'",
 ]
@@ -53,6 +54,9 @@ test = [
     "pytest >= 7.1",
     "coverage >= 6.4",
     "pytest-cov >= 3.0",
+    "flake8-django",
+    "django-stubs[compatible-mypy]>=1.12",
+    "django-types",
 ]
 doc = [
     "sphinx"
@@ -81,11 +85,13 @@ extend-exclude = '''
 # A regex preceded with ^/ will apply only to files and directories
 # in the root of the project.
 ^/foo.py  # exclude a file named foo.py in the root of the project (in addition to the defaults)
-^/.github/workflows/*.yml
+migrations/.*\.py$
 '''
 
 [tool.isort]
+atomic = true
 profile = "black"
+skip_gitignore = true
 
 [tool.mypy]
 python_version = "3.9"
@@ -93,13 +99,31 @@ warn_unused_configs = true
 exclude = [
     '^file1\.py$',  # TOML literal string (single-quotes, no escaping necessary)
     "^file2\\.py$",  # TOML basic string (double-quotes, backslash and other characters need escaping)
+
+    'settings.py',
+    'migrations/',
+    'models.py',
+    'admin.py',
 ]
 
+[tool.mypy-<django_project_name>]
+plugins = [
+    "mypy_django_plugin.main"
+]
+
+[tool.django-stubs]
+django_settings_module = "<django_project_name>.<django_project_name>.settings"
+
 [tool.flake8]
+# exclude = .svn,CVS,.bzr,.hg,.git,__pycache__,.tox,.eggs,*.egg
+extend-exclude = "**/migrations/*.py"
+# ignore = E121,E123,E126,E226,E24,E704,W503,W504
+per-file-ignores = "settings.py:E501"
 max_complexity = 10
 max-line-length = 88
 show-source = true
 benchmark = true
+require-plugins = "flake8-django"
 
 [tool.pytest.ini_options]
 markers = [
@@ -126,6 +150,22 @@ parallel = true
 
 [tool.coverage.report]
 skip_empty = true
+
+[tool.pyright]
+include = [
+    "src"
+]
+exclude = [
+    ".git",
+    "**/__pycache__",
+    "**/migrations",
+]
+ignore = [
+    "src/**/models.py",
+    "src/**/admin.py",
+]
+stubPath = ""
+pythonVersion = "3.9"
 ```
 
 ## Git Pre-Commit
@@ -185,14 +225,24 @@ repos:
         name: isort (python)
         language_version: python3.9
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v0.961
+    rev: v0.971
     hooks:
       - id: mypy
   - repo: https://github.com/PyCQA/flake8
-    rev: 4.0.1
+    rev: 5.0.4
     hooks:
       - id: flake8
-        args: ['--max-complexity', '20', '--max-line-length', '88']
+        args:
+          [
+            '--extend-exclude',
+            '"*.pyc"',
+            '--max-complexity',
+            '10',
+            '--max-line-length',
+            '88',
+            '--per-file-ignores',
+            '"settings.py:E501"',
+          ]
   - repo: https://github.com/asottile/pyupgrade
     rev: v2.37.1
     hooks:
@@ -250,3 +300,4 @@ jobs:
 - [`flake8` Documentation](https://flake8.pycqa.org/en/latest/)
 - [`pytest` Documentation](https://docs.pytest.org/)
 - [`coverage` Documentation](https://coverage.readthedocs.io/)
+- [`django-stubs` PyPI](https://pypi.org/project/django-stubs/)

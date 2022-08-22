@@ -38,11 +38,26 @@ repos:
     rev: v0.971
     hooks:
       - id: mypy
+        exclude: 'settings.py,migrations/,models.py,admin.py'
+        additional_dependencies: ['django-stubs']
+        language_version: python3.9
   - repo: https://github.com/PyCQA/flake8
     rev: 5.0.4
     hooks:
       - id: flake8
-        args: ['--max-complexity', '10', '--max-line-length', '88']
+        args:
+          [
+            '--extend-exclude',
+            '**/migrations/*.py',
+            '--max-complexity',
+            '10',
+            '--max-line-length',
+            '88',
+            '--per-file-ignores',
+            'settings.py:E501',
+            '--require-plugins',
+            'flake8-django',
+          ]
   - repo: https://github.com/asottile/pyupgrade
     rev: v2.37.3
     hooks:
