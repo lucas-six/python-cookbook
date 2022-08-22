@@ -213,6 +213,7 @@ repos:
     rev: 22.6.0
     hooks:
       - id: black
+        exclude: migrations/
         args: ['--verbose']
         # It is recommended to specify the latest version of Python
         # supported by your project here, or alternatively use
