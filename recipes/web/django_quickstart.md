@@ -61,7 +61,7 @@ pythonVersion = "3.9"
 
 ```bash
 pipenv install 'django~=3.2'
-pipenv install --dev flake8-django 'django-stubs[compatible-mypy]>=1.12'
+pipenv install --dev flake8-django 'django-stubs[compatible-mypy]>=1.12' django-types
 
 $ pipenv run django-admin version
 3.2.15
