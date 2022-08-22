@@ -154,6 +154,8 @@
 - [HTTP Request (CLI): `httpie`](https://leven-cn.github.io/python-cookbook/recipes/web/httpie)
 - [WSGI](https://leven-cn.github.io/python-cookbook/recipes/web/wsgi)
 - **CGI** (deprecated since Python *3.11*, [use WSGI instead](https://leven-cn.github.io/python-cookbook/recipes/web/wsgi))
+- Django
+  - [Django - Quick Start](https://leven-cn.github.io/python-cookbook/recipes/web/django_quickstart)
 
 <!-- markdownlint-enable line-length -->
 

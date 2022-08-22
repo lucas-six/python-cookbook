@@ -4,6 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+django = "~=3.2"
 
 [dev-packages]
 black = "*"
@@ -14,6 +15,9 @@ pyupgrade = "*"
 pytest = ">=7.1"
 coverage = {version = ">=6.4", extras = ["toml"]}
 pytest-cov = ">=3.0"
+flake8-django = "*"
+django-stubs = {extras = ["compatible-mypy"], version = ">=1.12"}
+django-types = "*"
 
 [requires]
 python_version = "3.9"

@@ -44,8 +44,8 @@ def application(
     assert isinstance(environ['CONTENT_TYPE'], str)
 
     # req_uri = environ['REQUEST_URI']
-    req_path = environ['PATH_INFO']
-    req_method = environ['REQUEST_METHOD']
+    req_path: str = environ['PATH_INFO']
+    req_method: str = environ['REQUEST_METHOD']
 
     root_path = Path('.')
     rsp = []
@@ -58,11 +58,11 @@ def application(
     if req_path == '/':
         rsp = [b'Hello world']
     elif req_path.endswith('.html'):
-        rsp_path = root_path.joinpath(req_path[1:])
+        rsp_path = root_path / req_path[1:]
         rsp_content = rsp_path.read_text(encoding='utf-8')
         rsp = [rsp_content.encode('utf-8')]
     elif req_path.endswith(('.png', '.jpg')):
-        rsp_path = root_path.joinpath(req_path[1:])
+        rsp_path = root_path / req_path[1:]
         rsp_content = rsp_path.read_bytes()
         _type = mimetypes.guess_type(rsp_path)[0]
         rsp_content_type = (
