@@ -157,6 +157,7 @@
 - Django
   - [Django - Quick Start](https://leven-cn.github.io/python-cookbook/recipes/web/django_quickstart)
   - [PostgreSQL - Setup](https://leven-cn.github.io/python-cookbook/recipes/web/postgresql_setup)
+  - [PostgreSQL - Usage](https://leven-cn.github.io/python-cookbook/recipes/web/postgresql_usage)
 
 <!-- markdownlint-enable line-length -->
 
