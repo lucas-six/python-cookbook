@@ -206,6 +206,7 @@ repos:
       - id: fix-byte-order-marker
       - id: detect-private-key
       - id: double-quote-string-fixer
+        exclude: manage.py
       - id: name-tests-test
         args: [--django]
   - repo: https://github.com/psf/black
@@ -228,20 +229,25 @@ repos:
     rev: v0.971
     hooks:
       - id: mypy
+        exclude: '(settings.py|migrations/|models.py|admin.py)'
+        additional_dependencies: [django-stubs]
   - repo: https://github.com/PyCQA/flake8
     rev: 5.0.4
     hooks:
       - id: flake8
+        additional_dependencies: [flake8-django]
         args:
           [
             '--extend-exclude',
-            '"*.pyc"',
+            '**/migrations/*.py',
             '--max-complexity',
             '10',
             '--max-line-length',
             '88',
             '--per-file-ignores',
-            '"settings.py:E501"',
+            'settings.py:E501',
+            '--require-plugins',
+            'flake8-django',
           ]
   - repo: https://github.com/asottile/pyupgrade
     rev: v2.37.1
