@@ -130,15 +130,6 @@ exclude = [
     'admin.py',
 ]
 
-[[tool.mypy.overrides]]
-module = "django_project.*"
-plugins = [
-    "mypy_django_plugin.main"
-]
-
-[tool.django-stubs]
-django_settings_module = "<django_project_name>.<django_project_name>.settings"
-
 [tool.flake8]
 # exclude = .svn,CVS,.bzr,.hg,.git,__pycache__,.tox,.eggs,*.egg
 extend-exclude = "**/migrations/*.py"
@@ -256,7 +247,6 @@ repos:
     hooks:
       - id: mypy
         exclude: '(settings.py|migrations/|models.py|admin.py)'
-        additional_dependencies: [django-stubs]
         exclude: migrations/
   - repo: https://github.com/PyCQA/flake8
     rev: 5.0.4

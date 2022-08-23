@@ -24,6 +24,7 @@ classifiers = [
 ]
 dependencies = [
     "django ~= 3.2",
+    "psycopg2 >= 2.8",
 ]
 dynamic = ["version"]
 
@@ -38,7 +39,6 @@ test = [
     "coverage >= 6.4",
     "pytest-cov >= 3.0",
     "flake8-django",
-    "django-stubs[compatible-mypy] >= 1.12",
     "django-types",
 ]
 doc = [
@@ -90,24 +90,7 @@ extend_skip_glob = ["*/migrations/*"]
 [tool.mypy]
 python_version = "3.9"
 warn_unused_configs = true
-ignore_missing_imports = true
-exclude = [
-    "settings.py",
-    "migrations/",
-]
-
-[tool.mypy-django_project]
-plugins = [
-    "mypy_django_plugin.main"
-]
-
-[tool.mypy-example_app]
-plugins = [
-    "mypy_django_plugin.main"
-]
-
-[tool.django-stubs]
-django_settings_module = "django_project.django_project.settings"
+exclude = 'django_project/'
 
 [tool.flake8]
 # exclude = .svn,CVS,.bzr,.hg,.git,__pycache__,.tox,.eggs,*.egg
