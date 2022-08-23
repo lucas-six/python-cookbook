@@ -1,5 +1,7 @@
 # Django - Quick Start
 
+[How to Read **"Django"**](https://leven-cn.github.io/python-cookbook/audios/django_pronunciation.mp3)
+
 ## Solution
 
 ### Create Project
@@ -23,6 +25,9 @@ extend-exclude = '''
 migrations/.*\.py$
 '''
 
+[tool.isort]
+extend_skip_glob = ["*/migrations/*"]
+
 [tool.mypy]
 exclude = [
     'settings.py',
@@ -31,7 +36,8 @@ exclude = [
     'admin.py',
 ]
 
-[tool.mypy-<django_project_name>]
+[[tool.mypy.overrides]]
+module = "<django_project_name>.*"
 plugins = ["mypy_django_plugin.main"]
 
 [tool.django-stubs]

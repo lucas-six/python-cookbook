@@ -2,6 +2,7 @@
 
 *.log
 *.sqlite3
+.coverage
 
 ### vscode ###
 .vscode

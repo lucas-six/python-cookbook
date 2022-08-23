@@ -89,9 +89,33 @@ migrations/.*\.py$
 '''
 
 [tool.isort]
+src_paths = ["src", "tests"]
 atomic = true
 profile = "black"
+# skip = [
+#    '.bzr',
+#    '.direnv',
+#    '.eggs',
+#    '.git',
+#    '.hg',
+#    '.mypy_cache',
+#    '.nox',
+#    '.pants.d',
+#    '.svn',
+#    '.tox',
+#    '.venv',
+#    '__pypackages__',
+#    '_build',
+#    'buck-out',
+#    'build',
+#    'dist',
+#    'node_modules',
+#    'venv'
+# ]
 skip_gitignore = true
+extend_skip = [".gitignore", ".dockerignore"]
+# skip_glob = []
+extend_skip_glob = ["*/migrations/*"]
 
 [tool.mypy]
 python_version = "3.9"
@@ -106,7 +130,8 @@ exclude = [
     'admin.py',
 ]
 
-[tool.mypy-<django_project_name>]
+[[tool.mypy.overrides]]
+module = "django_project.*"
 plugins = [
     "mypy_django_plugin.main"
 ]
@@ -225,6 +250,8 @@ repos:
     hooks:
       - id: isort
         name: isort (python)
+        exclude: migrations/
+        args: ['--profile', 'black']
         language_version: python3.9
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v0.971
@@ -232,11 +259,14 @@ repos:
       - id: mypy
         exclude: '(settings.py|migrations/|models.py|admin.py)'
         additional_dependencies: [django-stubs]
+        exclude: migrations/
+        args: ['--warn_unused_configs']
   - repo: https://github.com/PyCQA/flake8
     rev: 5.0.4
     hooks:
       - id: flake8
         additional_dependencies: [flake8-django]
+        exclude: migrations/
         args:
           [
             '--extend-exclude',

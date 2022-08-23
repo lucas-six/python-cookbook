@@ -59,21 +59,50 @@ migrations/.*\.py$
 '''
 
 [tool.isort]
+src_paths = ["examples", "django_project"]
 atomic = true
 profile = "black"
+# skip = [
+#    '.bzr',
+#    '.direnv',
+#    '.eggs',
+#    '.git',
+#    '.hg',
+#    '.mypy_cache',
+#    '.nox',
+#    '.pants.d',
+#    '.svn',
+#    '.tox',
+#    '.venv',
+#    '__pypackages__',
+#    '_build',
+#    'buck-out',
+#    'build',
+#    'dist',
+#    'node_modules',
+#    'venv'
+# ]
 skip_gitignore = true
+extend_skip = [".gitignore", ".dockerignore"]
+# skip_glob = []
+extend_skip_glob = ["*/migrations/*"]
 
 [tool.mypy]
 python_version = "3.9"
 warn_unused_configs = true
 exclude = [
-    'settings.py',
-    'migrations/',
-    'models.py',
-    'admin.py',
+    "settings.py",
+    "migrations/",
+    '.*/models\.py$',
+#    '/admin\.py$',
 ]
 
 [tool.mypy-django_project]
+plugins = [
+    "mypy_django_plugin.main"
+]
+
+[tool.mypy-example_app]
 plugins = [
     "mypy_django_plugin.main"
 ]

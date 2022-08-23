@@ -150,14 +150,18 @@
 - [HTTP Server (Builtin): `http.server`](https://leven-cn.github.io/python-cookbook/recipes/web/http_server_builtin)
 - [HTTP Cookie (Server Side): `http.cookies`](https://leven-cn.github.io/python-cookbook/recipes/web/http_cookie)
 - [HTTP Request (Builtin): `urllib.request`](https://leven-cn.github.io/python-cookbook/recipes/web/http_request)
-- [HTTP Request (CLI & Lib): `curl` / `pycurl`](https://leven-cn.github.io/python-cookbook/recipes/web/curl)
-- [HTTP Request (CLI): `httpie`](https://leven-cn.github.io/python-cookbook/recipes/web/httpie)
+- [HTTP Request (CLI): `curl`](https://leven-cn.github.io/python-cookbook/recipes/web/curl)
+- HTTP Request (C API): `libcurl`
+- HTTP Request (Python API/Bindings): `pycurl`
+- [HTTP Request (CLI & GUI): `httpie`](https://leven-cn.github.io/python-cookbook/recipes/web/httpie)
+- HTTP Request (GUI): `Postman`
 - [WSGI](https://leven-cn.github.io/python-cookbook/recipes/web/wsgi)
 - **CGI** (deprecated since Python *3.11*, [use WSGI instead](https://leven-cn.github.io/python-cookbook/recipes/web/wsgi))
 - Django
   - [Django - Quick Start](https://leven-cn.github.io/python-cookbook/recipes/web/django_quickstart)
   - [PostgreSQL - Setup](https://leven-cn.github.io/python-cookbook/recipes/web/postgresql_setup)
-  - [PostgreSQL - Usage](https://leven-cn.github.io/python-cookbook/recipes/web/postgresql_usage)
+  - [PostgreSQL CLI - Usage](https://leven-cn.github.io/python-cookbook/recipes/web/postgresql_usage)
+  - PostgreSQL GUI - `pgadmin4`
 
 <!-- markdownlint-enable line-length -->
 
