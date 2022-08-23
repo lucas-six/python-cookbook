@@ -89,9 +89,33 @@ migrations/.*\.py$
 '''
 
 [tool.isort]
+src_paths = ["src", "tests"]
 atomic = true
 profile = "black"
+# skip = [
+#    '.bzr',
+#    '.direnv',
+#    '.eggs',
+#    '.git',
+#    '.hg',
+#    '.mypy_cache',
+#    '.nox',
+#    '.pants.d',
+#    '.svn',
+#    '.tox',
+#    '.venv',
+#    '__pypackages__',
+#    '_build',
+#    'buck-out',
+#    'build',
+#    'dist',
+#    'node_modules',
+#    'venv'
+# ]
 skip_gitignore = true
+extend_skip = [".gitignore", ".dockerignore"]
+# skip_glob = []
+extend_skip_glob = ["*/migrations/*"]
 
 [tool.mypy]
 python_version = "3.9"
@@ -105,14 +129,6 @@ exclude = [
     'models.py',
     'admin.py',
 ]
-
-[tool.mypy-<django_project_name>]
-plugins = [
-    "mypy_django_plugin.main"
-]
-
-[tool.django-stubs]
-django_settings_module = "<django_project_name>.<django_project_name>.settings"
 
 [tool.flake8]
 # exclude = .svn,CVS,.bzr,.hg,.git,__pycache__,.tox,.eggs,*.egg
@@ -231,16 +247,15 @@ repos:
     hooks:
       - id: mypy
         exclude: '(settings.py|migrations/|models.py|admin.py)'
-        additional_dependencies: [django-stubs]
+        exclude: migrations/
   - repo: https://github.com/PyCQA/flake8
     rev: 5.0.4
     hooks:
       - id: flake8
         additional_dependencies: [flake8-django]
+        exclude: migrations/
         args:
           [
-            '--extend-exclude',
-            '**/migrations/*.py',
             '--max-complexity',
             '10',
             '--max-line-length',

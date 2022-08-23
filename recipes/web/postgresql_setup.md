@@ -77,6 +77,8 @@ max_connections = 4096
 password_encryption = scram-sha-256  # md5 or scram-sha-256
 
 shared_buffers = 256MB  # 128MB
+
+client_encoding = 'UTF8'
 ```
 
 ```ini

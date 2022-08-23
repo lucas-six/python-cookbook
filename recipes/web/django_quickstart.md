@@ -1,5 +1,7 @@
 # Django - Quick Start
 
+[How to Read **"Django"**](https://leven-cn.github.io/python-cookbook/audios/django_pronunciation.mp3)
+
 ## Solution
 
 ### Create Project
@@ -14,7 +16,7 @@ dependencies = [
 [project.optional-dependencies]
 test = [
     "flake8-django",
-    "django-stubs[compatible-mypy]>=1.12",
+    "django-stubs[compatible-mypy]",
     "django-types",
 ]
 
@@ -23,6 +25,9 @@ extend-exclude = '''
 migrations/.*\.py$
 '''
 
+[tool.isort]
+extend_skip_glob = ["*/migrations/*"]
+
 [tool.mypy]
 exclude = [
     'settings.py',
@@ -30,12 +35,6 @@ exclude = [
     'models.py',
     'admin.py',
 ]
-
-[tool.mypy-<django_project_name>]
-plugins = ["mypy_django_plugin.main"]
-
-[tool.django-stubs]
-django_settings_module = "<django_project_name>.<django_project_name>.settings"
 
 [tool.flake8]
 extend-exclude = "**/migrations/*.py"
