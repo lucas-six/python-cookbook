@@ -40,7 +40,7 @@ repos:
     rev: v0.971
     hooks:
       - id: mypy
-        exclude: (settings.py|migrations/|models.py|admin.py)
+        exclude: (settings.py|(migrations/)|models.py|admin.py)
         additional_dependencies: ['django-stubs']
         language_version: python3.9
   - repo: https://github.com/PyCQA/flake8

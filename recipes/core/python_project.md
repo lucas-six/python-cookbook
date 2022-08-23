@@ -250,8 +250,6 @@ repos:
     hooks:
       - id: isort
         name: isort (python)
-        exclude: migrations/
-        args: ['--profile', 'black']
         language_version: python3.9
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v0.971
@@ -260,7 +258,6 @@ repos:
         exclude: '(settings.py|migrations/|models.py|admin.py)'
         additional_dependencies: [django-stubs]
         exclude: migrations/
-        args: ['--warn_unused_configs']
   - repo: https://github.com/PyCQA/flake8
     rev: 5.0.4
     hooks:
@@ -269,8 +266,6 @@ repos:
         exclude: migrations/
         args:
           [
-            '--extend-exclude',
-            '**/migrations/*.py',
             '--max-complexity',
             '10',
             '--max-line-length',
