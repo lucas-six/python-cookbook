@@ -90,11 +90,10 @@ extend_skip_glob = ["*/migrations/*"]
 [tool.mypy]
 python_version = "3.9"
 warn_unused_configs = true
+ignore_missing_imports = true
 exclude = [
     "settings.py",
     "migrations/",
-    '.*/models\.py$',
-#    '/admin\.py$',
 ]
 
 [tool.mypy-django_project]
