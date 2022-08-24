@@ -147,23 +147,40 @@
 - [HTTP Range Requests: `Range`](https://leven-cn.github.io/python-cookbook/recipes/web/http_range)
 - [HTTP Caching](https://leven-cn.github.io/python-cookbook/recipes/web/http_caching)
 - [HTTP Datetime Format](https://leven-cn.github.io/python-cookbook/recipes/web/http_datetime_fmt)
-- [HTTP Server (Builtin): `http.server`](https://leven-cn.github.io/python-cookbook/recipes/web/http_server_builtin)
-- [HTTP Cookie (Server Side): `http.cookies`](https://leven-cn.github.io/python-cookbook/recipes/web/http_cookie)
-- [HTTP Request (Builtin): `urllib.request`](https://leven-cn.github.io/python-cookbook/recipes/web/http_request)
-- [HTTP Request (CLI): `curl`](https://leven-cn.github.io/python-cookbook/recipes/web/curl)
-- HTTP Request (C API): `libcurl`
-- HTTP Request (Python API/Bindings): `pycurl`
-- [HTTP Request (CLI & GUI): `httpie`](https://leven-cn.github.io/python-cookbook/recipes/web/httpie)
-- HTTP Request (GUI): `Postman`
+- HTTP Server
+  - [HTTP Server (Builtin): `http.server`](https://leven-cn.github.io/python-cookbook/recipes/web/http_server_builtin)
+  - HTTP Server (Python Asyncio API): `aiohttp`
+  - [HTTP Cookie (Server Side): `http.cookies`](https://leven-cn.github.io/python-cookbook/recipes/web/http_cookie)
+- HTTP Request (Client)
+  - [HTTP Request (Builtin): `urllib.request`](https://leven-cn.github.io/python-cookbook/recipes/web/http_request)
+  - [HTTP Request (CLI): `curl`](https://leven-cn.github.io/python-cookbook/recipes/web/curl)
+  - HTTP Request (C API): `libcurl`
+  - HTTP Request (Python API/Bindings): `pycurl`
+  - [HTTP Request (CLI & GUI): `httpie`](https://leven-cn.github.io/python-cookbook/recipes/web/httpie)
+  - HTTP Request (GUI): `Postman`
+  - HTTP Request (Python API): `requests` (using `urllib3`)
+  - HTTP Request (Python Asyncio API): `aiohttp`
 - [WSGI](https://leven-cn.github.io/python-cookbook/recipes/web/wsgi)
 - **CGI** (deprecated since Python *3.11*, [use WSGI instead](https://leven-cn.github.io/python-cookbook/recipes/web/wsgi))
+- Web Frameworks
+  - Django
+  - Flask
+  - FastAPI
 - Django
   - [Django - Quick Start](https://leven-cn.github.io/python-cookbook/recipes/web/django_quickstart)
+  - [Django DB - PostgreSQL](https://leven-cn.github.io/python-cookbook/recipes/web/django_db_postgresql)
+- PostgreSQL
   - [PostgreSQL - Setup](https://leven-cn.github.io/python-cookbook/recipes/web/postgresql_setup)
   - [PostgreSQL CLI - Usage](https://leven-cn.github.io/python-cookbook/recipes/web/postgresql_usage)
-  - PostgreSQL GUI - `pgadmin4`
-  - [Django DB - PostgreSQL](https://leven-cn.github.io/python-cookbook/recipes/web/django_db_postgresql)
+  - PostgreSQL GUI (Official) - `pgadmin4`
+- Redis
   - [Redis - Setup](https://leven-cn.github.io/python-cookbook/recipes/web/redis_setup)
+  - [Redis CLI - Basic Usage](https://leven-cn.github.io/python-cookbook/recipes/web/redis_usage_basic)
+  - Redis GUI (Official, **deprecated**) - `Redis Desktop Manager`
+  - Redis GUI (Free) - `Another Redis Desktop Manager`
+  - Redis GUI (Official, Free) - `RedisInsight`
+- Web Server
+  - `uWSGI`
 
 <!-- markdownlint-enable line-length -->
 

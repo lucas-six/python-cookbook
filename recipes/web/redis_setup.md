@@ -7,7 +7,33 @@
 
 ## Installation
 
-For both Ubuntu and CentOS:
+### Ubuntu
+
+#### System Repo
+
+```bash
+apt install redis systemd
+```
+
+#### Official Repo
+
+```bash
+# for minimal distribution (such as a Docker container)
+apt install lsb-release
+
+curl -fsSL https://packages.redis.io/gpg | sudo gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/redis.list
+apt update
+apt install redis
+```
+
+Or
+
+```bash
+snap install redis
+```
+
+### CentOS
 
 ```bash
 apt install redis systemd
@@ -60,3 +86,7 @@ systemctl start|stop|restart|status redis-server
 systemctl enable|disable redis
 systemctl start|stop|restart|status redis
 ```
+
+## References
+
+- [Redis Home](https://redis.io)
