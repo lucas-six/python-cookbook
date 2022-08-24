@@ -162,6 +162,8 @@
   - [PostgreSQL - Setup](https://leven-cn.github.io/python-cookbook/recipes/web/postgresql_setup)
   - [PostgreSQL CLI - Usage](https://leven-cn.github.io/python-cookbook/recipes/web/postgresql_usage)
   - PostgreSQL GUI - `pgadmin4`
+  - [Django DB - PostgreSQL](https://leven-cn.github.io/python-cookbook/recipes/web/django_db_postgresql)
+  - [Redis - Setup](https://leven-cn.github.io/python-cookbook/recipes/web/redis_setup)
 
 <!-- markdownlint-enable line-length -->
 

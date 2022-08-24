@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 django = "~=3.2"
 psycopg2 = ">=2.8"
+redis = "*"
 
 [dev-packages]
 black = "*"
