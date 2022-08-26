@@ -26,6 +26,7 @@ dependencies = [
     "django ~= 3.2",
     "psycopg2 >= 2.8",
     "redis >=4.0",
+    "django-redis",
 ]
 dynamic = ["version"]
 

@@ -41,6 +41,7 @@ dependencies = [
     "django ~= 3.2",
     "psycopg2 >= 2.8",
     "redis >= 4.0",
+    "django-redis",
 
     "requests >=2.6",
     "configparser; python_version == '2.7'",
