@@ -2,9 +2,9 @@
 
 ## Dependencies
 
-- PostgreSQL *11+*.
-See [PostgreSQL - Setup](https://leven-cn.github.io/python-cookbook/recipes/web/postgresql_setup)
-and [PostgreSQL CLI - Usage](https://leven-cn.github.io/python-cookbook/recipes/web/postgresql_usage).
+- Redis *5.0+*.
+See [Redis - Setup](https://leven-cn.github.io/python-cookbook/recipes/web/redis_setup)
+and [Redis CLI - Basic Usage](https://leven-cn.github.io/python-cookbook/recipes/web/redis_usage_basic).
 
 ```toml
 # pyproject.toml
@@ -36,6 +36,7 @@ pipenv install django-redis
 
 # Cache
 # https://docs.djangoproject.com/en/4.1/ref/settings/#caches
+# https://docs.djangoproject.com/en/4.1/topics/cache/
 
 CACHES = {
     'default': {
@@ -46,11 +47,14 @@ CACHES = {
 
 ### Django 4.0+
 
+#### Standalone Mode
+
 ```python
 # settings.py
 
 # Cache
 # https://docs.djangoproject.com/en/4.1/ref/settings/#caches
+# https://docs.djangoproject.com/en/4.1/topics/cache/
 #
 # LOCATION:
 #   - redis://localhost:6379/0
@@ -80,11 +84,14 @@ CACHES = {
 }
 ```
 
+#### Replication Mode
+
 ```python
 # settings.py
 
 # Cache
 # https://docs.djangoproject.com/en/4.1/ref/settings/#caches
+# https://docs.djangoproject.com/en/4.1/topics/cache/
 #
 # LOCATION:
 #   - redis://localhost:6379/0
@@ -125,6 +132,7 @@ CACHES = {
 
 # Cache
 # https://docs.djangoproject.com/en/3.2/ref/settings/#caches
+# https://docs.djangoproject.com/en/3.2/topics/cache/
 
 CACHES = {
     'default': {

@@ -1,3 +1,4 @@
+import logging
 from collections import OrderedDict
 
 from django.core.cache import cache
@@ -7,6 +8,8 @@ from .models import A
 
 CACHE_KEY = 'example'
 CACHE_TIMEOUT = 10
+
+logger = logging.getLogger()
 
 
 def index(request: HttpRequest) -> HttpResponse:
@@ -39,8 +42,11 @@ def use_cache(request: HttpRequest) -> HttpResponse:
     assert cache.get(CACHE_KEY) == {'a': 1, 'b': 2, 'c': None}
 
     # default value
+    default_value = 'default value'
     assert cache.get('non-exists-key') is None
-    assert cache.get('non-exists-key', 'default value') == 'default value'
+    logger.warning('non-exists-key')
+    assert cache.get('non-exists-key', default_value) == default_value
+    logger.debug(f'cache get: {default_value}')
 
     # get_or_set
     assert cache.get_or_set(CACHE_KEY, 2, CACHE_TIMEOUT) == {'a': 1, 'b': 2, 'c': None}
@@ -48,6 +54,7 @@ def use_cache(request: HttpRequest) -> HttpResponse:
 
     # delete
     cache.delete(CACHE_KEY)
+    logger.error('cache deleted')
 
     cache.set('num', 1)
     assert cache.incr('num') == 2
@@ -59,5 +66,7 @@ def use_cache(request: HttpRequest) -> HttpResponse:
     cache.set_many({'a': 1, 'b': 2, 'c': None})
     assert cache.get_many(['a', 'b', 'c']) == OrderedDict({'a': 1, 'b': 2, 'c': None})
     cache.delete_many(['a', 'b', 'c'])
+
+    logger.info('finished')
 
     return HttpResponse('ok')

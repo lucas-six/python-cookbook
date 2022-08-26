@@ -5,7 +5,8 @@
 ```bash
 pipenv --python 3.9
 
-pipenv install --dev black isort mypy 'flake8>=4.0' pyupgrade 'pytest>=7.1' 'coverage>=6.4' 'pytest-cov>=3.0' flake8-django 'django-stubs[compatible-mypy]>=1.12' types-redis
+pipenv install --dev black isort mypy 'flake8>=4.0' pyupgrade 'pytest>=7.1' 'coverage>=6.4' 'pytest-cov>=3.0' \
+    flake8-django 'django-stubs[compatible-mypy]>=1.12' types-redis
 ```
 
 ## `pyproject.toml`
@@ -41,7 +42,6 @@ dependencies = [
     "django ~= 3.2",
     "psycopg2 >= 2.8",
     "redis >= 4.0",
-    "django-redis",
 
     "requests >=2.6",
     "configparser; python_version == '2.7'",
