@@ -25,6 +25,7 @@ classifiers = [
 dependencies = [
     "django ~= 3.2",
     "psycopg2 >= 2.8",
+    "redis >=4.0",
 ]
 dynamic = ["version"]
 
@@ -40,6 +41,7 @@ test = [
     "pytest-cov >= 3.0",
     "flake8-django",
     "django-types",
+    "types-redis",
 ]
 doc = [
 ]

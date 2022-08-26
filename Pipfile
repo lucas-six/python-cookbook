@@ -6,7 +6,7 @@ name = "pypi"
 [packages]
 django = "~=3.2"
 psycopg2 = ">=2.8"
-redis = "*"
+redis = ">=4.0"
 
 [dev-packages]
 black = "*"
@@ -20,6 +20,7 @@ pytest-cov = ">=3.0"
 flake8-django = "*"
 django-types = "*"
 types-psycopg2 = "*"
+types-redis = "*"
 
 [requires]
 python_version = "3.9"
