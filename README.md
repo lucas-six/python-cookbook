@@ -172,13 +172,15 @@
 - PostgreSQL
   - [PostgreSQL - Setup](https://leven-cn.github.io/python-cookbook/recipes/web/postgresql_setup)
   - [PostgreSQL CLI - Usage](https://leven-cn.github.io/python-cookbook/recipes/web/postgresql_usage)
-  - PostgreSQL GUI (Official) - `pgadmin4`
+  - PostgreSQL GUI (Official): `pgadmin4`
 - Redis
   - [Redis - Setup](https://leven-cn.github.io/python-cookbook/recipes/web/redis_setup)
   - [Redis CLI - Basic Usage](https://leven-cn.github.io/python-cookbook/recipes/web/redis_usage_basic)
-  - Redis GUI (Official, **deprecated**) - `Redis Desktop Manager`
-  - Redis GUI (Free) - `Another Redis Desktop Manager`
-  - Redis GUI (Official, Free) - `RedisInsight`
+  - Redis GUI (Official): `RedisInsight`
+  - Redis GUI (Official): `Redis Desktop Manager` (**deprecated**)
+  - Redis GUI (Free): `Another Redis Desktop Manager`
+  - [Redis Python API: `redis-py`](https://leven-cn.github.io/python-cookbook/recipes/web/redis)
+  - Redis ORM: `pyton-redis-orm`
 - Web Server
   - `uWSGI`
 

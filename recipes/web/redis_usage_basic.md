@@ -39,8 +39,8 @@ redis-cli
 # - Information about expires are replicated and persisted on disk,
 #   the time virtually passes when your Redis server remains stopped
 #   (this means that Redis saves the date at which a key will expire).
-> expire <key> <seconds>
-> pexpire <key> <milliseconds>
+> expire <key> <seconds-int>
+> pexpire <key> <milliseconds-int>
 > persist <key>  # persistent forever
 > ttl <key>  # return the remaining time to live in seconds
 > pttl <key>  # return the remaining time to live in milliseconds
@@ -51,7 +51,8 @@ redis-cli
 ```bash
 # String
 > set <key> <value>
-> set <key> <value> ex <expire-seconds>
+> set <key> <value> ex <expire-seconds-int>
+> set <key> <value> px <expire-milliseconds-int>
 > get <key>
 
 > incr <key>  # atomic
