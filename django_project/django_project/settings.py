@@ -111,7 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
 # LANGUAGE_CODE = 'en-us'
-LANGUAGE_CODE = 'zh-Hans'
+LANGUAGE_CODE = 'zh-hans'
 
 # TIME_ZONE = 'UTC'
 TIME_ZONE = 'Asia/Shanghai'
@@ -132,3 +132,48 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Cache
+# https://docs.djangoproject.com/en/3.2/ref/settings/#caches
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379/1',
+        'TIMEOUT': 300,
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            # 'PASSWORD': 'xxx',
+            'CONNECTION_POOL_KWARGS': {
+                'max_connections': 2**12,
+                'socket_connect_timeout': 3.5,
+                'socket_timeout': 5.5,
+            },
+            'PICKLE_VERSION': -1,  # Use the latest protocol version
+            'SOCKET_CONNECT_TIMEOUT': 3.5,  # in seconds
+            'SOCKET_TIMEOUT': 6,  # in seconds
+            'COMPRESSOR': 'django_redis.compressors.zlib.ZlibCompressor',
+            'IGNORE_EXCEPTIONS': False,
+        },
+    },
+    'dj_session': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://localhost:6379/2',
+        'TIMEOUT': 300,
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            # 'PASSWORD': 'xxx',
+            'CONNECTION_POOL_KWARGS': {
+                'max_connections': 2**12,
+                'socket_connect_timeout': 3.5,
+                'socket_timeout': 5.5,
+            },
+            'PICKLE_VERSION': -1,  # Use the latest protocol version
+            'SOCKET_CONNECT_TIMEOUT': 3.5,  # in seconds
+            'SOCKET_TIMEOUT': 6,  # in seconds
+            'COMPRESSOR': 'django_redis.compressors.zlib.ZlibCompressor',
+            'IGNORE_EXCEPTIONS': False,
+        },
+    },
+}

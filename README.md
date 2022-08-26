@@ -169,6 +169,7 @@
 - Django
   - [Django - Quick Start](https://leven-cn.github.io/python-cookbook/recipes/web/django_quickstart)
   - [Django DB - PostgreSQL](https://leven-cn.github.io/python-cookbook/recipes/web/django_db_postgresql)
+  - [Django Cache - Redis](https://leven-cn.github.io/python-cookbook/recipes/web/django_cache_redis)
 - PostgreSQL
   - [PostgreSQL - Setup](https://leven-cn.github.io/python-cookbook/recipes/web/postgresql_setup)
   - [PostgreSQL CLI - Usage](https://leven-cn.github.io/python-cookbook/recipes/web/postgresql_usage)

@@ -1,6 +1,12 @@
+from collections import OrderedDict
+
+from django.core.cache import cache
 from django.http import Http404, HttpRequest, HttpResponse, JsonResponse
 
 from .models import A
+
+CACHE_KEY = 'example'
+CACHE_TIMEOUT = 10
 
 
 def index(request: HttpRequest) -> HttpResponse:
@@ -20,3 +26,38 @@ def api_get(request: HttpRequest) -> JsonResponse:
     return JsonResponse(
         {'a.name': a.name, 'a_list': a_list}, json_dumps_params={'ensure_ascii': False}
     )
+
+
+def use_cache(request: HttpRequest) -> HttpResponse:
+
+    # get / set
+    cache.set(CACHE_KEY, 1)  # use default timeout defined in settings.py
+    assert cache.get(CACHE_KEY) == 1
+    cache.set(CACHE_KEY, '1', CACHE_TIMEOUT)
+    assert cache.get(CACHE_KEY) == '1'
+    cache.set(CACHE_KEY, {'a': 1, 'b': 2, 'c': None}, CACHE_TIMEOUT)
+    assert cache.get(CACHE_KEY) == {'a': 1, 'b': 2, 'c': None}
+
+    # default value
+    assert cache.get('non-exists-key') is None
+    assert cache.get('non-exists-key', 'default value') == 'default value'
+
+    # get_or_set
+    assert cache.get_or_set(CACHE_KEY, 2, CACHE_TIMEOUT) == {'a': 1, 'b': 2, 'c': None}
+    assert cache.get_or_set('non-exists-key', 2, CACHE_TIMEOUT) == 2
+
+    # delete
+    cache.delete(CACHE_KEY)
+
+    cache.set('num', 1)
+    assert cache.incr('num') == 2
+    assert cache.incr('num', 10) == 12
+    assert cache.decr('num') == 11
+    assert cache.decr('num', 5) == 6
+
+    # Many
+    cache.set_many({'a': 1, 'b': 2, 'c': None})
+    assert cache.get_many(['a', 'b', 'c']) == OrderedDict({'a': 1, 'b': 2, 'c': None})
+    cache.delete_many(['a', 'b', 'c'])
+
+    return HttpResponse('ok')

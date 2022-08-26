@@ -71,7 +71,7 @@ pipenv run django-admin startproject <project_name>
 Edit `settings.py`:
 
 ```python
-LANGUAGE_CODE = 'zh-Hans'  # 'en-us'
+LANGUAGE_CODE = 'zh-hans'  # 'en-us'
 TIME_ZONE = 'Asia/Shanghai'  # 'UTC'
 ```
 
