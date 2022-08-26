@@ -22,6 +22,7 @@ flake8-django = "*"
 django-types = "*"
 types-psycopg2 = "*"
 types-redis = "*"
+colorlog = "*"
 
 [requires]
 python_version = "3.9"

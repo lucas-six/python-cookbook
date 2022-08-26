@@ -43,6 +43,7 @@ test = [
     "flake8-django",
     "django-types",
     "types-redis",
+    "colorlog",
 ]
 doc = [
 ]
