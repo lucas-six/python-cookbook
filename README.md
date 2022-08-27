@@ -1,8 +1,8 @@
 # Python Cookbook
 
 <section align="center">
-  <img src="https://raw.githubusercontent.com/leven-cn/python-cookbook/main/.python-logo.png"
-    alt="Python Logo" width="200" height="200" title="Python Logo">
+  <img src="https://leven-cn.github.io/python-cookbook/imgs/python-logo.png"
+    alt="Python Logo" width="250" height="250" style="text-align:center;" title="Python Logo">
   <br><br>
   <p>
     <a href="https://github.com/leven-cn/python-cookbook/actions/workflows/lint.yml">
@@ -22,7 +22,7 @@
 
 <!-- markdownlint-disable line-length -->
 
-### Core
+### Language Core (语言核心)
 
 - Text Processing (文本处理)
   - [Universal Newline](https://leven-cn.github.io/python-cookbook/recipes/core/universal_newline)
