@@ -10,9 +10,9 @@ from typing import Literal
 x: Literal[1, 2, True, False]  # one of 1, 2, True, False
 ```
 
-## More
+## More Details
 
-More details to see [Type Hint on Python Handbook](https://leven-cn.github.io/python-handbook/recipes/core/type_hint).
+- [Type Hint](https://leven-cn.github.io/python-cookbook/more/core/type_hint)
 
 ## References
 

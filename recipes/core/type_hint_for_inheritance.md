@@ -42,9 +42,9 @@ class Sub(Base):
 The method decorator version may be used with all of *instance methods*, *class methods*,
 *static methods*, and *properties*.
 
-## More
+## More Details
 
-More details to see [Type Hint on Python Handbook](https://leven-cn.github.io/python-handbook/recipes/core/type_hint).
+- [Type Hint](https://leven-cn.github.io/python-cookbook/more/core/type_hint)
 
 ## References
 
