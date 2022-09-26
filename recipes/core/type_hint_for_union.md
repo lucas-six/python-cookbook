@@ -27,9 +27,9 @@ isinstance(5, (int, str))
 issubclass(bool, (int, float))
 ```
 
-## More
+## More Details
 
-More details to see [Type Hint on Python Handbook](https://leven-cn.github.io/python-handbook/recipes/core/type_hint).
+- [Type Hint](https://leven-cn.github.io/python-cookbook/more/core/type_hint)
 
 ## References
 

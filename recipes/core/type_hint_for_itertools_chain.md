@@ -1,16 +1,12 @@
-# Type Hint for Type Object
+# Type Hint for `itertools.chain`
 
 ## Solution
 
 ```python
-from typing import Type
+import itertools
 
 
-class C: pass
-c: Type[C] = C
-
-o: Type[object]
-e: Type[BaseException]
+itertools.chain(...) -> itertools.chain[int]: ...
 ```
 
 ## More Details

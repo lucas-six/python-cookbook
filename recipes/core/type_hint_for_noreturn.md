@@ -1,16 +1,12 @@
-# Type Hint for Type Object
+# Type Hint for `NoReturn`
 
 ## Solution
 
 ```python
-from typing import Type
+from typing import NoReturn
 
-
-class C: pass
-c: Type[C] = C
-
-o: Type[object]
-e: Type[BaseException]
+def func(arg: int, arg2: str = 'a') -> NoReturn:
+    raise ValueError
 ```
 
 ## More Details

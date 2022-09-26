@@ -29,9 +29,9 @@ f: float = 1.5  # int or float
 def func(arg: int) -> int: ...
 ```
 
-## More
+## More Details
 
-More details to see [Type Hint on Python Handbook](https://leven-cn.github.io/python-handbook/recipes/core/type_hint).
+- [Type Hint](https://leven-cn.github.io/python-cookbook/more/core/type_hint)
 
 ## References
 

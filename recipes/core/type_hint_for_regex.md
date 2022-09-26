@@ -16,6 +16,6 @@ m: re.Match[str] = re.match(r'xxx', 'xxx')
 m: re.Match[bytes] = re.match(rb'xxx', b'xxx')
 ```
 
-## References
+## More Details
 
-More details to see [Type Hint on Python Handbook](https://leven-cn.github.io/python-handbook/recipes/core/type_hint).
+- [Type Hint](https://leven-cn.github.io/python-cookbook/more/core/type_hint)

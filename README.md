@@ -54,6 +54,7 @@
 - Type Hint (类型提示)
   - [Type Hint for Basic Types](https://leven-cn.github.io/python-cookbook/recipes/core/type_hint_for_basic_type)
   - [Type Hint for `namedtuple`: `typing.NamedTuple`](https://leven-cn.github.io/python-cookbook/recipes/core/type_hint_for_namedtuple)
+  - [Type Hint for `itertools.chain`](https://leven-cn.github.io/python-cookbook/recipes/core/type_hint_for_itertools_chain)
   - [Type Hint for Literal: `typing.Literal`](https://leven-cn.github.io/python-cookbook/recipes/core/type_hint_for_literal)
   - [Type Hint for Union Types: `|`, `typing.Union`, `typing.Optional`](https://leven-cn.github.io/python-cookbook/recipes/core/type_hint_for_union)
   - [Type Hint for Any: `typing.Any` and `object`](https://leven-cn.github.io/python-cookbook/recipes/core/type_hint_for_any)
@@ -193,6 +194,7 @@
 ### Core
 
 - [Representation of Dates and Times - ISO 8601 Format](https://leven-cn.github.io/python-cookbook/more/core/iso_8601_fmt)
+- [Type Hint](https://leven-cn.github.io/python-cookbook/more/core/type_hint)
 - [Logging Components and Flow](https://leven-cn.github.io/python-cookbook/more/core/logging)
 - Networks and Communications (网络通信)
   - [Endianness](https://leven-cn.github.io/python-cookbook/more/core/endianness)
