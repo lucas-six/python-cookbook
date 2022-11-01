@@ -15,6 +15,7 @@ classifiers = [
     "Development Status :: 1 - Planning",
     "Programming Language :: Python :: 3 :: Only",
     "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: Implementation :: CPython",
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Topic :: Utilities",
@@ -35,7 +36,7 @@ test = [
     "black",
     "isort",
     "mymy",
-    "flake8 >= 5.0",
+    "flake8",
     "pyupgrade",
     "pytest >= 7.1",
     "coverage >= 6.4",
@@ -55,7 +56,7 @@ Source = "https://github.com/leven-cn/python-cookbook/"
 
 [tool.black]
 line-length = 88
-target-version = ['py39']
+target-version = ['py310']
 skip-string-normalization = true
 include = '\.pyi?$'
 extend-exclude = '''
@@ -92,7 +93,7 @@ extend_skip = [".gitignore", ".dockerignore"]
 extend_skip_glob = ["*/migrations/*"]
 
 [tool.mypy]
-python_version = "3.9"
+python_version = "3.10"
 warn_unused_configs = true
 exclude = 'django_project/'
 
@@ -146,4 +147,4 @@ ignore = [
     "**/admin.py",
 ]
 stubPath = ""
-pythonVersion = "3.9"
+pythonVersion = "3.10"

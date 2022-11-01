@@ -3,9 +3,9 @@
 ## Setup Environment
 
 ```bash
-pipenv --python 3.9
+pipenv --python 3.10
 
-pipenv install --dev black isort mypy 'flake8>=4.0' pyupgrade 'pytest>=7.1' 'coverage>=6.4' 'pytest-cov>=3.0' \
+pipenv install --dev black isort mypy flake8 pyupgrade 'pytest>=7.1' 'coverage>=6.4' 'pytest-cov>=3.0' \
     flake8-django 'django-stubs[compatible-mypy]>=1.12' types-redis
 ```
 
@@ -20,7 +20,7 @@ authors = [
     {name = "Lee", email = "leven.cn@gmail.com"},
 ]
 readme = "README.md"
-requires-python = "~=3.9"
+requires-python = "~=3.10"
 license = {file = "LICENSE"}
 maintainers = [
     {name = "<Maintainer Name>", email = "<maintainer@email>"},
@@ -30,6 +30,7 @@ classifiers = [
     "Development Status :: 1 - Planning",
     "Programming Language :: Python :: 3 :: Only",
     "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: Implementation :: CPython",
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Topic :: Utilities",
@@ -53,7 +54,7 @@ test = [
     "black",
     "isort",
     "mymy",
-    "flake8 >= 4.0",
+    "flake8",
     "pyupgrade",
     "pytest >= 7.1",
     "coverage >= 6.4",
@@ -83,7 +84,7 @@ dogelang = "<package>:<name>"
 
 [tool.black]
 line-length = 88
-target-version = ['py39']
+target-version = ['py310']
 skip-string-normalization = true
 include = '\.pyi?$'
 extend-exclude = '''
@@ -123,7 +124,7 @@ extend_skip = [".gitignore", ".dockerignore"]
 extend_skip_glob = ["*/migrations/*"]
 
 [tool.mypy]
-python_version = "3.9"
+python_version = "3.10"
 warn_unused_configs = true
 exclude = [
     '^file1\.py$',  # TOML literal string (single-quotes, no escaping necessary)
@@ -186,7 +187,7 @@ ignore = [
     "src/**/admin.py",
 ]
 stubPath = ""
-pythonVersion = "3.9"
+pythonVersion = "3.10"
 ```
 
 ## Git Pre-Commit
@@ -240,13 +241,13 @@ repos:
         # supported by your project here, or alternatively use
         # pre-commit's default_language_version, see
         # https://pre-commit.com/#top_level-default_language_version
-        language_version: python3.9
+        language_version: python3.10
   - repo: https://github.com/pycqa/isort
     rev: 5.10.1
     hooks:
       - id: isort
         name: isort (python)
-        language_version: python3.9
+        language_version: python3.10
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v0.971
     hooks:
