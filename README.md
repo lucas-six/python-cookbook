@@ -150,14 +150,12 @@
 - [HTTP Caching](https://leven-cn.github.io/python-cookbook/recipes/web/http_caching)
 - [HTTP Datetime Format](https://leven-cn.github.io/python-cookbook/recipes/web/http_datetime_fmt)
 - HTTP Server
-  - [HTTP Server (Builtin): `http.server`](https://leven-cn.github.io/python-cookbook/recipes/web/http_server_builtin)
+  - [Builtin: `http.server`](https://leven-cn.github.io/python-cookbook/recipes/web/http_server_builtin)
   - HTTP Server (Python Asyncio API): `aiohttp`
   - [HTTP Cookie (Server Side): `http.cookies`](https://leven-cn.github.io/python-cookbook/recipes/web/http_cookie)
-- HTTP Request (Client)
-  - [HTTP Request (Builtin): `urllib.request`](https://leven-cn.github.io/python-cookbook/recipes/web/http_request)
-  - [HTTP Request (CLI): `curl`](https://leven-cn.github.io/python-cookbook/recipes/web/curl)
-  - HTTP Request (C API): `libcurl`
-  - HTTP Request (Python API/Bindings): `pycurl`
+- HTTP Client
+  - [Builtin: `urllib.request`](https://leven-cn.github.io/python-cookbook/recipes/web/http_request)
+  - [CLI: `curl`](https://leven-cn.github.io/python-cookbook/recipes/web/curl)
   - [HTTP Request (CLI & GUI): `httpie`](https://leven-cn.github.io/python-cookbook/recipes/web/httpie)
   - HTTP Request (GUI): `Postman`
   - HTTP Request (Python API): `requests` (using `urllib3`)
