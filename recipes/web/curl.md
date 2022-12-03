@@ -164,16 +164,12 @@ curl -C - -L --parallel --parallel-max 100 --max-time 30 --retry 3 -o <download-
 -O <url1> -O <url2>
 ```
 
-## Python Bindings
+## API
 
-**`PycURL`** is a Python interface to *`libcurl`*.
-
-```bash
-pip install pycurl
-```
+- *C*: **`libcurl`**
+- *Python*: `pip install pycurl` (See [`PycURL`](https://pycurl.io))
 
 ## References
 
 - [`curl` Home](https://curl.se)
 - [cURL Cookbook](https://catonmat.net/cookbooks/curl)
-- [`PycURL` Home](https://pycurl.io)
