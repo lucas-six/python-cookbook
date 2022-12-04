@@ -155,7 +155,6 @@
   - [HTTP Cookie (Server Side): `http.cookies`](https://leven-cn.github.io/python-cookbook/recipes/web/http_cookie)
 - HTTP Client
   - [Builtin: `urllib.request`](https://leven-cn.github.io/python-cookbook/recipes/web/http_request)
-  - [CLI: `curl`](https://leven-cn.github.io/python-cookbook/recipes/web/curl)
   - [HTTP Request (CLI & GUI): `httpie`](https://leven-cn.github.io/python-cookbook/recipes/web/httpie)
   - HTTP Request (GUI): `Postman`
   - HTTP Request (Python API): `requests` (using `urllib3`)
