@@ -134,8 +134,8 @@
   - [UDP Server](https://leven-cn.github.io/python-cookbook/recipes/core/udp_server_asyncio)
   - [UDP Client](https://leven-cn.github.io/python-cookbook/recipes/core/udp_client_asyncio)
 - Test
-  - [Standard Unit Testing Framework: `unittest`](https://leven-cn.github.io/python-cookbook/recipes/core/unittest)
-  - [Testing Framework: `pytest`](https://leven-cn.github.io/python-cookbook/recipes/core/pytest)
+  - [Builtin: `unittest`](https://leven-cn.github.io/python-cookbook/recipes/core/unittest)
+  - [`pytest`](https://leven-cn.github.io/python-cookbook/recipes/core/pytest)
 - Package Management
   - [`pip` - Standard Package Manager](https://leven-cn.github.io/python-cookbook/recipes/core/pip)
   - [`pipx` - Install and Run Python Applications](https://leven-cn.github.io/python-cookbook/recipes/core/pipx)
@@ -151,14 +151,13 @@
 - [HTTP Datetime Format](https://leven-cn.github.io/python-cookbook/recipes/web/http_datetime_fmt)
 - HTTP Server
   - [Builtin: `http.server`](https://leven-cn.github.io/python-cookbook/recipes/web/http_server_builtin)
-  - HTTP Server (Python Asyncio API): `aiohttp`
+  - Asyncio API: `aiohttp`
   - [HTTP Cookie (Server Side): `http.cookies`](https://leven-cn.github.io/python-cookbook/recipes/web/http_cookie)
 - HTTP Client
   - [Builtin: `urllib.request`](https://leven-cn.github.io/python-cookbook/recipes/web/http_request)
-  - [HTTP Request (CLI & GUI): `httpie`](https://leven-cn.github.io/python-cookbook/recipes/web/httpie)
-  - HTTP Request (GUI): `Postman`
-  - HTTP Request (Python API): `requests` (using `urllib3`)
-  - HTTP Request (Python Asyncio API): `aiohttp`
+  - `Postman` (GUI)
+  - `requests` (using `urllib3`) (API)
+  - Asyncio API: `aiohttp`
 - [WSGI](https://leven-cn.github.io/python-cookbook/recipes/web/wsgi)
 - **CGI** (deprecated since Python *3.11*, [use WSGI instead](https://leven-cn.github.io/python-cookbook/recipes/web/wsgi))
 - Web Frameworks
