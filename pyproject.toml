@@ -96,7 +96,10 @@ extend_skip_glob = ["*/migrations/*"]
 [tool.mypy]
 python_version = "3.10"
 plugins = [
-  "pydantic.mypy"
+    "pydantic.mypy"
+]
+exclude = [
+    "manage.py",
 ]
 follow_imports = "silent"
 warn_redundant_casts = true
