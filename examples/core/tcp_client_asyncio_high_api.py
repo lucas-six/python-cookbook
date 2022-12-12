@@ -9,7 +9,7 @@ logging.basicConfig(
 )
 
 
-async def tcp_echo_client(data: bytes):
+async def tcp_echo_client(data: bytes) -> None:
     # Low-level APIs: loop.create_connection()
     reader, writer = await asyncio.open_connection('127.0.0.1', 8888, limit=2**16)
     assert isinstance(reader, asyncio.StreamReader)

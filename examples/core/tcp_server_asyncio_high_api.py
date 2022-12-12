@@ -30,7 +30,9 @@ recv_bufsize: int | None = None
 send_bufsize: int | None = None
 
 
-async def handle_echo(reader: asyncio.StreamReader, writer: asyncio.StreamWriter):
+async def handle_echo(
+    reader: asyncio.StreamReader, writer: asyncio.StreamWriter
+) -> None:
     # `socket.getpeername()`
     client_address = writer.get_extra_info('peername')
     logging.debug(f'connected from {client_address}')
@@ -74,7 +76,7 @@ async def tcp_echo_server(
     port: int,
     *,
     backlog: int = 100,
-):
+) -> None:
     # Low-level APIs: loop.create_server()
     # The socket option `TCP_NODELAY` is set by default in Python 3.6+
     server = await asyncio.start_server(

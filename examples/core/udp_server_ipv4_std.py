@@ -20,7 +20,7 @@ class MyUDPHandler(socketserver.BaseRequestHandler):
     when sending data back via sendto().
     """
 
-    def handle(self):
+    def handle(self) -> None:
         data = self.request[0].strip()
         sock = self.request[1]
         logger.debug(f'recv: {data}, from: {self.client_address[0]}')
@@ -31,7 +31,7 @@ class MyUDPHandler(socketserver.BaseRequestHandler):
 
 
 with socketserver.UDPServer(
-    ('localhost', 9999), MyUDPHandler, bind_and_activate=False  # type: ignore
+    ('localhost', 9999), MyUDPHandler, bind_and_activate=False  # pyright: ignore
 ) as server:
     # When multiple processes with differing UIDs assign sockets
     # to an identical UDP socket address with `SO_REUSEADDR`,

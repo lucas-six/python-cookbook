@@ -40,8 +40,8 @@ repos:
     rev: v0.991
     hooks:
       - id: mypy
-        exclude: (settings.py|models.py|(migrations/)|admin.py)
-        additional_dependencies: [types-redis]
+        exclude: (settings.py|manage.py|models.py|(migrations/)|admin.py)
+        additional_dependencies: [pydantic, types-redis]
         language_version: python3.9
   - repo: https://github.com/PyCQA/flake8
     rev: 6.0.0

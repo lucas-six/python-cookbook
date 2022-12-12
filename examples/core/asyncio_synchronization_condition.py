@@ -9,14 +9,14 @@ logging.basicConfig(
 )
 
 
-async def consumer(cond: asyncio.Condition, i: int):
+async def consumer(cond: asyncio.Condition, i: int) -> None:
     async with cond:
         logging.debug(f'consumer {i} waiting')
         await cond.wait()
     logging.debug(f'consumer {i} done')
 
 
-async def producer(cond: asyncio.Condition):
+async def producer(cond: asyncio.Condition) -> None:
     for i in (1, 2):
         async with cond:
             cond.notify(i)
@@ -30,13 +30,13 @@ async def producer(cond: asyncio.Condition):
     logging.debug('producer done')
 
 
-async def coro3():
+async def coro3() -> None:
     logging.debug('coro3 running')
     await asyncio.sleep(0.01)
     logging.debug('coro3 done')
 
 
-async def main():
+async def main() -> None:
     cond = asyncio.Condition()
 
     consumers = [consumer(cond, i) for i in range(5)]

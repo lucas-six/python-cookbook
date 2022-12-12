@@ -14,7 +14,7 @@ class MutexResource:
         self.value = value
 
 
-async def coro1(lock: asyncio.Lock, mutex_res: MutexResource):
+async def coro1(lock: asyncio.Lock, mutex_res: MutexResource) -> None:
     async with lock:
         assert lock.locked()
         logging.debug('coro1 acquired lock')
@@ -22,7 +22,7 @@ async def coro1(lock: asyncio.Lock, mutex_res: MutexResource):
     logging.debug('coro1 released lock')
 
 
-async def coro2(lock: asyncio.Lock, mutex_res: MutexResource):
+async def coro2(lock: asyncio.Lock, mutex_res: MutexResource) -> None:
     await lock.acquire()
     try:
         assert lock.locked()
@@ -34,13 +34,13 @@ async def coro2(lock: asyncio.Lock, mutex_res: MutexResource):
         logging.debug('coro2 released lock')
 
 
-async def coro3():
+async def coro3() -> None:
     logging.debug('coro3 running')
     await asyncio.sleep(0.01)
     logging.debug('coro3 done')
 
 
-async def main():
+async def main() -> None:
     mutex_res = MutexResource(0)
     lock = asyncio.Lock()
 

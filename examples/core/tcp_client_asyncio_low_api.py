@@ -24,14 +24,14 @@ class EchoClientProtocol(asyncio.Protocol):
         tcp_nodelay: bool = True,
         recv_buf_size: int | None = None,
         send_buf_size: int | None = None,
-    ):
+    ) -> None:
         self.message = message
         self.on_con_lost = on_con_lost
         self.tcp_nodelay = tcp_nodelay
         self.recv_buf_size = recv_buf_size
         self.send_buf_size = send_buf_size
 
-    def connection_made(self, transport: asyncio.BaseTransport):
+    def connection_made(self, transport: asyncio.BaseTransport) -> None:
         assert isinstance(transport, asyncio.Transport)
 
         # `socket.getpeername()`
@@ -46,15 +46,15 @@ class EchoClientProtocol(asyncio.Protocol):
         transport.write(self.message)
         logging.debug(f'sent: {self.message!r}')
 
-    def data_received(self, data: bytes):
+    def data_received(self, data: bytes) -> None:
         logging.debug(f'recv: {data!r}')
 
-    def connection_lost(self, exc: Exception | None):
+    def connection_lost(self, exc: Exception | None) -> None:
         logging.debug('The server closed the connection')
         self.on_con_lost.set_result(True)
 
 
-async def tcp_echo_client(data: bytes):
+async def tcp_echo_client(data: bytes) -> None:
     loop = asyncio.get_running_loop()
 
     on_con_lost = loop.create_future()

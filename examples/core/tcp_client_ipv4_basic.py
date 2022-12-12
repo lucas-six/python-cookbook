@@ -24,7 +24,7 @@ def run_client(
     tcp_nodelay: bool = True,
     recv_buf_size: int | None = None,
     send_buf_size: int | None = None,
-):
+) -> None:
     try:
         with socket.create_connection((host, port), timeout=timeout) as client:
             handle_reuse_address(client, reuse_address)

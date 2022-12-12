@@ -23,7 +23,7 @@ send_bufsize: int | None = None
 class EchoServerProtocol(asyncio.DatagramProtocol):
     def connection_made(  # type: ignore[override]
         self, transport: asyncio.DatagramTransport
-    ):
+    ) -> None:
         self.transport = transport
 
         sock = transport.get_extra_info('socket')
@@ -31,7 +31,7 @@ class EchoServerProtocol(asyncio.DatagramProtocol):
         assert sock.getsockname() == server_address
         logging.debug(f'Server address: {server_address}')
 
-    def datagram_received(self, data: bytes, addr: tuple[str, int]):
+    def datagram_received(self, data: bytes, addr: tuple[str, int]) -> None:
         sock = self.transport.get_extra_info('socket')
         assert sock.type is socket.SOCK_DGRAM
         assert not sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR)
@@ -49,7 +49,7 @@ class EchoServerProtocol(asyncio.DatagramProtocol):
         self.transport.close()
 
 
-async def udp_echo_server(host: str, port: int):
+async def udp_echo_server(host: str, port: int) -> None:
     loop = asyncio.get_running_loop()
 
     # The parameter `reuse_address` is no longer supported, as using `SO_REUSEADDR`
