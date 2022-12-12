@@ -5,6 +5,7 @@
 ```bash
 pipenv --python 3.10
 
+pipenv install pydantic
 pipenv install --dev black isort mypy flake8 pytest pyupgrade 'coverage>=6.4' 'pytest-cov>=3.0' \
     flake8-django 'django-stubs[compatible-mypy]>=1.12' types-redis
 ```
@@ -40,6 +41,7 @@ classifiers = [
     "Typing :: Typed",
 ]
 dependencies = [
+    "pydantic",
     "django ~= 3.2",
     "psycopg2 >= 2.8",
     "redis >= 4.0",

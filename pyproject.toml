@@ -24,6 +24,7 @@ classifiers = [
     "Typing :: Typed",
 ]
 dependencies = [
+    "pydantic",
     "django ~= 3.2",
     "psycopg2 >= 2.8",
     "redis >=4.0",
