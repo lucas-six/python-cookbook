@@ -165,16 +165,16 @@ def handle_socket_bufsize(
         # if max_recv_buf_size:
         #    recv_buf_size = min(recv_buf_size, max_recv_buf_size)
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF, recv_buf_size)
-    recv_buf_size: int = sock.getsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF)
-    logging.debug(f'recv buffer size: {recv_buf_size} (max={max_recv_buf_size})')
+    _recv_buf_size: int = sock.getsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF)
+    logging.debug(f'recv buffer size: {_recv_buf_size} (max={max_recv_buf_size})')
 
     if send_buf_size:
         # kernel do this already!
         # if max_send_buf_size:
         #    send_buf_size = min(send_buf_size, max_send_buf_size)
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, send_buf_size)
-    send_buf_size: int = sock.getsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF)
-    logging.debug(f'send buffer size: {send_buf_size} (max={max_send_buf_size})')
+    _send_buf_size: int = sock.getsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF)
+    logging.debug(f'send buffer size: {_send_buf_size} (max={max_send_buf_size})')
 
 
 def handle_listen(sock: socket.socket, accept_queue_size: int | None) -> None:
@@ -226,8 +226,8 @@ def handle_tcp_nodelay(sock: socket.socket, tcp_nodelay: bool | None = None) -> 
     """
     if tcp_nodelay is not None:
         sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
-    tcp_nodelay: bool = sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY) != 0
-    logging.debug(f'TCP Nodelay: {tcp_nodelay}')
+    _tcp_nodelay: bool = sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY) != 0
+    logging.debug(f'TCP Nodelay: {_tcp_nodelay}')
 
 
 def handle_tcp_keepalive(
@@ -252,8 +252,8 @@ def handle_tcp_keepalive(
     if enable is not None:
         val = 1 if enable else 0
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, val)
-    enabled: bool = sock.getsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE) != 0
-    logging.debug(f'TCP Keep-Alive: {enabled}')
+    _enable: bool = sock.getsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE) != 0
+    logging.debug(f'TCP Keep-Alive: {_enable}')
 
     if not enabled:
         return
@@ -266,18 +266,18 @@ def handle_tcp_keepalive(
     if idle_option is not None:
         if idle is not None:
             sock.setsockopt(socket.IPPROTO_TCP, idle_option, idle)
-        idle: int = sock.getsockopt(socket.IPPROTO_TCP, idle_option)
-        logging.debug(f'TCP Keep-Alive idle time (seconds): {idle}')
+        _idle: int = sock.getsockopt(socket.IPPROTO_TCP, idle_option)
+        logging.debug(f'TCP Keep-Alive idle time (seconds): {_idle}')
 
     if cnt is not None:
         sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPCNT, cnt)
-    cnt: int = sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPCNT)
-    logging.debug(f'TCP Keep-Alive retries: {cnt}')
+    _cnt: int = sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPCNT)
+    logging.debug(f'TCP Keep-Alive retries: {_cnt}')
 
     if intvl is not None:
         sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPINTVL, intvl)
-    intvl: int = sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPINTVL)
-    logging.debug(f'TCP Keep-Alive interval time (seconds): {intvl}')
+    _intvl: int = sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPINTVL)
+    logging.debug(f'TCP Keep-Alive interval time (seconds): {_intvl}')
 
 
 def handle_tcp_quickack(sock: socket.socket, tcp_quickack: bool | None = None) -> None:
@@ -304,5 +304,7 @@ def handle_tcp_quickack(sock: socket.socket, tcp_quickack: bool | None = None) -
         if tcp_quickack is not None:
             val = 1 if tcp_quickack else 0
             sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_QUICKACK, val)
-        tcp_quickack = sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_QUICKACK) != 0
-        logging.debug(f'TCP Quick ACK: {tcp_quickack}')
+        _tcp_quickack: bool = (
+            sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_QUICKACK) != 0
+        )
+        logging.debug(f'TCP Quick ACK: {_tcp_quickack}')

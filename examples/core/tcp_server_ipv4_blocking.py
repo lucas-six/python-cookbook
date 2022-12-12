@@ -6,7 +6,7 @@ from __future__ import annotations
 import logging
 import socket
 import struct
-from typing import Any
+from typing import Any, NoReturn
 
 from net import (
     handle_listen,

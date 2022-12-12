@@ -6,7 +6,7 @@ from __future__ import annotations
 import logging
 import socket
 import struct
-from typing import Any
+from typing import Any, NoReturn
 
 from net import (
     get_tcp_server_max_connect_timeout,

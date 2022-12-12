@@ -38,7 +38,7 @@ class EchoClientProtocol(asyncio.DatagramProtocol):
         transport.sendto(self.message)
         logging.debug(f'sent: {self.message!r}, to: {server_address}')
 
-    def datagram_received(self, data: bytes, addr: tuple[str, int]):
+    def datagram_received(self, data: bytes, addr: tuple[str, int]) -> None:
         assert self.transport
 
         sock = self.transport.get_extra_info('socket')

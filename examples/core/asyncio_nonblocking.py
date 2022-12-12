@@ -22,7 +22,7 @@ async def main() -> None:
     logging.debug(f'started main at {time.strftime("%X")}')
     await asyncio.gather(
         asyncio.to_thread(blocking_io),
-        asyncio.sleep(1),  # type: ignore
+        asyncio.sleep(1),  # pyright: ignore
     )
     logging.debug(f'finished main at {time.strftime("%X")}')
 
