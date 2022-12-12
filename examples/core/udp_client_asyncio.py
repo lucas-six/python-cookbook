@@ -21,14 +21,14 @@ send_bufsize: int | None = None
 
 
 class EchoClientProtocol(asyncio.DatagramProtocol):
-    def __init__(self, message: bytes, on_con_lost: asyncio.Future[bool]):
+    def __init__(self, message: bytes, on_con_lost: asyncio.Future[bool]) -> None:
         self.message = message
         self.on_con_lost = on_con_lost
         self.transport: asyncio.DatagramTransport | None = None
 
     def connection_made(  # type: ignore[override]
         self, transport: asyncio.DatagramTransport
-    ):
+    ) -> None:
         self.transport = transport
 
         sock = transport.get_extra_info('socket')
@@ -53,14 +53,14 @@ class EchoClientProtocol(asyncio.DatagramProtocol):
 
         self.transport.close()
 
-    def error_received(self, exc: Exception | None):
+    def error_received(self, exc: Exception | None) -> None:
         logging.error(f'Error received: {exc}')
 
-    def connection_lost(self, exc: Exception | None):
+    def connection_lost(self, exc: Exception | None) -> None:
         self.on_con_lost.set_result(True)
 
 
-async def udp_echo_client(host: str, port: int):
+async def udp_echo_client(host: str, port: int) -> None:
     loop = asyncio.get_running_loop()
     on_con_lost = loop.create_future()
 

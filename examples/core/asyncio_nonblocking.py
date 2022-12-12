@@ -10,7 +10,7 @@ logging.basicConfig(
 )
 
 
-def blocking_io():
+def blocking_io() -> None:
     logging.debug(f'start blocking_io at {time.strftime("%X")}')
     # Note that time.sleep() can be replaced with any blocking
     # IO-bound operation, such as file operations.
@@ -18,7 +18,7 @@ def blocking_io():
     logging.debug(f'blocking_io complete at {time.strftime("%X")}')
 
 
-async def main():
+async def main() -> None:
     logging.debug(f'started main at {time.strftime("%X")}')
     await asyncio.gather(
         asyncio.to_thread(blocking_io),

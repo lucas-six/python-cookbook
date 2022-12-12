@@ -25,7 +25,7 @@ logging.basicConfig(
 logger = logging.getLogger()
 
 
-def recv_bin_data(sock: socket.socket, unpacker: struct.Struct):
+def recv_bin_data(sock: socket.socket, unpacker: struct.Struct) -> None:
     data = sock.recv(unpacker.size)
     if data:
         logger.debug(f'recv: {data!r}')
@@ -49,7 +49,7 @@ def run_server(
     tcp_keepalive_idle: int | None = None,
     tcp_keepalive_cnt: int | None = None,
     tcp_keepalive_intvl: int | None = None,
-):
+) -> NoReturn:
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     handle_reuse_address(sock, reuse_address)

@@ -16,7 +16,7 @@ logging.basicConfig(
 logger = logging.getLogger()
 
 
-def recv_bin_data(sock: socket.socket, unpacker: struct.Struct):
+def recv_bin_data(sock: socket.socket, unpacker: struct.Struct) -> None:
     data, client_address = sock.recvfrom(unpacker.size)
     if data:
         logger.debug(f'recv: {data!r}, from {client_address}')
@@ -33,7 +33,7 @@ def run_server(
     timeout: float | None = None,
     recv_buf_size: int | None = None,
     send_buf_size: int | None = None,
-):
+) -> None:
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
     handle_reuse_address(sock, reuse_address)

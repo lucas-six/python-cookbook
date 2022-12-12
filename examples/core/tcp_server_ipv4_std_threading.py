@@ -20,7 +20,7 @@ logger = logging.getLogger()
 
 
 class ThreadingTCPRequestHandler(socketserver.BaseRequestHandler):
-    def handle(self):
+    def handle(self) -> None:
         cur_thread = threading.current_thread()
         logger.debug(
             f'connected from {self.client_address} '
@@ -37,7 +37,7 @@ class ThreadingTCPRequestHandler(socketserver.BaseRequestHandler):
         logger.debug(f'sent: {data}')
 
 
-def client(host: str, port: int, message: bytes):
+def client(host: str, port: int, message: bytes) -> None:
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
         handle_tcp_nodelay(sock, True)
 

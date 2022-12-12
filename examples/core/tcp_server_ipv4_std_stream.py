@@ -18,7 +18,7 @@ logger = logging.getLogger()
 
 
 class MyTCPHandler(socketserver.StreamRequestHandler):
-    def handle(self):
+    def handle(self) -> None:
         logger.debug(f'connected from {self.client_address}')
 
         # self.rfile is a file-like object created by the handler;

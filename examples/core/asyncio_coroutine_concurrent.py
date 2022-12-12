@@ -9,7 +9,7 @@ logging.basicConfig(
 )
 
 
-async def coroutine_lowlevel_api(arg: int):
+async def coroutine_lowlevel_api(arg: int) -> tuple[str, str]:
     """run coroutines concurrently. (Low-level APIs)
 
     Before Python 3.7: loop.create_task()
@@ -27,7 +27,7 @@ async def coroutine_lowlevel_api(arg: int):
     return r1, r2
 
 
-async def coroutine_task(arg: int):
+async def coroutine_task(arg: int) -> tuple[str, str]:
     """run coroutines concurrently. (Python 3.7+)
 
     Python 3.7+: asyncio.create_task()
@@ -44,13 +44,13 @@ async def coroutine_task(arg: int):
     return r3, r4
 
 
-async def coroutine_gather(arg: int):
+async def coroutine_gather(arg: int) -> tuple[str, str]:
     """run coroutines concurrently: return results at a time."""
     logging.debug(f'run coroutine_gather: {arg}')
     return await asyncio.gather(task(5, 1.0), task(6, 1.5))
 
 
-async def coroutine_as_completed(arg: int):
+async def coroutine_as_completed(arg: int) -> list[str]:
     """run coroutines concurrently: return result each task."""
     logging.debug(f'run coroutine_as_completed: {arg}')
 
@@ -73,13 +73,13 @@ async def coroutine_as_completed(arg: int):
     return rs
 
 
-async def task(num: int, wait: float):
+async def task(num: int, wait: float) -> str:
     logging.debug(f'run task {num}, wait {wait} seconds')
     await asyncio.sleep(wait)
     return f'task {num} result'
 
 
-async def main():
+async def main() -> tuple[str, ...]:
     r1 = await coroutine_lowlevel_api(1)
     r2 = await coroutine_task(2)
     r3 = await coroutine_gather(3)
@@ -88,5 +88,5 @@ async def main():
     return r1 + r2 + tuple(r3) + tuple(r4)
 
 
-result = asyncio.run(main())  # Python 3.7+
+result: tuple[str, ...] = asyncio.run(main())  # Python 3.7+
 logging.debug(f'result: {result}')

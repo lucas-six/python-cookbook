@@ -11,27 +11,27 @@ logging.basicConfig(
 )
 
 
-def callback(num: int, wait: float, *, kwarg: str = 'keyword'):
+def callback(num: int, wait: float, *, kwarg: str = 'keyword') -> None:
     """Not a coroutine."""
     logging.debug(f'run callback {num}, [{kwarg}] wait {wait} seconds')
     time.sleep(wait)
 
 
-def callback_time(num: int, wait: float, loop: asyncio.BaseEventLoop):
+def callback_time(num: int, wait: float, loop: asyncio.BaseEventLoop) -> None:
     logging.debug(f'run callback_time {num}, wait {wait} seconds, at {loop.time()}')
     time.sleep(wait)
 
 
 def callback_result(
     num: int, wait: float, future: asyncio.Future[str], *, kwarg: str = 'keyword'
-):
+) -> None:
     """Not a coroutine, return results."""
     logging.debug(f'run callback {num}, [{kwarg}] wait {wait} seconds')
     time.sleep(wait)
     future.set_result(f'result {num}')
 
 
-async def main():
+async def main() -> str:
     loop = asyncio.get_running_loop()
 
     now = loop.time()
@@ -61,5 +61,5 @@ async def main():
     return await future
 
 
-result = asyncio.run(main())
+result: str = asyncio.run(main())
 logging.debug(f'result: {result}')

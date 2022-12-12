@@ -11,24 +11,24 @@ logging.basicConfig(
 
 class Pool:
     def __init__(self, init_value: list[int]) -> None:
-        self.pool = init_value
+        self.pool: list[int] = init_value
         self.semaphore = asyncio.Semaphore(len(self.pool))
 
 
-async def consumer(pool: Pool, i: int):
+async def consumer(pool: Pool, i: int) -> None:
     async with pool.semaphore:
         logging.debug(f'consumer {i} running')
         await asyncio.sleep(0.5)
         logging.debug(f'consumer {i} done')
 
 
-async def coro():
+async def coro() -> None:
     logging.debug('coro running')
     await asyncio.sleep(0.01)
     logging.debug('coro done')
 
 
-async def main():
+async def main() -> None:
     pool = Pool([1, 2, 3])
 
     consumers = [consumer(pool, i) for i in range(10)]

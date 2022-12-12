@@ -61,7 +61,8 @@ def get_tcp_client_max_connect_timeout() -> int | None:
 
 def handle_connect_timeout(
     sock: socket.socket, timeout: float | None, tcp_syn_retries: int | None
-):
+) -> None:
+    """Handle connect timeout."""
     # system connect timeout (client side)
     #
     # On Linux 2.2+: /proc/sys/net/ipv4/tcp_syn_retries
@@ -74,7 +75,9 @@ def handle_connect_timeout(
             sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_SYNCNT, tcp_syn_retries)
     if sys.platform == 'linux':
         _tcp_syn_retries = int(
-            Path('/proc/sys/net/ipv4/tcp_syn_retries').read_text().strip()
+            Path('/proc/sys/net/ipv4/tcp_syn_retries')
+            .read_text(encoding='utf-8')
+            .strip()
         )
         assert (
             sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_SYNCNT) == _tcp_syn_retries
@@ -89,8 +92,10 @@ def handle_connect_timeout(
     )
 
 
-def handle_reuse_address(sock: socket.socket, reuse_address: bool | None = None):
-    # Reuse address
+def handle_reuse_address(
+    sock: socket.socket, reuse_address: bool | None = None
+) -> None:
+    """Reuse address
     #
     # The `SO_REUSEADDR` flag tells the kernel to reuse a local socket in
     # `TIME_WAIT` state, without waiting for its natural timeout to expire
@@ -98,6 +103,7 @@ def handle_reuse_address(sock: socket.socket, reuse_address: bool | None = None)
     # When multiple processes with differing UIDs assign sockets
     # to an identical UDP socket address with `SO_REUSEADDR`,
     # incoming packets can become randomly distributed among the sockets.
+    """
     if sock.type is socket.SOCK_DGRAM and reuse_address:
         raise ValueError('DONOT use SO_REUSEADDR on UDP')
 
@@ -108,7 +114,7 @@ def handle_reuse_address(sock: socket.socket, reuse_address: bool | None = None)
     logging.debug(f'reuse address: {reuse_address}')
 
 
-def handle_reuse_port(sock: socket.socket, reuse_port: bool | None = None):
+def handle_reuse_port(sock: socket.socket, reuse_port: bool | None = None) -> None:
     """Reuse port
 
     For TCP
@@ -141,21 +147,25 @@ def handle_socket_bufsize(
     sock: socket.socket,
     recv_buf_size: int | None,
     send_buf_size: int | None,
-):
+) -> None:
     # Get the maximum socket receive/send buffer in bytes.
     max_recv_buf_size = max_send_buf_size = None
     if sys.platform == 'linux':
         # - read(recv): /proc/sys/net/core/rmem_max
         # - write(send): /proc/sys/net/core/wmem_max
-        max_recv_buf_size = int(Path('/proc/sys/net/core/rmem_max').read_text().strip())
-        max_send_buf_size = int(Path('/proc/sys/net/core/wmem_max').read_text().strip())
+        max_recv_buf_size = int(
+            Path('/proc/sys/net/core/rmem_max').read_text(encoding='utf-8').strip()
+        )
+        max_send_buf_size = int(
+            Path('/proc/sys/net/core/wmem_max').read_text(encoding='utf-8').strip()
+        )
 
     if recv_buf_size:
         # kernel do this already!
         # if max_recv_buf_size:
         #    recv_buf_size = min(recv_buf_size, max_recv_buf_size)
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF, recv_buf_size)
-    recv_buf_size = sock.getsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF)
+    recv_buf_size: int = sock.getsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF)
     logging.debug(f'recv buffer size: {recv_buf_size} (max={max_recv_buf_size})')
 
     if send_buf_size:
@@ -163,11 +173,11 @@ def handle_socket_bufsize(
         # if max_send_buf_size:
         #    send_buf_size = min(send_buf_size, max_send_buf_size)
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, send_buf_size)
-    send_buf_size = sock.getsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF)
+    send_buf_size: int = sock.getsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF)
     logging.debug(f'send buffer size: {send_buf_size} (max={max_send_buf_size})')
 
 
-def handle_listen(sock: socket.socket, accept_queue_size: int | None):
+def handle_listen(sock: socket.socket, accept_queue_size: int | None) -> None:
     """Set backlog (accept queue size) for `listen()`.
 
     On Linux 2.2+, there are two queues: SYN queue and accept queue
@@ -179,10 +189,12 @@ def handle_listen(sock: socket.socket, accept_queue_size: int | None):
     """
     if sys.platform == 'linux':  # Linux 2.2+
         assert socket.SOMAXCONN == int(
-            Path('/proc/sys/net/core/somaxconn').read_text().strip()
+            Path('/proc/sys/net/core/somaxconn').read_text(encoding='utf-8').strip()
         )
         max_syn_queue_size = int(
-            Path('/proc/sys/net/ipv4/tcp_max_syn_backlog').read_text().strip()
+            Path('/proc/sys/net/ipv4/tcp_max_syn_backlog')
+            .read_text(encoding='utf-8')
+            .strip()
         )
         logging.debug(f'max syn queue size: {max_syn_queue_size}')
 
@@ -196,7 +208,7 @@ def handle_listen(sock: socket.socket, accept_queue_size: int | None):
     sock.listen()
 
 
-def handle_tcp_nodelay(sock: socket.socket, tcp_nodelay: bool | None = None):
+def handle_tcp_nodelay(sock: socket.socket, tcp_nodelay: bool | None = None) -> None:
     """The `TCP_NODELAY` option disables Nagle algorithm.
 
     Nagle's algorithm works by combining a number of small outgoing messages
@@ -214,7 +226,7 @@ def handle_tcp_nodelay(sock: socket.socket, tcp_nodelay: bool | None = None):
     """
     if tcp_nodelay is not None:
         sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
-    tcp_nodelay = sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY) != 0
+    tcp_nodelay: bool = sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY) != 0
     logging.debug(f'TCP Nodelay: {tcp_nodelay}')
 
 
@@ -224,7 +236,7 @@ def handle_tcp_keepalive(
     idle: int | None = None,
     cnt: int | None = None,
     intvl: int | None = None,
-):
+) -> None:
     """Handle TCP Keep-Alive.
 
     The `SO_KEEPALIVE` option enables TCP Keep-Alive.
@@ -240,10 +252,10 @@ def handle_tcp_keepalive(
     if enable is not None:
         val = 1 if enable else 0
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, val)
-    enable = sock.getsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE) != 0
-    logging.debug(f'TCP Keep-Alive: {enable}')
+    enabled: bool = sock.getsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE) != 0
+    logging.debug(f'TCP Keep-Alive: {enabled}')
 
-    if not enable:
+    if not enabled:
         return
 
     idle_option: int | None = None
@@ -254,21 +266,21 @@ def handle_tcp_keepalive(
     if idle_option is not None:
         if idle is not None:
             sock.setsockopt(socket.IPPROTO_TCP, idle_option, idle)
-        idle = sock.getsockopt(socket.IPPROTO_TCP, idle_option)
+        idle: int = sock.getsockopt(socket.IPPROTO_TCP, idle_option)
         logging.debug(f'TCP Keep-Alive idle time (seconds): {idle}')
 
     if cnt is not None:
         sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPCNT, cnt)
-    cnt = sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPCNT)
+    cnt: int = sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPCNT)
     logging.debug(f'TCP Keep-Alive retries: {cnt}')
 
     if intvl is not None:
         sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPINTVL, intvl)
-    intvl = sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPINTVL)
+    intvl: int = sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPINTVL)
     logging.debug(f'TCP Keep-Alive interval time (seconds): {intvl}')
 
 
-def handle_tcp_quickack(sock: socket.socket, tcp_quickack: bool | None = None):
+def handle_tcp_quickack(sock: socket.socket, tcp_quickack: bool | None = None) -> None:
     """Enable TCP Quick ACK mode, disabling delayed ACKs.
 
     In quickack mode, `ACK`s are sent immediately,

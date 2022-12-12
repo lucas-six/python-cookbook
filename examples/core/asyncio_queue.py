@@ -5,14 +5,14 @@ import asyncio
 import logging
 import random
 import time
-from typing import Any
+from typing import Any, NoReturn
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}'
 )
 
 
-async def worker(i: int, queue: asyncio.Queue[float]):
+async def worker(i: int, queue: asyncio.Queue[float]) -> NoReturn:
     while True:
         # Get a "work item" out of the queue.
         sleep_for = await queue.get()
@@ -26,7 +26,7 @@ async def worker(i: int, queue: asyncio.Queue[float]):
         logging.debug(f'worker {i} has slept for {sleep_for:.2f} seconds')
 
 
-async def main(workers: int):
+async def main(workers: int) -> None:
     queue: asyncio.Queue[float] = asyncio.Queue(32)
 
     # Generate random timings and put them into the queue.

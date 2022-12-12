@@ -10,7 +10,8 @@ logging.basicConfig(
 )
 
 
-async def coroutine(arg: int):
+async def coroutine(arg: int) -> int:
+    """Coroutine demo."""
     logging.debug(f'run coroutine: {arg}')
     return arg + 1
 

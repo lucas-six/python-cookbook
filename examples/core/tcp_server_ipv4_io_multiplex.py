@@ -6,6 +6,7 @@ from __future__ import annotations
 import logging
 import selectors
 import socket
+from typing import NoReturn
 
 from net import (
     get_tcp_server_max_connect_timeout,
@@ -42,7 +43,7 @@ g_tcp_keepalive_cnt = None
 g_tcp_keepalive_intvl = None
 
 
-def handle_read(conn: socket.socket, mask: int):
+def handle_read(conn: socket.socket, mask: int) -> None:
     """Callback for read events."""
     assert mask == selectors.EVENT_READ
 
@@ -67,7 +68,7 @@ def handle_read(conn: socket.socket, mask: int):
         logger.error(err)
 
 
-def handle_requests(sock: socket.socket, mask: int):
+def handle_requests(sock: socket.socket, mask: int) -> None:
     """Callback for new connections."""
     assert mask == selectors.EVENT_READ
 
@@ -107,7 +108,7 @@ def run_server(
     tcp_keepalive_idle: int | None = None,
     tcp_keepalive_cnt: int | None = None,
     tcp_keepalive_intvl: int | None = None,
-):
+) -> NoReturn:
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     handle_reuse_address(sock, reuse_address)

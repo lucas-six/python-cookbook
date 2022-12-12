@@ -34,7 +34,7 @@ send_bufsize: int | None = None
 
 
 class EchoServerProtocol(asyncio.Protocol):
-    def connection_made(self, transport: asyncio.BaseTransport):
+    def connection_made(self, transport: asyncio.BaseTransport) -> None:
         assert isinstance(transport, asyncio.Transport)
 
         # `socket.getpeername()`
@@ -65,7 +65,7 @@ class EchoServerProtocol(asyncio.Protocol):
         handle_tcp_quickack(sock, tcp_quickack)
         # logging.debug(dir(sock))
 
-    def data_received(self, data: bytes):
+    def data_received(self, data: bytes) -> None:
         logging.debug(f'recv: {data!r}')
 
         self.transport.write(data)
@@ -79,7 +79,7 @@ async def tcp_echo_server(
     port: int,
     *,
     backlog: int = 100,
-):
+) -> None:
     loop = asyncio.get_running_loop()
 
     # The socket option `TCP_NODELAY` is set by default in Python 3.6+
