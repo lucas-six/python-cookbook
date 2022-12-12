@@ -255,7 +255,7 @@ def handle_tcp_keepalive(
     _enable: bool = sock.getsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE) != 0
     logging.debug(f'TCP Keep-Alive: {_enable}')
 
-    if not enabled:
+    if not _enable:
         return
 
     idle_option: int | None = None
