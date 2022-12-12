@@ -18,19 +18,19 @@ logger = logging.getLogger()
 
 
 class MyTCPHandler(socketserver.StreamRequestHandler):
-    def handle(self):
+    def handle(self) -> None:
         logger.debug(f'connected from {self.client_address}')
 
         # self.rfile is a file-like object created by the handler;
         # we can now use e.g. readline() instead of raw recv() calls
-        data = self.rfile.readline()
-        logger.debug(f'recv: {data}')
+        data: bytes = self.rfile.readline()
+        logger.debug(f'recv: {data!r}')
 
         # Likewise, self.wfile is a file-like object used to write back
         # to the client
         data = data.upper()
         self.wfile.write(data)
-        logger.debug(f'sent: {data}')
+        logger.debug(f'sent: {data!r}')
 
 
 if __name__ == '__main__':

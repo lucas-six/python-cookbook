@@ -5,7 +5,8 @@
 ```bash
 pipenv --python 3.10
 
-pipenv install --dev black isort mypy flake8 pyupgrade 'pytest>=7.1' 'coverage>=6.4' 'pytest-cov>=3.0' \
+pipenv install pydantic
+pipenv install --dev black isort mypy flake8 pytest pyupgrade 'coverage>=6.4' 'pytest-cov>=3.0' \
     flake8-django 'django-stubs[compatible-mypy]>=1.12' types-redis
 ```
 
@@ -40,6 +41,7 @@ classifiers = [
     "Typing :: Typed",
 ]
 dependencies = [
+    "pydantic",
     "django ~= 3.2",
     "psycopg2 >= 2.8",
     "redis >= 4.0",
@@ -55,8 +57,8 @@ test = [
     "isort",
     "mymy",
     "flake8",
+    "pytest",
     "pyupgrade",
-    "pytest >= 7.1",
     "coverage >= 6.4",
     "pytest-cov >= 3.0",
     "flake8-django",
@@ -125,7 +127,17 @@ extend_skip_glob = ["*/migrations/*"]
 
 [tool.mypy]
 python_version = "3.10"
+plugins = [
+  "pydantic.mypy"
+]
+follow_imports = "silent"
+warn_redundant_casts = true
+warn_unused_ignores = true
 warn_unused_configs = true
+disallow_any_generics = true
+check_untyped_defs = true
+no_implicit_reexport = true
+disallow_untyped_defs = true
 exclude = [
     '^file1\.py$',  # TOML literal string (single-quotes, no escaping necessary)
     "^file2\\.py$",  # TOML basic string (double-quotes, backslash and other characters need escaping)
@@ -135,6 +147,12 @@ exclude = [
     'models.py',
     'admin.py',
 ]
+
+[tool.pydantic-mypy]
+init_forbid_extra = true
+init_typed = true
+warn_required_dynamic_aliases = true
+warn_untyped_fields = true
 
 [tool.flake8]
 # exclude = .svn,CVS,.bzr,.hg,.git,__pycache__,.tox,.eggs,*.egg
@@ -252,9 +270,8 @@ repos:
     rev: v0.971
     hooks:
       - id: mypy
-        exclude: '(settings.py|migrations/|models.py|admin.py)'
-        additional_dependencies: [types-redis]
-        exclude: migrations/
+        exclude: '(settings.py|manage.py|migrations/|models.py|admin.py)'
+        additional_dependencies: [pydantic, types-redis]
   - repo: https://github.com/PyCQA/flake8
     rev: 5.0.4
     hooks:

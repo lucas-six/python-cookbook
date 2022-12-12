@@ -31,7 +31,7 @@ def run_client(
     tcp_nodelay: bool = True,
     recv_buf_size: int | None = None,
     send_buf_size: int | None = None,
-):
+) -> None:
     binary_fmt: str = '! I 2s Q 2h f'
     packer = struct.Struct(binary_fmt)
     binary_value: tuple[Any, ...] = (1, b'ab', 2, 3, 3, 2.5)

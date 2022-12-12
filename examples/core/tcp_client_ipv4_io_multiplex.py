@@ -40,7 +40,7 @@ def run_client(
     tcp_nodelay: bool = True,
     recv_buf_size: int | None = None,
     send_buf_size: int | None = None,
-):
+) -> None:
     data: list[bytes] = [b'data2\n', b'data1\n']
 
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client:

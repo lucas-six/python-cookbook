@@ -9,13 +9,13 @@ logging.basicConfig(
 )
 
 
-async def task(num: int, wait: float):
+async def task(num: int, wait: float) -> str:
     logging.debug(f'run task {num}, wait {wait} seconds')
     await asyncio.sleep(wait)
     return f'task {num} done'
 
 
-async def main():
+async def main() -> None:
     tasks1 = {asyncio.create_task(task(i, 1.0), name=f't{i}') for i in range(5)}
     done, _ = await asyncio.wait(tasks1)
     for t in done:

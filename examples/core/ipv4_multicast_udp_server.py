@@ -13,25 +13,29 @@ from pathlib import Path
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
 )
-logger = logging.getLogger()
+logger: logging.Logger = logging.getLogger()
 
 
 # system info
 _uname = os.uname()
-os_name = _uname.sysname
+os_name: str = _uname.sysname
 os_version_info = tuple(_uname.release.split('.'))
 max_recv_buf_size: int | None
 max_send_buf_size: int | None
 if os_name == 'Linux':
     assert socket.SOMAXCONN == int(
-        Path('/proc/sys/net/core/somaxconn').read_text().strip()
+        Path('/proc/sys/net/core/somaxconn').read_text(encoding='utf-8').strip()
     )
 
     # Get max UDP recv/send buffer size in system (Linux)
     # - read(recv): /proc/sys/net/core/rmem_max
     # - write(send): /proc/sys/net/core/wmem_max
-    max_recv_buf_size = int(Path('/proc/sys/net/core/rmem_max').read_text().strip())
-    max_send_buf_size = int(Path('/proc/sys/net/core/wmem_max').read_text().strip())
+    max_recv_buf_size = int(
+        Path('/proc/sys/net/core/rmem_max').read_text(encoding='utf-8').strip()
+    )
+    max_send_buf_size = int(
+        Path('/proc/sys/net/core/wmem_max').read_text(encoding='utf-8').strip()
+    )
 else:
     max_recv_buf_size = max_send_buf_size = None
 
@@ -43,9 +47,9 @@ def run_server(
     *,
     recv_buf_size: int | None = None,
     send_buf_size: int | None = None,
-    multicast_ttl: int | None = None,
     multicast_loopback: bool | None = None,
-):
+) -> None:
+    """Run server."""
     sock: socket.SocketType = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
     # Reuse address

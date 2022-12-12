@@ -6,6 +6,7 @@ from __future__ import annotations
 import logging
 import socket
 import struct
+from typing import Any
 
 from net import handle_socket_bufsize
 
@@ -14,13 +15,13 @@ logging.basicConfig(
 )
 
 data: bytes = b'data'
-server_address = ('localhost', 9999)
-timeout = 5.0
+server_address: tuple[str, int] = ('localhost', 9999)
+timeout: float = 5.0
 recv_bufsize: int | None = None
 send_bufsize: int | None = None
 
 binary_fmt: str = '! I 2s Q 2h f'
-binary_value: tuple = (1, b'ab', 2, 3, 3, 2.5)
+binary_value: tuple[Any, ...] = (1, b'ab', 2, 3, 3, 2.5)
 packer = struct.Struct(binary_fmt)
 
 with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as client:

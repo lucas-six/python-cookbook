@@ -26,7 +26,7 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
     client.
     """
 
-    def handle(self):
+    def handle(self) -> None:
         logger.debug(f'connected from {self.client_address}')
 
         # self.request is the TCP socket connected to the client

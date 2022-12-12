@@ -6,7 +6,7 @@ import sys
 if __name__ == '__main__':
     import argparse
 
-    parser = argparse.ArgumentParser(description='demo')
+    parser: argparse.ArgumentParser = argparse.ArgumentParser(description='demo')
     parser.add_argument('arg1', help='positional argument (str type)')
     parser.add_argument('arg2', help='positional argument (int type)', type=int)
     parser.add_argument(
@@ -60,6 +60,6 @@ if __name__ == '__main__':
     assert isinstance(args.arg7, list)
     assert isinstance(args.arg8, list)
     assert isinstance(args.arg9, list)
-    assert len(args.arg7) in (0, 1)  # type: ignore
-    assert len(args.arg8) == 2  # type: ignore
-    assert len(args.arg9) > 1  # type: ignore
+    assert len(args.arg7) in (0, 1)  # pyright: ignore
+    assert len(args.arg8) == 2  # pyright: ignore
+    assert len(args.arg9) > 1  # pyright: ignore
