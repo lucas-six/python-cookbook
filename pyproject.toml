@@ -37,6 +37,7 @@ test = [
     "black",
     "isort",
     "mymy",
+    "pylint",
     "flake8",
     "pytest",
     "pyupgrade",
@@ -115,6 +116,16 @@ init_forbid_extra = true
 init_typed = true
 warn_required_dynamic_aliases = true
 warn_untyped_fields = true
+
+[tool.pylint.main]
+recursive = yes
+py-version = 3.10
+
+[tool.pylint.'FORMAT']
+max-line-length = 88
+
+[tool.pylint.'LOGGING']
+logging-format-style = new
 
 [tool.flake8]
 # exclude = .svn,CVS,.bzr,.hg,.git,__pycache__,.tox,.eggs,*.egg

@@ -6,7 +6,7 @@
 pipenv --python 3.10
 
 pipenv install pydantic
-pipenv install --dev black isort mypy flake8 pytest pyupgrade 'coverage>=6.4' 'pytest-cov>=3.0' \
+pipenv install --dev black isort mypy pylint flake8 pytest pyupgrade 'coverage>=6.4' 'pytest-cov>=3.0' \
     flake8-django 'django-stubs[compatible-mypy]>=1.12' types-redis
 ```
 
@@ -56,6 +56,7 @@ test = [
     "black",
     "isort",
     "mymy",
+    "pylint",
     "flake8",
     "pytest",
     "pyupgrade",
@@ -153,6 +154,12 @@ init_forbid_extra = true
 init_typed = true
 warn_required_dynamic_aliases = true
 warn_untyped_fields = true
+
+[tool.pylint.'FORMAT']
+max-line-length = 88
+
+[tool.pylint.'LOGGING']
+logging-format-style = new
 
 [tool.flake8]
 # exclude = .svn,CVS,.bzr,.hg,.git,__pycache__,.tox,.eggs,*.egg
@@ -272,6 +279,10 @@ repos:
       - id: mypy
         exclude: '(settings.py|manage.py|migrations/|models.py|admin.py)'
         additional_dependencies: [pydantic, types-redis]
+  - repo: https://github.com/PyCQA/pylint
+    hooks:
+      - id: pylint
+        language_version: python3.10
   - repo: https://github.com/PyCQA/flake8
     rev: 5.0.4
     hooks:
@@ -343,6 +354,7 @@ jobs:
 - [`black` Documentation](https://black.readthedocs.io/en/stable/)
 - [`isort` Documentation](https://pycqa.github.io/isort/)
 - [`mypy` Documentation](https://mypy.readthedocs.io/en/stable/)
+- [`pylint` Documentation](https://pylint.pycqa.org/en/latest/)
 - [`flake8` Documentation](https://flake8.pycqa.org/en/latest/)
 - [`pytest` Documentation](https://docs.pytest.org/)
 - [`coverage` Documentation](https://coverage.readthedocs.io/)
