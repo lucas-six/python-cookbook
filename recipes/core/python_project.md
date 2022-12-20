@@ -286,6 +286,7 @@ repos:
   - repo: https://github.com/PyCQA/pylint
     hooks:
       - id: pylint
+        rev: v2.15.9
         language_version: python3.10
   - repo: https://github.com/PyCQA/flake8
     rev: 5.0.4
