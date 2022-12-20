@@ -6,7 +6,7 @@
 pipenv --python 3.10
 
 pipenv install pydantic
-pipenv install --dev black isort mypy pylint flake8 pytest pyupgrade 'coverage>=6.4' 'pytest-cov>=3.0' \
+pipenv install --dev black isort mypy pylint flake8 pre-commit pytest pyupgrade 'coverage>=6.4' 'pytest-cov>=3.0' \
     flake8-django 'django-stubs[compatible-mypy]>=1.12' types-redis
 ```
 
@@ -58,6 +58,7 @@ test = [
     "mymy",
     "pylint",
     "flake8",
+    "pre-commit",
     "pytest",
     "pyupgrade",
     "coverage >= 6.4",
@@ -158,6 +159,21 @@ warn_untyped_fields = true
 [tool.pylint.main]
 recursive = true
 py-version = 3.10
+ignore = "CVS,migrations"
+load-plugins = pylint_django
+disable = [
+    "raw-checker-failed",
+    "bad-inline-option",
+    "locally-disabled",
+    "file-ignored",
+    "suppressed-message",
+    "useless-suppression",
+    "deprecated-pragma",
+    "use-symbolic-message-instead",
+]
+enable = [
+    "c-extension-no-member",
+]
 
 [tool.pylint.'FORMAT']
 max-line-length = 88
@@ -219,22 +235,7 @@ stubPath = ""
 pythonVersion = "3.10"
 ```
 
-## Git Pre-Commit
-
-```bash
-# .git/hooks/pre-commit
-# chmod u+x .git/hooks/pre-commit
-
-pipenv run isort .
-pipenv run mypy .
-
-# IDE may included
-#pipenv run flake8 .
-```
-
-## GitHub Actions
-
-### `pre-commit`
+## `pre-commit`
 
 ```yaml
 # .pre-commit-config.yaml
@@ -287,6 +288,7 @@ repos:
     rev: v2.15.9
     hooks:
       - id: pylint
+        exclude: migrations/
         language_version: python3.10
   - repo: https://github.com/PyCQA/flake8
     rev: 5.0.4
@@ -323,6 +325,27 @@ ci:
   skip: []
   submodules: false
 ```
+
+```bash
+pre-commit install
+```
+
+## Git Pre-Commit
+
+```bash
+# .git/hooks/pre-commit
+# chmod u+x .git/hooks/pre-commit
+
+pipenv run isort .
+pipenv run mypy .
+
+# IDE may included
+#pipenv run flake8 .
+```
+
+## GitHub Actions
+
+### `pre-commit`
 
 ### GitHub Workflows
 

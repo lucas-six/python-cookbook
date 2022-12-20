@@ -33,7 +33,9 @@ def get_tcp_server_max_connect_timeout() -> int | None:
     """
     if sys.platform == 'linux':  # Linux 2.2+
         tcp_synack_retries = int(
-            Path('/proc/sys/net/ipv4/tcp_synack_retries').read_text().strip()
+            Path('/proc/sys/net/ipv4/tcp_synack_retries')
+            .read_text(encoding='utf-8')
+            .strip()
         )
         logging.debug(f'max syn/ack retries: {tcp_synack_retries}')
         return _get_linux_tcp_max_connect_timeout(tcp_synack_retries)
@@ -51,7 +53,9 @@ def get_tcp_client_max_connect_timeout() -> int | None:
     """
     if sys.platform == 'linux':  # Linux 2.2+
         tcp_syn_retries = int(
-            Path('/proc/sys/net/ipv4/tcp_syn_retries').read_text().strip()
+            Path('/proc/sys/net/ipv4/tcp_syn_retries')
+            .read_text(encoding='utf-8')
+            .strip()
         )
         logging.debug(f'max syn retries: {tcp_syn_retries}')
         return _get_linux_tcp_max_connect_timeout(tcp_syn_retries)

@@ -120,12 +120,44 @@ warn_untyped_fields = true
 [tool.pylint.main]
 recursive = true
 py-version = 3.10
+ignore = "CVS,migrations,manage.py,django_project"
+load-plugins = "pylint_django"
 
 [tool.pylint.'FORMAT']
 max-line-length = 88
 
 [tool.pylint.'LOGGING']
 logging-format-style = "new"
+
+[tool.pylint.'MESSAGES CONTROL']
+disable = [
+    "raw-checker-failed",
+    "bad-inline-option",
+    "locally-disabled",
+    "file-ignored",
+    "suppressed-message",
+    "useless-suppression",
+    "deprecated-pragma",
+    "use-symbolic-message-instead",
+    "W2601",
+    "W1203",
+    "C0116",
+    "R0801",
+    "C0103",
+    "W0621",
+    "R0914",
+    "W0108",
+    "C0115",
+    "R0913",
+    "E0401",
+    "W0201",
+    "too-few-public-methods",
+    "global-statement",
+    "E5110",
+]
+enable = [
+    "c-extension-no-member",
+]
 
 [tool.flake8]
 # exclude = .svn,CVS,.bzr,.hg,.git,__pycache__,.tox,.eggs,*.egg

@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 pydantic = "*"
+django = "~=3.2"
 
 [dev-packages]
 black = "*"
@@ -12,6 +13,8 @@ isort = "*"
 flake8 = "*"
 mypy = "*"
 pytest = "*"
+pre-commit = "*"
+pylint-django = "*"
 
 [requires]
 python_version = "3.10"
