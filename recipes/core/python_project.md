@@ -59,6 +59,7 @@ test = [
     "pylint",
     "flake8",
     "pre-commit",
+    "pylint-django",
     "pytest",
     "pyupgrade",
     "coverage >= 6.4",
@@ -160,7 +161,7 @@ warn_untyped_fields = true
 recursive = true
 py-version = 3.10
 ignore = "CVS,migrations"
-load-plugins = pylint_django
+load-plugins = "pylint_django"
 disable = [
     "raw-checker-failed",
     "bad-inline-option",

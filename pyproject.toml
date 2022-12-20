@@ -39,6 +39,7 @@ test = [
     "mymy",
     "pylint",
     "flake8",
+    "pylint-django",
     "pytest",
     "pyupgrade",
     "coverage >= 6.4",
@@ -153,7 +154,7 @@ disable = [
     "W0201",
     "too-few-public-methods",
     "global-statement",
-    "E5110",
+    "django-not-configured",
 ]
 enable = [
     "c-extension-no-member",
