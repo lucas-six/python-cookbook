@@ -1,3 +1,6 @@
+"""Views
+"""
+
 import logging
 from collections import OrderedDict
 
@@ -19,8 +22,8 @@ def index(request: HttpRequest) -> HttpResponse:
 def api_get(request: HttpRequest) -> JsonResponse:
     try:
         a = A.objects.get(name='a1', is_active=True)
-    except A.DoesNotExist:
-        raise Http404
+    except A.DoesNotExist as err:
+        raise Http404 from err
 
     a_list: list[str] = []
     for _a in A.objects.filter(name__startswith='a', is_active=True):

@@ -266,7 +266,7 @@ def handle_tcp_keepalive(
     if sys.platform == 'linux':  # Linux 2.4+
         idle_option = socket.TCP_KEEPIDLE
     elif sys.platform == 'darwin' and sys.version_info >= (3, 10):
-        idle_option = socket.TCP_KEEPALIVE
+        idle_option = socket.TCP_KEEPALIVE  # pylint: disable-no-member
     if idle_option is not None:
         if idle is not None:
             sock.setsockopt(socket.IPPROTO_TCP, idle_option, idle)

@@ -1,3 +1,6 @@
+"""Urls.py
+"""
+
 from django.urls import path
 
 from .views import api_get, index, use_cache
