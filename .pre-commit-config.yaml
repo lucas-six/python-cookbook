@@ -47,7 +47,8 @@ repos:
     rev: v2.15.9
     hooks:
       - id: pylint
-        additional_dependencies: [pylint-django]
+        additional_dependencies: [django~=3.2, pylint-django]
+        exclude: (settings.py|manage.py|migrations/|models.py|admin.py)
         language_version: python3.10
   - repo: https://github.com/PyCQA/flake8
     rev: 6.0.0
