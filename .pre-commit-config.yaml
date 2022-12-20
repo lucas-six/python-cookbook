@@ -47,6 +47,7 @@ repos:
     rev: v2.15.9
     hooks:
       - id: pylint
+        additional_dependencies: [pylint-django]
         language_version: python3.10
   - repo: https://github.com/PyCQA/flake8
     rev: 6.0.0
