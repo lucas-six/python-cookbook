@@ -6,7 +6,7 @@
 pipenv --python 3.10
 
 pipenv install pydantic
-pipenv install --dev black isort mypy flake8 pytest pyupgrade 'coverage>=6.4' 'pytest-cov>=3.0' \
+pipenv install --dev black isort mypy pylint flake8 pre-commit pytest pyupgrade 'coverage>=6.4' 'pytest-cov>=3.0' \
     flake8-django 'django-stubs[compatible-mypy]>=1.12' types-redis
 ```
 
@@ -56,7 +56,10 @@ test = [
     "black",
     "isort",
     "mymy",
+    "pylint",
     "flake8",
+    "pre-commit",
+    "pylint-django",
     "pytest",
     "pyupgrade",
     "coverage >= 6.4",
@@ -154,6 +157,31 @@ init_typed = true
 warn_required_dynamic_aliases = true
 warn_untyped_fields = true
 
+[tool.pylint.main]
+recursive = true
+py-version = 3.10
+ignore = "CVS,migrations"
+load-plugins = "pylint_django"
+disable = [
+    "raw-checker-failed",
+    "bad-inline-option",
+    "locally-disabled",
+    "file-ignored",
+    "suppressed-message",
+    "useless-suppression",
+    "deprecated-pragma",
+    "use-symbolic-message-instead",
+]
+enable = [
+    "c-extension-no-member",
+]
+
+[tool.pylint.'FORMAT']
+max-line-length = 88
+
+[tool.pylint.'LOGGING']
+logging-format-style = "new"
+
 [tool.flake8]
 # exclude = .svn,CVS,.bzr,.hg,.git,__pycache__,.tox,.eggs,*.egg
 extend-exclude = "**/migrations/*.py"
@@ -208,22 +236,7 @@ stubPath = ""
 pythonVersion = "3.10"
 ```
 
-## Git Pre-Commit
-
-```bash
-# .git/hooks/pre-commit
-# chmod u+x .git/hooks/pre-commit
-
-pipenv run isort .
-pipenv run mypy .
-
-# IDE may included
-#pipenv run flake8 .
-```
-
-## GitHub Actions
-
-### `pre-commit`
+## `pre-commit`
 
 ```yaml
 # .pre-commit-config.yaml
@@ -270,8 +283,15 @@ repos:
     rev: v0.971
     hooks:
       - id: mypy
-        exclude: '(settings.py|manage.py|migrations/|models.py|admin.py)'
+        exclude: (settings.py|manage.py|migrations/|models.py|admin.py)
         additional_dependencies: [pydantic, types-redis]
+  - repo: https://github.com/PyCQA/pylint
+    rev: v2.15.9
+    hooks:
+      - id: pylint
+        additional_dependencies: [django, pylint-django]
+        exclude: (settings.py|manage.py|migrations/|models.py|admin.py)
+        language_version: python3.10
   - repo: https://github.com/PyCQA/flake8
     rev: 5.0.4
     hooks:
@@ -308,6 +328,27 @@ ci:
   submodules: false
 ```
 
+```bash
+pre-commit install
+```
+
+## Git Pre-Commit
+
+```bash
+# .git/hooks/pre-commit
+# chmod u+x .git/hooks/pre-commit
+
+pipenv run isort .
+pipenv run mypy .
+
+# IDE may included
+#pipenv run flake8 .
+```
+
+## GitHub Actions
+
+### `pre-commit`
+
 ### GitHub Workflows
 
 ```yaml
@@ -343,6 +384,7 @@ jobs:
 - [`black` Documentation](https://black.readthedocs.io/en/stable/)
 - [`isort` Documentation](https://pycqa.github.io/isort/)
 - [`mypy` Documentation](https://mypy.readthedocs.io/en/stable/)
+- [`pylint` Documentation](https://pylint.pycqa.org/en/latest/)
 - [`flake8` Documentation](https://flake8.pycqa.org/en/latest/)
 - [`pytest` Documentation](https://docs.pytest.org/)
 - [`coverage` Documentation](https://coverage.readthedocs.io/)

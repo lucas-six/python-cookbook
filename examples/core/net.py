@@ -33,7 +33,9 @@ def get_tcp_server_max_connect_timeout() -> int | None:
     """
     if sys.platform == 'linux':  # Linux 2.2+
         tcp_synack_retries = int(
-            Path('/proc/sys/net/ipv4/tcp_synack_retries').read_text().strip()
+            Path('/proc/sys/net/ipv4/tcp_synack_retries')
+            .read_text(encoding='utf-8')
+            .strip()
         )
         logging.debug(f'max syn/ack retries: {tcp_synack_retries}')
         return _get_linux_tcp_max_connect_timeout(tcp_synack_retries)
@@ -51,7 +53,9 @@ def get_tcp_client_max_connect_timeout() -> int | None:
     """
     if sys.platform == 'linux':  # Linux 2.2+
         tcp_syn_retries = int(
-            Path('/proc/sys/net/ipv4/tcp_syn_retries').read_text().strip()
+            Path('/proc/sys/net/ipv4/tcp_syn_retries')
+            .read_text(encoding='utf-8')
+            .strip()
         )
         logging.debug(f'max syn retries: {tcp_syn_retries}')
         return _get_linux_tcp_max_connect_timeout(tcp_syn_retries)
@@ -262,7 +266,7 @@ def handle_tcp_keepalive(
     if sys.platform == 'linux':  # Linux 2.4+
         idle_option = socket.TCP_KEEPIDLE
     elif sys.platform == 'darwin' and sys.version_info >= (3, 10):
-        idle_option = socket.TCP_KEEPALIVE
+        idle_option = socket.TCP_KEEPALIVE  # pylint: disable=no-member
     if idle_option is not None:
         if idle is not None:
             sock.setsockopt(socket.IPPROTO_TCP, idle_option, idle)
