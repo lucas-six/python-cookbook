@@ -4,10 +4,7 @@
 
 ```bash
 pipenv --python 3.10
-
-pipenv install pydantic
-pipenv install --dev black isort mypy pylint flake8 pre-commit pytest pyupgrade 'coverage>=6.4' 'pytest-cov>=3.0' \
-    flake8-django 'django-stubs[compatible-mypy]>=1.12' types-redis
+pipenv install --dev black isort mypy pylint flake8 pytest coverage[toml] pytest-cov pre-commit pyupgrade
 ```
 
 ## `pyproject.toml`
@@ -42,7 +39,7 @@ classifiers = [
 ]
 dependencies = [
     "pydantic",
-    "django ~= 3.2",
+
     "psycopg2 >= 2.8",
     "redis >= 4.0",
 
@@ -58,16 +55,11 @@ test = [
     "mymy",
     "pylint",
     "flake8",
-    "pre-commit",
-    "pylint-django",
     "pytest",
+    "coverage",
+    "pytest-cov",
+    "pre-commit",
     "pyupgrade",
-    "coverage >= 6.4",
-    "pytest-cov >= 3.0",
-    "flake8-django",
-    "django-stubs[compatible-mypy]>=1.12",
-    "django-types",
-    "types-redis",
 ]
 doc = [
     "sphinx"
@@ -245,7 +237,7 @@ pythonVersion = "3.10"
 # See https://pre-commit.com/hooks.html for more hooks
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.3.0
+    rev: v4.4.0
     hooks:
       - id: trailing-whitespace
         args: [--markdown-linebreak-ext=md]
@@ -263,7 +255,7 @@ repos:
       - id: name-tests-test
         args: [--django]
   - repo: https://github.com/psf/black
-    rev: 22.6.0
+    rev: 22.12.0
     hooks:
       - id: black
         exclude: migrations/
@@ -274,40 +266,32 @@ repos:
         # https://pre-commit.com/#top_level-default_language_version
         language_version: python3.10
   - repo: https://github.com/pycqa/isort
-    rev: 5.10.1
+    rev: v5.11.3
     hooks:
       - id: isort
         name: isort (python)
         language_version: python3.10
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v0.971
+    rev: v0.991
     hooks:
       - id: mypy
-        exclude: (settings.py|manage.py|migrations/|models.py|admin.py)
         additional_dependencies: [pydantic, types-redis]
+        language_version: python3.10
   - repo: https://github.com/PyCQA/pylint
     rev: v2.15.9
     hooks:
       - id: pylint
-        additional_dependencies: [django, pylint-django]
-        exclude: (settings.py|manage.py|migrations/|models.py|admin.py)
         language_version: python3.10
   - repo: https://github.com/PyCQA/flake8
     rev: 5.0.4
     hooks:
       - id: flake8
-        additional_dependencies: [flake8-django]
-        exclude: migrations/
         args:
           [
             '--max-complexity',
             '10',
             '--max-line-length',
             '88',
-            '--per-file-ignores',
-            'settings.py:E501',
-            '--require-plugins',
-            'flake8-django',
           ]
   - repo: https://github.com/asottile/pyupgrade
     rev: v2.37.1
@@ -388,4 +372,3 @@ jobs:
 - [`flake8` Documentation](https://flake8.pycqa.org/en/latest/)
 - [`pytest` Documentation](https://docs.pytest.org/)
 - [`coverage` Documentation](https://coverage.readthedocs.io/)
-- [`django-stubs` PyPI](https://pypi.org/project/django-stubs/)

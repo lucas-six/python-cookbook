@@ -74,9 +74,10 @@
 - Logging (日志)
   - [Logging Usage](https://leven-cn.github.io/python-cookbook/recipes/core/logging_usage)
   - [Logging Dictionary Configuration](https://leven-cn.github.io/python-cookbook/recipes/core/logging_dict_config)
-- [Command-Line Arguments Parser: `argparse`](https://leven-cn.github.io/python-cookbook/recipes/core/argparse)
-  - **`optparse`** (deprecated since Python *3.2*, [use *`argparse`* instead](https://leven-cn.github.io/python-cookbook/recipes/core/argparse))
-  - **`getopt`**: C-Style Parser ([use *`argparse`* instead](https://leven-cn.github.io/python-cookbook/recipes/core/argparse))
+- Command-Line Arguments Parser
+  - [`argparse`](https://leven-cn.github.io/python-cookbook/recipes/core/argparse)
+  - ~~`optparse`~~ (deprecated since Python *3.2*, use [`argparse`](https://leven-cn.github.io/python-cookbook/recipes/core/argparse) instead)
+  - ~~`getopt`~~: C-Style Parser (use [`argparse`](<https://leven-cn.github.io/python-cookbook/recipes/core/argparse>) instead)
 - Parallelism and Concurrent (并发)
   - [Multi-Threads Parallelism for **I/O-bound** tasks](https://leven-cn.github.io/python-cookbook/recipes/core/multi_threads)
   - [Multi-Processes Parallelism for **CPU-bound** tasks](https://leven-cn.github.io/python-cookbook/recipes/core/multi_processes)
@@ -134,7 +135,7 @@
   - [UDP Server](https://leven-cn.github.io/python-cookbook/recipes/core/udp_server_asyncio)
   - [UDP Client](https://leven-cn.github.io/python-cookbook/recipes/core/udp_client_asyncio)
 - Test
-  - [Builtin: `unittest`](https://leven-cn.github.io/python-cookbook/recipes/core/unittest)
+  - [`unittest` (Builtin)](https://leven-cn.github.io/python-cookbook/recipes/core/unittest)
   - [`pytest`](https://leven-cn.github.io/python-cookbook/recipes/core/pytest)
 - Package Management
   - [`pip` - Standard Package Manager](https://leven-cn.github.io/python-cookbook/recipes/core/pip)
