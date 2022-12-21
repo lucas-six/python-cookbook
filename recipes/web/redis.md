@@ -9,7 +9,7 @@ and [Redis CLI - Basic Usage](https://leven-cn.github.io/python-cookbook/recipes
 # pyproject.toml
 
 dependencies = [
-    "psycopg2 >= 2.8",
+    "redis",
 ]
 ```
 

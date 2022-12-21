@@ -10,11 +10,15 @@ django = "~=3.2"
 [dev-packages]
 black = "*"
 isort = "*"
-flake8 = "*"
 mypy = "*"
-pytest = "*"
-pre-commit = "*"
+pylint = "*"
+flake8 = "*"
 pylint-django = "*"
+flake8-django = "*"
+pytest = "*"
+coverage = {extras = ["toml"], version = "*"}
+pytest-cov = "*"
+pre-commit = "*"
 
 [requires]
 python_version = "3.10"

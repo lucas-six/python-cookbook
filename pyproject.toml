@@ -25,6 +25,7 @@ classifiers = [
 ]
 dependencies = [
     "pydantic",
+
     "django ~= 3.2",
     "psycopg2 >= 2.8",
     "redis >=4.0",
@@ -36,16 +37,15 @@ dynamic = ["version"]
 test = [
     "black",
     "isort",
-    "mymy",
+    "mypy",
     "pylint",
     "flake8",
     "pylint-django",
+    "flake8-django",
     "pytest",
     "pyupgrade",
     "coverage >= 6.4",
     "pytest-cov >= 3.0",
-    "flake8-django",
-    "django-types",
     "types-redis",
     "colorlog",
 ]
