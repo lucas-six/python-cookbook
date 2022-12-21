@@ -147,7 +147,6 @@
 ### Web Development
 
 - [URL Parsing: `urllib.parse`](https://leven-cn.github.io/python-cookbook/recipes/web/url_parse)
-- [HTTP Range Requests: `Range`](https://leven-cn.github.io/python-cookbook/recipes/web/http_range)
 - [HTTP Caching](https://leven-cn.github.io/python-cookbook/recipes/web/http_caching)
 - [HTTP Datetime Format](https://leven-cn.github.io/python-cookbook/recipes/web/http_datetime_fmt)
 - HTTP Server
