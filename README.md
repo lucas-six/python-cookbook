@@ -199,7 +199,6 @@
 
 ### Web
 
-- [HTTP Basic](https://leven-cn.github.io/python-cookbook/more/web/http_basic)
 - [HTTP Connection Management](https://leven-cn.github.io/python-cookbook/more/web/http_connection)
 - [HTTP Authentication](https://leven-cn.github.io/python-cookbook/more/web/http_authentication)
 - [HTTP Cookie](https://leven-cn.github.io/python-cookbook/more/web/http_cookie)
