@@ -154,11 +154,9 @@
   - [HTTP Cookie (Server Side): `http.cookies`](https://leven-cn.github.io/python-cookbook/recipes/web/http_cookie)
 - HTTP Client
   - [Builtin: `urllib.request`](https://leven-cn.github.io/python-cookbook/recipes/web/http_request)
-  - `Postman` (GUI)
   - `requests` (using `urllib3`) (API)
   - Asyncio API: `aiohttp`
-- [WSGI](https://leven-cn.github.io/python-cookbook/recipes/web/wsgi)
-- **CGI** (deprecated since Python *3.11*, [use WSGI instead](https://leven-cn.github.io/python-cookbook/recipes/web/wsgi))
+- ASGI / [WSGI](https://leven-cn.github.io/python-cookbook/recipes/web/wsgi) / ~~CGI~~
 - Web Frameworks
   - Django
   - Flask
@@ -201,7 +199,6 @@
 
 ### Web
 
-- [URL, URI, URN](https://leven-cn.github.io/python-cookbook/more/web/uri_url_urn)
 - [HTTP Basic](https://leven-cn.github.io/python-cookbook/more/web/http_basic)
 - [HTTP Connection Management](https://leven-cn.github.io/python-cookbook/more/web/http_connection)
 - [HTTP Authentication](https://leven-cn.github.io/python-cookbook/more/web/http_authentication)
