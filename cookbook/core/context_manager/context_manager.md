@@ -2,7 +2,7 @@
 
 **syntactic sugar**.
 
-## Solution
+## Recipes
 
 ```python
 from contextlib import contextmanager
@@ -35,17 +35,12 @@ class managed_resource:
         return False
 ```
 
-### Usage
+## Usage
 
 ```python
 with managed_resource(timeout=3600) as resource:
     pass
 ```
-
-### More Details
-
-- [`with` Statement](https://leven-cn.github.io/python-cookbook/recipes/core/with_statement)
-- [Context Manager (on Python Handbook)](https://leven-cn.github.io/python-handbook/recipes/core/context_manager).
 
 ## References
 

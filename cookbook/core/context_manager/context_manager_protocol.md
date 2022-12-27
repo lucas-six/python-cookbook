@@ -1,10 +1,10 @@
 # Context Manager Protocol
 
-## Solution
+## Recipes
 
 ```python
 from types import TracebackType
-from typing import Optional, Type
+from typing import Type
 
 
 class ContextManager:
@@ -37,8 +37,8 @@ class ContextManager:
         return self
 
     def __exit__(self,
-                 exc_type: Optional[Type[BaseException]],
-                 exc_val: Optional[Exception],
+                 exc_type: Type[BaseException] | None,
+                 exc_val: Exception | None,
                  exc_tb: TracebackType) -> bool:
         """Exit the runtime context and return a Boolean flag
         indicating if any exception that occurred should be suppressed.

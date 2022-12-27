@@ -9,7 +9,7 @@
 affect `connect()`, `accept()`, `send()`/`sendall()`, `recv()`.
 
 ```python
-def _get_linux_tcp_max_connect_timeout(retries: int) -> int:
+def _get_linux_tcp_connect_timeout(retries: int) -> int:
     """See RFC 6298 - Computing TCP's Retransmission Timer
 
     https://datatracker.ietf.org/doc/html/rfc6298.htm
@@ -22,29 +22,18 @@ def _get_linux_tcp_max_connect_timeout(retries: int) -> int:
     return timeout
 
 
-def get_tcp_server_max_connect_timeout() -> int | None:
-    """Max TCP connect timeout (server-side)
+# SYN/ACK retries (server side)
+# On Linux 2.2+: /proc/sys/net/ipv4/tcp_synack_retries
+# See https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_synack_retries
+tcp_synack_retries = \
+    int(Path('/proc/sys/net/ipv4/tcp_synack_retries').read_text(encoding='utf-8').strip())
 
-    On Linux 2.2+,
-    max syn/ack retry times: /proc/sys/net/ipv4/tcp_synack_retries
-
-    See https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_synack_retries
-    """
-    if sys.platform == 'linux':  # Linux 2.2+
-        tcp_synack_retries = int(
-            Path('/proc/sys/net/ipv4/tcp_synack_retries').read_text().strip()
-        )
-        logging.debug(f'max syn/ack retries: {tcp_synack_retries}')
-        return _get_linux_tcp_max_connect_timeout(tcp_synack_retries)
-
-    return None
+sys_timeout: int = _get_linux_tcp_connect_timeout(tcp_synack_retries)
 ```
-
-See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples/core/net.py)
 
 ## More Details
 
-- [TCP Connect Timeout (Server Side) - Linux Cookbook](https://leven-cn.github.io/linux-cookbook/cookbook/tcp/tcp_connect_timeout_server)
+- [TCP Connect Timeout (Server Side) - Linux Cookbook](https://leven-cn.github.io/linux-cookbook/cookbook/net/tcp_connect_timeout_server)
 
 ## References
 

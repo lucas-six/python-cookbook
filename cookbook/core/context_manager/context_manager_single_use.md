@@ -1,5 +1,7 @@
 # Single Use Context Manager
 
+## Recipes
+
 Most context managers are written in a way that means
 they can only be used effectively in a `with` statement **once**.
 These *single use context managers* must be created afresh each time they're used - attempting to
