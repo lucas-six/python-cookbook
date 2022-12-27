@@ -5,8 +5,8 @@
 ## TCP
 
 - Reduce *TCP connect time* (*handshaking time*)
-  - [reduce **`tcp_syn_retries`** (**`TCP_SYNCNT`**)](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_connect_timeout_client)
-  - [reduce **`tcp_synack_retries`**](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_connect_timeout_server)
+  - [reduce **`tcp_syn_retries`** (**`TCP_SYNCNT`**)](https://leven-cn.github.io/linux-cookbook/cookbook/tcp/tcp_connect_timeout_client)
+  - [reduce **`tcp_synack_retries`**](https://leven-cn.github.io/linux-cookbook/cookbook/tcp/tcp_connect_timeout_server)
 - [Disable *Nagle Algorithm*, enable **`TCP_NODELAY`**](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_nodelay).
 - [Disable *Delayed ACK*, enable **TCP Quick ACK** (**`TCP_QUICKACK`**)](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_quickack).
 - [Enable **Persistent Connection** (**TCP Keep-Alive**, **`SO_KEEPALIVE`**)](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_keepalive).

@@ -1,36 +1,6 @@
-# TCP Connect Timeout (Client-Side)
+# TCP Connect Timeout (Client Side)
 
-The **`tcp_syn_retries`** variable. Since Linux *2.2*.
-
-The maximum number of times initial `SYN`s for an active TCP connection attempt will be retransmitted.
-This value should not be higher than *`255`*. The default value is *`6`*,
-which corresponds to retrying for up to approximately *127 seconds*.
-
-Before Linux *3.7*, the default value was *`5`*,
-which (in conjunction with calculation based on other kernel parameters)
-corresponded to approximately *180 seconds*.
-
-See [Linux - `tcp_syn_retries`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_syn_retries)
-
-## Solution
-
-### OS Level
-
-```bash
-$ cat /proc/sys/net/ipv4/tcp_syn_retries
-6
-$ sysctl net.ipv4.tcp_syn_retries
-net.ipv4.tcp_syn_retries = 6
-
-sysctl -w net.ipv4.tcp_syn_retries = 2
-```
-
-```c
-// linux kernel 2.6.32
-icsk->icsk_rto = min(icsk->icsk_rto << 1, TCP_RTO_MAX)
-```
-
-### Application Level
+## Recipes
 
 - **blocking mode** (default): `socket.settimeout(None)` or `socket.setblocking(True)`
 - **timeout mode**: `socket.settimeout(3.5)`
@@ -102,6 +72,10 @@ def handle_connect_timeout(
 
 See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples/core/net.py)
 
+## More Details
+
+- [TCP Connect Timeout (Client Side) on Linux Cookbook](https://leven-cn.github.io/linux-cookbook/cookbook/tcp/tcp_connect_timeout_client)
+
 ## References
 
 <!-- markdownlint-disable line-length -->
@@ -110,6 +84,5 @@ See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples
 - [Linux Programmer's Manual - tcp(7)](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html)
 - [Linux Programmer's Manual - tcp(7) - `TCP_SYNCNT`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#TCP_SYNCNT)
 - [Linux Programmer's Manual - tcp(7) - `tcp_syn_retries`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_syn_retries)
-- [RFC 6298 - Computing TCP's Retransmission Timer](https://datatracker.ietf.org/doc/html/rfc6298.html)
 
 <!-- markdownlint-enable line-length -->
