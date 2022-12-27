@@ -2,7 +2,7 @@
 
 New in Python *3.4*.
 
-## Solution
+## Recipes
 
 ```python
 from contextlib import suppress

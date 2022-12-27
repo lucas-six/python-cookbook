@@ -27,10 +27,6 @@ def func(*args, **kwargs):
     print('run func')
 ```
 
-## More Details
-
-- [Function (Method) Decorator](https://leven-cn.github.io/python-cookbook/more/core/function_decorator)
-
 ## References
 
 - [PEP 318 - Decorators for Functions and Methods](https://peps.python.org/pep-0318/)

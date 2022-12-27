@@ -1,6 +1,6 @@
 # Multiple Context Managers
 
-## Solution
+## Recipes
 
 ```python
 with A() as a, B() as b:

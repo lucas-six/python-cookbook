@@ -18,32 +18,59 @@
   <p><a href="https://leven-cn.github.io/python-cookbook/">https://leven-cn.github.io/python-cookbook/</a></p>
 </section>
 
-## Recipes
-
 <!-- markdownlint-disable line-length -->
+
+## Language Core (语言核心)
+
+### Text Processing (文本处理)
+
+- [Universal Newline](https://leven-cn.github.io/python-cookbook/cookbook/core/text/universal_newline)
+- [String format specification (字符串格式规范)](https://leven-cn.github.io/python-cookbook/cookbook/core/text/str_fmt_spec)
+- [Regex Patterns](https://leven-cn.github.io/python-cookbook/cookbook/core/text/regex_patterns)
+
+### Extended Type (拓展类型)
+
+- [Tuples with Named Fields - `namedtuple` (命名元组)](https://leven-cn.github.io/python-cookbook/cookbook/core/ext_type/namedtuple)
+- [Ordered Dictionary - `OrderedDict`](https://leven-cn.github.io/python-cookbook/cookbook/core/ext_type/ordereddict)
+
+### Decorator (装饰器)
+
+- [Function (Method) Decorator](https://leven-cn.github.io/python-cookbook/cookbook/core/decorator/function_decorator)
+- [Function Decorator Without Argument](https://leven-cn.github.io/python-cookbook/cookbook/core/decorator/function_decorator_no_args)
+- [Function Decorator With Required Arguments](https://leven-cn.github.io/python-cookbook/cookbook/core/decorator/function_decorator_args_required)
+- [Function Decorator With Optional Arguments](https://leven-cn.github.io/python-cookbook/cookbook/core/decorator/function_decorator_args_optional)
+- [Class Decorator](https://leven-cn.github.io/python-cookbook/cookbook/core/decorator/class_decorator)
+
+### Context Manager (上下文管理器)
+
+- [`with` Statement](https://leven-cn.github.io/python-cookbook/cookbook/core/context_manager/with_statement)
+- [Context Manager](https://leven-cn.github.io/python-cookbook/cookbook/core/context_manager/context_manager)
+- [Multiple Context Managers](https://leven-cn.github.io/python-cookbook/cookbook/core/context_manager/context_manager_multiple)
+- [Context Manager Protocol](https://leven-cn.github.io/python-cookbook/cookbook/core/context_manager/context_manager_protocol)
+- [Single Use Context Manager](https://leven-cn.github.io/python-cookbook/cookbook/core/context_manager/context_manager_single_use)
+- [Reentrant Context Manager](https://leven-cn.github.io/python-cookbook/cookbook/core/context_manager/context_manager_reentrant)
+- [Reusable Context Manager](https://leven-cn.github.io/python-cookbook/cookbook/core/context_manager/context_manager_reusable)
+
+### Exception Handling
+
+- [Suppress Exceptions](https://leven-cn.github.io/python-cookbook/cookbook/core/exception/suppress_exceptions)
+
+### Socket
+
+- [TCP Connect Timeout (Server Side)](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_connect_timeout_server)
+- [TCP Connect Timeout (Client Side)](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_connect_timeout_client)
+- [TCP Nodelay (Disable Nagle's Algorithm)](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_nodelay)
+- [TCP Quick ACK (Disable Delayed ACK (禁用延迟确认))](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_quickack)
+- [TCP Keep-Alive](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_keepalive)
+
+### Web
+
+- [HTTP Cookie (Server Side): `http.cookies`](https://leven-cn.github.io/python-cookbook/cookbook/core/web/http_cookie)
+
+## Recipes
 
 ### Language Core (语言核心)
 
-- Text Processing (文本处理)
-  - [Universal Newline](https://leven-cn.github.io/python-cookbook/recipes/core/universal_newline)
-  - [String format specification (字符串格式规范)](https://leven-cn.github.io/python-cookbook/recipes/core/str_fmt_spec)
-  - [Regex Patterns](https://leven-cn.github.io/python-cookbook/recipes/core/regex_patterns)
-- [Tuples with Named Fields - `namedtuple` (命名元组)](https://leven-cn.github.io/python-cookbook/recipes/core/namedtuple)
-- [Ordered Dictionary - `OrderedDict`](https://leven-cn.github.io/python-cookbook/recipes/core/ordereddict)
-- Decorator (装饰器)
-  - [Function Decorator Without Argument](https://leven-cn.github.io/python-cookbook/recipes/core/function_decorator_no_args)
-  - [Function Decorator With Required Arguments](https://leven-cn.github.io/python-cookbook/recipes/core/function_decorator_args_required)
-  - [Function Decorator With Optional Arguments](https://leven-cn.github.io/python-cookbook/recipes/core/function_decorator_args_optional)
-  - [Class Decorator](https://leven-cn.github.io/python-cookbook/recipes/core/class_decorator)
-- Context Manager (上下文管理器)
-  - [`with` Statement](https://leven-cn.github.io/python-cookbook/recipes/core/with_statement)
-  - [Create Context Manager](https://leven-cn.github.io/python-cookbook/recipes/core/context_manager)
-  - [Multiple Context Managers](https://leven-cn.github.io/python-cookbook/recipes/core/context_manager_multiple)
-  - [Context Manager Protocol](https://leven-cn.github.io/python-cookbook/recipes/core/context_manager_protocol)
-  - [Single Use Context Manager](https://leven-cn.github.io/python-cookbook/recipes/core/context_manager_single_use)
-  - [Reentrant Context Manager](https://leven-cn.github.io/python-cookbook/recipes/core/context_manager_reentrant)
-  - [Reusable Context Manager](https://leven-cn.github.io/python-cookbook/recipes/core/context_manager_reusable)
-  - [Suppress Exceptions](https://leven-cn.github.io/python-cookbook/recipes/core/suppress_exceptions)
 - Time
   - [Time: Timestamp (UNIX Time), UTC, Local Time](https://leven-cn.github.io/python-cookbook/recipes/core/time)
   - [Time Zone](https://leven-cn.github.io/python-cookbook/recipes/core/timezone)
@@ -100,13 +127,8 @@
   - [TCP Client (IPv4) - Basic](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_client_ipv4_basic)
   - [TCP Client (IPv4) - Timeout Mode](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_client_ipv4_timeout)
   - [TCP Client (IPv4) - Non-Blocking Mode (I/O Multiplex, I/O多路复用)](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_client_ipv4_io_multiplex)
-  - [TCP Connect Timeout (Server Side)](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_connect_timeout_server)
-  - [TCP Connect Timeout (Client Side)](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_connect_timeout_client)
   - [TCP Data Transmission Timeout](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_transmission_timeout)
   - [TCP `listen()` Queue](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_listen_queue)
-  - [TCP Nodelay (Disable Nagle's Algorithm)](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_nodelay)
-  - [TCP Keep-Alive](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_keepalive)
-  - [TCP Quick ACK (Disable Delayed ACK (延迟确认))](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_quickack)
   - [UDP Server (IPv4) - Standard Framework](https://leven-cn.github.io/python-cookbook/recipes/core/udp_server_ipv4_std)
   - [UDP Server (IPv4) - Timeout Mode](https://leven-cn.github.io/python-cookbook/recipes/core/udp_server_ipv4_timeout)
   - [UDP Client (IPv4) - Timeout Mode](https://leven-cn.github.io/python-cookbook/recipes/core/udp_client_ipv4_timeout)
@@ -153,7 +175,6 @@
 - HTTP Server
   - [Builtin: `http.server`](https://leven-cn.github.io/python-cookbook/recipes/web/http_server_builtin)
   - Asyncio API: `aiohttp`
-  - [HTTP Cookie (Server Side): `http.cookies`](https://leven-cn.github.io/python-cookbook/recipes/web/http_cookie)
 - HTTP Client
   - [Builtin: `urllib.request`](https://leven-cn.github.io/python-cookbook/recipes/web/http_request)
   - `requests` (using `urllib3`) (API)
@@ -189,20 +210,12 @@
 
 ### Core
 
-- [Function (Method) Decorator](https://leven-cn.github.io/python-cookbook/more/core/function_decorator)
 - [Representation of Dates and Times - ISO 8601 Format](https://leven-cn.github.io/python-cookbook/more/core/iso_8601_fmt)
 - [Type Hint](https://leven-cn.github.io/python-cookbook/more/core/type_hint)
 - [Logging Components and Flow](https://leven-cn.github.io/python-cookbook/more/core/logging)
-- Networks and Communications (网络通信)
-  - [Endianness](https://leven-cn.github.io/python-cookbook/more/core/endianness)
-  - [TCP Slow Start (慢启动)](https://leven-cn.github.io/python-cookbook/more/core/tcp_slowstart)
-  - [TCP RFC 1337 - TIME-WAIT Assassination Hazards (TIME-WAIT 暗杀)](https://leven-cn.github.io/python-cookbook/more/core/tcp_rfc1337)
-  - [TCP Selective ACK](https://leven-cn.github.io/python-cookbook/more/core/tcp_sack)
 
 ### Web
 
-- [HTTP Connection Management](https://leven-cn.github.io/python-cookbook/more/web/http_connection)
-- [HTTP Cookie](https://leven-cn.github.io/python-cookbook/more/web/http_cookie)
 - [Cross-Site Request Forgery (CSRF) (跨站请求伪造)](https://leven-cn.github.io/python-cookbook/more/web/csrf)
 
 See [full-version documentation](https://leven-cn.github.io/)
