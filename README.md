@@ -137,12 +137,14 @@
 - Test
   - [`unittest` (Builtin)](https://leven-cn.github.io/python-cookbook/recipes/core/unittest)
   - [`pytest`](https://leven-cn.github.io/python-cookbook/recipes/core/pytest)
-- Package Management
-  - [`pip` - Standard Package Manager](https://leven-cn.github.io/python-cookbook/recipes/core/pip)
-  - [`pipx` - Install and Run Python Applications](https://leven-cn.github.io/python-cookbook/recipes/core/pipx)
-  - [`pipenv` - Virtual Environment Manager](https://leven-cn.github.io/python-cookbookbook/recipes/core/pipenv)
 - [Setup Python Project](https://leven-cn.github.io/python-cookbook/recipes/core/python_project)
 - [Performance Measurement](https://leven-cn.github.io/python-cookbook/recipes/core/perf)
+
+### Package Management
+
+- [`pip` - Standard Package Manager](https://leven-cn.github.io/python-cookbook/recipes/core/pip)
+- [`pipx` - Install and Run Python Applications](https://leven-cn.github.io/python-cookbook/recipes/core/pipx)
+- [`pipenv` - Virtual Environment Manager](https://leven-cn.github.io/python-cookbookbook/recipes/core/pipenv)
 
 ### Web Development
 
