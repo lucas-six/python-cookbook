@@ -1,6 +1,6 @@
 # HTTP Cookie (Server Side)
 
-## Solution
+## Recipes
 
 ```python
 from http import cookies
@@ -35,10 +35,10 @@ morsel.output(attrs=['domain'], header='Cookie: ')
 # 'Cookie: key1=value1; Domain=python.org'
 ```
 
-## More
+## More Details
 
-- [HTTP Cookie](https://leven-cn.github.io/python-cookbook/more/web/http_cookie)
+- [HTTP Cookie - Linux Cookbook](https://leven-cn.github.io/linux-cookbook/cookbook/web/http_cookie)
 
 ## References
 
-- [`http.cookies` Documentation](https://docs.python.org/3/library/http.cookies.html)
+- [Python - `http.cookies`](https://docs.python.org/3/library/http.cookies.html)

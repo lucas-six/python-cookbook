@@ -106,13 +106,9 @@ from urllib.parse import parse_qsl
 
 ## More
 
-More details to see [URL, URI, URN](https://leven-cn.github.io/linux-cookbook/more/web/uri_url_urn).
+More details to see [URL, URI, URN - Linux Cookbook](https://leven-cn.github.io/linux-cookbook/cookbook/web/uri_url_urn).
 
 ## References
 
 - [Python - `urllib.parse` module](https://docs.python.org/3/library/urllib.parse.html#urllib.parse)
 - [URL Living Standard](https://url.spec.whatwg.org)
-- [RFC 3986 - Uniform Resource Identifier (URI): Generic Syntax](https://www.rfc-editor.org/rfc/rfc3986)
-- [RFC 6874 - Representing IPv6 Zone Identifiers in Address Literals and Uniform Resource Identifiers](https://www.rfc-editor.org/rfc/rfc6874)
-- [RFC 3305 - Report from the Joint W3C/IETF URI Planning Interest Group: Uniform Resource Identifiers (URIs), URLs, and Uniform Resource Names (URNs): Clarifications and Recommendations](https://www.rfc-editor.org/rfc/rfc3305)
-- [Wikipedia - URL](https://en.wikipedia.org/wiki/URL)
