@@ -88,12 +88,6 @@
 - [Logging Usage](https://leven-cn.github.io/python-cookbook/cookbook/core/logging/logging_usage)
 - [Logging Dictionary Configuration](https://leven-cn.github.io/python-cookbook/cookbook/core/logging/logging_dict_config)
 
-### Command-Line Arguments Parser
-
-- [`argparse`](https://leven-cn.github.io/python-cookbook/cookbook/core/cli/argparse)
-- ~~`optparse`~~ (deprecated since Python *3.2*)
-- ~~`getopt`~~: C-Style Parser
-
 ### Socket
 
 - [TCP Connect Timeout (Server Side)](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_connect_timeout_server)
@@ -105,6 +99,19 @@
 ### Web
 
 - [HTTP Cookie (Server Side): `http.cookies`](https://leven-cn.github.io/python-cookbook/cookbook/core/web/http_cookie)
+
+## Build (构建)
+
+### Command-Line Arguments Parser
+
+- [`argparse`](https://leven-cn.github.io/python-cookbook/cookbook/build/cli/argparse)
+- ~~`optparse`~~ (deprecated since Python *3.2*)
+- ~~`getopt`~~: C-Style Parser
+
+### Test
+
+- [`unittest` (Builtin)](https://leven-cn.github.io/python-cookbook/cookbook/build/test/unittest)
+- [`pytest`](https://leven-cn.github.io/python-cookbook/cookbook/build/test/pytest)
 
 ## Recipes
 
@@ -166,9 +173,6 @@
   - [TCP Client - (Low-Level APIs)](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_client_asyncio_low_api)
   - [UDP Server](https://leven-cn.github.io/python-cookbook/recipes/core/udp_server_asyncio)
   - [UDP Client](https://leven-cn.github.io/python-cookbook/recipes/core/udp_client_asyncio)
-- Test
-  - [`unittest` (Builtin)](https://leven-cn.github.io/python-cookbook/recipes/core/unittest)
-  - [`pytest`](https://leven-cn.github.io/python-cookbook/recipes/core/pytest)
 - [Setup Python Project](https://leven-cn.github.io/python-cookbook/recipes/core/python_project)
 - [Performance Measurement](https://leven-cn.github.io/python-cookbook/recipes/core/perf)
 
