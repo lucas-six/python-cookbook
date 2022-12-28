@@ -1,8 +1,6 @@
 # Time
 
-## Solution
-
-### Timestamp (UNIX Time)
+## Timestamp (UNIX Time)
 
 ```python
 import time
@@ -18,7 +16,7 @@ True
 True
 ```
 
-### UTC Time
+## UTC Time
 
 ```python
 import time
@@ -31,7 +29,7 @@ assert isinstance(utc_time, time.struct_time)
 epoch = time.gmtime(0)
 ```
 
-### Local Time
+## Local Time
 
 ```python
 import time
@@ -40,7 +38,7 @@ import time
 >>> isinstance(local_time, time.struct_time)
 ```
 
-### Convert Local Time To Timestamp (UNIX Time)
+## Convert Local Time To Timestamp (UNIX Time)
 
 ```python
 import time

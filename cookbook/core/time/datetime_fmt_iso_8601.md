@@ -1,6 +1,6 @@
 # ISO 8601 Format
 
-## Solution
+## Recipes
 
 ```plaintext
 # 'YYYY' = [0000-9999]
@@ -39,7 +39,7 @@ YYYY-MM-DDThh:mm:ss.sss+hh:mm  # time offsets from UTC
 
 ## More Details
 
-- [Representation of Dates and Times: ISO 8601 Format](https://leven-cn.github.io/python-cookbook/more/core/iso_8601_fmt)
+- [Representation of Dates and Times: ISO 8601 Format - Linux Cookbook](https://leven-cn.github.io/linux-cookbook/cookbook/time/fmt_iso_8601)
 
 ## References
 

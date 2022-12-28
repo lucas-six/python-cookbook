@@ -1,6 +1,6 @@
 # RFC 5322/2822 Format
 
-## Solution
+## Recipes
 
 ```python
 import email.utils

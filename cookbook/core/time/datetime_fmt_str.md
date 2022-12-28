@@ -1,6 +1,6 @@
 # Format Time String
 
-## Solution
+## Recipes
 
 ```python
 import time

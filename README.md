@@ -33,6 +33,15 @@
 - [Tuples with Named Fields - `namedtuple` (命名元组)](https://leven-cn.github.io/python-cookbook/cookbook/core/ext_type/namedtuple)
 - [Ordered Dictionary - `OrderedDict`](https://leven-cn.github.io/python-cookbook/cookbook/core/ext_type/ordereddict)
 
+### Date & Time (日期时间)
+
+- [Time: Timestamp (UNIX Time), UTC, Local Time](https://leven-cn.github.io/python-cookbook/cookbook/core/time/time)
+- [Time Zone](https://leven-cn.github.io/python-cookbook/cookbook/core/time/timezone)
+- Representation
+  - [Format Date & Time String](https://leven-cn.github.io/python-cookbook/cookbook/core/time/datetime_fmt_str)
+  - [ISO 8601 Format](https://leven-cn.github.io/python-cookbook/cookbook/core/time/datetime_fmt_iso_8601)
+  - [RFC 5822/2822 Format](https://leven-cn.github.io/python-cookbook/cookbook/core/time/datetime_fmt_rfc_2822)
+
 ### Decorator (装饰器)
 
 - [Function (Method) Decorator](https://leven-cn.github.io/python-cookbook/cookbook/core/decorator/function_decorator)
@@ -71,14 +80,6 @@
 
 ### Language Core (语言核心)
 
-- Time
-  - [Time: Timestamp (UNIX Time), UTC, Local Time](https://leven-cn.github.io/python-cookbook/recipes/core/time)
-  - [Time Zone](https://leven-cn.github.io/python-cookbook/recipes/core/timezone)
-- Representation of Dates and Times
-  - [Format Date & Time String](https://leven-cn.github.io/python-cookbook/recipes/core/datetime_fmt_str)
-  - [ISO 8601 Format](https://leven-cn.github.io/python-cookbook/recipes/core/datetime_fmt_iso_8601)
-  - [RFC 3339 Format](https://leven-cn.github.io/python-cookbook/recipes/core/datetime_fmt_rfc_3339)
-  - [RFC 5822/2822 Format](https://leven-cn.github.io/python-cookbook/recipes/core/datetime_fmt_rfc_2822)
 - Type Hint / Type Annotation (类型提示/类型注解)
   - [Basic Types](https://leven-cn.github.io/python-cookbook/recipes/core/type_hint_for_basic_type)
   - [`namedtuple`: `typing.NamedTuple`](https://leven-cn.github.io/python-cookbook/recipes/core/type_hint_for_namedtuple)
