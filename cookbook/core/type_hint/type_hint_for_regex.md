@@ -1,6 +1,6 @@
 # Type Hint for Regex
 
-## Solution
+## Recipes
 
 ```python
 # Since Python 3.9, `typing.Pattern` and `typing.Match` are deprecated,
@@ -18,4 +18,4 @@ m: re.Match[bytes] = re.match(rb'xxx', b'xxx')
 
 ## More Details
 
-- [Type Hint](https://leven-cn.github.io/python-cookbook/more/core/type_hint)
+- [Type Hint](https://leven-cn.github.io/python-cookbook/cookbook/core/type_hint/type_hint)

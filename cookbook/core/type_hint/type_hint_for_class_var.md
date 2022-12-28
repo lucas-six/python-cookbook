@@ -1,33 +1,23 @@
-# Type Hint for `namedtuple`
+# Type Hint for Class Variables: `typing.ClassVar`
 
-## Solution
+## Recipes
 
-**`typing.NamedTuple`** is the *typed version* of *`collections.namedtuple()`*.
-
-```python
-from typing import NamedTuple
-
-
-class Point(NamedTuple):
-    x: float
-    y: float
-```
-
-This is equivalent to:
+Special type construct to mark **class variables**.
 
 ```python
-from collections import namedtuple
+from typing import ClassVar
 
-Point = collections.namedtuple('Point', ['x', 'y'])
+class C:
+    cls_attr: ClassVar[dict[str, int]] = {}   # class variable
+    ins_attr: int = 10                        # instance variable
 ```
 
 ## More Details
 
-- [Type Hint](https://leven-cn.github.io/python-cookbook/more/core/type_hint)
+- [Type Hint](https://leven-cn.github.io/python-cookbook/cookbook/core/type_hint/type_hint)
 
 ## References
 
-- [PEP 585 – Type Hinting Generics In Standard Collections](https://peps.python.org/pep-0585/)
 - [Python - `typing` module](https://docs.python.org/3/library/typing.html)
 - [`mypy` Documentation](https://mypy.readthedocs.io/en/latest/)
 - [PEP 526 - Syntax for Variable Annotations](https://peps.python.org/pep-0526/)

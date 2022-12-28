@@ -1,6 +1,6 @@
 # Type Hint for Restricting Inheritance and Overriding
 
-## Solution
+## Recipes
 
 New in Python *3.8*,
 see [PEP 591](https://peps.python.org/pep-0591/ "PEP 591 - Adding a final qualifier to typing").
@@ -44,7 +44,7 @@ The method decorator version may be used with all of *instance methods*, *class 
 
 ## More Details
 
-- [Type Hint](https://leven-cn.github.io/python-cookbook/more/core/type_hint)
+- [Type Hint](https://leven-cn.github.io/python-cookbook/cookbook/core/type_hint/type_hint)
 
 ## References
 

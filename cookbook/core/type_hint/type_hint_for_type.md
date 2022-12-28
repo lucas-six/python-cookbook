@@ -1,6 +1,6 @@
 # Type Hint for Type Object
 
-## Solution
+## Recipes
 
 ```python
 from typing import Type
@@ -15,4 +15,4 @@ e: Type[BaseException]
 
 ## More Details
 
-- [Type Hint](https://leven-cn.github.io/python-cookbook/more/core/type_hint)
+- [Type Hint](https://leven-cn.github.io/python-cookbook/cookbook/core/type_hint/type_hint)

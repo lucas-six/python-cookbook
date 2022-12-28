@@ -64,6 +64,24 @@
 
 - [Suppress Exceptions](https://leven-cn.github.io/python-cookbook/cookbook/core/exception/suppress_exceptions)
 
+### Type Hint / Type Annotation (类型提示/类型注解)
+
+- [Type Hint](https://leven-cn.github.io/python-cookbook/cookbook/core/type_hint/type_hint)
+- [Basic Types](https://leven-cn.github.io/python-cookbook/cookbook/core/type_hint/type_hint_for_basic_type)
+- [`namedtuple`: `typing.NamedTuple`](https://leven-cn.github.io/python-cookbook/cookbook/core/type_hint/type_hint_for_namedtuple)
+- [`itertools.chain`](https://leven-cn.github.io/python-cookbook/cookbook/core/type_hint/type_hint_for_itertools_chain)
+- [Literal: `typing.Literal`](https://leven-cn.github.io/python-cookbook/cookbook/core/type_hint/type_hint_for_literal)
+- [Union Types: `|`, ~~`typing.Union`~~, ~~`typing.Optional`~~](https://leven-cn.github.io/python-cookbook/cookbook/core/type_hint/type_hint_for_union)
+- [Any: `typing.Any` and `object`](https://leven-cn.github.io/python-cookbook/cookbook/core/type_hint/type_hint_for_any)
+- [Type objects](https://leven-cn.github.io/python-cookbook/cookbook/core/type_hint/type_hint_for_type)
+- [Callable objects](https://leven-cn.github.io/python-cookbook/cookbook/core/type_hint/type_hint_for_callable)
+- [Regex](https://leven-cn.github.io/python-cookbook/cookbook/core/type_hint/type_hint_for_regex)
+- [socket](https://leven-cn.github.io/python-cookbook/cookbook/core/type_hint/type_hint_for_socket)
+- [Constants and Class Attributes: `typing.Final`](https://leven-cn.github.io/python-cookbook/cookbook/core/type_hint/type_hint_for_constant)
+- [Class Variables: `typing.ClassVar`](https://leven-cn.github.io/python-cookbook/cookbook/core/type_hint/type_hint_for_class_var)
+- [Restricting Inheritance and Overriding: `@typing.final`](https://leven-cn.github.io/python-cookbook/cookbook/core/type_hint/type_hint_for_inheritance)
+- [`typing.NoReturn`](https://leven-cn.github.io/python-cookbook/cookbook/core/type_hint/type_hint_for_noreturn)
+
 ### Socket
 
 - [TCP Connect Timeout (Server Side)](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_connect_timeout_server)
@@ -80,20 +98,6 @@
 
 ### Language Core (语言核心)
 
-- Type Hint / Type Annotation (类型提示/类型注解)
-  - [Basic Types](https://leven-cn.github.io/python-cookbook/recipes/core/type_hint_for_basic_type)
-  - [`namedtuple`: `typing.NamedTuple`](https://leven-cn.github.io/python-cookbook/recipes/core/type_hint_for_namedtuple)
-  - [`itertools.chain`](https://leven-cn.github.io/python-cookbook/recipes/core/type_hint_for_itertools_chain)
-  - [Literal: `typing.Literal`](https://leven-cn.github.io/python-cookbook/recipes/core/type_hint_for_literal)
-  - [Union Types: `|`, ~~`typing.Union`~~, ~~`typing.Optional`~~](https://leven-cn.github.io/python-cookbook/recipes/core/type_hint_for_union)
-  - [Any: `typing.Any` and `object`](https://leven-cn.github.io/python-cookbook/recipes/core/type_hint_for_any)
-  - [Type objects](https://leven-cn.github.io/python-cookbook/recipes/core/type_hint_for_type)
-  - [Callable objects](https://leven-cn.github.io/python-cookbook/recipes/core/type_hint_for_callable)
-  - [Regex](https://leven-cn.github.io/python-cookbook/recipes/core/type_hint_for_regex)
-  - [socket](https://leven-cn.github.io/python-cookbook/recipes/core/type_hint_for_socket)
-  - [Constants and Class Attributes: `typing.Final`](https://leven-cn.github.io/python-cookbook/recipes/core/type_hint_for_constant)
-  - [Class Variables: `typing.ClassVar`](https://leven-cn.github.io/python-cookbook/recipes/core/type_hint_for_class_var)
-  - [Restricting Inheritance and Overriding: `@typing.final`](https://leven-cn.github.io/python-cookbook/recipes/core/type_hint_for_inheritance)
 - [Pack/Unpack Binary Data - `struct`](https://leven-cn.github.io/python-cookbook/recipes/core/struct)
 - I/O, File-Like Object
   - [Inheritance of File Descriptor](https://leven-cn.github.io/python-cookbook/recipes/core/fd_inheritable)
@@ -211,8 +215,6 @@
 
 ### Core
 
-- [Representation of Dates and Times - ISO 8601 Format](https://leven-cn.github.io/python-cookbook/more/core/iso_8601_fmt)
-- [Type Hint](https://leven-cn.github.io/python-cookbook/more/core/type_hint)
 - [Logging Components and Flow](https://leven-cn.github.io/python-cookbook/more/core/logging)
 
 ### Web

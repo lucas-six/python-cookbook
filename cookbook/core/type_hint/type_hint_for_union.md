@@ -1,6 +1,6 @@
 # Type Hint for Union Types
 
-## Solution
+## Recipes
 
 ### Python 3.10+
 
@@ -42,7 +42,7 @@ issubclass(bool, (int, float))
 
 ## More Details
 
-- [Type Hint](https://leven-cn.github.io/python-cookbook/more/core/type_hint)
+- [Type Hint](https://leven-cn.github.io/python-cookbook/cookbook/core/type_hint/type_hint)
 
 ## References
 

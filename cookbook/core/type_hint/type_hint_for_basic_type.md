@@ -1,6 +1,6 @@
 # Type Hint for Basic Types
 
-## Solution
+## Recipes
 
 **NOTE**: *`typing.List`*, *`typing.Dict`*, *`typing.Tuple`*, *`typing.Set`*, *`typing.FrozenSet`*
 are deprecated since Python *3.9*, using standard types instead.
@@ -31,7 +31,7 @@ def func(arg: int) -> int: ...
 
 ## More Details
 
-- [Type Hint](https://leven-cn.github.io/python-cookbook/more/core/type_hint)
+- [Type Hint](https://leven-cn.github.io/python-cookbook/cookbook/core/type_hint/type_hint)
 
 ## References
 
