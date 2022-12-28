@@ -98,6 +98,7 @@
 
 ### Web
 
+- [URL Parsing: `urllib.parse`](https://leven-cn.github.io/python-cookbook/cookbook/core/web/url_parse)
 - [HTTP Cookie (Server Side): `http.cookies`](https://leven-cn.github.io/python-cookbook/cookbook/core/web/http_cookie)
 
 ## Build (构建)
@@ -184,7 +185,6 @@
 
 ### Web Development
 
-- [URL Parsing: `urllib.parse`](https://leven-cn.github.io/python-cookbook/recipes/web/url_parse)
 - [HTTP Datetime Format](https://leven-cn.github.io/python-cookbook/recipes/web/http_datetime_fmt)
 - HTTP Server
   - [Builtin: `http.server`](https://leven-cn.github.io/python-cookbook/recipes/web/http_server_builtin)
