@@ -123,6 +123,10 @@
 - [`unittest` (Builtin)](https://leven-cn.github.io/python-cookbook/cookbook/build/test/unittest)
 - [`pytest`](https://leven-cn.github.io/python-cookbook/cookbook/build/test/pytest)
 
+### Performance
+
+- [Performance Measurement](https://leven-cn.github.io/python-cookbook/cookbook/build/perf/perf)
+
 ## Web Development
 
 - [URL Parsing: `urllib.parse`](https://leven-cn.github.io/python-cookbook/cookbook/web/url_parse)
@@ -191,7 +195,6 @@
   - [UDP Server](https://leven-cn.github.io/python-cookbook/recipes/core/udp_server_asyncio)
   - [UDP Client](https://leven-cn.github.io/python-cookbook/recipes/core/udp_client_asyncio)
 - [Setup Python Project](https://leven-cn.github.io/python-cookbook/recipes/core/python_project)
-- [Performance Measurement](https://leven-cn.github.io/python-cookbook/recipes/core/perf)
 
 ### Web Development
 
