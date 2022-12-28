@@ -1,11 +1,11 @@
 # WSGI (Web Server Gateway Interface)
 
-## Solution
+## Recipes
 
 ```python
 """WSGI (Web Server Gateway Interface) Application.
 
-Copyright (c) 2015-2022 Li Yun <leven.cn@gmail.com>
+Copyright (c) 2015-2023 Li Yun <leven.cn@gmail.com>
 All Rights Reserved.
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
