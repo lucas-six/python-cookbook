@@ -98,8 +98,6 @@
 
 ### Language Core (语言核心)
 
-- Type Hint / Type Annotation (类型提示/类型注解)
-
 - [Pack/Unpack Binary Data - `struct`](https://leven-cn.github.io/python-cookbook/recipes/core/struct)
 - I/O, File-Like Object
   - [Inheritance of File Descriptor](https://leven-cn.github.io/python-cookbook/recipes/core/fd_inheritable)
