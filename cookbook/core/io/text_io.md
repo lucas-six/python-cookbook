@@ -1,8 +1,6 @@
-# Access Text Files
+# Text I/O
 
-## Solution
-
-### Text Files
+## Text Files
 
 ```python
 import io
@@ -31,7 +29,7 @@ with open('x.txt', 'w+', encoding='utf-8') as f:
     curr_pos: int = f.seek(1, io.SEEK_CUR)
 ```
 
-### In-memory text buffer `io.StringIO`
+## In-memory text buffer `io.StringIO`
 
 ```python
 import io
@@ -49,7 +47,3 @@ contents = output.getvalue()
 # .getvalue() will now raise an exception.
 output.close()
 ```
-
-## References
-
-More details to see [File Object, I/O on Python Handbook](https://leven-cn.github.io/python-handbook/recipes/core/file_object).
