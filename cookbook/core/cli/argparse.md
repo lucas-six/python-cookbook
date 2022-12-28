@@ -1,6 +1,6 @@
 # Parser for Command-Line Arguments: `argparse`
 
-## Solution
+## Recipes
 
 ```python
 """Command-Line Arguments Parsing.
