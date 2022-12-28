@@ -1,6 +1,6 @@
 # HTTP Datetime Format
 
-## Solution
+## Recipes
 
 **[RFC 5322](https://www.rfc-editor.org/rfc/rfc5322 "Internet Message Format")** Format
 (*[RFC 2822](https://www.rfc-editor.org/rfc/rfc2822 "Internet Message Format")* obsoleted).

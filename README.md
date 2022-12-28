@@ -96,11 +96,6 @@
 - [TCP Quick ACK (Disable Delayed ACK (禁用延迟确认))](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_quickack)
 - [TCP Keep-Alive](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_keepalive)
 
-### Web
-
-- [URL Parsing: `urllib.parse`](https://leven-cn.github.io/python-cookbook/cookbook/core/web/url_parse)
-- [HTTP Cookie (Server Side): `http.cookies`](https://leven-cn.github.io/python-cookbook/cookbook/core/web/http_cookie)
-
 ## Build (构建)
 
 ### Command-Line Arguments Parser
@@ -119,6 +114,17 @@
 
 - [`unittest` (Builtin)](https://leven-cn.github.io/python-cookbook/cookbook/build/test/unittest)
 - [`pytest`](https://leven-cn.github.io/python-cookbook/cookbook/build/test/pytest)
+
+## Web Development
+
+- [URL Parsing: `urllib.parse`](https://leven-cn.github.io/python-cookbook/cookbook/web/url_parse)
+- [HTTP Datetime Format](https://leven-cn.github.io/python-cookbook/cookbook/web/http_datetime_fmt)
+- [HTTP Cookie (Server Side): `http.cookies`](https://leven-cn.github.io/python-cookbook/cookbook/web/http_cookie)
+- ASGI / [WSGI](https://leven-cn.github.io/python-cookbook/cookbook/web/wsgi) / ~~CGI~~
+- HTTP Client
+  - [`urllib.request` (Builtin)](https://leven-cn.github.io/python-cookbook/cookbook/web/http_request)
+  - [`requests`](https://requests.readthedocs.io/en/latest/) (using `urllib3`)
+  - Asyncio API: `aiohttp`
 
 ## Recipes
 
@@ -185,15 +191,9 @@
 
 ### Web Development
 
-- [HTTP Datetime Format](https://leven-cn.github.io/python-cookbook/recipes/web/http_datetime_fmt)
 - HTTP Server
   - [Builtin: `http.server`](https://leven-cn.github.io/python-cookbook/recipes/web/http_server_builtin)
   - Asyncio API: `aiohttp`
-- HTTP Client
-  - [Builtin: `urllib.request`](https://leven-cn.github.io/python-cookbook/recipes/web/http_request)
-  - `requests` (using `urllib3`) (API)
-  - Asyncio API: `aiohttp`
-- ASGI / [WSGI](https://leven-cn.github.io/python-cookbook/recipes/web/wsgi) / ~~CGI~~
 - Web Frameworks
   - Django
   - Flask
@@ -221,10 +221,6 @@
 <!-- markdownlint-enable line-length -->
 
 ## More Details
-
-### Web
-
-- [Cross-Site Request Forgery (CSRF) (跨站请求伪造)](https://leven-cn.github.io/python-cookbook/more/web/csrf)
 
 See [full-version documentation](https://leven-cn.github.io/)
 
