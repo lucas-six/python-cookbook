@@ -1,6 +1,6 @@
 # URL Parsing - `urllib.parse`
 
-## Solution
+## Recipes
 
 ```python
 from urllib.parse import urlparse, urlsplit, urldefrag
