@@ -82,6 +82,14 @@
 - [Restricting Inheritance and Overriding: `@typing.final`](https://leven-cn.github.io/python-cookbook/cookbook/core/type_hint/type_hint_for_inheritance)
 - [`typing.NoReturn`](https://leven-cn.github.io/python-cookbook/cookbook/core/type_hint/type_hint_for_noreturn)
 
+### I/O, File-Like Object
+
+- [Inheritance of File Descriptor](https://leven-cn.github.io/python-cookbook/cookbook/core/io/fd_inheritable)
+- [File Object (I/O)](https://leven-cn.github.io/python-cookbook/cookbook/core/io/file_object)
+- [Text I/O](https://leven-cn.github.io/python-cookbook/cookbook/core/io/text_io)
+- [Binary I/O](https://leven-cn.github.io/python-cookbook/cookbook/core/io/binary_io)
+- [`open()` Reference Implementation](https://leven-cn.github.io/python-cookbook/cookbook/core/io/open_ref_impl)
+
 ### Logging (日志)
 
 - [Logging Components and Flow](https://leven-cn.github.io/python-cookbook/cookbook/core/logging/logging_flow)
@@ -131,10 +139,6 @@
 ### Language Core (语言核心)
 
 - [Pack/Unpack Binary Data - `struct`](https://leven-cn.github.io/python-cookbook/recipes/core/struct)
-- I/O, File-Like Object
-  - [Inheritance of File Descriptor](https://leven-cn.github.io/python-cookbook/recipes/core/fd_inheritable)
-  - [Access Text Files](https://leven-cn.github.io/python-cookbook/recipes/core/text_io)
-  - [Access Binary Files](https://leven-cn.github.io/python-cookbook/recipes/core/binary_io)
 - Parallelism and Concurrent (并发)
   - [Multi-Threads Parallelism for **I/O-bound** tasks](https://leven-cn.github.io/python-cookbook/recipes/core/multi_threads)
   - [Multi-Processes Parallelism for **CPU-bound** tasks](https://leven-cn.github.io/python-cookbook/recipes/core/multi_processes)
@@ -222,7 +226,8 @@
 
 ## More Details
 
-See [full-version documentation](https://leven-cn.github.io/)
+- [Linux Cookbook](https://leven-cn.github.io/linux-cookbook/)
+- [full-version documentation](https://leven-cn.github.io/)
 
 ## License
 
