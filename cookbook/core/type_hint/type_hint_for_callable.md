@@ -1,24 +1,27 @@
-# Type Hint for Literal
+# Type Hint for `Callable`
 
-New in Python *3.8*. See [PEP 586](https://peps.python.org/pep-0586/ "PEP 586 – Literal Types").
+## Recipes
 
-## Solution
+Since Python *3.9*, *`typing.Callable`* is deprecated,
+using **`collections.abc.Callable`** instead.
+See [PEP 585](https://peps.python.org/pep-0585/ "PEP 585 - Type Hinting Generics In Standard Collections").
 
 ```python
-from typing import Literal
+from collections.abc import Callable
 
-x: Literal[1, 2, True, False]  # one of 1, 2, True, False
+
+Callable[[Arg1Type, Arg2Type], ReturnType]
+Callable[[...], ReturnType]  # variable arguements
 ```
 
 ## More Details
 
-- [Type Hint](https://leven-cn.github.io/python-cookbook/more/core/type_hint)
+- [Type Hint](https://leven-cn.github.io/python-cookbook/cookbook/core/type_hint/type_hint)
 
 ## References
 
+- [PEP 585 – Type Hinting Generics In Standard Collections](https://peps.python.org/pep-0585/)
 - [Python - `typing` module](https://docs.python.org/3/library/typing.html)
-- [Python - `typing.Literal` module](https://docs.python.org/3/library/typing.html#typing.Literal)
-- [PEP 586 – Literal Types](https://peps.python.org/pep-0586/)
 - [`mypy` Documentation](https://mypy.readthedocs.io/en/latest/)
 - [PEP 526 - Syntax for Variable Annotations](https://peps.python.org/pep-0526/)
 - [PEP 3107 – Function Annotations](https://peps.python.org/pep-3107/)

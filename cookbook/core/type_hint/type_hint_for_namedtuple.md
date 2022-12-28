@@ -1,22 +1,29 @@
-# Type Hint for `Callable`
+# Type Hint for `namedtuple`
 
-## Solution
+## Recipes
 
-Since Python *3.9*, *`typing.Callable`* is deprecated,
-using **`collections.abc.Callable`** instead.
-See [PEP 585](https://peps.python.org/pep-0585/ "PEP 585 - Type Hinting Generics In Standard Collections").
+**`typing.NamedTuple`** is the *typed version* of *`collections.namedtuple()`*.
 
 ```python
-from collections.abc import Callable
+from typing import NamedTuple
 
 
-Callable[[Arg1Type, Arg2Type], ReturnType]
-Callable[[...], ReturnType]  # variable arguements
+class Point(NamedTuple):
+    x: float
+    y: float
+```
+
+This is equivalent to:
+
+```python
+from collections import namedtuple
+
+Point = collections.namedtuple('Point', ['x', 'y'])
 ```
 
 ## More Details
 
-- [Type Hint](https://leven-cn.github.io/python-cookbook/more/core/type_hint)
+- [Type Hint](https://leven-cn.github.io/python-cookbook/cookbook/core/type_hint/type_hint)
 
 ## References
 

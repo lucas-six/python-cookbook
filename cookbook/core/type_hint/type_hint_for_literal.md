@@ -1,24 +1,24 @@
-# Type Hint for Class Variables: `typing.ClassVar`
+# Type Hint for Literal
 
-## Solution
+New in Python *3.8*. See [PEP 586](https://peps.python.org/pep-0586/ "PEP 586 – Literal Types").
 
-Special type construct to mark **class variables**.
+## Recipes
 
 ```python
-from typing import ClassVar
+from typing import Literal
 
-class C:
-    cls_attr: ClassVar[dict[str, int]] = {}   # class variable
-    ins_attr: int = 10                        # instance variable
+x: Literal[1, 2, True, False]  # one of 1, 2, True, False
 ```
 
 ## More Details
 
-- [Type Hint](https://leven-cn.github.io/python-cookbook/more/core/type_hint)
+- [Type Hint](https://leven-cn.github.io/python-cookbook/cookbook/core/type_hint/type_hint)
 
 ## References
 
 - [Python - `typing` module](https://docs.python.org/3/library/typing.html)
+- [Python - `typing.Literal` module](https://docs.python.org/3/library/typing.html#typing.Literal)
+- [PEP 586 – Literal Types](https://peps.python.org/pep-0586/)
 - [`mypy` Documentation](https://mypy.readthedocs.io/en/latest/)
 - [PEP 526 - Syntax for Variable Annotations](https://peps.python.org/pep-0526/)
 - [PEP 3107 – Function Annotations](https://peps.python.org/pep-3107/)
