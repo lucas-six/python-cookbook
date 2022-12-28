@@ -1,6 +1,6 @@
 # Logging Usage
 
-## Solution
+## Recipes
 
 ### Basic Usage
 
@@ -63,9 +63,9 @@ if not isinstance(numeric_level, int):
 logging.basicConfig(level=numeric_level, ...)
 ```
 
-## More
+## More Details
 
-More details to see [Logging Components and Flow](https://leven-cn.github.io/python-cookbook/more/core/logging).
+- [Logging Components and Flow](https://leven-cn.github.io/python-cookbook/cookbook/core/logging/logging_flow)
 
 ## References
 
