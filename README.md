@@ -88,6 +88,12 @@
 - [Logging Usage](https://leven-cn.github.io/python-cookbook/cookbook/core/logging/logging_usage)
 - [Logging Dictionary Configuration](https://leven-cn.github.io/python-cookbook/cookbook/core/logging/logging_dict_config)
 
+### Command-Line Arguments Parser
+
+- [`argparse`](https://leven-cn.github.io/python-cookbook/cookbook/core/cli/argparse)
+- ~~`optparse`~~ (deprecated since Python *3.2*)
+- ~~`getopt`~~: C-Style Parser
+
 ### Socket
 
 - [TCP Connect Timeout (Server Side)](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_connect_timeout_server)
@@ -109,10 +115,6 @@
   - [Inheritance of File Descriptor](https://leven-cn.github.io/python-cookbook/recipes/core/fd_inheritable)
   - [Access Text Files](https://leven-cn.github.io/python-cookbook/recipes/core/text_io)
   - [Access Binary Files](https://leven-cn.github.io/python-cookbook/recipes/core/binary_io)
-- Command-Line Arguments Parser
-  - [`argparse`](https://leven-cn.github.io/python-cookbook/recipes/core/argparse)
-  - ~~`optparse`~~ (deprecated since Python *3.2*, use [`argparse`](https://leven-cn.github.io/python-cookbook/recipes/core/argparse) instead)
-  - ~~`getopt`~~: C-Style Parser (use [`argparse`](<https://leven-cn.github.io/python-cookbook/recipes/core/argparse>) instead)
 - Parallelism and Concurrent (并发)
   - [Multi-Threads Parallelism for **I/O-bound** tasks](https://leven-cn.github.io/python-cookbook/recipes/core/multi_threads)
   - [Multi-Processes Parallelism for **CPU-bound** tasks](https://leven-cn.github.io/python-cookbook/recipes/core/multi_processes)
