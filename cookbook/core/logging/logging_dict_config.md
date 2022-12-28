@@ -1,6 +1,6 @@
 # Logging Dictionary Config
 
-## Solution
+## Recipes
 
 ```python
 import logging
@@ -101,9 +101,9 @@ import logging.config
 logging.config.dictConfig(LOGGING)
 ```
 
-## More
+## More Details
 
-More details to see [Logging Components and Flow](https://leven-cn.github.io/python-cookbook/more/core/logging).
+- [Logging Components and Flow](https://leven-cn.github.io/python-cookbook/cookbook/core/logging/logging_flow)
 
 ## References
 

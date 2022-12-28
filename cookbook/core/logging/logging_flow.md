@@ -8,11 +8,6 @@
 - `Filter`
 - `Formatter`
 
-## Examples (Recipes)
-
-- [Usage on Python Cookbook](https://leven-cn.github.io/python-cookbook/recipes/core/logging_usage)
-- [Dictionary Configuration on Python Cookbook](https://leven-cn.github.io/python-cookbook/recipes/core/logging_dict_config)
-
 ## Logging Flow
 
 ![Logging Flow](https://leven-cn.github.io/python-cookbook/imgs/logging_flow.png)

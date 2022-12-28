@@ -82,6 +82,12 @@
 - [Restricting Inheritance and Overriding: `@typing.final`](https://leven-cn.github.io/python-cookbook/cookbook/core/type_hint/type_hint_for_inheritance)
 - [`typing.NoReturn`](https://leven-cn.github.io/python-cookbook/cookbook/core/type_hint/type_hint_for_noreturn)
 
+### Logging (日志)
+
+- [Logging Components and Flow](https://leven-cn.github.io/python-cookbook/cookbook/core/logging/logging_flow)
+- [Logging Usage](https://leven-cn.github.io/python-cookbook/cookbook/core/logging/logging_usage)
+- [Logging Dictionary Configuration](https://leven-cn.github.io/python-cookbook/cookbook/core/logging/logging_dict_config)
+
 ### Socket
 
 - [TCP Connect Timeout (Server Side)](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_connect_timeout_server)
@@ -103,9 +109,6 @@
   - [Inheritance of File Descriptor](https://leven-cn.github.io/python-cookbook/recipes/core/fd_inheritable)
   - [Access Text Files](https://leven-cn.github.io/python-cookbook/recipes/core/text_io)
   - [Access Binary Files](https://leven-cn.github.io/python-cookbook/recipes/core/binary_io)
-- Logging (日志)
-  - [Logging Usage](https://leven-cn.github.io/python-cookbook/recipes/core/logging_usage)
-  - [Logging Dictionary Configuration](https://leven-cn.github.io/python-cookbook/recipes/core/logging_dict_config)
 - Command-Line Arguments Parser
   - [`argparse`](https://leven-cn.github.io/python-cookbook/recipes/core/argparse)
   - ~~`optparse`~~ (deprecated since Python *3.2*, use [`argparse`](https://leven-cn.github.io/python-cookbook/recipes/core/argparse) instead)
@@ -212,10 +215,6 @@
 <!-- markdownlint-enable line-length -->
 
 ## More Details
-
-### Core
-
-- [Logging Components and Flow](https://leven-cn.github.io/python-cookbook/more/core/logging)
 
 ### Web
 
