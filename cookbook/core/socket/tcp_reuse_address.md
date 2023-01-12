@@ -23,7 +23,7 @@ if sock.type is socket.SOCK_DGRAM and reuse_address:
 val: Literal[0, 1]
 sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, val)
 
-is_reuse_address = sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR) != 0
+is_reuse_address: bool = sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR) != 0
 ```
 
 ## More Details
