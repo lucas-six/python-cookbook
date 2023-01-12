@@ -99,14 +99,15 @@
 ### Socket
 
 - [TCP/UDP Reuse Port](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/reuse_port)
+- [TCP/UDP (Recv/Send) Buffer Size: `SO_RCVBUF`, `SO_SNDBUF`](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/buffer_size)
 - TCP Connection Timeout
   - [Server Side](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_connect_timeout_server)
   - [Client Side](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_connect_timeout_client)
 - [TCP Reuse Address](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_reuse_address)
 - [TCP `listen()` Queue](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_listen_queue)
+- [TCP Keep-Alive](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_keepalive)
 - [TCP Nodelay (Disable Nagle's Algorithm)](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_nodelay)
 - [TCP Quick ACK (Disable Delayed ACK (禁用延迟确认))](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_quickack)
-- [TCP Keep-Alive](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_keepalive)
 
 ## Build (构建)
 
@@ -181,7 +182,6 @@
   - [UDP Server (IPv4) - Standard Framework](https://leven-cn.github.io/python-cookbook/recipes/core/udp_server_ipv4_std)
   - [UDP Server (IPv4) - Timeout Mode](https://leven-cn.github.io/python-cookbook/recipes/core/udp_server_ipv4_timeout)
   - [UDP Client (IPv4) - Timeout Mode](https://leven-cn.github.io/python-cookbook/recipes/core/udp_client_ipv4_timeout)
-  - [TCP/UDP (Recv/Send) Buffer Size](https://leven-cn.github.io/python-cookbook/recipes/core/net_buffer_size)
   - [Create IP Multicast (组播) Server and Client (UDP)](https://leven-cn.github.io/python-cookbook/recipes/core/ip_multicast)
   - [IPC - Socket Pair](https://leven-cn.github.io/python-cookbook/recipes/core/ipc_socketpair)
   - [IPC - UNIX Domain Socket (UDS, UNIX 域套接字) Server and Client](https://leven-cn.github.io/python-cookbook/recipes/core/ipc_unix_domain_socket)
