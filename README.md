@@ -98,8 +98,10 @@
 
 ### Socket
 
-- [TCP Connect Timeout (Server Side)](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_connect_timeout_server)
-- [TCP Connect Timeout (Client Side)](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_connect_timeout_client)
+- TCP Connection Timeout
+  - [Server Side](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_connect_timeout_server)
+  - [Client Side](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_connect_timeout_client)
+- [TCP `listen()` Queue](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_listen_queue)
 - [TCP Nodelay (Disable Nagle's Algorithm)](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_nodelay)
 - [TCP Quick ACK (Disable Delayed ACK (禁用延迟确认))](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_quickack)
 - [TCP Keep-Alive](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_keepalive)
@@ -133,10 +135,18 @@
 - [HTTP Datetime Format](https://leven-cn.github.io/python-cookbook/cookbook/web/http_datetime_fmt)
 - [HTTP Cookie (Server Side): `http.cookies`](https://leven-cn.github.io/python-cookbook/cookbook/web/http_cookie)
 - ASGI / [WSGI](https://leven-cn.github.io/python-cookbook/cookbook/web/wsgi) / ~~CGI~~
-- HTTP Client
-  - [`urllib.request` (Builtin)](https://leven-cn.github.io/python-cookbook/cookbook/web/http_request)
-  - [`requests`](https://requests.readthedocs.io/en/latest/) (using `urllib3`)
-  - Asyncio API: `aiohttp`
+
+### HTTP Client/Request
+
+- [`urllib.request` (Builtin)](https://leven-cn.github.io/python-cookbook/cookbook/web/http_request)
+- [`requests`](https://requests.readthedocs.io/en/latest/) (using `urllib3`)
+- Asyncio API: `aiohttp`
+
+### Web Frameworks
+
+- **Django**: full-featured
+- **Flask**: tiny
+- **FastAPI**: API doc, asyncio
 
 ## Recipes
 
@@ -166,7 +176,6 @@
   - [TCP Client (IPv4) - Timeout Mode](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_client_ipv4_timeout)
   - [TCP Client (IPv4) - Non-Blocking Mode (I/O Multiplex, I/O多路复用)](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_client_ipv4_io_multiplex)
   - [TCP Data Transmission Timeout](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_transmission_timeout)
-  - [TCP `listen()` Queue](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_listen_queue)
   - [UDP Server (IPv4) - Standard Framework](https://leven-cn.github.io/python-cookbook/recipes/core/udp_server_ipv4_std)
   - [UDP Server (IPv4) - Timeout Mode](https://leven-cn.github.io/python-cookbook/recipes/core/udp_server_ipv4_timeout)
   - [UDP Client (IPv4) - Timeout Mode](https://leven-cn.github.io/python-cookbook/recipes/core/udp_client_ipv4_timeout)
@@ -201,10 +210,6 @@
 - HTTP Server
   - [Builtin: `http.server`](https://leven-cn.github.io/python-cookbook/recipes/web/http_server_builtin)
   - Asyncio API: `aiohttp`
-- Web Frameworks
-  - Django
-  - Flask
-  - FastAPI
 - Django
   - [Django - Quick Start](https://leven-cn.github.io/python-cookbook/recipes/web/django_quickstart)
   - [Django DB - PostgreSQL](https://leven-cn.github.io/python-cookbook/recipes/web/django_db_postgresql)
