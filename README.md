@@ -147,14 +147,20 @@
 ### HTTP Client/Request
 
 - [`urllib.request` (Builtin)](https://leven-cn.github.io/python-cookbook/cookbook/web/http_request)
-- Sync I/O: [`requests`](https://requests.readthedocs.io/en/latest/) (using [`urllib3`](https://urllib3.readthedocs.io/en/stable/))
-- Async I/O: [**`aiohttp`**](https://docs.aiohttp.org/en/stable/)
+- Sync: [`requests`](https://requests.readthedocs.io/en/latest/) (using [`urllib3`](https://urllib3.readthedocs.io/en/stable/))
+- Async: [**`aiohttp`**](https://docs.aiohttp.org/en/stable/)
 
 ### Web Frameworks
 
 - **Django**: full-featured
 - **Flask**: tiny
-- [**FastAPI**](https://fastapi.tiangolo.com/): API doc, asyncio, type hint, data validation ([pydantic](https://pydantic-docs.helpmanual.io/))
+- [**FastAPI**](https://fastapi.tiangolo.com/): *API doc*, *asyncio*, *type hint*, *data validation* ([**`pydantic`**](https://pydantic-docs.helpmanual.io/))
+
+### Redis
+
+- [Sync: **`redis-py`**](https://leven-cn.github.io/python-cookbook/cookbook/web/redis)
+- Async: **`aioredis`**
+- ORM: *`pyton-redis-orm`*
 
 ## Recipes
 
@@ -223,14 +229,6 @@
   - [PostgreSQL - Setup](https://leven-cn.github.io/python-cookbook/recipes/web/postgresql_setup)
   - [PostgreSQL CLI - Usage](https://leven-cn.github.io/python-cookbook/recipes/web/postgresql_usage)
   - PostgreSQL GUI (Official): `pgadmin4`
-- Redis
-  - [Redis - Setup](https://leven-cn.github.io/python-cookbook/recipes/web/redis_setup)
-  - [Redis CLI - Basic Usage](https://leven-cn.github.io/python-cookbook/recipes/web/redis_usage_basic)
-  - Redis GUI (Official): `RedisInsight`
-  - Redis GUI (Official): `Redis Desktop Manager` (**deprecated**)
-  - Redis GUI (Free): `Another Redis Desktop Manager`
-  - [Redis Python API: `redis-py`](https://leven-cn.github.io/python-cookbook/recipes/web/redis)
-  - Redis ORM: `pyton-redis-orm`
 - Web Server
   - `uWSGI`
 
