@@ -98,15 +98,15 @@
 
 ### Socket
 
-- [TCP/UDP Reuse Port](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/reuse_port)
+- [TCP/UDP Reuse Port: `SO_REUSEPORT`](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/reuse_port)
 - [TCP/UDP (Recv/Send) Buffer Size: `SO_RCVBUF`, `SO_SNDBUF`](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/buffer_size)
 - TCP Connection Timeout
   - [Server Side](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_connect_timeout_server)
   - [Client Side](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_connect_timeout_client)
-- [TCP Reuse Address](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_reuse_address)
+- [TCP Reuse Address: `SO_REUSEADDR`](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_reuse_address)
 - [TCP `listen()` Queue](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_listen_queue)
-- [TCP Keep-Alive](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_keepalive)
-- [TCP Nodelay (Disable Nagle's Algorithm)](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_nodelay)
+- [TCP Keep-Alive: : `SO_KEEPALIVE`, `TCP_KEEPIDLE`, `TCP_KEEPCNT`, `TCP_KEEPINTVL`](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_keepalive)
+- [TCP Nodelay (Disable Nagle's Algorithm): `TCP_NODELAY`](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_nodelay)
 - [TCP Quick ACK (Disable Delayed ACK (禁用延迟确认))](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_quickack)
 
 ## Build (构建)
@@ -132,6 +132,10 @@
 
 - [Performance Measurement](https://leven-cn.github.io/python-cookbook/cookbook/build/perf/perf)
 
+### Deploy
+
+- [Deploy App with Docker](https://leven-cn.github.io/python-cookbook/cookbook/build/deploy/docker)
+
 ## Web Development
 
 - [URL Parsing: `urllib.parse`](https://leven-cn.github.io/python-cookbook/cookbook/web/url_parse)
@@ -142,14 +146,14 @@
 ### HTTP Client/Request
 
 - [`urllib.request` (Builtin)](https://leven-cn.github.io/python-cookbook/cookbook/web/http_request)
-- [`requests`](https://requests.readthedocs.io/en/latest/) (using `urllib3`)
-- Asyncio API: `aiohttp`
+- Sync I/O: [`requests`](https://requests.readthedocs.io/en/latest/) (using [`urllib3`](https://urllib3.readthedocs.io/en/stable/))
+- Async I/O: [**`aiohttp`**](https://docs.aiohttp.org/en/stable/)
 
 ### Web Frameworks
 
 - **Django**: full-featured
 - **Flask**: tiny
-- **FastAPI**: API doc, asyncio
+- [**FastAPI**](https://fastapi.tiangolo.com/): API doc, asyncio, type hint, data validation ([pydantic](https://pydantic-docs.helpmanual.io/))
 
 ## Recipes
 
