@@ -44,7 +44,7 @@ repos:
         additional_dependencies: [pydantic, types-redis]
         language_version: python3.10
   - repo: https://github.com/PyCQA/pylint
-    rev: v2.15.10
+    rev: v2.16.0b0
     hooks:
       - id: pylint
         additional_dependencies: [django~=3.2, pylint-django]
