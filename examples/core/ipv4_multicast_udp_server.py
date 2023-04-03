@@ -118,7 +118,6 @@ def run_server(
                 logger.debug(f'no data from {client_address}')
                 break
     finally:
-
         # Leave group
         #
         # The `IP_DROP_MEMBERSHIP` socket option

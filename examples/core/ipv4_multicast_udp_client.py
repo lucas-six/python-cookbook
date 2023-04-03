@@ -19,7 +19,6 @@ multicast_loopback: bool | None = None
 
 with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as client:
     try:
-
         # The `IP_MULTICAST_TTL` socket option
         # allows the application to primarily limit the lifetime (TTL, Time-to-Live) of
         # the packet in the Internet and prevent it from circulating indefinitely.
