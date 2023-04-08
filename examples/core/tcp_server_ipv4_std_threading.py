@@ -37,11 +37,13 @@ class ThreadingTCPRequestHandler(socketserver.BaseRequestHandler):
         logger.debug(f'sent: {data}')
 
 
-def client(host: str, port: int, message: bytes) -> None:
+# pylint: disable=no-member
+# mypy: disable-error-code="name-defined"
+def client(addr: socketserver._AfInetAddress, message: bytes) -> None:
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
         handle_tcp_nodelay(sock, True)
 
-        sock.connect((host, port))
+        sock.connect(addr)
         sock.sendall(message)
         response = sock.recv(1024)
         logging.debug(f'recv: {response!r}')
@@ -63,8 +65,6 @@ if __name__ == '__main__':
         server.server_bind()
         server.server_activate()
 
-        host, port = server.server_address
-
         # Start a thread with the server -- that thread will then start one
         # more thread for each request
         # daemon: exit the server thread when the main thread terminates
@@ -72,8 +72,8 @@ if __name__ == '__main__':
         server_thread.start()
         logging.debug(f'Server loop running in thread: {server_thread.name}')
 
-        client(host, port, b'Hello World 1')
-        client(host, port, b'Hello World 2')
-        client(host, port, b'Hello World 3')
+        client(server.server_address, b'Hello World 1')
+        client(server.server_address, b'Hello World 2')
+        client(server.server_address, b'Hello World 3')
 
         server.shutdown()
