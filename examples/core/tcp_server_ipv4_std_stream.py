@@ -37,7 +37,6 @@ if __name__ == '__main__':
     with socketserver.TCPServer(
         ('localhost', 9999), MyTCPHandler, bind_and_activate=False
     ) as server:
-
         server.allow_reuse_address = True  # `SO_REUSEADDR` socket option
         server.request_queue_size = 100  # param `backlog` for `listen()`
 
