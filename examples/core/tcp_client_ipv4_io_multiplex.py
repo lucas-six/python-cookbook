@@ -44,7 +44,6 @@ def run_client(
     data: list[bytes] = [b'data2\n', b'data1\n']
 
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client:
-
         handle_connect_timeout(client, conn_timeout, tcp_syn_retries)
         handle_reuse_address(client, reuse_address)
         handle_tcp_nodelay(client, tcp_nodelay)

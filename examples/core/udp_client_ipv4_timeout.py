@@ -25,7 +25,6 @@ binary_value: tuple[Any, ...] = (1, b'ab', 2, 3, 3, 2.5)
 packer = struct.Struct(binary_fmt)
 
 with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as client:
-
     client.settimeout(timeout)
     logging.debug(f'recv/send timeout: {client.gettimeout()} seconds')
 

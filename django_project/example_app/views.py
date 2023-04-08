@@ -35,7 +35,6 @@ def api_get(request: HttpRequest) -> JsonResponse:
 
 
 def use_cache(request: HttpRequest) -> HttpResponse:
-
     # get / set
     cache.set(CACHE_KEY, 1)  # use default timeout defined in settings.py
     assert cache.get(CACHE_KEY) == 1
