@@ -154,7 +154,7 @@ disable = [
     "W0201",
     "too-few-public-methods",
     "global-statement",
-    "django-not-configured",
+#    "django-not-configured",
 ]
 enable = [
     "c-extension-no-member",
