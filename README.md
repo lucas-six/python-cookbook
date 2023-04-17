@@ -22,6 +22,10 @@
 
 ## Language Core (语言核心)
 
+### General
+
+- [Flatten a nested sequence](https://leven-cn.github.io/python-cookbook/cookbook/core/general/flat_seq)
+
 ### Text Processing (文本处理)
 
 - [Universal Newline](https://leven-cn.github.io/python-cookbook/cookbook/core/text/universal_newline)
