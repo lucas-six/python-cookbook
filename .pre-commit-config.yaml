@@ -29,43 +29,26 @@ repos:
         # supported by your project here, or alternatively use
         # pre-commit's default_language_version, see
         # https://pre-commit.com/#top_level-default_language_version
-        language_version: python3.10
+        language_version: python3.11
   - repo: https://github.com/pycqa/isort
     rev: 5.12.0
     hooks:
       - id: isort
         name: isort (python)
-        language_version: python3.10
+        language_version: python3.11
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.4.1
     hooks:
       - id: mypy
         exclude: (settings.py|manage.py|models.py|(migrations/)|admin.py)
         additional_dependencies: [pydantic, types-redis]
-        language_version: python3.10
+        language_version: python3.11
   - repo: https://github.com/PyCQA/pylint
     rev: v3.0.0a6
     hooks:
       - id: pylint
         exclude: django_project/
-        language_version: python3.10
-  - repo: https://github.com/PyCQA/flake8
-    rev: 6.1.0
-    hooks:
-      - id: flake8
-        additional_dependencies: [flake8-django]
-        exclude: migrations/
-        args:
-          [
-            '--max-complexity',
-            '10',
-            '--max-line-length',
-            '88',
-            '--per-file-ignores',
-            'settings.py:E501',
-            '--require-plugins',
-            'flake8-django',
-          ]
+        language_version: python3.11
   - repo: https://github.com/asottile/pyupgrade
     rev: v3.10.1
     hooks:
