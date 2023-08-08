@@ -5,7 +5,7 @@ authors = [
     {name = "Li Yun", email = "leven.cn@gmail.com"},
 ]
 readme = "README.md"
-requires-python = "~=3.10"
+requires-python = "~=3.11"
 license = {file = "LICENSE"}
 maintainers = [
     {name = "Li Yun", email = "leven.cn@gmail.com"},
@@ -14,8 +14,8 @@ keywords = ["cookbook", "recipe", "django"]
 classifiers = [
     "Development Status :: 1 - Planning",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: Implementation :: CPython",
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Topic :: Utilities",
@@ -26,10 +26,10 @@ classifiers = [
 dependencies = [
     "pydantic",
 
-    "django ~= 3.2",
-    "psycopg2 >= 2.8",
-    "redis >=4.0",
-    "django-redis",
+    #"django ~= 3.2",
+    #"psycopg2 >= 2.8",
+    #"redis >=4.0",
+    #"django-redis",
 ]
 dynamic = ["version"]
 
@@ -39,15 +39,15 @@ test = [
     "isort",
     "mypy",
     "pylint",
-    "flake8",
-    "pylint-django",
-    "flake8-django",
-    "pytest",
-    "pyupgrade",
-    "coverage >= 6.4",
-    "pytest-cov >= 3.0",
-    "types-redis",
-    "colorlog",
+    "pylint-pydantic",
+    "pylint-print",
+    #"pylint-django",
+    #"pytest",
+    #"pyupgrade",
+    #"coverage >= 6.4",
+    #"pytest-cov >= 3.0",
+    #"types-redis",
+    #"colorlog",
 ]
 doc = [
 ]
@@ -59,15 +59,16 @@ Source = "https://github.com/leven-cn/python-cookbook/"
 
 [tool.black]
 line-length = 88
-target-version = ['py310']
+target-version = ['py311']
 skip-string-normalization = true
 include = '\.pyi?$'
 extend-exclude = '''
+tests/.*\.py$
 migrations/.*\.py$
 '''
 
 [tool.isort]
-src_paths = ["examples", "django_project"]
+src_paths = ["examples"]
 atomic = true
 profile = "black"
 # skip = [
@@ -96,12 +97,12 @@ extend_skip = [".gitignore", ".dockerignore"]
 extend_skip_glob = ["*/migrations/*"]
 
 [tool.mypy]
-python_version = "3.10"
+python_version = "3.11"
 plugins = [
     "pydantic.mypy"
 ]
 exclude = [
-    "manage.py",
+    "test_main.py",
 ]
 follow_imports = "silent"
 warn_redundant_casts = true
@@ -118,11 +119,23 @@ init_typed = true
 warn_required_dynamic_aliases = true
 warn_untyped_fields = true
 
+[[tool.mypy.overrides]]
+module = "motor.*"
+ignore_missing_imports = true
+
 [tool.pylint.main]
 recursive = true
-py-version = 3.10
-ignore = "CVS,migrations,manage.py,django_project"
-#load-plugins = "pylint_django"
+py-version = 3.11
+jobs = 0
+ignore = "CVS,.git,__pycache__,.mypy_cache,tests"
+ignore-paths = "dev_dir,tests"
+ignore-patterns = "test_.*.py"
+ignored-classes = "Body"
+extension-pkg-whitelist = "pydantic"
+load-plugins = [
+    "pylint_pydantic",
+    "pylint_print",
+]
 
 [tool.pylint.'FORMAT']
 max-line-length = 88
@@ -140,6 +153,7 @@ disable = [
     "useless-suppression",
     "deprecated-pragma",
     "use-symbolic-message-instead",
+    "logging-fstring-interpolation",
     "W2601",
     "W1203",
     "C0116",
@@ -160,16 +174,10 @@ enable = [
     "c-extension-no-member",
 ]
 
-[tool.flake8]
-# exclude = .svn,CVS,.bzr,.hg,.git,__pycache__,.tox,.eggs,*.egg
-extend-exclude = "**/migrations/*.py"
-# ignore = E121,E123,E126,E226,E24,E704,W503,W504
-per-file-ignores = "settings.py:E501"
-max-complexity = 10
-max-line-length = 88
-show-source = true
-benchmark = true
-require-plugins = "flake8-django"
+[tool.pylint.design]
+max-args = 12
+min-public-methods = 1
+max-locals = 22
 
 [tool.pytest.ini_options]
 markers = [
@@ -198,16 +206,16 @@ skip_empty = true
 [tool.pyright]
 include = [
     "examples",
-    "django_project",
 ]
 exclude = [
     ".git",
     "**/__pycache__",
+    "**/.mypy_cache",
     "**/migrations",
 ]
 ignore = [
-    "**/models.py",
     "**/admin.py",
 ]
+reportGeneralTypeIssues = "none"
 stubPath = ""
-pythonVersion = "3.10"
+pythonVersion = "3.11"

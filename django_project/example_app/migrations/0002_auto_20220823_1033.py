@@ -20,17 +20,25 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='a',
             name='age',
-            field=models.PositiveSmallIntegerField(blank=True, null=True, verbose_name='age'),
+            field=models.PositiveSmallIntegerField(
+                blank=True, null=True, verbose_name='age'
+            ),
         ),
         migrations.AddField(
             model_name='a',
             name='balance',
-            field=models.DecimalField(decimal_places=2, default=0.0, max_digits=8, verbose_name='balance'),
+            field=models.DecimalField(
+                decimal_places=2, default=0.0, max_digits=8, verbose_name='balance'
+            ),
         ),
         migrations.AddField(
             model_name='a',
             name='created_time',
-            field=models.DateTimeField(auto_now_add=True, default=django.utils.timezone.now, verbose_name='created time'),
+            field=models.DateTimeField(
+                auto_now_add=True,
+                default=django.utils.timezone.now,
+                verbose_name='created time',
+            ),
             preserve_default=False,
         ),
         migrations.AddField(
@@ -46,12 +54,22 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='a',
             name='sex',
-            field=models.CharField(blank=True, choices=[('M', 'Man'), ('F', 'Female'), ('-', '-')], max_length=8, verbose_name='sex'),
+            field=models.CharField(
+                blank=True,
+                choices=[('M', 'Man'), ('F', 'Female'), ('-', '-')],
+                max_length=8,
+                verbose_name='sex',
+            ),
         ),
         migrations.AddField(
             model_name='a',
             name='sex2',
-            field=models.CharField(blank=True, choices=[('Man', 'Man'), ('Female', 'Female'), ('-', '-')], max_length=8, verbose_name='sex'),
+            field=models.CharField(
+                blank=True,
+                choices=[('Man', 'Man'), ('Female', 'Female'), ('-', '-')],
+                max_length=8,
+                verbose_name='sex',
+            ),
         ),
         migrations.AddField(
             model_name='a',
@@ -61,18 +79,37 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='a',
             name='uuid',
-            field=models.UUIDField(default=uuid.uuid4, editable=False, unique=True, verbose_name='uuid'),
+            field=models.UUIDField(
+                default=uuid.uuid4, editable=False, unique=True, verbose_name='uuid'
+            ),
         ),
         migrations.AlterField(
             model_name='a',
             name='nickname',
-            field=models.CharField(default='[unknown]', max_length=64, verbose_name='nickname'),
+            field=models.CharField(
+                default='[unknown]', max_length=64, verbose_name='nickname'
+            ),
         ),
         migrations.CreateModel(
             name='B',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('a', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='example_app.a', verbose_name='A')),
+                (
+                    'id',
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name='ID',
+                    ),
+                ),
+                (
+                    'a',
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to='example_app.a',
+                        verbose_name='A',
+                    ),
+                ),
             ],
             options={
                 'verbose_name': 'B',

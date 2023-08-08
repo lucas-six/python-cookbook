@@ -5,20 +5,20 @@ name = "pypi"
 
 [packages]
 pydantic = "*"
-django = "~=3.2"
+#django = "~=3.2"
 
 [dev-packages]
 black = "*"
 isort = "*"
 mypy = "*"
 pylint = "*"
-flake8 = "*"
-pylint-django = "*"
-flake8-django = "*"
-pytest = "*"
-coverage = {extras = ["toml"], version = "*"}
-pytest-cov = "*"
-pre-commit = "*"
+pylint-pydantic = "*"
+pylint-print = "*"
+#pylint-django = "*"
+#pytest = "*"
+#coverage = {extras = ["toml"], version = "*"}
+#pytest-cov = "*"
+#pre-commit = "*"
 
 [requires]
-python_version = "3.10"
+python_version = "3.11"
