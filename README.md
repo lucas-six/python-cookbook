@@ -102,17 +102,17 @@
 
 ### Socket
 
-- [TCP/UDP Reuse Port: `SO_REUSEPORT`](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/reuse_port)
-- [TCP/UDP (Recv/Send) Buffer Size: `SO_RCVBUF`, `SO_SNDBUF`](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/buffer_size)
 - TCP Connection Timeout
   - [Server Side](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_connect_timeout_server)
   - [Client Side](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_connect_timeout_client)
-- [TCP Reuse Address: `SO_REUSEADDR`](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_reuse_address)
 - [TCP `listen()` Queue](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_listen_queue)
+- [TCP Transmission Timeout](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_transmission_timeout)
 - [TCP Keep-Alive: : `SO_KEEPALIVE`, `TCP_KEEPIDLE`, `TCP_KEEPCNT`, `TCP_KEEPINTVL`](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_keepalive)
+- [TCP/UDP Reuse Port: `SO_REUSEPORT`](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/reuse_port)
+- [TCP/UDP (Recv/Send) Buffer Size: `SO_RCVBUF`, `SO_SNDBUF`](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/buffer_size)
+- [TCP Reuse Address: `SO_REUSEADDR`](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_reuse_address)
 - [TCP Nodelay (Disable Nagle's Algorithm): `TCP_NODELAY`](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_nodelay)
 - [TCP Quick ACK (Disable Delayed ACK (禁用延迟确认))](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_quickack)
-- [TCP Transmission Timeout](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_transmission_timeout)
 
 ## Build (构建)
 
@@ -127,6 +127,10 @@
 - [`pip` - Standard Package Manager](https://leven-cn.github.io/python-cookbook/cookbook/build/pkg/pip)
 - [`pipx` - Install and Run Python Applications](https://leven-cn.github.io/python-cookbook/cookbook/build/pkg/pipx)
 - [`pipenv` - Virtual Environment Manager](https://leven-cn.github.io/python-cookbook/cookbook/build/pkg/pipenv)
+
+### Project
+
+- [project: `pyproject.toml`](https://leven-cn.github.io/python-cookbook/cookbook/build/project)
 
 ### Test
 
@@ -158,7 +162,11 @@
 
 - **Django**: full-featured
 - **Flask**: tiny
-- [**FastAPI**](https://fastapi.tiangolo.com/): *API doc*, *asyncio*, *type hint*, *data validation* ([**`pydantic`**](https://pydantic-docs.helpmanual.io/))
+- [**FastAPI**](https://fastapi.tiangolo.com/)
+  - API doc: *OpenAPI* ([**Swagger**](https://swagger.io/))
+  - `asyncio`
+  - type hint or type annotation
+  - data validation ([**`pydantic`**](https://pydantic-docs.helpmanual.io/))
 
 ### Redis
 
