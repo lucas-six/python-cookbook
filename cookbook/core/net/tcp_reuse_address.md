@@ -28,7 +28,7 @@ is_reuse_address: bool = sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR)
 
 ## More Details
 
-- [TCP Reuse Address - Linux Cookbook](https://leven-cn.github.io/linux-cookbook/cookbook/net/tcp_reuse_address)
+- [TCP Reuse Address - Linux Cookbook](https://leven-cn.github.io/linux-cookbook/cookbook/admin/net/tcp_reuse_address)
 
 ## References
 

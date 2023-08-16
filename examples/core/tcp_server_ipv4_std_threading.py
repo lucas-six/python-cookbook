@@ -4,14 +4,10 @@
 import logging
 import socket
 import socketserver
+import sys
 import threading
 
-from net import (
-    handle_reuse_port,
-    handle_tcp_keepalive,
-    handle_tcp_nodelay,
-    handle_tcp_quickack,
-)
+from net import handle_tcp_quickack
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}'
@@ -41,7 +37,7 @@ class ThreadingTCPRequestHandler(socketserver.BaseRequestHandler):
 # mypy: disable-error-code="name-defined"
 def client(addr: socketserver._AfInetAddress, message: bytes) -> None:
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-        handle_tcp_nodelay(sock, True)
+        sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
 
         sock.connect(addr)
         sock.sendall(message)
@@ -57,9 +53,18 @@ if __name__ == '__main__':
         server.allow_reuse_address = True  # `SO_REUSEADDR` socket option
         server.request_queue_size = 100  # param `backlog` for `listen()`
 
-        handle_reuse_port(server.socket, True)
-        handle_tcp_nodelay(server.socket, True)
-        handle_tcp_keepalive(server.socket, True, 1800, 9, 15)
+        server.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+        server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+
+        # TCP Keep-Alive
+        server.socket.setsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)
+        if sys.platform == 'linux':  # Linux 2.4+
+            server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPIDLE, 1800)
+        elif sys.platform == 'darwin' and sys.version_info >= (3, 10):
+            server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPALIVE, 1800)
+        server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPCNT, 9)
+        server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPINTVL, 15)
+
         handle_tcp_quickack(server.socket, True)
 
         server.server_bind()

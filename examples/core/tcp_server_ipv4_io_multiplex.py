@@ -6,16 +6,13 @@ from __future__ import annotations
 import logging
 import selectors
 import socket
+import sys
 from typing import NoReturn
 
 from net import (
     get_tcp_server_max_connect_timeout,
     handle_listen,
-    handle_reuse_address,
-    handle_reuse_port,
     handle_socket_bufsize,
-    handle_tcp_keepalive,
-    handle_tcp_nodelay,
     handle_tcp_quickack,
 )
 
@@ -35,12 +32,7 @@ selector = selectors.DefaultSelector()
 
 recv_buf_size: int | None = None
 send_buf_size: int | None = None
-g_tcp_nodelay: bool | None = None
 g_tcp_quickack: bool | None = None
-g_tcp_keepalive_enabled = None
-g_tcp_keepalive_idle = None
-g_tcp_keepalive_cnt = None
-g_tcp_keepalive_intvl = None
 
 
 def handle_read(conn: socket.socket, mask: int) -> None:
@@ -77,18 +69,9 @@ def handle_requests(sock: socket.socket, mask: int) -> None:
     logger.debug(f'recv request from {client_address}')
 
     handle_socket_bufsize(conn, recv_buf_size, send_buf_size)
-    if g_tcp_nodelay is not None:
-        handle_tcp_nodelay(conn, g_tcp_nodelay)
+    sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
     if g_tcp_quickack is not None:
         handle_tcp_quickack(conn, g_tcp_quickack)
-
-    handle_tcp_keepalive(
-        sock,
-        g_tcp_keepalive_enabled,
-        g_tcp_keepalive_idle,
-        g_tcp_keepalive_cnt,
-        g_tcp_keepalive_intvl,
-    )
 
     conn.setblocking(False)
     selector.register(conn, selectors.EVENT_READ, handle_read)
@@ -98,36 +81,27 @@ def run_server(
     host: str = '',
     port: int = 0,
     *,
-    reuse_address: bool = True,
-    reuse_port: bool = True,
-    tcp_nodelay: bool = True,
     tcp_quickack: bool = True,
     accept_queue_size: int | None = None,
     timeout: float | None = None,
-    tcp_keepalive: bool | None = None,
-    tcp_keepalive_idle: int | None = None,
-    tcp_keepalive_cnt: int | None = None,
-    tcp_keepalive_intvl: int | None = None,
+    tcp_keepalive_idle: int = 1800,
+    tcp_keepalive_cnt: int = 9,
+    tcp_keepalive_intvl: int = 15,
 ) -> NoReturn:
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-    handle_reuse_address(sock, reuse_address)
-    handle_reuse_port(sock, reuse_port)
-    handle_tcp_nodelay(sock, tcp_nodelay)
-    global g_tcp_nodelay
-    g_tcp_nodelay = tcp_nodelay
+    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+    sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
 
-    global g_tcp_keepalive_enabled
-    global g_tcp_keepalive_idle
-    global g_tcp_keepalive_cnt
-    global g_tcp_keepalive_intvl
-    g_tcp_keepalive_enabled = tcp_keepalive
-    g_tcp_keepalive_idle = tcp_keepalive_idle
-    g_tcp_keepalive_cnt = tcp_keepalive_cnt
-    g_tcp_keepalive_intvl = tcp_keepalive_intvl
-    handle_tcp_keepalive(
-        sock, tcp_keepalive, tcp_keepalive_idle, tcp_keepalive_cnt, tcp_keepalive_intvl
-    )
+    # TCP Keep-Alive
+    sock.setsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)
+    if sys.platform == 'linux':  # Linux 2.4+
+        sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPIDLE, tcp_keepalive_idle)
+    elif sys.platform == 'darwin' and sys.version_info >= (3, 10):
+        sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPALIVE, tcp_keepalive_idle)
+    sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPCNT, tcp_keepalive_cnt)
+    sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPINTVL, tcp_keepalive_intvl)
 
     handle_tcp_quickack(sock, tcp_quickack)
     global g_tcp_quickack
@@ -167,7 +141,6 @@ run_server(
     'localhost',
     9999,
     timeout=5.5,
-    tcp_keepalive=True,
     tcp_keepalive_idle=1800,
     tcp_keepalive_cnt=5,
     tcp_keepalive_intvl=15,

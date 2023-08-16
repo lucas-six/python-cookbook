@@ -24,7 +24,7 @@ def _get_linux_tcp_connect_timeout(retries: int) -> int:
 
 # SYN/ACK retries (server side)
 # On Linux 2.2+: /proc/sys/net/ipv4/tcp_synack_retries
-# See https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_synack_retries
+# See https://manpages.debian.org/bookworm/manpages/tcp.7.en.html#tcp_synack_retries
 tcp_synack_retries = \
     int(Path('/proc/sys/net/ipv4/tcp_synack_retries').read_text(encoding='utf-8').strip())
 
@@ -33,15 +33,12 @@ sys_timeout: int = _get_linux_tcp_connect_timeout(tcp_synack_retries)
 
 ## More Details
 
-- [TCP Connect Timeout (Server Side) - Linux Cookbook](https://leven-cn.github.io/linux-cookbook/cookbook/net/tcp_connect_timeout_server)
+- [TCP Connect Timeout (Server Side) - Linux Cookbook](https://leven-cn.github.io/linux-cookbook/cookbook/admin/net/tcp_connect_timeout_server)
 
 ## References
 
 <!-- markdownlint-disable line-length -->
 
 - [Python - `socket` module](https://docs.python.org/3/library/socket.html)
-- [Linux Programmer's Manual - `accept`(2)](https://manpages.debian.org/bullseye/manpages-dev/accept.2.en.html)
-- [Linux Programmer's Manual - tcp(7)](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html)
-- [Linux Programmer's Manual - tcp(7) - `tcp_synack_retries`](https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_synack_retries)
 
 <!-- markdownlint-enable line-length -->

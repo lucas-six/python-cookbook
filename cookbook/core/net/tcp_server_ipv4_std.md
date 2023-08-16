@@ -11,11 +11,8 @@
 import logging
 import socket
 import socketserver
-import sys
 
 from net import (
-    handle_reuse_port,
-    handle_tcp_keepalive,
     handle_tcp_nodelay,
     handle_tcp_quickack,
 )
@@ -55,9 +52,8 @@ if __name__ == '__main__':
         server.allow_reuse_address = True  # `SO_REUSEADDR` socket option
         server.request_queue_size = 100  # param `backlog` for `listen()`
 
-        handle_reuse_port(server.socket, True)
+        server.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
         handle_tcp_nodelay(server.socket, True)
-        handle_tcp_keepalive(server.socket, True, 1800, 9, 15)
         handle_tcp_quickack(server.socket, True)
 
         server.server_bind()
@@ -68,8 +64,6 @@ if __name__ == '__main__':
         server.serve_forever(poll_interval=5.5)
 ```
 
-See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples/core/tcp_server_ipv4_std_base.py)
-
 ### StreamRequestHandler
 
 ```python
@@ -79,11 +73,8 @@ See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples
 import logging
 import socket
 import socketserver
-import sys
 
 from net import (
-    handle_reuse_port,
-    handle_tcp_keepalive,
     handle_tcp_nodelay,
     handle_tcp_quickack,
 )
@@ -118,9 +109,8 @@ if __name__ == '__main__':
         server.allow_reuse_address = True  # `SO_REUSEADDR` socket option
         server.request_queue_size = 100  # param `backlog` for `listen()`
 
-        handle_reuse_port(server.socket, True)
+        server.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
         handle_tcp_nodelay(server.socket, True)
-        handle_tcp_keepalive(server.socket, True, 1800, 9, 15)
         handle_tcp_quickack(server.socket, True)
 
         server.server_bind()
@@ -131,8 +121,6 @@ if __name__ == '__main__':
         server.serve_forever()
 ```
 
-See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples/core/tcp_server_ipv4_std_stream.py)
-
 ### Threading
 
 ```python
@@ -142,12 +130,9 @@ See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples
 import logging
 import socket
 import socketserver
-import sys
 import threading
 
 from net import (
-    handle_reuse_port,
-    handle_tcp_keepalive,
     handle_tcp_nodelay,
     handle_tcp_quickack,
 )
@@ -194,9 +179,8 @@ if __name__ == '__main__':
         server.allow_reuse_address = True  # `SO_REUSEADDR` socket option
         server.request_queue_size = 100  # param `backlog` for `listen()`
 
-        handle_reuse_port(server.socket, True)
+        server.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
         handle_tcp_nodelay(server.socket, True)
-        handle_tcp_keepalive(server.socket, True, 1800, 9, 15)
         handle_tcp_quickack(server.socket, True)
 
         server.server_bind()
@@ -218,17 +202,15 @@ if __name__ == '__main__':
         server.shutdown()
 ```
 
-See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples/core/tcp_server_ipv4_std_threading.py)
-
 ## More
 
-- [TCP/UDP Reuse Address](net_reuse_address)
-- [TCP/UDP Reuse Port](net_reuse_port)
 - [TCP Connect Timeout (Client Side)](tcp_connect_timeout_client)
 - [TCP Connect Timeout (Server Side)](tcp_connect_timeout_server)
-- [TCP Data Transmission Timeout](tcp_transmission_timeout)
-- [TCP Nodelay (Dsiable Nagle's Algorithm)](tcp_nodelay)
+- [TCP Reuse Address](tcp_reuse_address)
+- [Reuse Port](reuse_port)
 - [TCP Keep-Alive](tcp_keepalive)
+- [TCP Nodelay (Dsiable Nagle's Algorithm)](tcp_nodelay)
+- [TCP Data Transmission Timeout](tcp_transmission_timeout)
 - [TCP Quick ACK (Disable Delayed ACK (延迟确认))](tcp_quickack)
 - [TCP Slow Start (慢启动)](../../more/core/tcp_slowstart)
 

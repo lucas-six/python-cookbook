@@ -20,7 +20,7 @@ sock.listen(accept_queue_size)
 
 ## More Details
 
-- [TCP `listen()` Queue - Linux Cookbook](https://leven-cn.github.io/linux-cookbook/cookbook/net/tcp_listen_queue)
+- [TCP `listen()` Queue - Linux Cookbook](https://leven-cn.github.io/linux-cookbook/cookbook/admin/net/tcp_listen_queue)
 
 ## References
 

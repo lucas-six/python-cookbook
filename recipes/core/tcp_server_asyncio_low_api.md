@@ -19,11 +19,7 @@ import logging
 import socket
 
 from net import (
-    handle_reuse_address,
-    handle_reuse_port,
     handle_socket_bufsize,
-    handle_tcp_keepalive,
-    handle_tcp_nodelay,
     handle_tcp_quickack,
 )
 
@@ -31,12 +27,7 @@ logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}'
 )
 
-tcp_nodelay = True
 tcp_quickack = True
-tcp_keepalive_enabled = True
-tcp_keepalive_idle = 1800
-tcp_keepalive_cnt = 5
-tcp_keepalive_intvl = 15
 recv_bufsize: int | None = None
 send_bufsize: int | None = None
 
@@ -59,17 +50,9 @@ class EchoServerProtocol(asyncio.Protocol):
         assert sock.getpeername() == client_address
         assert sock.getsockname() == transport.get_extra_info('sockname')
         assert sock.gettimeout() == 0.0
-        handle_reuse_address(sock)
-        handle_reuse_port(sock)
+        assert sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR) == 1
+        assert sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT) == 1
         handle_socket_bufsize(sock, recv_bufsize, send_bufsize)
-        handle_tcp_nodelay(sock, tcp_nodelay)
-        handle_tcp_keepalive(
-            sock,
-            tcp_keepalive_enabled,
-            tcp_keepalive_idle,
-            tcp_keepalive_cnt,
-            tcp_keepalive_intvl,
-        )
         handle_tcp_quickack(sock, tcp_quickack)
         # logging.debug(dir(sock))
 
@@ -115,16 +98,14 @@ async def tcp_echo_server(
 asyncio.run(tcp_echo_server('127.0.0.1', 8888))  # Python 3.7+
 ```
 
-See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples/core/tcp_server_asyncio_low_api.py)
-
 ## More
 
-- [TCP/UDP Reuse Address](net_reuse_address)
-- [TCP/UDP Reuse Port](net_reuse_port)
+- [TCP Reuse Address](tcp_reuse_address)
+- [Reuse Port](reuse_port)
 - [TCP/UDP (Recv/Send) Buffer Size](net_buffer_size)
 - [TCP `listen()` Queue](tcp_listen_queue)
-- [TCP Nodelay (Dsiable Nagle's Algorithm)](tcp_nodelay)
 - [TCP Keep-Alive](tcp_keepalive)
+- [TCP Nodelay (Dsiable Nagle's Algorithm)](tcp_nodelay)
 - [TCP Quick ACK (Disable Delayed ACK (延迟确认))](tcp_quickack)
 - [TCP Slow Start (慢启动)](../../more/core/tcp_slowstart)
 
