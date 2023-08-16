@@ -50,7 +50,11 @@ class EchoServerProtocol(asyncio.Protocol):
         if sys.platform == 'linux':  # Linux 2.4+
             sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPIDLE, 1800)
         elif sys.platform == 'darwin' and sys.version_info >= (3, 10):
-            sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPALIVE, 1800)
+            sock.setsockopt(
+                socket.IPPROTO_TCP,
+                socket.TCP_KEEPALIVE,  # pylint: disable=no-member
+                1800,
+            )
         sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPCNT, 5)
         sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPINTVL, 15)
 
