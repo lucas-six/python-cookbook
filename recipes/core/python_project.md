@@ -3,43 +3,14 @@
 ## Setup Environment
 
 ```bash
-pipenv --python 3.10
-pipenv install --dev black isort mypy pylint flake8 pytest coverage[toml] pytest-cov pre-commit pyupgrade
+pipenv install --dev flake8 pytest coverage[toml] pytest-cov pre-commit pyupgrade
 ```
 
 ## `pyproject.toml`
 
 ```toml
 [project]
-name = "<project_name>"
-description = "<project description>"
-authors = [
-    {name = "<Author Name>", email = "<author@email>"},
-    {name = "Lee", email = "leven.cn@gmail.com"},
-]
-readme = "README.md"
-requires-python = "~=3.10"
-license = {file = "LICENSE"}
-maintainers = [
-    {name = "<Maintainer Name>", email = "<maintainer@email>"},
-]
-keywords = ["xxx"]
-classifiers = [
-    "Development Status :: 1 - Planning",
-    "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: Implementation :: CPython",
-    "Topic :: Software Development :: Libraries :: Python Modules",
-    "Topic :: Utilities",
-    "Operating System :: OS Independent",
-    "License :: OSI Approved :: MIT License",
-    "License :: OSI Approved :: Apache Software License",
-    "Typing :: Typed",
-]
 dependencies = [
-    "pydantic",
-
     "psycopg2 >= 2.8",
     "redis >= 4.0",
 
@@ -50,10 +21,6 @@ dynamic = ["version"]
 
 [project.optional-dependencies]
 test = [
-    "black",
-    "isort",
-    "mymy",
-    "pylint",
     "flake8",
     "pytest",
     "coverage",
@@ -65,11 +32,6 @@ doc = [
     "sphinx"
 ]
 
-[project.urls]
-Home = "<URL>"
-Documentation = "<URL>"
-Source = "<URL>"
-
 [project.scripts]
 <command_name> = "xxx:main"
 
@@ -80,59 +42,13 @@ Source = "<URL>"
 dogelang = "<package>:<name>"
 
 [tool.black]
-line-length = 88
-target-version = ['py310']
-skip-string-normalization = true
-include = '\.pyi?$'
 extend-exclude = '''
 # A regex preceded with ^/ will apply only to files and directories
 # in the root of the project.
 ^/foo.py  # exclude a file named foo.py in the root of the project (in addition to the defaults)
-migrations/.*\.py$
 '''
 
-[tool.isort]
-src_paths = ["src", "tests"]
-atomic = true
-profile = "black"
-# skip = [
-#    '.bzr',
-#    '.direnv',
-#    '.eggs',
-#    '.git',
-#    '.hg',
-#    '.mypy_cache',
-#    '.nox',
-#    '.pants.d',
-#    '.svn',
-#    '.tox',
-#    '.venv',
-#    '__pypackages__',
-#    '_build',
-#    'buck-out',
-#    'build',
-#    'dist',
-#    'node_modules',
-#    'venv'
-# ]
-skip_gitignore = true
-extend_skip = [".gitignore", ".dockerignore"]
-# skip_glob = []
-extend_skip_glob = ["*/migrations/*"]
-
 [tool.mypy]
-python_version = "3.10"
-plugins = [
-  "pydantic.mypy"
-]
-follow_imports = "silent"
-warn_redundant_casts = true
-warn_unused_ignores = true
-warn_unused_configs = true
-disallow_any_generics = true
-check_untyped_defs = true
-no_implicit_reexport = true
-disallow_untyped_defs = true
 exclude = [
     '^file1\.py$',  # TOML literal string (single-quotes, no escaping necessary)
     "^file2\\.py$",  # TOML basic string (double-quotes, backslash and other characters need escaping)
@@ -143,36 +59,9 @@ exclude = [
     'admin.py',
 ]
 
-[tool.pydantic-mypy]
-init_forbid_extra = true
-init_typed = true
-warn_required_dynamic_aliases = true
-warn_untyped_fields = true
-
 [tool.pylint.main]
-recursive = true
-py-version = 3.10
-ignore = "CVS,migrations"
+ignore = "migrations"
 load-plugins = "pylint_django"
-disable = [
-    "raw-checker-failed",
-    "bad-inline-option",
-    "locally-disabled",
-    "file-ignored",
-    "suppressed-message",
-    "useless-suppression",
-    "deprecated-pragma",
-    "use-symbolic-message-instead",
-]
-enable = [
-    "c-extension-no-member",
-]
-
-[tool.pylint.'FORMAT']
-max-line-length = 88
-
-[tool.pylint.'LOGGING']
-logging-format-style = "new"
 
 [tool.flake8]
 # exclude = .svn,CVS,.bzr,.hg,.git,__pycache__,.tox,.eggs,*.egg
@@ -210,22 +99,6 @@ parallel = true
 
 [tool.coverage.report]
 skip_empty = true
-
-[tool.pyright]
-include = [
-    "src"
-]
-exclude = [
-    ".git",
-    "**/__pycache__",
-    "**/migrations",
-]
-ignore = [
-    "src/**/models.py",
-    "src/**/admin.py",
-]
-stubPath = ""
-pythonVersion = "3.10"
 ```
 
 ## `pre-commit`
@@ -357,18 +230,12 @@ jobs:
 
 ## References
 
-- [Packaging Python Projects](https://packaging.python.org/en/latest/tutorials/packaging-projects/)
 - [PEP 517 - A build-system independent format for source trees](https://peps.python.org/pep-0517/)
 - [PEP 518 – Specifying Minimum Build System Requirements for Python Projects](https://peps.python.org/pep-0518/)
 - [`flit` Documentation](https://flit.pypa.io/en/latest/)
 - [TOML 1.0](https://toml.io/en/v1.0.0)
 - [PEP 621 – Storing project metadata in pyproject.toml](https://peps.python.org/pep-0621/)
-- [PEP 508 – Dependency specification for Python Software Packages](https://peps.python.org/pep-0508)
 - [`pre-commit` Documentation](https://pre-commit.com/)
-- [`black` Documentation](https://black.readthedocs.io/en/stable/)
-- [`isort` Documentation](https://pycqa.github.io/isort/)
-- [`mypy` Documentation](https://mypy.readthedocs.io/en/stable/)
-- [`pylint` Documentation](https://pylint.pycqa.org/en/latest/)
 - [`flake8` Documentation](https://flake8.pycqa.org/en/latest/)
 - [`pytest` Documentation](https://docs.pytest.org/)
 - [`coverage` Documentation](https://coverage.readthedocs.io/)
