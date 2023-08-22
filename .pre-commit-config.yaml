@@ -47,7 +47,7 @@ repos:
     rev: v3.0.0a6
     hooks:
       - id: pylint
-        additional_dependencies: [pylint-pydantic]
+        additional_dependencies: [pydantic, pylint-pydantic]
         exclude: django_project/
         language_version: python3.11
         args:
