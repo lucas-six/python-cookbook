@@ -103,19 +103,13 @@
 ### Networks and Communications (网络通信)
 
 - [`socketserver` Class Diagram](https://leven-cn.github.io/python-cookbook/cookbook/core/net/socketserver_class_diagram)
-- [TCP Server (IPv4) - Standard Framework](https://leven-cn.github.io/python-cookbook/cookbook/core/net/tcp_server_ipv4_std)
+- [TCP Server (IPv4)](https://leven-cn.github.io/python-cookbook/cookbook/core/net/tcp_server_ipv4)
 - [TCP Server (IPv4) - Blocking Mode (阻塞模式)](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_server_ipv4_blocking)
 - [TCP Server (IPv4) - Timeout Mode](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_server_ipv4_timeout)
 - [TCP Server (IPv4) - Non-Blocking Mode (I/O Multiplex, I/O多路复用)](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_server_ipv4_io_multiplex)
 - TCP Connection Timeout
-  - [Server Side](https://leven-cn.github.io/python-cookbook/cookbook/core/net/tcp_connect_timeout_server)
   - [Client Side](https://leven-cn.github.io/python-cookbook/cookbook/core/net/tcp_connect_timeout_client)
-- [TCP `listen()` Queue: `socket.SOMAXCONN`](https://leven-cn.github.io/python-cookbook/cookbook/core/net/tcp_listen_queue)
-- [TCP Reuse Address: `SO_REUSEADDR`](https://leven-cn.github.io/python-cookbook/cookbook/core/net/tcp_reuse_address)
-- [TCP/UDP Reuse Port: `SO_REUSEPORT`](https://leven-cn.github.io/python-cookbook/cookbook/core/net/reuse_port)
 - [TCP Transmission Timeout](https://leven-cn.github.io/python-cookbook/cookbook/core/net/tcp_transmission_timeout)
-- [TCP Keep-Alive: : `SO_KEEPALIVE`, `TCP_KEEPIDLE`, `TCP_KEEPCNT`, `TCP_KEEPINTVL`](https://leven-cn.github.io/python-cookbook/cookbook/core/net/tcp_keepalive)
-- [TCP Nodelay (Disable Nagle's Algorithm): `TCP_NODELAY`](https://leven-cn.github.io/python-cookbook/cookbook/core/net/tcp_nodelay)
 - [TCP/UDP (Recv/Send) Buffer Size: `SO_RCVBUF`, `SO_SNDBUF`](https://leven-cn.github.io/python-cookbook/cookbook/core/net/buffer_size)
 - [TCP Quick ACK (Disable Delayed ACK (禁用延迟确认))](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_quickack)
 

@@ -130,37 +130,6 @@ def handle_socket_bufsize(
     logging.debug(f'send buffer size: {_send_buf_size} (max={max_send_buf_size})')
 
 
-def handle_listen(sock: socket.socket, accept_queue_size: int | None) -> None:
-    """Set backlog (accept queue size) for `listen()`.
-
-    On Linux 2.2+, there are two queues: SYN queue and accept queue
-    max syn queue size: /proc/sys/net/ipv4/tcp_max_syn_backlog
-    max accept queue size: /proc/sys/net/core/somaxconn
-
-    https://manpages.debian.org/bullseye/manpages-dev/listen.2.en.html
-    https://manpages.debian.org/bullseye/manpages/tcp.7.en.html#tcp_max_syn_backlog
-    """
-    if sys.platform == 'linux':  # Linux 2.2+
-        assert socket.SOMAXCONN == int(
-            Path('/proc/sys/net/core/somaxconn').read_text(encoding='utf-8').strip()
-        )
-        max_syn_queue_size = int(
-            Path('/proc/sys/net/ipv4/tcp_max_syn_backlog')
-            .read_text(encoding='utf-8')
-            .strip()
-        )
-        logging.debug(f'max syn queue size: {max_syn_queue_size}')
-
-    if accept_queue_size is None:
-        sock.listen()
-    else:
-        # kernel do this already!
-        # accept_queue_size = min(accept_queue_size, socket.SOMAXCONN)
-        sock.listen(accept_queue_size)
-    logging.debug(f'accept queue size: {accept_queue_size} (max={socket.SOMAXCONN})')
-    sock.listen()
-
-
 def handle_tcp_quickack(sock: socket.socket, tcp_quickack: bool | None = None) -> None:
     """Enable TCP Quick ACK mode, disabling delayed ACKs.
 

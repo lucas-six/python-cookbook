@@ -72,7 +72,7 @@ async def tcp_echo_server(
     host: str,
     port: int,
     *,
-    backlog: int = 100,
+    backlog: int = socket.SOMAXCONN,
 ) -> None:
     # Low-level APIs: loop.create_server()
     # The socket option `TCP_NODELAY` is set by default in Python 3.6+

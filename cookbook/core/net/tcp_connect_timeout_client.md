@@ -6,7 +6,7 @@
 - **timeout mode**: `socket.settimeout(3.5)`
 - **non-blocking mode**: `socket.settimeout(0.0)` or `socket.setblocking(False)`
 
-affect `connect()`, `accept()`, `send()`/`sendall()`, `recv()`.
+affect `connect()`, `send()`/`sendall()`, `recv()`.
 
 ```python
 def _get_linux_tcp_connect_timeout(retries: int) -> int:

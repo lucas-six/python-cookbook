@@ -74,7 +74,7 @@ async def tcp_echo_server(
     host: str,
     port: int,
     *,
-    backlog: int = 100,
+    backlog: int = socket.SOMAXCONN,
 ) -> None:
     loop = asyncio.get_running_loop()
 

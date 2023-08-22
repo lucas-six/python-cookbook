@@ -6,12 +6,10 @@ from __future__ import annotations
 import logging
 import selectors
 import socket
-import sys
 from typing import NoReturn
 
 from net import (
     get_tcp_server_max_connect_timeout,
-    handle_listen,
     handle_socket_bufsize,
     handle_tcp_quickack,
 )
@@ -82,26 +80,14 @@ def run_server(
     port: int = 0,
     *,
     tcp_quickack: bool = True,
-    accept_queue_size: int | None = None,
+    accept_queue_size: int = socket.SOMAXCONN,
     timeout: float | None = None,
-    tcp_keepalive_idle: int = 1800,
-    tcp_keepalive_cnt: int = 9,
-    tcp_keepalive_intvl: int = 15,
 ) -> NoReturn:
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
     sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
-
-    # TCP Keep-Alive
-    sock.setsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)
-    if sys.platform == 'linux':  # Linux 2.4+
-        sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPIDLE, tcp_keepalive_idle)
-    elif sys.platform == 'darwin' and sys.version_info >= (3, 10):
-        sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPALIVE, tcp_keepalive_idle)
-    sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPCNT, tcp_keepalive_cnt)
-    sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPINTVL, tcp_keepalive_intvl)
 
     handle_tcp_quickack(sock, tcp_quickack)
     global g_tcp_quickack
@@ -110,12 +96,8 @@ def run_server(
     # non-blocking mode: == sock.settimeout(0.0)
     sock.setblocking(False)
 
-    # Bind
     sock.bind((host, port))
-    server_address: tuple[str, int] = sock.getsockname()
-    logger.debug(f'Server address: {server_address}')
-
-    handle_listen(sock, accept_queue_size)
+    sock.listen(accept_queue_size)
 
     selector.register(sock, selectors.EVENT_READ, handle_requests)
 
@@ -141,7 +123,4 @@ run_server(
     'localhost',
     9999,
     timeout=5.5,
-    tcp_keepalive_idle=1800,
-    tcp_keepalive_cnt=5,
-    tcp_keepalive_intvl=15,
 )
