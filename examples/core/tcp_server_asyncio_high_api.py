@@ -6,26 +6,15 @@ from __future__ import annotations
 import asyncio
 import logging
 import socket
+import sys
 
-from net import (
-    handle_reuse_address,
-    handle_reuse_port,
-    handle_socket_bufsize,
-    handle_tcp_keepalive,
-    handle_tcp_nodelay,
-    handle_tcp_quickack,
-)
+from net import handle_socket_bufsize, handle_tcp_quickack
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}'
 )
 
-tcp_nodelay = True
 tcp_quickack = True
-tcp_keepalive_enabled = True
-tcp_keepalive_idle = 1800
-tcp_keepalive_cnt = 5
-tcp_keepalive_intvl = 15
 recv_bufsize: int | None = None
 send_bufsize: int | None = None
 
@@ -45,16 +34,24 @@ async def handle_echo(
     assert sock.getpeername() == client_address
     assert sock.getsockname() == writer.get_extra_info('sockname')
     assert sock.gettimeout() == 0.0
-    handle_reuse_address(sock)
-    handle_reuse_port(sock)
-    handle_tcp_nodelay(sock, tcp_nodelay)
-    handle_tcp_keepalive(
-        sock,
-        tcp_keepalive_enabled,
-        tcp_keepalive_idle,
-        tcp_keepalive_cnt,
-        tcp_keepalive_intvl,
-    )
+    assert sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR) == 1
+    assert sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT) == 1
+
+    sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+
+    # TCP Keep-Alive
+    sock.setsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)
+    if sys.platform == 'linux':  # Linux 2.4+
+        sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPIDLE, 1800)
+    elif sys.platform == 'darwin' and sys.version_info >= (3, 10):
+        sock.setsockopt(
+            socket.IPPROTO_TCP,
+            socket.TCP_KEEPALIVE,  # pylint: disable=no-member
+            1800,
+        )
+    sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPCNT, 5)
+    sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPINTVL, 15)
+
     handle_tcp_quickack(sock, tcp_quickack)
     handle_socket_bufsize(sock, recv_bufsize, send_bufsize)
     # logging.debug(dir(sock))
@@ -75,7 +72,7 @@ async def tcp_echo_server(
     host: str,
     port: int,
     *,
-    backlog: int = 100,
+    backlog: int = socket.SOMAXCONN,
 ) -> None:
     # Low-level APIs: loop.create_server()
     # The socket option `TCP_NODELAY` is set by default in Python 3.6+

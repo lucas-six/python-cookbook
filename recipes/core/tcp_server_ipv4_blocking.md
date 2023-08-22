@@ -17,11 +17,7 @@ from typing import Any
 
 from net import (
     handle_listen,
-    handle_reuse_address,
-    handle_reuse_port,
     handle_socket_bufsize,
-    handle_tcp_keepalive,
-    handle_tcp_nodelay,
     handle_tcp_quickack,
 )
 
@@ -43,27 +39,16 @@ def run_server(
     host: str = '',
     port: int = 0,
     *,
-    reuse_address: bool = True,
-    reuse_port: bool = True,
-    tcp_nodelay: bool = True,
     tcp_quickack: bool = True,
     accept_queue_size: int | None = None,
     recv_buf_size: int | None = None,
     send_buf_size: int | None = None,
-    tcp_keepalive: bool | None = None,
-    tcp_keepalive_idle: int | None = None,
-    tcp_keepalive_cnt: int | None = None,
-    tcp_keepalive_intvl: int | None = None,
 ):
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-    handle_reuse_address(sock, reuse_address)
-    handle_reuse_port(sock, reuse_port)
-    handle_tcp_nodelay(sock, tcp_nodelay)
+    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
     handle_tcp_quickack(sock, tcp_quickack)
-    handle_tcp_keepalive(
-        sock, tcp_keepalive, tcp_keepalive_idle, tcp_keepalive_cnt, tcp_keepalive_intvl
-    )
 
     # Bind
     sock.bind((host, port))
@@ -87,7 +72,6 @@ def run_server(
             handle_socket_bufsize(conn, recv_buf_size, send_buf_size)
 
             with conn:
-                handle_tcp_nodelay(conn, tcp_nodelay)
                 handle_tcp_quickack(conn, tcp_quickack)
 
                 while True:
@@ -116,19 +100,17 @@ def run_server(
 # - '' or '0.0.0.0': socket.INADDR_ANY
 # - socket.INADDR_BROADCAST
 # Port 0 means to select an arbitrary unused port
-run_server('localhost', 9999, tcp_keepalive=True, tcp_keepalive_cnt=9)
+run_server('localhost', 9999)
 ```
-
-See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples/core/tcp_server_ipv4_blocking.py)
 
 ## More
 
-- [TCP/UDP Reuse Address](net_reuse_address)
-- [TCP/UDP Reuse Port](net_reuse_port)
+- [TCP Reuse Address](tcp_reuse_address)
+- [Reuse Port](reuse_port)
 - [TCP/UDP (Recv/Send) Buffer Size](net_buffer_size)
 - [TCP `listen()` Queue](tcp_listen_queue)
-- [TCP Nodelay (Dsiable Nagle's Algorithm)](tcp_nodelay)
 - [TCP Keep-Alive](tcp_keepalive)
+- [TCP Nodelay (Dsiable Nagle's Algorithm)](tcp_nodelay)
 - [TCP Quick ACK (Disable Delayed ACK (延迟确认))](tcp_quickack)
 - [Pack/Unpack Binary Data: `struct`](struct)
 - [TCP Slow Start (慢启动)](../../more/core/tcp_slowstart)

@@ -8,7 +8,7 @@ import socket
 import struct
 from typing import Any
 
-from net import handle_reuse_address, handle_reuse_port, handle_socket_bufsize
+from net import handle_socket_bufsize
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
@@ -28,16 +28,13 @@ def run_server(
     host: str = '',
     port: int = 0,
     *,
-    reuse_address: bool = False,
-    reuse_port: bool = True,
     timeout: float | None = None,
     recv_buf_size: int | None = None,
     send_buf_size: int | None = None,
 ) -> None:
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-    handle_reuse_address(sock, reuse_address)
-    handle_reuse_port(sock, reuse_port)
+    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
 
     # Bind
     sock.bind((host, port))

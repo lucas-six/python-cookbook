@@ -8,15 +8,7 @@ import socket
 import struct
 from typing import Any, NoReturn
 
-from net import (
-    handle_listen,
-    handle_reuse_address,
-    handle_reuse_port,
-    handle_socket_bufsize,
-    handle_tcp_keepalive,
-    handle_tcp_nodelay,
-    handle_tcp_quickack,
-)
+from net import handle_socket_bufsize, handle_tcp_quickack
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
@@ -33,37 +25,20 @@ def recv_bin_data(sock: socket.socket, unpacker: struct.Struct) -> None:
 
 
 def run_server(
-    host: str = '',
-    port: int = 0,
+    host: str,
+    port: int,
+    accept_queue_size: int = socket.SOMAXCONN,
     *,
-    reuse_address: bool = True,
-    reuse_port: bool = True,
-    tcp_nodelay: bool = True,
     tcp_quickack: bool = True,
-    accept_queue_size: int | None = None,
     recv_buf_size: int | None = None,
     send_buf_size: int | None = None,
-    tcp_keepalive: bool | None = None,
-    tcp_keepalive_idle: int | None = None,
-    tcp_keepalive_cnt: int | None = None,
-    tcp_keepalive_intvl: int | None = None,
 ) -> NoReturn:
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-    handle_reuse_address(sock, reuse_address)
-    handle_reuse_port(sock, reuse_port)
-    handle_tcp_nodelay(sock, tcp_nodelay)
     handle_tcp_quickack(sock, tcp_quickack)
-    handle_tcp_keepalive(
-        sock, tcp_keepalive, tcp_keepalive_idle, tcp_keepalive_cnt, tcp_keepalive_intvl
-    )
 
-    # Bind
     sock.bind((host, port))
-    server_address: tuple[str, int] = sock.getsockname()
-    logger.debug(f'Server address: {server_address}')
-
-    handle_listen(sock, accept_queue_size)
+    sock.listen(accept_queue_size)
 
     binary_fmt: str = '! I 2s Q 2h f'
     unpacker = struct.Struct(binary_fmt)
@@ -80,7 +55,7 @@ def run_server(
             handle_socket_bufsize(conn, recv_buf_size, send_buf_size)
 
             with conn:
-                handle_tcp_nodelay(conn, tcp_nodelay)
+                conn.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
                 handle_tcp_quickack(conn, tcp_quickack)
 
                 while True:
@@ -109,4 +84,4 @@ def run_server(
 # - '' or '0.0.0.0': socket.INADDR_ANY
 # - socket.INADDR_BROADCAST
 # Port 0 means to select an arbitrary unused port
-run_server('localhost', 9999, tcp_keepalive=True, tcp_keepalive_cnt=9)
+run_server('localhost', 9999)

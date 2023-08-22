@@ -7,12 +7,7 @@ import logging
 import selectors
 import socket
 
-from net import (
-    handle_connect_timeout,
-    handle_reuse_address,
-    handle_socket_bufsize,
-    handle_tcp_nodelay,
-)
+from net import handle_connect_timeout, handle_socket_bufsize
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
@@ -36,8 +31,6 @@ def run_client(
     conn_timeout: float | None = None,
     tcp_syn_retries: int | None = None,
     io_multiplex_timeout: float | None = None,
-    reuse_address: bool = False,
-    tcp_nodelay: bool = True,
     recv_buf_size: int | None = None,
     send_buf_size: int | None = None,
 ) -> None:
@@ -45,8 +38,6 @@ def run_client(
 
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client:
         handle_connect_timeout(client, conn_timeout, tcp_syn_retries)
-        handle_reuse_address(client, reuse_address)
-        handle_tcp_nodelay(client, tcp_nodelay)
         handle_socket_bufsize(client, recv_buf_size, send_buf_size)
 
         try:

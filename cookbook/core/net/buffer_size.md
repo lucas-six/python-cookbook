@@ -33,7 +33,7 @@ real_send_buf_size: int = sock.getsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF)
 
 ## More Details
 
-- [TCP/UDP (Recv/Send) Buffer Size: `SO_RCVBUF`, `SO_SNDBUF` - Linux Cookbook](https://leven-cn.github.io/linux-cookbook/cookbook/net/buffer_size)
+- [TCP/UDP (Recv/Send) Buffer Size: `SO_RCVBUF`, `SO_SNDBUF` - Linux Cookbook](https://leven-cn.github.io/linux-cookbook/cookbook/admin/net/buffer_size)
 
 ## References
 

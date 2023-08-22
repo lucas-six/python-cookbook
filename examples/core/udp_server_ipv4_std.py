@@ -2,9 +2,8 @@
 """
 
 import logging
+import socket
 import socketserver
-
-from net import handle_reuse_port
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
@@ -37,7 +36,7 @@ with socketserver.UDPServer(
     # to an identical UDP socket address with `SO_REUSEADDR`,
     # incoming packets can become randomly distributed among the sockets.
     server.allow_reuse_address = False
-    handle_reuse_port(server.socket, True)  # SO_REUSEPORT
+    server.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
     server.server_bind()
 
     server.serve_forever()
