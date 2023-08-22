@@ -128,13 +128,12 @@ recursive = true
 py-version = 3.11
 jobs = 0
 ignore = "CVS,.git,__pycache__,.mypy_cache,tests"
-ignore-paths = "dev_dir,tests"
+ignore-paths = "tests"
 ignore-patterns = "test_.*.py"
 ignored-classes = "Body"
 extension-pkg-whitelist = "pydantic"
 load-plugins = [
     "pylint_pydantic",
-    "pylint_print",
 ]
 
 [tool.pylint.'FORMAT']

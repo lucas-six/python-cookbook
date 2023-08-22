@@ -100,18 +100,17 @@
 - [Logging Usage](https://leven-cn.github.io/python-cookbook/cookbook/core/logging/logging_usage)
 - [Logging Dictionary Configuration](https://leven-cn.github.io/python-cookbook/cookbook/core/logging/logging_dict_config)
 
-### Socket
+### Networks and Communications (网络通信)
 
+- [`socketserver` Class Diagram](https://leven-cn.github.io/python-cookbook/cookbook/core/net/socketserver_class_diagram)
+- [TCP Server (IPv4)](https://leven-cn.github.io/python-cookbook/cookbook/core/net/tcp_server_ipv4)
+- [TCP Server (IPv4) - Blocking Mode (阻塞模式)](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_server_ipv4_blocking)
+- [TCP Server (IPv4) - Timeout Mode](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_server_ipv4_timeout)
+- [TCP Server (IPv4) - Non-Blocking Mode (I/O Multiplex, I/O多路复用)](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_server_ipv4_io_multiplex)
 - TCP Connection Timeout
-  - [Server Side](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_connect_timeout_server)
-  - [Client Side](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_connect_timeout_client)
-- [TCP `listen()` Queue](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_listen_queue)
-- [TCP Transmission Timeout](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_transmission_timeout)
-- [TCP Keep-Alive: : `SO_KEEPALIVE`, `TCP_KEEPIDLE`, `TCP_KEEPCNT`, `TCP_KEEPINTVL`](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_keepalive)
-- [TCP/UDP Reuse Port: `SO_REUSEPORT`](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/reuse_port)
-- [TCP/UDP (Recv/Send) Buffer Size: `SO_RCVBUF`, `SO_SNDBUF`](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/buffer_size)
-- [TCP Reuse Address: `SO_REUSEADDR`](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_reuse_address)
-- [TCP Nodelay (Disable Nagle's Algorithm): `TCP_NODELAY`](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_nodelay)
+  - [Client Side](https://leven-cn.github.io/python-cookbook/cookbook/core/net/tcp_connect_timeout_client)
+- [TCP Transmission Timeout](https://leven-cn.github.io/python-cookbook/cookbook/core/net/tcp_transmission_timeout)
+- [TCP/UDP (Recv/Send) Buffer Size: `SO_RCVBUF`, `SO_SNDBUF`](https://leven-cn.github.io/python-cookbook/cookbook/core/net/buffer_size)
 - [TCP Quick ACK (Disable Delayed ACK (禁用延迟确认))](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_quickack)
 
 ## Build (构建)
@@ -131,6 +130,10 @@
 ### Project
 
 - [project: `pyproject.toml`](https://leven-cn.github.io/python-cookbook/cookbook/build/project)
+- `black`
+- `isort`
+- `mypy`
+- `pylint`
 
 ### Test
 
@@ -168,6 +171,11 @@
   - type hint or type annotation
   - data validation ([**`pydantic`**](https://pydantic-docs.helpmanual.io/))
 
+### Web Server
+
+- [Builtin: `http.server`](https://leven-cn.github.io/python-cookbook/cookbook/web/http_server_builtin)
+- Asyncio API: `aiohttp`
+
 ### Redis
 
 - [Sync: **`redis-py`**](https://leven-cn.github.io/python-cookbook/cookbook/web/redis)
@@ -193,11 +201,6 @@
   - [Synchronization Primitives - Semaphore (信号量): `Semaphore` / `BoundedSemaphore` (For Processes and Threads)](https://leven-cn.github.io/python-cookbook/recipes/core/synchronization_semaphore)
   - [Synchronization Primitives - (栅栏): `Barrier`](https://leven-cn.github.io/python-cookbook/recipes/core/synchronization_barrier)
 - Networks and Communications (网络通信)
-  - [`socketserver` Class Diagram](https://leven-cn.github.io/python-cookbook/recipes/core/socketserver_class_diagram)
-  - [TCP Server (IPv4) - Standard Framework](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_server_ipv4_std)
-  - [TCP Server (IPv4) - Blocking Mode (阻塞模式)](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_server_ipv4_blocking)
-  - [TCP Server (IPv4) - Timeout Mode](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_server_ipv4_timeout)
-  - [TCP Server (IPv4) - Non-Blocking Mode (I/O Multiplex, I/O多路复用)](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_server_ipv4_io_multiplex)
   - [TCP Client (IPv4) - Basic](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_client_ipv4_basic)
   - [TCP Client (IPv4) - Timeout Mode](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_client_ipv4_timeout)
   - [TCP Client (IPv4) - Non-Blocking Mode (I/O Multiplex, I/O多路复用)](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_client_ipv4_io_multiplex)
@@ -229,9 +232,6 @@
 
 ### Web Development
 
-- HTTP Server
-  - [Builtin: `http.server`](https://leven-cn.github.io/python-cookbook/recipes/web/http_server_builtin)
-  - Asyncio API: `aiohttp`
 - Django
   - [Django - Quick Start](https://leven-cn.github.io/python-cookbook/recipes/web/django_quickstart)
   - [Django DB - PostgreSQL](https://leven-cn.github.io/python-cookbook/recipes/web/django_db_postgresql)

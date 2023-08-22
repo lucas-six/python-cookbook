@@ -22,7 +22,7 @@ sock.setsockopt(socket.SOL_SOCKET, socket.SO_SNDTIMEO, 5)
 
 ## More Details
 
-- [TCP Transmission Timeout: `SO_RCVTIMEO`, `SO_SNDTIMEO` - Linux Cookbook](https://leven-cn.github.io/linux-cookbook/cookbook/net/tcp_transmission_timeout)
+- [TCP Transmission Timeout: `SO_RCVTIMEO`, `SO_SNDTIMEO` - Linux Cookbook](https://leven-cn.github.io/linux-cookbook/cookbook/admin/net/tcp_transmission_timeout)
 
 ## References
 
