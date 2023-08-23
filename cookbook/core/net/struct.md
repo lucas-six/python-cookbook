@@ -1,6 +1,6 @@
 # Pack/Unpack Binary Data - `struct`
 
-## Solution
+## Recipes
 
 ```python
 """Pack/Unpack binary data.
@@ -67,11 +67,9 @@ assert buf2.tobytes() == data
 assert s.unpack_from(buf2, 0) == value
 ```
 
-See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples/core/pack_unpack_bin_data.py)
-
 ## More
 
-More details about [Endianness](../../more/core/endianness).
+- [Endianness - Linux Cookbook](https://leven-cn.github.io/linux-cookbook/cookbook/general_concepts/endianness)
 
 ## References
 

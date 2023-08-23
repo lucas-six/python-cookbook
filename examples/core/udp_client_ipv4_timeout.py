@@ -8,8 +8,6 @@ import socket
 import struct
 from typing import Any
 
-from net import handle_socket_bufsize
-
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
 )
@@ -28,7 +26,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as client:
     client.settimeout(timeout)
     logging.debug(f'recv/send timeout: {client.gettimeout()} seconds')
 
-    handle_socket_bufsize(client, recv_bufsize, send_bufsize)
+    # handle_socket_bufsize(client, recv_bufsize, send_bufsize)
 
     try:
         client.sendto(data, server_address)

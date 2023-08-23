@@ -10,8 +10,6 @@ import asyncio
 import logging
 import socket
 
-from net import handle_socket_bufsize
-
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}'
 )
@@ -39,7 +37,7 @@ class EchoServerProtocol(asyncio.DatagramProtocol):
         # logging.debug(dir(sock))
 
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
-        handle_socket_bufsize(sock, recv_bufsize, send_bufsize)
+        # handle_socket_bufsize(sock, recv_bufsize, send_bufsize)
 
         logging.debug(f'recv: {data!r}, from: {addr}')
 

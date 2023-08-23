@@ -9,8 +9,6 @@ from __future__ import annotations
 import asyncio
 import logging
 
-from net import handle_socket_bufsize
-
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}'
 )
@@ -40,7 +38,7 @@ class EchoClientProtocol(asyncio.Protocol):
 
         sock = transport.get_extra_info('socket')
         assert sock.gettimeout() == 0.0
-        handle_socket_bufsize(sock, self.recv_buf_size, self.send_buf_size)
+        # handle_socket_bufsize(sock, self.recv_buf_size, self.send_buf_size)
 
         transport.write(self.message)
         logging.debug(f'sent: {self.message!r}')

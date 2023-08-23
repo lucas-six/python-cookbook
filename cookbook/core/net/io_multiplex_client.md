@@ -1,23 +1,11 @@
-# TCP Client (IPv4) - Non-Blocking Mode (I/O Multiplex)
+# I/O Multiplex (Client)
 
-## Solution
+## Recipes
 
 ```python
-"""TCP Client (IPv4) - Non-Blocking Mode (I/O Multiplex)
-"""
-
-from __future__ import annotations
-
 import logging
 import selectors
 import socket
-
-from net import (
-    handle_connect_timeout,
-    handle_reuse_address,
-    handle_socket_bufsize,
-    handle_tcp_nodelay,
-)
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
@@ -39,21 +27,12 @@ def run_client(
     port: int,
     *,
     conn_timeout: float | None = None,
-    tcp_syn_retries: int | None = None,
     io_multiplex_timeout: float | None = None,
-    reuse_address: bool = False,
-    tcp_nodelay: bool = True,
-    recv_buf_size: int | None = None,
-    send_buf_size: int | None = None,
-):
+) -> None:
     data: list[bytes] = [b'data2\n', b'data1\n']
 
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client:
-
-        handle_connect_timeout(client, conn_timeout, tcp_syn_retries)
-        handle_reuse_address(client, reuse_address)
-        handle_tcp_nodelay(client, tcp_nodelay)
-        handle_socket_bufsize(client, recv_buf_size, send_buf_size)
+        client.settimeout(conn_timeout)
 
         try:
             client.connect((host, port))
@@ -106,7 +85,6 @@ run_client(
     'localhost',
     9999,
     conn_timeout=3.5,
-    tcp_syn_retries=2,
     io_multiplex_timeout=5.5,
 )
 ```
@@ -115,11 +93,7 @@ See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples
 
 ## More
 
-- [TCP/UDP Reuse Address](net_reuse_address)
-- [TCP/UDP (Recv/Send) Buffer Size](net_buffer_size)
-- [TCP Connect Timeout (Client Side)](tcp_connect_timeout_client)
-- [TCP Data Transmission Timeout](tcp_transmission_timeout)
-- [TCP Nodelay (Nagle's Algorithm)](tcp_nodelay)
+- [I/O Multiplex (I/O多路复用) (Server)](https://leven-cn.github.io/python-cookbook/cookbook/core/net/io_multiplex_server)
 
 ## References
 

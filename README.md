@@ -104,14 +104,10 @@
 
 - [`socketserver` Class Diagram](https://leven-cn.github.io/python-cookbook/cookbook/core/net/socketserver_class_diagram)
 - [TCP Server (IPv4)](https://leven-cn.github.io/python-cookbook/cookbook/core/net/tcp_server_ipv4)
-- [TCP Server (IPv4) - Blocking Mode (阻塞模式)](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_server_ipv4_blocking)
-- [TCP Server (IPv4) - Timeout Mode](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_server_ipv4_timeout)
-- [TCP Server (IPv4) - Non-Blocking Mode (I/O Multiplex, I/O多路复用)](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_server_ipv4_io_multiplex)
-- TCP Connection Timeout
-  - [Client Side](https://leven-cn.github.io/python-cookbook/cookbook/core/net/tcp_connect_timeout_client)
-- [TCP Transmission Timeout](https://leven-cn.github.io/python-cookbook/cookbook/core/net/tcp_transmission_timeout)
-- [TCP/UDP (Recv/Send) Buffer Size: `SO_RCVBUF`, `SO_SNDBUF`](https://leven-cn.github.io/python-cookbook/cookbook/core/net/buffer_size)
-- [TCP Quick ACK (Disable Delayed ACK (禁用延迟确认))](https://leven-cn.github.io/python-cookbook/cookbook/core/socket/tcp_quickack)
+- [TCP Client (IPv4)](https://leven-cn.github.io/python-cookbook/cookbook/core/net/tcp_client_ipv4)
+- [I/O Multiplex (I/O多路复用) (Server)](https://leven-cn.github.io/python-cookbook/cookbook/core/net/io_multiplex_server)
+- [I/O Multiplex (I/O多路复用) (Client)](https://leven-cn.github.io/python-cookbook/cookbook/core/net/io_multiplex_client)
+- [Pack/Unpack Binary Data - `struct`](https://leven-cn.github.io/python-cookbook/cookbook/core/net/struct)
 
 ## Build (构建)
 
@@ -186,7 +182,6 @@
 
 ### Language Core (语言核心)
 
-- [Pack/Unpack Binary Data - `struct`](https://leven-cn.github.io/python-cookbook/recipes/core/struct)
 - Parallelism and Concurrent (并发)
   - [Multi-Threads Parallelism for **I/O-bound** tasks](https://leven-cn.github.io/python-cookbook/recipes/core/multi_threads)
   - [Multi-Processes Parallelism for **CPU-bound** tasks](https://leven-cn.github.io/python-cookbook/recipes/core/multi_processes)
@@ -201,9 +196,6 @@
   - [Synchronization Primitives - Semaphore (信号量): `Semaphore` / `BoundedSemaphore` (For Processes and Threads)](https://leven-cn.github.io/python-cookbook/recipes/core/synchronization_semaphore)
   - [Synchronization Primitives - (栅栏): `Barrier`](https://leven-cn.github.io/python-cookbook/recipes/core/synchronization_barrier)
 - Networks and Communications (网络通信)
-  - [TCP Client (IPv4) - Basic](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_client_ipv4_basic)
-  - [TCP Client (IPv4) - Timeout Mode](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_client_ipv4_timeout)
-  - [TCP Client (IPv4) - Non-Blocking Mode (I/O Multiplex, I/O多路复用)](https://leven-cn.github.io/python-cookbook/recipes/core/tcp_client_ipv4_io_multiplex)
   - [UDP Server (IPv4) - Standard Framework](https://leven-cn.github.io/python-cookbook/recipes/core/udp_server_ipv4_std)
   - [UDP Server (IPv4) - Timeout Mode](https://leven-cn.github.io/python-cookbook/recipes/core/udp_server_ipv4_timeout)
   - [UDP Client (IPv4) - Timeout Mode](https://leven-cn.github.io/python-cookbook/recipes/core/udp_client_ipv4_timeout)
