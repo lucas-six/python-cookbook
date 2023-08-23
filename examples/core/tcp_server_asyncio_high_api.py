@@ -8,8 +8,6 @@ import logging
 import socket
 import sys
 
-from net import handle_socket_bufsize, handle_tcp_quickack
-
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}'
 )
@@ -52,8 +50,7 @@ async def handle_echo(
     sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPCNT, 5)
     sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPINTVL, 15)
 
-    handle_tcp_quickack(sock, tcp_quickack)
-    handle_socket_bufsize(sock, recv_bufsize, send_bufsize)
+    # handle_tcp_quickack(sock, tcp_quickack)
     # logging.debug(dir(sock))
 
     # Recv

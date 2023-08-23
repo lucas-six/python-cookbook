@@ -1,30 +1,16 @@
-# TCP Server (IPv4) - Non-Blocking Mode (I/O Multiplex)
+# I/O Multiplex (Server)
 
 ## Solution
 
 ```python
-"""TCP Server (IPv4) - Non-Blocking Mode (I/O Multiplex)
-"""
-
-from __future__ import annotations
-
 import logging
 import selectors
 import socket
-
-from net import (
-    get_tcp_server_max_connect_timeout,
-    handle_listen,
-    handle_socket_bufsize,
-    handle_tcp_keepalive,
-    handle_tcp_nodelay,
-    handle_tcp_quickack,
-)
+from typing import NoReturn
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
 )
-logger = logging.getLogger()
 
 # In non-blocking mode: I/O multiplex
 # on Windows and POSIX: select()
@@ -35,12 +21,8 @@ logger = logging.getLogger()
 # @see select
 selector = selectors.DefaultSelector()
 
-recv_buf_size: int | None = None
-send_buf_size: int | None = None
-g_tcp_quickack: bool | None = None
 
-
-def handle_read(conn: socket.socket, mask: int):
+def handle_read(conn: socket.socket, mask: int) -> None:
     """Callback for read events."""
     assert mask == selectors.EVENT_READ
 
@@ -49,11 +31,11 @@ def handle_read(conn: socket.socket, mask: int):
 
         data = conn.recv(1024)
         if data:
-            logger.debug(f'recv: {data!r}, from {client_address}')
+            logging.debug(f'recv: {data!r}, from {client_address}')
             conn.sendall(data)
-            logger.debug(f'sent: {data!r}')
+            logging.debug(f'sent: {data!r}')
         else:
-            logger.debug(f'no data from {client_address}')
+            logging.debug(f'no data from {client_address}')
             selector.unregister(conn)
 
             # explicitly shutdown.
@@ -62,20 +44,16 @@ def handle_read(conn: socket.socket, mask: int):
             conn.shutdown(socket.SHUT_WR)
             conn.close()
     except OSError as err:
-        logger.error(err)
+        logging.error(err)
 
 
-def handle_requests(sock: socket.socket, mask: int):
+def handle_requests(sock: socket.socket, mask: int) -> None:
     """Callback for new connections."""
     assert mask == selectors.EVENT_READ
 
     conn, client_address = sock.accept()
     assert isinstance(conn, socket.socket)
-    logger.debug(f'recv request from {client_address}')
-
-    handle_socket_bufsize(conn, recv_buf_size, send_buf_size)
-    if g_tcp_quickack is not None:
-        handle_tcp_quickack(conn, g_tcp_quickack)
+    logging.debug(f'recv request from {client_address}')
 
     conn.setblocking(False)
     selector.register(conn, selectors.EVENT_READ, handle_read)
@@ -85,32 +63,15 @@ def run_server(
     host: str = '',
     port: int = 0,
     *,
-    tcp_quickack: bool = True,
-    accept_queue_size: int | None = None,
+    accept_queue_size: int = socket.SOMAXCONN,
     timeout: float | None = None,
-):
+) -> NoReturn:
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
-
-    handle_tcp_quickack(sock, tcp_quickack)
-    global g_tcp_quickack
-    g_tcp_quickack = tcp_quickack
-
-    # non-blocking mode: == sock.settimeout(0.0)
     sock.setblocking(False)
-
-    # Bind
     sock.bind((host, port))
-    server_address: tuple[str, int] = sock.getsockname()
-    logger.debug(f'Server address: {server_address}')
-
-    handle_listen(sock, accept_queue_size)
+    sock.listen(accept_queue_size)
 
     selector.register(sock, selectors.EVENT_READ, handle_requests)
-
-    logger.debug(f'max connect timeout: {get_tcp_server_max_connect_timeout()}')
 
     # Accept and handle incoming client requests
     try:
@@ -123,30 +84,22 @@ def run_server(
         selector.close()
 
 
-# host
-# - 'localhost': socket.INADDR_LOOPBACK
-# - '' or '0.0.0.0': socket.INADDR_ANY
-# - socket.INADDR_BROADCAST
-# Port 0 means to select an arbitrary unused port
-run_server(
-    'localhost',
-    9999,
-    timeout=5.5,
-)
+if __name__ == '__main__':
+    # host
+    # - 'localhost': socket.INADDR_LOOPBACK
+    # - '' or '0.0.0.0': socket.INADDR_ANY
+    # - socket.INADDR_BROADCAST
+    # Port 0 means to select an arbitrary unused port
+    run_server(
+        'localhost',
+        9999,
+        timeout=5.5,
+    )
 ```
 
 ## More
 
-- [TCP Reuse Address](tcp_reuse_address)
-- [Reuse Port](reuse_port)
-- [TCP/UDP (Recv/Send) Buffer Size](net_buffer_size)
-- [TCP Connect Timeout (Server Side)](tcp_connect_timeout_server)
-- [TCP Data Transmission Timeout](tcp_transmission_timeout)
-- [TCP `listen()` Queue](tcp_listen_queue)
-- [TCP Nodelay (Dsiable Nagle's Algorithm)](tcp_nodelay)
-- [TCP Keep-Alive](tcp_keepalive)
-- [TCP Quick ACK (Disable Delayed ACK (延迟确认))](tcp_quickack)
-- [TCP Slow Start (慢启动)](../../more/core/tcp_slowstart)
+- [I/O Multiplex (I/O多路复用) (Client)](https://leven-cn.github.io/python-cookbook/cookbook/core/net/io_multiplex_client)
 
 ## References
 

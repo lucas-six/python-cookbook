@@ -1,13 +1,9 @@
-"""TCP Client (IPv4) - Non-Blocking Mode (I/O Multiplex)
+"""I/O Multiplex (Client)
 """
-
-from __future__ import annotations
 
 import logging
 import selectors
 import socket
-
-from net import handle_connect_timeout, handle_socket_bufsize
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
@@ -29,16 +25,12 @@ def run_client(
     port: int,
     *,
     conn_timeout: float | None = None,
-    tcp_syn_retries: int | None = None,
     io_multiplex_timeout: float | None = None,
-    recv_buf_size: int | None = None,
-    send_buf_size: int | None = None,
 ) -> None:
     data: list[bytes] = [b'data2\n', b'data1\n']
 
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client:
-        handle_connect_timeout(client, conn_timeout, tcp_syn_retries)
-        handle_socket_bufsize(client, recv_buf_size, send_buf_size)
+        client.settimeout(conn_timeout)
 
         try:
             client.connect((host, port))
@@ -91,6 +83,5 @@ run_client(
     'localhost',
     9999,
     conn_timeout=3.5,
-    tcp_syn_retries=2,
     io_multiplex_timeout=5.5,
 )

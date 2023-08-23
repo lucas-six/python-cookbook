@@ -8,8 +8,6 @@ import socket
 import struct
 from typing import Any
 
-from net import handle_socket_bufsize
-
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
 )
@@ -29,8 +27,6 @@ def run_server(
     port: int = 0,
     *,
     timeout: float | None = None,
-    recv_buf_size: int | None = None,
-    send_buf_size: int | None = None,
 ) -> None:
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
@@ -41,7 +37,7 @@ def run_server(
     server_address: tuple[str, int] = sock.getsockname()
     logger.debug(f'Server address: {server_address}')
 
-    handle_socket_bufsize(sock, recv_buf_size, send_buf_size)
+    # handle_socket_bufsize(sock, recv_buf_size, send_buf_size)
 
     binary_fmt: str = '! I 2s Q 2h f'
     unpacker = struct.Struct(binary_fmt)

@@ -1,23 +1,14 @@
-"""TCP Server (IPv4) - Non-Blocking Mode (I/O Multiplex)
+"""I/O Multiplex (Server)
 """
-
-from __future__ import annotations
 
 import logging
 import selectors
 import socket
 from typing import NoReturn
 
-from net import (
-    get_tcp_server_max_connect_timeout,
-    handle_socket_bufsize,
-    handle_tcp_quickack,
-)
-
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
 )
-logger = logging.getLogger()
 
 # In non-blocking mode: I/O multiplex
 # on Windows and POSIX: select()
@@ -27,10 +18,6 @@ logger = logging.getLogger()
 #
 # @see select
 selector = selectors.DefaultSelector()
-
-recv_buf_size: int | None = None
-send_buf_size: int | None = None
-g_tcp_quickack: bool | None = None
 
 
 def handle_read(conn: socket.socket, mask: int) -> None:
@@ -42,11 +29,11 @@ def handle_read(conn: socket.socket, mask: int) -> None:
 
         data = conn.recv(1024)
         if data:
-            logger.debug(f'recv: {data!r}, from {client_address}')
+            logging.debug(f'recv: {data!r}, from {client_address}')
             conn.sendall(data)
-            logger.debug(f'sent: {data!r}')
+            logging.debug(f'sent: {data!r}')
         else:
-            logger.debug(f'no data from {client_address}')
+            logging.debug(f'no data from {client_address}')
             selector.unregister(conn)
 
             # explicitly shutdown.
@@ -55,7 +42,7 @@ def handle_read(conn: socket.socket, mask: int) -> None:
             conn.shutdown(socket.SHUT_WR)
             conn.close()
     except OSError as err:
-        logger.error(err)
+        logging.error(err)
 
 
 def handle_requests(sock: socket.socket, mask: int) -> None:
@@ -64,12 +51,7 @@ def handle_requests(sock: socket.socket, mask: int) -> None:
 
     conn, client_address = sock.accept()
     assert isinstance(conn, socket.socket)
-    logger.debug(f'recv request from {client_address}')
-
-    handle_socket_bufsize(conn, recv_buf_size, send_buf_size)
-    sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
-    if g_tcp_quickack is not None:
-        handle_tcp_quickack(conn, g_tcp_quickack)
+    logging.debug(f'recv request from {client_address}')
 
     conn.setblocking(False)
     selector.register(conn, selectors.EVENT_READ, handle_read)
@@ -79,29 +61,15 @@ def run_server(
     host: str = '',
     port: int = 0,
     *,
-    tcp_quickack: bool = True,
     accept_queue_size: int = socket.SOMAXCONN,
     timeout: float | None = None,
 ) -> NoReturn:
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
-    sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
-
-    handle_tcp_quickack(sock, tcp_quickack)
-    global g_tcp_quickack
-    g_tcp_quickack = tcp_quickack
-
-    # non-blocking mode: == sock.settimeout(0.0)
     sock.setblocking(False)
-
     sock.bind((host, port))
     sock.listen(accept_queue_size)
 
     selector.register(sock, selectors.EVENT_READ, handle_requests)
-
-    logger.debug(f'max connect timeout: {get_tcp_server_max_connect_timeout()}')
 
     # Accept and handle incoming client requests
     try:
@@ -114,13 +82,14 @@ def run_server(
         selector.close()
 
 
-# host
-# - 'localhost': socket.INADDR_LOOPBACK
-# - '' or '0.0.0.0': socket.INADDR_ANY
-# - socket.INADDR_BROADCAST
-# Port 0 means to select an arbitrary unused port
-run_server(
-    'localhost',
-    9999,
-    timeout=5.5,
-)
+if __name__ == '__main__':
+    # host
+    # - 'localhost': socket.INADDR_LOOPBACK
+    # - '' or '0.0.0.0': socket.INADDR_ANY
+    # - socket.INADDR_BROADCAST
+    # Port 0 means to select an arbitrary unused port
+    run_server(
+        'localhost',
+        9999,
+        timeout=5.5,
+    )
