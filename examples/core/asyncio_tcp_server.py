@@ -34,16 +34,10 @@ async def handle_echo(
     assert bool(sock.getsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE))
     if sys.platform == 'linux':  # Linux 2.4+
         assert sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPIDLE) == 1800
-    elif sys.platform == 'darwin' and sys.version_info >= (3, 10):
-        assert (
-            not sock.getsockopt(
-                socket.IPPROTO_TCP, socket.TCP_KEEPALIVE  # pylint: disable=no-member
-            )
-            == 1800
-        )
-        sock.setsockopt(
-            socket.IPPROTO_TCP, socket.TCP_KEEPALIVE, 1800  # pylint: disable=no-member
-        )
+    elif hasattr(socket, 'TCP_KEEPALIVE'):  # macOS and Python 3.10+
+        assert sys.platform == 'darwin' and sys.version_info >= (3, 10)
+        assert not sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPALIVE) == 1800
+        sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPALIVE, 1800)
     assert sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPCNT) == 5
     assert sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPINTVL) == 15
 
@@ -104,11 +98,10 @@ async def tcp_echo_server(
                 sock.setsockopt(
                     socket.IPPROTO_TCP, socket.TCP_KEEPIDLE, keep_alive_idle
                 )
-            elif sys.platform == 'darwin' and sys.version_info >= (3, 10):
+            elif hasattr(socket, 'TCP_KEEPALIVE'):
+                assert sys.platform == 'darwin' and sys.version_info >= (3, 10)
                 sock.setsockopt(
-                    socket.IPPROTO_TCP,
-                    socket.TCP_KEEPALIVE,  # pylint: disable=no-member
-                    keep_alive_idle,
+                    socket.IPPROTO_TCP, socket.TCP_KEEPALIVE, keep_alive_idle
                 )
             sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPCNT, keep_alive_cnt)
             sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPINTVL, keep_alive_intvl)
