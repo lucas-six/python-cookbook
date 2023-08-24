@@ -146,31 +146,35 @@
 
 ## Web Development
 
-- [URL Parsing: `urllib.parse`](https://leven-cn.github.io/python-cookbook/cookbook/web/url_parse)
+- [URL Parsing: `urllib.parse`](https://leven-cn.github.io/python-cookbook/cookbook/web/urllib_parse)
 - [HTTP Datetime Format](https://leven-cn.github.io/python-cookbook/cookbook/web/http_datetime_fmt)
 - [HTTP Cookie (Server Side): `http.cookies`](https://leven-cn.github.io/python-cookbook/cookbook/web/http_cookie)
 - ASGI / [WSGI](https://leven-cn.github.io/python-cookbook/cookbook/web/wsgi) / ~~CGI~~
 
 ### HTTP Client/Request
 
-- [`urllib.request` (Builtin)](https://leven-cn.github.io/python-cookbook/cookbook/web/http_request)
-- Sync: [`requests`](https://requests.readthedocs.io/en/latest/) (using [`urllib3`](https://urllib3.readthedocs.io/en/stable/))
-- Async: [**`aiohttp`**](https://docs.aiohttp.org/en/stable/)
+- [Built-in: `urllib.request`](https://leven-cn.github.io/python-cookbook/cookbook/web/urllib_request)
+- Sync IO: [*`requests`*](https://requests.readthedocs.io/en/latest/) (using [`urllib3`](https://urllib3.readthedocs.io/en/stable/))
+- Async IO (asyncio): [**`aiohttp`**](https://docs.aiohttp.org/en/stable/)
 
 ### Web Frameworks
 
-- **Django**: full-featured
-- **Flask**: tiny
+- [Django](https://www.djangoproject.com/
+): full-featured
+- [Flask](https://flask.palletsprojects.com/): tiny
 - [**FastAPI**](https://fastapi.tiangolo.com/)
-  - API doc: *OpenAPI* ([**Swagger**](https://swagger.io/))
-  - `asyncio`
+  - API doc: *OpenAPI* ([*Swagger*](https://swagger.io/))
+  - ASGI with `asyncio`
   - type hint or type annotation
-  - data validation ([**`pydantic`**](https://pydantic-docs.helpmanual.io/))
+  - data validation ([*`pydantic`*](https://pydantic-docs.helpmanual.io/))
 
 ### Web Server
 
 - [Builtin: `http.server`](https://leven-cn.github.io/python-cookbook/cookbook/web/http_server_builtin)
-- Asyncio API: `aiohttp`
+- [`aiohttp`: asyncio, API](https://docs.aiohttp.org/en/stable/)
+- [`uvicorn`: ASGI, WebSockets](https://leven-cn.github.io/python-cookbook/cookbook/web/uvicorn)
+- [`Hypercorn`: HTTP/2, HTTP/3](https://pypi.org/project/hypercorn/)
+- [`uWSGI`: WSGI](https://uwsgi.readthedocs.org/en/latest/index.html)
 
 ### Redis
 
@@ -233,8 +237,6 @@
   - [PostgreSQL - Setup](https://leven-cn.github.io/python-cookbook/recipes/web/postgresql_setup)
   - [PostgreSQL CLI - Usage](https://leven-cn.github.io/python-cookbook/recipes/web/postgresql_usage)
   - PostgreSQL GUI (Official): `pgadmin4`
-- Web Server
-  - `uWSGI`
 
 <!-- markdownlint-enable line-length -->
 
