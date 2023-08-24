@@ -1,11 +1,8 @@
 # Asynchronous I/O - Scheduled Tasks
 
-## Solution
+## Recipes
 
 ```python
-"""Asynchronous I/O - Scheduled Tasks.
-"""
-
 import asyncio
 import logging
 import time
@@ -69,8 +66,6 @@ async def main():
 result = asyncio.run(main())
 logging.debug(f'result: {result}')
 ```
-
-See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples/core/asyncio_schedule.py)
 
 ## References
 

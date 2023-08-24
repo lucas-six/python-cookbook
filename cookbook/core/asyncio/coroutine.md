@@ -1,11 +1,8 @@
-# Asynchronous I/O - Create coroutine
+# Asynchronous I/O - Coroutine
 
-## Solution
+## Recipes
 
 ```python
-"""Asynchronous I/O - coroutine.
-"""
-
 import asyncio
 import logging
 import sys
@@ -15,9 +12,21 @@ logging.basicConfig(
 )
 
 
-async def coroutine(arg: int):
+async def coroutine(arg: int) -> tuple[int, str, str]:
+    """Coroutine demo."""
     logging.debug(f'run coroutine: {arg}')
-    return arg + 1
+
+    result_1: str = await task(1, 1.0)
+    result_2: str = await task(2, 1.5)
+
+    return arg + 1, result_1, result_2
+
+
+async def task(num: int, wait: float) -> str:
+    """Coroutine task demo."""
+    logging.debug(f'run task {num}, wait {wait} seconds')
+    await asyncio.sleep(wait)
+    return f'task {num} result'
 
 
 coro = coroutine(1)
@@ -26,7 +35,9 @@ if sys.version_info >= (3, 7):  # Python 3.7+
     logging.debug(f'result: {result}')
 else:
     # Low-level APIs
-    loop = asyncio.get_event_loop()
+    # `get_running_loop()` has been added since Python 3.7.
+    # `get_event_loop()` has been deprecated since Python 3.10.
+    loop = asyncio.get_running_loop()
     try:
         logging.debug('starting event loop')
         result = loop.run_until_complete(coro)
@@ -34,8 +45,6 @@ else:
     finally:
         loop.close()
 ```
-
-See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples/core/asyncio_coroutine.py)
 
 ## References
 

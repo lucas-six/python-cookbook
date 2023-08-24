@@ -10,10 +10,21 @@ logging.basicConfig(
 )
 
 
-async def coroutine(arg: int) -> int:
+async def coroutine(arg: int) -> tuple[int, str, str]:
     """Coroutine demo."""
     logging.debug(f'run coroutine: {arg}')
-    return arg + 1
+
+    result_1: str = await task(1, 1.0)
+    result_2: str = await task(2, 1.5)
+
+    return arg + 1, result_1, result_2
+
+
+async def task(num: int, wait: float) -> str:
+    """Coroutine task demo."""
+    logging.debug(f'run task {num}, wait {wait} seconds')
+    await asyncio.sleep(wait)
+    return f'task {num} result'
 
 
 coro = coroutine(1)
