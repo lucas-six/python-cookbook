@@ -109,10 +109,7 @@ async def tcp_echo_server(
         # QUICK ACK
         if hasattr(socket, 'TCP_QUICKACK'):
             assert sys.platform == 'linux'
-            quickack_enabled = bool(
-                sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_QUICKACK)
-            )
-            logging.debug(f'QUICK_ACK: {quickack_enabled}')
+            assert bool(sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_QUICKACK))
 
     # `asyncio.Server` object is an asynchronous context manager since Python 3.7.
     if not start_serving:
