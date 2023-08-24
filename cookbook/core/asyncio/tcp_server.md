@@ -36,7 +36,8 @@ async def handle_echo(
     assert bool(sock.getsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE))
     if sys.platform == 'linux':  # Linux 2.4+
         assert sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPIDLE) == 1800
-    elif sys.platform == 'darwin' and sys.version_info >= (3, 10):
+    elif hasattr(socket, 'TCP_KEEPALIVE'):  # macOS and Python 3.10+
+        assert sys.platform == 'darwin' and sys.version_info >= (3, 10)
         assert not sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPALIVE) == 1800
         sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPALIVE, 1800)
     assert sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPCNT) == 5
@@ -99,11 +100,10 @@ async def tcp_echo_server(
                 sock.setsockopt(
                     socket.IPPROTO_TCP, socket.TCP_KEEPIDLE, keep_alive_idle
                 )
-            elif sys.platform == 'darwin' and sys.version_info >= (3, 10):
+            elif hasattr(socket, 'TCP_KEEPALIVE'):
+                assert sys.platform == 'darwin' and sys.version_info >= (3, 10)
                 sock.setsockopt(
-                    socket.IPPROTO_TCP,
-                    socket.TCP_KEEPALIVE,  # pylint: disable=no-member
-                    keep_alive_idle,
+                    socket.IPPROTO_TCP, socket.TCP_KEEPALIVE, keep_alive_idle
                 )
             sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPCNT, keep_alive_cnt)
             sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPINTVL, keep_alive_intvl)
@@ -111,10 +111,7 @@ async def tcp_echo_server(
         # QUICK ACK
         if hasattr(socket, 'TCP_QUICKACK'):
             assert sys.platform == 'linux'
-            quickack_enabled = bool(
-                sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_QUICKACK)
-            )
-            logging.debug(f'QUICK_ACK: {quickack_enabled}')
+            assert bool(sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_QUICKACK))
 
     # `asyncio.Server` object is an asynchronous context manager since Python 3.7.
     if not start_serving:
