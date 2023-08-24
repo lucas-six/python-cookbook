@@ -1,11 +1,8 @@
-# TCP Client - Asynchronous I/O (High-Level APIs)
+# TCP Client - Asynchronous I/O
 
 ## Solution
 
 ```python
-"""TCP Client - Asynchronous I/O (High-Level APIs).
-"""
-
 import asyncio
 import logging
 
@@ -31,8 +28,6 @@ async def tcp_echo_client(data: bytes):
 
 asyncio.run(tcp_echo_client(b'Hello World!'))  # Python 3.7+
 ```
-
-See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples/core/tcp_client_asyncio_high_api.py)
 
 ## References
 

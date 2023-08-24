@@ -1,11 +1,8 @@
 # Asynchronous I/O - Run coroutines Concurrently
 
-## Solution
+## Recipes
 
 ```python
-"""Asynchronous I/O - Run coroutines concurrently.
-"""
-
 import asyncio
 import logging
 
@@ -96,8 +93,6 @@ async def main():
 result = asyncio.run(main())  # Python 3.7+
 logging.debug(f'result: {result}')
 ```
-
-See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples/core/asyncio_coroutine_concurrent.py)
 
 ## References
 

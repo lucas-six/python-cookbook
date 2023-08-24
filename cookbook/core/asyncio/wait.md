@@ -1,11 +1,8 @@
 # Asynchronous I/O - Wait
 
-## Solution
+## Recipes
 
 ```python
-"""Asynchronous I/O - Wait.
-"""
-
 import asyncio
 import logging
 
@@ -49,8 +46,6 @@ async def main():
 
 asyncio.run(main())  # Python 3.7+
 ```
-
-See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples/core/asyncio_wait.py)
 
 ## References
 
