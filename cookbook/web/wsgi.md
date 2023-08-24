@@ -103,8 +103,6 @@ def application(
     return rsp
 ```
 
-See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples/web/wsgi_app.py)
-
 ## CGI (Common Gateway Interface)
 
 **`cgi`** and **`cgitb`** are deprecated since Python *3.11*. See [PEP 594](https://peps.python.org/pep-0594/)

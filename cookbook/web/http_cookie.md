@@ -37,7 +37,7 @@ morsel.output(attrs=['domain'], header='Cookie: ')
 
 ## More Details
 
-- [HTTP Cookie - Linux Cookbook](https://leven-cn.github.io/linux-cookbook/cookbook/web/http_cookie)
+- [HTTP Cookie - Linux Cookbook](https://leven-cn.github.io/linux-cookbook/cookbook/web/http/http_cookie)
 
 ## References
 

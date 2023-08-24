@@ -1,4 +1,4 @@
-# URL Parsing - `urllib.parse`
+# `urllib.parse`: URL Parsing
 
 ## Recipes
 
@@ -106,7 +106,7 @@ from urllib.parse import parse_qsl
 
 ## More
 
-More details to see [URL, URI, URN - Linux Cookbook](https://leven-cn.github.io/linux-cookbook/cookbook/web/uri_url_urn).
+More details to see [URL, URI, URN - Linux Cookbook](https://leven-cn.github.io/linux-cookbook/cookbook/general_concepts/uri_url_urn).
 
 ## References
 
