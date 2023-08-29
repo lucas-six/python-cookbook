@@ -177,6 +177,8 @@ enable = [
 max-args = 12
 min-public-methods = 1
 max-locals = 22
+max-branches = 20
+max-statements = 80
 
 [tool.pytest.ini_options]
 markers = [
