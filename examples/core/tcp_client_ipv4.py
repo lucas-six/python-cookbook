@@ -33,7 +33,7 @@ def run_tcp_client(
             #
             # On Linux 2.2+: /proc/sys/net/ipv4/tcp_syn_retries
             # On Linux 2.4+: `TCP_SYNCNT`
-            if sys.platform == 'linux':  # Linux 2.4+
+            if hasattr(socket, 'TCP_SYNCNT') and sys.platform == 'linux':  # Linux 2.4+
                 if syn_retries is not None:
                     client.setsockopt(
                         socket.IPPROTO_TCP, socket.TCP_SYNCNT, syn_retries

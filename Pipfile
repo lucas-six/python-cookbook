@@ -5,6 +5,8 @@ name = "pypi"
 
 [packages]
 pydantic = "*"
+redis = "*"
+types-redis = "*"
 #django = "~=3.2"
 
 [dev-packages]

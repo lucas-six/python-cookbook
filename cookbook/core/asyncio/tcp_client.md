@@ -6,14 +6,16 @@
 import asyncio
 import logging
 
+from asyncio_tcp_server import HOST, PORT
+
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}'
 )
 
 
-async def tcp_echo_client(data: bytes):
+async def tcp_echo_client(host: str, port: int, data: bytes) -> None:
     # Low-level APIs: loop.create_connection()
-    reader, writer = await asyncio.open_connection('127.0.0.1', 8888, limit=2**16)
+    reader, writer = await asyncio.open_connection(host, port, limit=2**16)
     assert isinstance(reader, asyncio.StreamReader)
     assert isinstance(writer, asyncio.StreamWriter)
 
@@ -26,7 +28,7 @@ async def tcp_echo_client(data: bytes):
     writer.close()
 
 
-asyncio.run(tcp_echo_client(b'Hello World!'))  # Python 3.7+
+asyncio.run(tcp_echo_client(HOST, PORT, b'Hello World!'))
 ```
 
 ## References

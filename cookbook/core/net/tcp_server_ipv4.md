@@ -72,6 +72,11 @@ class ByteHandler(socketserver.BaseRequestHandler):
             )
             logger.debug(f'[{self.client_address}] QUICK_ACK: {enable_quickack}')
 
+        # Fast Open
+        if sys.platform == 'linux':
+            fastopen = self.request.getsockopt(socket.SOL_SOCKET, socket.TCP_FASTOPEN)
+            logger.debug(f'[{self.client_address}] Fast Open: {fastopen}')
+
         data: bytes = self.request.recv(1024)
         logger.debug(f'[{self.client_address}] recv: {data!r}')
 
@@ -165,6 +170,7 @@ def run_tcp_server(
     allow_reuse_port: bool = True,
     allow_nodelay: bool = True,
     allow_quickack: bool = True,
+    allow_fastopen: bool | None = None,
     enable_threading: bool = False,
 ) -> None:
     """Run TCP server.
@@ -217,6 +223,12 @@ def run_tcp_server(
             assert sys.platform == 'linux'
             server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_QUICKACK, 1)
 
+        # Fast Open, Linux 3.7+
+        if sys.platform == 'linux':
+            if allow_fastopen is not None:
+                val = 2 if allow_fastopen else 0
+                server.socket.setsockopt(socket.SOL_SOCKET, socket.TCP_FASTOPEN, val)
+
         server.server_bind()
 
         reuse_address = bool(
@@ -230,14 +242,19 @@ def run_tcp_server(
         logger.debug(f'Reuse Port: {reuse_port}')
 
         nodelay = bool(server.socket.getsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY))
-        logger.debug(f'NO_DELAY (disable Nagle\'s Algorithm): {nodelay}')
+        logger.debug(f'No Delay (disable Nagle\'s Algorithm): {nodelay}')
 
         # Quick ACK (disable delayed ACKs)
-        if allow_quickack and hasattr(socket, 'TCP_QUICKACK'):  # Linux 2.4.4+
+        if hasattr(socket, 'TCP_QUICKACK'):  # Linux 2.4.4+
+            assert sys.platform == 'linux'
             quickack = bool(
                 server.socket.getsockopt(socket.IPPROTO_TCP, socket.TCP_QUICKACK)
             )
-            logger.debug(f'QUICK ACK: {quickack}')
+            logger.debug(f'Quick ACK: {quickack}')
+
+        if sys.platform == 'linux':  # Linux 3.7+
+            fastopen = server.socket.getsockopt(socket.SOL_SOCKET, socket.TCP_FASTOPEN)
+            logger.debug(f'Fast Open: {fastopen}')
 
         # On Linux 2.2+, there are two queues: SYN queue and accept queue
         #       syn queue size: /proc/sys/net/ipv4/tcp_max_syn_backlog
@@ -302,6 +319,7 @@ if __name__ == '__main__':
         allow_reuse_port=True,
         allow_nodelay=True,
         allow_quickack=True,
+        allow_fastopen=None,
         enable_threading=False,
     )
 ```
@@ -317,7 +335,8 @@ if __name__ == '__main__':
 - [TCP/UDP (Recv/Send) Buffer Size: `SO_RCVBUF`, `SO_SNDBUF` - Linux Cookbook](https://leven-cn.github.io/linux-cookbook/cookbook/admin/net/buffer_size)
 - [TCP Transmission Timeout: `SO_RCVTIMEO`, `SO_SNDTIMEO` - Linux Cookbook](https://leven-cn.github.io/linux-cookbook/cookbook/admin/net/tcp_transmission_timeout)
 - [TCP Quick ACK (Disable Delayed ACKs, 禁用延迟确认) - Linux Cookbook](https://leven-cn.github.io/linux-cookbook/cookbook/admin/net/tcp_quickack)
-- [TCP Slow Start (慢启动)](../../more/core/tcp_slowstart)
+- [TCP Slow Start (慢启动) - Linux Cookbook](https://leven-cn.github.io/linux-cookbook/cookbook/admin/net/tcp_slowstart)
+- [TCP Fast Open (TFO) - Linux Cookbook](https://leven-cn.github.io/linux-cookbook/cookbook/admin/net/tcp_fastopen)
 
 ## References
 

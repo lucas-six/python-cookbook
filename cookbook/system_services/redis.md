@@ -2,8 +2,8 @@
 
 ## Start
 
-See [Redis - Setup](https://leven-cn.github.io/linux-cookbook/cookbook/web/redis/redis_setup)
-and [Redis CLI - Basic Usage](https://leven-cn.github.io/linux-cookbook/cookbook/web/redis/redis_usage_basic).
+See [Redis: Setup - Linux Cookbook](https://leven-cn.github.io/linux-cookbook/cookbook/admin/redis/redis_setup)
+and [Redis CLI: Basic Usage - Linux Cookbook](https://leven-cn.github.io/linux-cookbook/cookbook/admin/redis/redis_usage_basic).
 
 ```toml
 # pyproject.toml
@@ -85,8 +85,6 @@ assert redis_client.get(CACHE_KEY) is None
 
 redis_client.close()
 ```
-
-See [source code](https://leven-cn.github.io/python-coobkook/examples/web/redis_usage.py)
 
 ## References
 

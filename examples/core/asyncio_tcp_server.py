@@ -10,8 +10,12 @@ logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}'
 )
 
-recv_bufsize: int | None = None
-send_bufsize: int | None = None
+HOST = 'localhost'
+PORT = 8888
+
+KEEP_ALIVE_IDLE = 1800
+KEEP_ALIVE_CNT = 5
+KEEP_ALIVE_INTVL = 15
 
 
 async def handle_echo(
@@ -32,14 +36,32 @@ async def handle_echo(
         assert sys.platform == 'linux'
         assert bool(sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_QUICKACK))
     assert bool(sock.getsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE))
-    if sys.platform == 'linux':  # Linux 2.4+
-        assert sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPIDLE) == 1800
+    if sys.platform == 'linux':
+        # Keep Idle, Linux 2.4+
+        assert (
+            sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPIDLE) == KEEP_ALIVE_IDLE
+        )
+
+        # Fast Open, Linux 3.7+
+        fastopen = sock.getsockopt(socket.SOL_SOCKET, socket.TCP_FASTOPEN)
+        logging.debug(f'Fast Open: {fastopen}')
     elif hasattr(socket, 'TCP_KEEPALIVE'):  # macOS and Python 3.10+
         assert sys.platform == 'darwin' and sys.version_info >= (3, 10)
-        assert not sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPALIVE) == 1800
-        sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPALIVE, 1800)
-    assert sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPCNT) == 5
-    assert sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPINTVL) == 15
+        sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPALIVE, KEEP_ALIVE_IDLE)
+    assert sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPCNT) == KEEP_ALIVE_CNT
+    assert sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPINTVL) == KEEP_ALIVE_INTVL
+
+    # recv buffer size
+    # max: /proc/sys/net/core/rmem_max
+    # sock.setsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF, N)
+    recv_buff_size: int = sock.getsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF)
+    logging.debug(f'recv buffer size: {recv_buff_size}')
+
+    # send buffer size
+    # max: /proc/sys/net/core/wmem_max
+    # sock.setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, N)
+    send_buff_size: int = sock.getsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF)
+    logging.debug(f'send buffer size: {send_buff_size}')
 
     # logging.debug(dir(sock))
 
@@ -63,6 +85,7 @@ async def tcp_echo_server(
     keep_alive_idle: int | None = None,
     keep_alive_cnt: int | None = None,
     keep_alive_intvl: int | None = None,
+    allow_fastopen: bool | None = None,
     start_serving: bool = False,
 ) -> None:
     # Low-level APIs: loop.create_server()
@@ -78,7 +101,7 @@ async def tcp_echo_server(
 
     # Prior to Python 3.7 `asyncio.Server.sockets` used to return an internal list of
     # server sockets directly.
-    # In 3.7 a copy of that list is returned.
+    # Since 3.7, a copy of that list is returned.
     server_addressess = ', '.join(str(sock.getsockname()) for sock in server.sockets)
     logging.debug(f'Serving on {server_addressess}')
 
@@ -86,6 +109,10 @@ async def tcp_echo_server(
         # Issue: ? The socket option `TCP_NODELAY` is set by default in Python 3.6+
         assert not bool(sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY))
         sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+
+        assert bool(sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY))
+        assert bool(sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR))
+        assert bool(sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT))
 
         # Keep-Alive
         if (
@@ -111,14 +138,26 @@ async def tcp_echo_server(
             assert sys.platform == 'linux'
             assert bool(sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_QUICKACK))
 
+        # Fast Open, Linux 3.7+
+        if sys.platform == 'linux':
+            if allow_fastopen is not None:
+                val = 2 if allow_fastopen else 0
+                sock.setsockopt(socket.SOL_SOCKET, socket.TCP_FASTOPEN, val)
+
     # `asyncio.Server` object is an asynchronous context manager since Python 3.7.
     if not start_serving:
         async with server:
             await server.serve_forever()
 
 
-asyncio.run(
-    tcp_echo_server(
-        '127.0.0.1', 8888, keep_alive_idle=1800, keep_alive_cnt=5, keep_alive_intvl=15
+if __name__ == '__main__':
+    asyncio.run(
+        tcp_echo_server(
+            HOST,
+            PORT,
+            keep_alive_idle=KEEP_ALIVE_IDLE,
+            keep_alive_cnt=KEEP_ALIVE_CNT,
+            keep_alive_intvl=KEEP_ALIVE_INTVL,
+            allow_fastopen=None,
+        )
     )
-)  # Python 3.7+
