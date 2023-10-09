@@ -22,7 +22,7 @@ async def handle_timeout() -> None:
     except TimeoutError:
         logging.error("The long operation timed out, but we've handled it.")
 
-    logging.debug("This statement will run regardless.")
+    logging.debug('This statement will run regardless.')
 
 
 async def handle_reschedule() -> None:
@@ -49,7 +49,7 @@ async def handle_abs_timeout() -> None:
     except TimeoutError:
         logging.error("The long operation timed out, but we've handled it.")
 
-    logging.debug("This statement will run regardless.")
+    logging.debug('This statement will run regardless.')
 
 
 async def handle_wait_for() -> None:
