@@ -17,17 +17,17 @@ async def do_task(name: str, delay: float) -> str:
     return f'task ({name}) result'
 
 
-async def handle_timeout():
+async def handle_timeout() -> None:
     try:
         async with asyncio.timeout(3.0):
             await do_task('1', 3.5)
     except TimeoutError:
         logging.error("The long operation timed out, but we've handled it.")
 
-    logging.debug("This statement will run regardless.")
+    logging.debug('This statement will run regardless.')
 
 
-async def handle_reschedule():
+async def handle_reschedule() -> None:
     try:
         # We do not know the timeout when starting, so we pass ``None``.
         async with asyncio.timeout(None) as cm:
@@ -43,7 +43,7 @@ async def handle_reschedule():
         logging.error("The long operation timed out, but we've handled it.")
 
 
-async def handle_abs_timeout():
+async def handle_abs_timeout() -> None:
     deadline = asyncio.get_running_loop().time() + 3.5
     try:
         async with asyncio.timeout_at(deadline):
@@ -51,10 +51,10 @@ async def handle_abs_timeout():
     except TimeoutError:
         logging.error("The long operation timed out, but we've handled it.")
 
-    logging.debug("This statement will run regardless.")
+    logging.debug('This statement will run regardless.')
 
 
-async def handle_wait_for():
+async def handle_wait_for() -> None:
     try:
         r = await asyncio.wait_for(do_task('4', 1.0), timeout=0.5)
     except asyncio.TimeoutError:
@@ -70,7 +70,7 @@ async def handle_wait_for():
         logging.debug(f'result: {r}')
 
 
-async def main():
+async def main() -> None:
     await handle_timeout()  # Python 3.11+
     await handle_reschedule()  # Python 3.11+
     await handle_abs_timeout()  # Python 3.11+
