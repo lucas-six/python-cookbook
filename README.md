@@ -25,6 +25,13 @@
 ### General
 
 - [Flatten a nested sequence](https://leven-cn.github.io/python-cookbook/cookbook/core/general/flat_seq)
+- [Unpacking Elements from Iterables](https://leven-cn.github.io/python-cookbook/cookbook/core/general/unpack_iterable)
+- [Finding the Largest or Smallest N Items](https://leven-cn.github.io/python-cookbook/cookbook/core/general/largest_smallest_n)
+- [Implementing a Priority Queue](https://leven-cn.github.io/python-cookbook/cookbook/core/general/priority_queue)
+- [Calculating with Dictionarie](https://leven-cn.github.io/python-cookbook/cookbook/core/general/calculate_dict)
+- [Finding Commonalities in Two Dictionaries](https://leven-cn.github.io/python-cookbook/cookbook/core/general/common_dict)
+- [Sorting Objects Without Native Comparison Support](https://leven-cn.github.io/python-cookbook/cookbook/core/general/sort_object)
+- [Grouping Records Together Based on a Field](https://leven-cn.github.io/python-cookbook/cookbook/core/general/groupby)
 
 ### Text Processing (文本处理)
 
@@ -112,9 +119,10 @@
 ### Asynchronous I/O (异步 I/O)
 
 - [Coroutine (协程)](https://leven-cn.github.io/python-cookbook/cookbook/core/asyncio/coroutine)
-- [Run coroutines concurrently (并发执行协程)](https://leven-cn.github.io/python-cookbook/cookbook/core/asyncio/coroutine_concurrent)
+- [Concurrent Coroutines (or Tasks) (并行协程)](https://leven-cn.github.io/python-cookbook/cookbook/core/asyncio/coroutine_concurrent)
+- [Timeout](https://leven-cn.github.io/python-cookbook/cookbook/core/asyncio/timeout)
+- [Waiting Primitives](https://leven-cn.github.io/python-cookbook/cookbook/core/asyncio/wait)
 - [Scheduled Tasks (调度任务)](https://leven-cn.github.io/python-cookbook/cookbook/core/asyncio/schedule)
-- [Wait](https://leven-cn.github.io/python-cookbook/cookbook/core/asyncio/wait)
 - [TCP Server](https://leven-cn.github.io/python-cookbook/cookbook/core/asyncio/tcp_server) ([Low-Level APIs](https://leven-cn.github.io/python-cookbook/cookbook/core/asyncio/tcp_server_low))
 - [TCP Client](https://leven-cn.github.io/python-cookbook/cookbook/core/asyncio/tcp_client) ([Low-Level APIs](https://leven-cn.github.io/python-cookbook/cookbook/core/asyncio/tcp_client_low))
 
@@ -162,7 +170,7 @@
 
 ### HTTP Client/Request
 
-- [Built-in: `urllib.request`](https://leven-cn.github.io/python-cookbook/cookbook/web/urllib_request)
+- [`urllib.request` (Builtin)](https://leven-cn.github.io/python-cookbook/cookbook/web/urllib_request)
 - Sync IO: [*`requests`*](https://requests.readthedocs.io/en/latest/) (using [`urllib3`](https://urllib3.readthedocs.io/en/stable/))
 - Async IO (asyncio): [**`aiohttp`**](https://docs.aiohttp.org/en/stable/)
 
@@ -173,17 +181,17 @@
 - [Flask](https://flask.palletsprojects.com/): tiny
 - [**FastAPI**](https://fastapi.tiangolo.com/)
   - API doc: *OpenAPI* ([*Swagger*](https://swagger.io/))
-  - ASGI with `asyncio`
-  - type hint or type annotation
+  - *ASGI* with `asyncio`
+  - type annotation
   - data validation ([*`pydantic`*](https://pydantic-docs.helpmanual.io/))
 
 ### Web Server
 
-- [Builtin: `http.server`](https://leven-cn.github.io/python-cookbook/cookbook/web/http_server_builtin)
+- [`http.server` (builtin)](https://leven-cn.github.io/python-cookbook/cookbook/web/http_server_builtin)
 - [`aiohttp`: asyncio, API](https://docs.aiohttp.org/en/stable/)
 - [`uvicorn`: ASGI, WebSockets](https://leven-cn.github.io/python-cookbook/cookbook/web/uvicorn)
 - [`Hypercorn`: HTTP/2, HTTP/3](https://pypi.org/project/hypercorn/)
-- [`uWSGI`: WSGI](https://uwsgi.readthedocs.org/en/latest/index.html)
+- [`uWSGI`: WSGI, HTTP/2](https://uwsgi.readthedocs.org/en/latest/index.html)
 
 ## System Services Driver
 
