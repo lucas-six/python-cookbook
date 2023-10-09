@@ -68,7 +68,7 @@ async def handle_wait_for() -> None:
         logging.debug(f'result: {r}')
 
 
-async def main():
+async def main() -> None:
     await handle_timeout()  # Python 3.11+
     await handle_reschedule()  # Python 3.11+
     await handle_abs_timeout()  # Python 3.11+

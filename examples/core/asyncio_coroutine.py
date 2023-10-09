@@ -14,8 +14,8 @@ async def do_task(name: str, delay: float, sleep_result: str | None = None) -> s
     logging.debug(f'run task {name}, sleep {delay} seconds')
 
     if sleep_result:
-        sleep_result: str = await asyncio.sleep(delay, result=f'sleep {delay} seconds')
-        return f'task ({name}) result: {sleep_result}'
+        result: str = await asyncio.sleep(delay, result=f'sleep {delay} seconds')
+        return f'task ({name}) result: {result}'
 
     await asyncio.sleep(delay)
     return f'task ({name}) result'
