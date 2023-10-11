@@ -2,7 +2,7 @@
 # See https://pre-commit.com/hooks.html for more hooks
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
+    rev: v4.5.0
     hooks:
       - id: trailing-whitespace
         args: [--markdown-linebreak-ext=md]
@@ -44,7 +44,7 @@ repos:
         additional_dependencies: [pydantic, types-redis]
         language_version: python3.11
   - repo: https://github.com/PyCQA/pylint
-    rev: v3.0.0b0
+    rev: v3.0.1
     hooks:
       - id: pylint
         additional_dependencies: [pydantic, pylint-pydantic]
@@ -53,7 +53,7 @@ repos:
         args:
           - '--load-plugins=pylint_pydantic'
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.13.0
+    rev: v3.15.0
     hooks:
       - id: pyupgrade
 
