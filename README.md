@@ -150,7 +150,7 @@
 
 ### Test
 
-- [`unittest` (Builtin)](https://leven-cn.github.io/python-cookbook/cookbook/build/test/unittest)
+- [`unittest` (builtin)](https://leven-cn.github.io/python-cookbook/cookbook/build/test/unittest)
 - [`pytest`](https://leven-cn.github.io/python-cookbook/cookbook/build/test/pytest)
 
 ### Performance
@@ -167,31 +167,38 @@
 - [HTTP Datetime Format](https://leven-cn.github.io/python-cookbook/cookbook/web/http_datetime_fmt)
 - [HTTP Cookie (Server Side): `http.cookies`](https://leven-cn.github.io/python-cookbook/cookbook/web/http_cookie)
 - ASGI / [WSGI](https://leven-cn.github.io/python-cookbook/cookbook/web/wsgi) / ~~CGI~~
+- [IDNA (Internationalized Domain Names in Applications, 国际化域名应用)](https://leven-cn.github.io/python-cookbook/cookbook/web/idna)
 
 ### HTTP Client/Request
 
-- [`urllib.request` (Builtin)](https://leven-cn.github.io/python-cookbook/cookbook/web/urllib_request)
-- Sync IO: [*`requests`*](https://requests.readthedocs.io/en/latest/) (using [`urllib3`](https://urllib3.readthedocs.io/en/stable/))
-- Async IO (asyncio): [**`aiohttp`**](https://docs.aiohttp.org/en/stable/)
+- [`urllib.request` (builtin)](https://leven-cn.github.io/python-cookbook/cookbook/web/urllib_request)
+- [*`requests`*](https://requests.readthedocs.io/en/latest/): sync io, using [`urllib3`](https://urllib3.readthedocs.io/en/stable/)
+- [**`aiohttp`**](https://docs.aiohttp.org/en/stable/): asyncio
+  - [`aiodns`](https://pypi.org/project/aiodns/): DNS resolver for asyncio
+    - [`pycares`](https://pypi.org/project/pycares/) (using C library: [`c-ares`](https://c-ares.org/)) with [`idna`](https://leven-cn.github.io/python-cookbook/cookbook/web/idna)
 
 ### Web Frameworks
 
-- [Django](https://www.djangoproject.com/
+- [*`Django`*](https://www.djangoproject.com/
 ): full-featured
-- [Flask](https://flask.palletsprojects.com/): tiny
-- [**FastAPI**](https://fastapi.tiangolo.com/)
+  - [Quick Start](https://leven-cn.github.io/python-cookbook/cookbook/web/django_quickstart)
+  - [DB - PostgreSQL](https://leven-cn.github.io/python-cookbook/cookbook/web/django_db_postgresql)
+  - [Cache - Redis](https://leven-cn.github.io/python-cookbook/cookbook/web/django_cache_redis)
+  - [Logging](https://leven-cn.github.io/python-cookbook/cookbook/web/django_logging)
+- [`Flask`](https://flask.palletsprojects.com/): tiny
+- [**`FastAPI`**](https://fastapi.tiangolo.com/)
   - API doc: *OpenAPI* ([*Swagger*](https://swagger.io/))
   - *ASGI* with `asyncio`
   - type annotation
-  - data validation ([*`pydantic`*](https://pydantic-docs.helpmanual.io/))
+  - [*`pydantic`*](https://pydantic-docs.helpmanual.io/): data validation
 
 ### Web Server
 
 - [`http.server` (builtin)](https://leven-cn.github.io/python-cookbook/cookbook/web/http_server_builtin)
 - [`aiohttp`: asyncio, API](https://docs.aiohttp.org/en/stable/)
-- [`uvicorn`: ASGI, WebSockets](https://leven-cn.github.io/python-cookbook/cookbook/web/uvicorn)
+- [**`uvicorn`**: ASGI, WebSockets](https://leven-cn.github.io/python-cookbook/cookbook/web/uvicorn)
 - [`Hypercorn`: HTTP/2, HTTP/3](https://pypi.org/project/hypercorn/)
-- [`uWSGI`: WSGI, HTTP/2](https://uwsgi.readthedocs.org/en/latest/index.html)
+- [*`uWSGI`*: WSGI, HTTP/2](https://uwsgi.readthedocs.org/en/latest/index.html)
 
 ## System Services Driver
 
@@ -241,14 +248,6 @@
   - [UDP Server](https://leven-cn.github.io/python-cookbook/recipes/core/udp_server_asyncio)
   - [UDP Client](https://leven-cn.github.io/python-cookbook/recipes/core/udp_client_asyncio)
 - [Setup Python Project](https://leven-cn.github.io/python-cookbook/recipes/core/python_project)
-
-### Web Development
-
-- Django
-  - [Django - Quick Start](https://leven-cn.github.io/python-cookbook/recipes/web/django_quickstart)
-  - [Django DB - PostgreSQL](https://leven-cn.github.io/python-cookbook/recipes/web/django_db_postgresql)
-  - [Django Cache - Redis](https://leven-cn.github.io/python-cookbook/recipes/web/django_cache_redis)
-  - [Django Logging](https://leven-cn.github.io/python-cookbook/recipes/web/django_logging)
 
 <!-- markdownlint-enable line-length -->
 
