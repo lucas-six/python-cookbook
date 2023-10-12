@@ -21,7 +21,7 @@ pipenv install --dev colorlog
 # settings.py
 
 # Logging
-# https://docs.djangoproject.com/en/4.1/topics/logging/
+# https://docs.djangoproject.com/en/4.2/topics/logging/
 
 LOGGING = {
     'version': 1,
@@ -113,8 +113,6 @@ LOGGING = {
 }
 ```
 
-See [Python source code](https://github.com/leven-cn/python-cookbook/blob/main/django_project/django_project/settings.py).
-
 ## Usage
 
 ```python
@@ -128,9 +126,9 @@ logger.debug(...)
 
 ## More
 
-- [Logging Usage](https://leven-cn.github.io/python-cookbook/recipes/core/logging_usage)
-- [Logging Dictionary Configuration](https://leven-cn.github.io/python-cookbook/recipes/core/logging_dict_config)
+- [Logging Usage](../core/logging/logging_usage)
+- [Logging Dictionary Configuration](../core/logging/logging_dict_config)
 
 ## References
 
-- [Django Documentation - Logging](https://docs.djangoproject.com/en/4.1/topics/logging/)
+- [Django Documentation - Logging](https://docs.djangoproject.com/en/4.2/topics/logging/)

@@ -44,7 +44,7 @@ pip install 'uvicorn[standard]'
             "propagate": false
         },
         "uvicorn.error": {
-            "level": "INFO"
+            "level": "ERROR"
         },
         "uvicorn.debug": {
             "level": "DEBUG"

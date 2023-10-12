@@ -3,18 +3,15 @@
 ## Dependencies
 
 - Redis *5.0+*.
-See [Redis - Setup](https://leven-cn.github.io/python-cookbook/recipes/web/redis_setup)
-and [Redis CLI - Basic Usage](https://leven-cn.github.io/python-cookbook/recipes/web/redis_usage_basic).
+See [Setup](https://leven-cn.github.io/linux-cookbook/cookbook/admin/redis/redis_setup)
+- [CLI: `redis-cli` - Basic Usage](https://leven-cn.github.io/linux-cookbook/cookbook/admin/redis/redis_usage_basic)
 
 ```toml
 # pyproject.toml
 
 dependencies = [
+    "django ~= 4.2",
     "redis >= 4.0",
-    "django-redis",  # Django 4.0-
-]
-
-[project.optional-dependencies] = [
     "types-redis",
 ]
 ```
@@ -22,9 +19,6 @@ dependencies = [
 ```bash
 pipenv install 'redis>=4.0'
 pipenv install --dev types-redis
-
-# Django 4.0-
-pipenv install django-redis
 ```
 
 ## Settings
@@ -35,8 +29,8 @@ pipenv install django-redis
 # settings.py
 
 # Cache
-# https://docs.djangoproject.com/en/4.1/ref/settings/#caches
-# https://docs.djangoproject.com/en/4.1/topics/cache/
+# https://docs.djangoproject.com/en/4.2/ref/settings/#caches
+# https://docs.djangoproject.com/en/4.2/topics/cache/
 
 CACHES = {
     'default': {
@@ -53,8 +47,8 @@ CACHES = {
 # settings.py
 
 # Cache
-# https://docs.djangoproject.com/en/4.1/ref/settings/#caches
-# https://docs.djangoproject.com/en/4.1/topics/cache/
+# https://docs.djangoproject.com/en/4.2/ref/settings/#caches
+# https://docs.djangoproject.com/en/4.2/topics/cache/
 #
 # LOCATION:
 #   - redis://localhost:6379/0
@@ -90,8 +84,8 @@ CACHES = {
 # settings.py
 
 # Cache
-# https://docs.djangoproject.com/en/4.1/ref/settings/#caches
-# https://docs.djangoproject.com/en/4.1/topics/cache/
+# https://docs.djangoproject.com/en/4.2/ref/settings/#caches
+# https://docs.djangoproject.com/en/4.2/topics/cache/
 #
 # LOCATION:
 #   - redis://localhost:6379/0
@@ -215,16 +209,14 @@ assert cache.get_many(['a', 'b', 'c']) == OrderedDict({'a': 1, 'b': 2, 'c': None
 cache.delete_many(['a', 'b', 'c'])
 ```
 
-See [Python source code](https://github.com/leven-cn/python-cookbook/blob/main/django_project/example_app/views.py).
-
 ## More
 
-- [Redis - Setup](https://leven-cn.github.io/python-cookbook/recipes/web/redis_setup)
-- [Redis CLI - Basic Usage](https://leven-cn.github.io/python-cookbook/recipes/web/redis_usage_basic)
-- [Redis Python API: `redis-py`](https://leven-cn.github.io/python-cookbook/recipes/web/redis)
+- [Redis Setup - Linux Cookbook](https://leven-cn.github.io/linux-cookbook/cookbook/admin/redis/redis_setup)
+- [CLI: `redis-cli` Basic Usage - Linux Cookbook](https://leven-cn.github.io/linux-cookbook/cookbook/admin/redis/redis_usage_basic)
+- [Redis Python API: `redis-py`](../system_services/redis)
 
 ## References
 
-- [Django Documentation - Cache Framework](https://docs.djangoproject.com/en/4.1/topics/cache/)
+- [Django Documentation - Cache Framework](https://docs.djangoproject.com/en/4.2/topics/cache/)
 - [Redis Documentation](https://redis.io/docs/)
 - [`redis-py` Documentation](https://redis.readthedocs.io/en/latest/)

@@ -2,21 +2,20 @@
 
 ## Dependencies
 
-- PostgreSQL *11+*.
-See [PostgreSQL - Setup](https://leven-cn.github.io/python-cookbook/recipes/web/postgresql_setup)
-and [PostgreSQL CLI - Usage](https://leven-cn.github.io/python-cookbook/recipes/web/postgresql_usage).
+- PostgreSQL *11+*: [Setup](https://leven-cn.github.io/linux-cookbook/cookbook/admin/postgresql/postgresql_setup)
+and [Usage](https://leven-cn.github.io/linux-cookbook/cookbook/admin/postgresql/postgresql_usage).
 
 ```toml
 # pyproject.toml
 
 dependencies = [
-    "psycopg2 >= 2.8",
+    "psycopg[binary, pool] >= 3.2",
 ]
 ```
 
 ```bash
-pipenv install 'psycopg2>=2.8'
-pipenv install --dev types-psycopg2
+pipenv install 'psycopg[binary, pool]>=3.2'
+# pipenv install --dev types-psycopg2
 ```
 
 ## Settings
@@ -116,8 +115,6 @@ class B(models.Model):
         verbose_name_plural = 'Bs'
 ```
 
-See [Python source code](https://github.com/leven-cn/python-cookbook/blob/main/django_project/example_app/models.py).
-
 ## Run
 
 ```bash
@@ -176,7 +173,10 @@ CREATE INDEX IF NOT EXISTS example_app_b_a_id_9a9a6b60
     TABLESPACE pg_default;
 ```
 
-See [SQL source code](https://github.com/leven-cn/python-cookbook/blob/main/data/django_postgresql.sql).
+## More
+
+- [PostgreSQL Setup - Linux Cookbook](https://leven-cn.github.io/linux-cookbook/cookbook/admin/postgresql/postgresql_setup)
+- [PostgreSQL CLI: `psql` Usage - Linux Cookbook](https://leven-cn.github.io/linux-cookbook/cookbook/admin/postgresql/postgresql_usage)
 
 ## References
 
