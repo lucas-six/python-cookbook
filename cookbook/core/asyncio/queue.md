@@ -1,11 +1,8 @@
 # Asynchronous I/O - Queue
 
-## Solution
+## Recipes
 
 ```python
-"""Asynchronous I/O - Queue.
-"""
-
 import asyncio
 import logging
 import random
@@ -67,8 +64,6 @@ async def main(workers: int):
 
 asyncio.run(main(workers=10))
 ```
-
-See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples/core/asyncio_queue.py)
 
 ## References
 
