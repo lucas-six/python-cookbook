@@ -205,14 +205,18 @@
 ### MongoDB
 
 - [Official Driver](https://www.mongodb.com/docs/drivers/python/)
-  - [Sync: `pymongo`](https://www.mongodb.com/docs/drivers/pymongo/)
-  - [Async: `motor`](https://www.mongodb.com/docs/drivers/motor/)
+  - [`pymongo`: Sync](https://www.mongodb.com/docs/drivers/pymongo/)
+  - [`motor`: Async](https://www.mongodb.com/docs/drivers/motor/)
 
 ### Redis
 
-- [Sync: `redis-py`](https://leven-cn.github.io/python-cookbook/cookbook/system_services/redis)
-- [Async: `aioredis`](https://aioredis.readthedocs.io/en/latest/)
+- [`redis-py`: Sync / Async](https://leven-cn.github.io/python-cookbook/cookbook/system_services/redis)
+- [`aioredis`: Async](https://aioredis.readthedocs.io/en/latest/)
 - ORM: `pyton-redis-orm`
+
+### RabbitMQ
+
+- [`pika`: Async/Sync (Official Recommended)](https://pika.readthedocs.io/en/stable/index.html)
 
 ## Recipes
 
