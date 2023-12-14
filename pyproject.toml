@@ -25,9 +25,12 @@ classifiers = [
 ]
 dependencies = [
     "pydantic",
-    "redis",
-    "types-redis"
-
+    "redis[hiredis]",
+    "types-redis",
+    "motor",
+    celery[librabbitmq, mongodb, redis],
+    #"requests",
+    #"types-requests",
     #"django ~= 4.2",
     #"psycopg[binary, pool] >= 3.2",
 ]
@@ -43,11 +46,10 @@ test = [
     "pylint-print",
     #"pylint-django",
     #"colorlog",
-
     #"pytest",
-    #"pyupgrade",
-    #"coverage >= 6.4",
+    #"coverage[toml]",
     #"pytest-cov >= 3.0",
+    #"pyupgrade",
 ]
 doc = [
 ]

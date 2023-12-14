@@ -5,9 +5,15 @@ name = "pypi"
 
 [packages]
 pydantic = "*"
-redis = "*"
+redis = {version = "*", extras = ["hiredis"]}
 types-redis = "*"
+motor = "*"
+#uvloop = {version = "*", markers = "sys_platform != 'win32'"}
+celery = {version = "*", extras = ["librabbitmq", "mongodb", "redis"]}
+#requests = "*"
+#types-requests = "*"
 #django = "~=4.2"
+#psycopg = {version = ">=3.2", extras = ["binary", "pool"]}
 
 [dev-packages]
 black = "*"
@@ -17,9 +23,10 @@ pylint = "*"
 pylint-pydantic = "*"
 pylint-print = "*"
 #pylint-django = "*"
+#colorlog = "*"
 #pytest = "*"
 #coverage = {extras = ["toml"], version = "*"}
-#pytest-cov = "*"
+#pytest-cov = ">=3.0"
 #pre-commit = "*"
 
 [requires]

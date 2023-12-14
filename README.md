@@ -143,7 +143,7 @@
 
 ### Project
 
-- [project: `pyproject.toml`](https://leven-cn.github.io/python-cookbook/cookbook/build/project)
+- [Project: `pyproject.toml`](https://leven-cn.github.io/python-cookbook/cookbook/build/project)
 - `black`
 - `isort`
 - `mypy`
@@ -167,7 +167,7 @@
 - [URL Parsing: `urllib.parse`](https://leven-cn.github.io/python-cookbook/cookbook/web/urllib_parse)
 - [HTTP Datetime Format](https://leven-cn.github.io/python-cookbook/cookbook/web/http_datetime_fmt)
 - [HTTP Cookie (Server Side): `http.cookies`](https://leven-cn.github.io/python-cookbook/cookbook/web/http_cookie)
-- ASGI / [WSGI](https://leven-cn.github.io/python-cookbook/cookbook/web/wsgi) / ~~CGI~~
+- [ASGI](https://asgi.readthedocs.io/en/latest/) / [WSGI](https://leven-cn.github.io/python-cookbook/cookbook/web/wsgi) / ~~CGI~~
 - [IDNA (Internationalized Domain Names in Applications, 国际化域名应用)](https://leven-cn.github.io/python-cookbook/cookbook/web/idna)
 
 ### HTTP Client/Request
@@ -188,10 +188,10 @@
   - [Logging](https://leven-cn.github.io/python-cookbook/cookbook/web/django_logging)
 - [`Flask`](https://flask.palletsprojects.com/): tiny
 - [**`FastAPI`**](https://fastapi.tiangolo.com/)
-  - API doc: *OpenAPI* ([*Swagger*](https://swagger.io/))
-  - *ASGI* with `asyncio`
+  - [**`Starlette`**](https://www.starlette.io/): *ASGI*
+  - [**`Pydantic`**](https://pydantic-docs.helpmanual.io/): data validation
+  - [*`Swagger`*](https://swagger.io/): *OpenAPI*
   - type annotation
-  - [*`pydantic`*](https://pydantic-docs.helpmanual.io/): data validation
 
 ### Web Server
 
@@ -201,23 +201,34 @@
 - [`Hypercorn`: HTTP/2, HTTP/3](https://pypi.org/project/hypercorn/)
 - [*`uWSGI`*: WSGI, HTTP/2](https://uwsgi.readthedocs.org/en/latest/index.html)
 
+### Task Queue
+
+- [**`Celery`**](https://docs.celeryq.dev/en/stable/)
+
 ## System Services Driver
 
 ### MongoDB
 
 - [Official Driver](https://www.mongodb.com/docs/drivers/python/)
   - [`pymongo`: Sync](https://www.mongodb.com/docs/drivers/pymongo/)
-  - [`motor`: Async](https://www.mongodb.com/docs/drivers/motor/)
+  - [**`motor`**: Async](https://www.mongodb.com/docs/drivers/motor/)
+- [`Beanie`: Async ODM (based on `Pydantic`)](https://beanie-odm.dev/)
 
 ### Redis
 
-- [`redis-py`: Sync / Async](https://leven-cn.github.io/python-cookbook/cookbook/system_services/redis)
-- [`aioredis`: Async](https://aioredis.readthedocs.io/en/latest/)
-- ORM: `pyton-redis-orm`
+- [**`redis-py`**: Sync / Async](https://leven-cn.github.io/python-cookbook/cookbook/system_services/redis)
+- [`aioredis`: Async (Obsoleted by `redis-py`)](https://aioredis.readthedocs.io/en/latest/)
+- `pyton-redis-orm`: ORM
 
 ### RabbitMQ
 
 - [`pika`: Async/Sync (Official Recommended)](https://pika.readthedocs.io/en/stable/index.html)
+
+## IoT
+
+### MQTT
+
+- [**`asyncio-mqtt`**: Async](https://pypi.org/project/asyncio-mqtt/) ([中文](https://blog.alexsun.top/vuepress-python-notes/pypi-package/async/asyncio-mqtt.html))
 
 ## Recipes
 
@@ -258,7 +269,7 @@
 ## More Details
 
 - [Linux Cookbook](https://leven-cn.github.io/linux-cookbook/)
-- [full-version documentation](https://leven-cn.github.io/)
+- [Cookbook collections](https://leven-cn.github.io/)
 
 ## License
 
