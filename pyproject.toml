@@ -55,9 +55,9 @@ doc = [
 ]
 
 [project.urls]
-Home = "https://leven-cn.github.io/python-cookbook/"
-Documentation = "https://leven-cn.github.io/python-cookbook/"
-Source = "https://github.com/leven-cn/python-cookbook/"
+Home = "https://lucas-stack.github.io/python-cookbook/"
+Documentation = "https://lucas-stack.github.io/python-cookbook/"
+Source = "https://github.com/lucas-stack/python-cookbook/"
 
 [tool.black]
 line-length = 88
