@@ -1,5 +1,46 @@
 # Web Frameworks: FastAPI
 
+## Installation
+
+```bash
+pipenv install pydantic
+pipenv install fastapi[all]
+pipenv install uvicorn[standard]
+
+# NoSQL Database: MongoDB
+#pipenv install motor
+pipenv install beanie
+
+# HTTP Request
+pipenv install aiohttp
+
+# Cache: Redis
+pipenv install redis[hiredis]
+pipenv install types-redis
+
+# MQ: RabbitMQ/MongoDB/Redis
+pipenv install pika
+pipenv install types-pika
+
+# Task Queue: Celery
+pipenv install celery[librabbitmq, mongodb, redis]
+
+# MQTT
+pipenv install asyncio-mqtt
+
+pipenv install --dev pylint-pydantic
+```
+
+```ini
+# pyproject.toml
+
+[tool.pylint.main]
+extension-pkg-whitelist = "pydantic"
+load-plugins = [
+    "pylint_pydantic",
+]
+```
+
 ## Data Model and Validation
 
 - [`Pydantic` Documentation](https://pydantic-docs.helpmanual.io/)
@@ -174,5 +215,7 @@ async def shutdown_db_client():
 ## References
 
 - [Getting Started with MongoDB and FastAPI](https://www.mongodb.com/developer/languages/python/python-quickstart-fastapi/)
-- [Beanie - Async Python ODM for MongoDB, based on Pydantic](https://beanie-odm.dev/)
+- [`uvicorn`: ASGI, WebSockets](https://leven-cn.github.io/python-cookbook/cookbook/web/uvicorn)
+- [`Pydantic`](https://pydantic-docs.helpmanual.io/): data validation
+- [`Beanie` - Async Python ODM for MongoDB, based on `Pydantic`](https://beanie-odm.dev/)
 - [Awesome List for FastAPI](https://github.com/mjhea0/awesome-fastapi)

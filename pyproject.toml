@@ -25,9 +25,12 @@ classifiers = [
 ]
 dependencies = [
     "pydantic",
-    "redis",
-    "types-redis"
-
+    "redis[hiredis]",
+    "types-redis",
+    "motor",
+    "celery[librabbitmq, mongodb, redis]",
+    #"requests",
+    #"types-requests",
     #"django ~= 4.2",
     #"psycopg[binary, pool] >= 3.2",
 ]
@@ -43,19 +46,18 @@ test = [
     "pylint-print",
     #"pylint-django",
     #"colorlog",
-
     #"pytest",
-    #"pyupgrade",
-    #"coverage >= 6.4",
+    #"coverage[toml]",
     #"pytest-cov >= 3.0",
+    #"pyupgrade",
 ]
 doc = [
 ]
 
 [project.urls]
-Home = "https://leven-cn.github.io/python-cookbook/"
-Documentation = "https://leven-cn.github.io/python-cookbook/"
-Source = "https://github.com/leven-cn/python-cookbook/"
+Home = "https://lucas-stack.github.io/python-cookbook/"
+Documentation = "https://lucas-stack.github.io/python-cookbook/"
+Source = "https://github.com/lucas-stack/python-cookbook/"
 
 [tool.black]
 line-length = 88
@@ -127,9 +129,9 @@ ignore_missing_imports = true
 recursive = true
 py-version = 3.11
 jobs = 0
-ignore = "CVS,.git,__pycache__,.mypy_cache,tests"
+ignore = "CVS,.git,__pycache__,.mypy_cache,tests,django_project"
 ignore-paths = "tests"
-ignore-patterns = "test_.*.py"
+ignore-patterns = "test_.*.py,manage.py,settings.py"
 ignored-classes = "Body"
 extension-pkg-whitelist = "pydantic"
 load-plugins = [
