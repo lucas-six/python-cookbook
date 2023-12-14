@@ -28,7 +28,7 @@ dependencies = [
     "redis[hiredis]",
     "types-redis",
     "motor",
-    celery[librabbitmq, mongodb, redis],
+    "celery[librabbitmq, mongodb, redis]",
     #"requests",
     #"types-requests",
     #"django ~= 4.2",
