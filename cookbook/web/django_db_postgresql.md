@@ -2,8 +2,8 @@
 
 ## Dependencies
 
-- PostgreSQL *11+*: [Setup](https://leven-cn.github.io/linux-cookbook/cookbook/admin/postgresql/postgresql_setup)
-and [Usage](https://leven-cn.github.io/linux-cookbook/cookbook/admin/postgresql/postgresql_usage).
+- PostgreSQL *11+*: [Setup](https://lucas-six.github.io/linux-cookbook/cookbook/admin/postgresql/postgresql_setup)
+and [Usage](https://lucas-six.github.io/linux-cookbook/cookbook/admin/postgresql/postgresql_usage).
 
 ```toml
 # pyproject.toml
@@ -175,8 +175,8 @@ CREATE INDEX IF NOT EXISTS example_app_b_a_id_9a9a6b60
 
 ## More
 
-- [PostgreSQL Setup - Linux Cookbook](https://leven-cn.github.io/linux-cookbook/cookbook/admin/postgresql/postgresql_setup)
-- [PostgreSQL CLI: `psql` Usage - Linux Cookbook](https://leven-cn.github.io/linux-cookbook/cookbook/admin/postgresql/postgresql_usage)
+- [PostgreSQL Setup - Linux Cookbook](https://lucas-six.github.io/linux-cookbook/cookbook/admin/postgresql/postgresql_setup)
+- [PostgreSQL CLI: `psql` Usage - Linux Cookbook](https://lucas-six.github.io/linux-cookbook/cookbook/admin/postgresql/postgresql_usage)
 
 ## References
 

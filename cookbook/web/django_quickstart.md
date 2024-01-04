@@ -1,6 +1,6 @@
 # Django - Quick Start
 
-[How to Read **"Django"**](https://leven-cn.github.io/python-cookbook/audios/django_pronunciation.mp3)
+[How to Read **"Django"**](https://lucas-six.github.io/python-cookbook/audios/django_pronunciation.mp3)
 
 ## Solution
 

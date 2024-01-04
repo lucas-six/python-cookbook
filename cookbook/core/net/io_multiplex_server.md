@@ -99,7 +99,7 @@ if __name__ == '__main__':
 
 ## More
 
-- [I/O Multiplex (I/O多路复用) (Client)](https://leven-cn.github.io/python-cookbook/cookbook/core/net/io_multiplex_client)
+- [I/O Multiplex (I/O多路复用) (Client)](io_multiplex_client)
 
 ## References
 

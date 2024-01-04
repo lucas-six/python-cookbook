@@ -3,8 +3,8 @@
 ## Dependencies
 
 - Redis *5.0+*.
-See [Setup](https://leven-cn.github.io/linux-cookbook/cookbook/admin/redis/redis_setup)
-- [CLI: `redis-cli` - Basic Usage](https://leven-cn.github.io/linux-cookbook/cookbook/admin/redis/redis_usage_basic)
+See [Setup](https://lucas-six.github.io/linux-cookbook/cookbook/admin/redis/redis_setup)
+- [CLI: `redis-cli` - Basic Usage](https://lucas-six.github.io/linux-cookbook/cookbook/admin/redis/redis_usage_basic)
 
 ```toml
 # pyproject.toml
@@ -211,8 +211,8 @@ cache.delete_many(['a', 'b', 'c'])
 
 ## More
 
-- [Redis Setup - Linux Cookbook](https://leven-cn.github.io/linux-cookbook/cookbook/admin/redis/redis_setup)
-- [CLI: `redis-cli` Basic Usage - Linux Cookbook](https://leven-cn.github.io/linux-cookbook/cookbook/admin/redis/redis_usage_basic)
+- [Redis Setup - Linux Cookbook](https://lucas-six.github.io/linux-cookbook/cookbook/admin/redis/redis_setup)
+- [CLI: `redis-cli` Basic Usage - Linux Cookbook](https://lucas-six.github.io/linux-cookbook/cookbook/admin/redis/redis_usage_basic)
 - [Redis Python API: `redis-py`](../system_services/redis)
 
 ## References

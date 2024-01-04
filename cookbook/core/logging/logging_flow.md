@@ -10,7 +10,7 @@
 
 ## Logging Flow
 
-![Logging Flow](https://leven-cn.github.io/python-cookbook/imgs/logging_flow.png)
+![Logging Flow](https://lucas-six.github.io/python-cookbook/imgs/logging_flow.png)
 
 ## References
 

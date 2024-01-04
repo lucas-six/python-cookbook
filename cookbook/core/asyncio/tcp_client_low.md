@@ -83,8 +83,6 @@ async def tcp_echo_client(data: bytes):
 asyncio.run(tcp_echo_client(b'Hello World!'))  # Python 3.7+
 ```
 
-See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples/core/tcp_client_asyncio_low_api.py)
-
 ## More
 
 - [TCP/UDP (Recv/Send) Buffer Size](net_buffer_size)
