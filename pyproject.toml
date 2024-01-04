@@ -2,13 +2,13 @@
 name = "python-cookbook"
 description = "Recipes for Python. Hands-on code examples and snippets for daily work."
 authors = [
-    {name = "Li Yun", email = "leven.cn@gmail.com"},
+    {name = "Li Yun", email = "lucassix.lee@gmail.com"},
 ]
 readme = "README.md"
 requires-python = "~=3.11"
 license = {file = "LICENSE"}
 maintainers = [
-    {name = "Li Yun", email = "leven.cn@gmail.com"},
+    {name = "Li Yun", email = "lucassix.lee@gmail.com"},
 ]
 keywords = ["cookbook", "recipe", "django"]
 classifiers = [
@@ -55,9 +55,9 @@ doc = [
 ]
 
 [project.urls]
-Home = "https://lucas-stack.github.io/python-cookbook/"
-Documentation = "https://lucas-stack.github.io/python-cookbook/"
-Source = "https://github.com/lucas-stack/python-cookbook/"
+Home = "https://lucas-six.github.io/python-cookbook/"
+Documentation = "https://lucas-six.github.io/python-cookbook/"
+Source = "https://github.com/lucas-six/python-cookbook/"
 
 [tool.black]
 line-length = 88

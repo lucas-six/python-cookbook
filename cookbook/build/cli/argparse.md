@@ -70,8 +70,6 @@ if __name__ == '__main__':
     assert len(args.arg9) > 1  # type: ignore
 ```
 
-See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples/core/cli_args.py)
-
 ## `optparse`
 
 Deprecated since Python *3.2*, using `argparse` instead.
