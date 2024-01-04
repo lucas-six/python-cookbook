@@ -89,11 +89,9 @@ run_client(
 )
 ```
 
-See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples/core/tcp_client_ipv4_io_multiplex.py)
-
 ## More
 
-- [I/O Multiplex (I/O多路复用) (Server)](https://leven-cn.github.io/python-cookbook/cookbook/core/net/io_multiplex_server)
+- [I/O Multiplex (I/O多路复用) (Server)](io_multiplex_server)
 
 ## References
 

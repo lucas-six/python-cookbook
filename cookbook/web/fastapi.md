@@ -215,7 +215,7 @@ async def shutdown_db_client():
 ## References
 
 - [Getting Started with MongoDB and FastAPI](https://www.mongodb.com/developer/languages/python/python-quickstart-fastapi/)
-- [`uvicorn`: ASGI, WebSockets](https://leven-cn.github.io/python-cookbook/cookbook/web/uvicorn)
+- [`uvicorn`: ASGI, WebSockets](uvicorn)
 - [`Pydantic`](https://pydantic-docs.helpmanual.io/): data validation
 - [`Beanie` - Async Python ODM for MongoDB, based on `Pydantic`](https://beanie-odm.dev/)
 - [Awesome List for FastAPI](https://github.com/mjhea0/awesome-fastapi)

@@ -69,7 +69,7 @@ assert s.unpack_from(buf2, 0) == value
 
 ## More
 
-- [Endianness - Linux Cookbook](https://leven-cn.github.io/linux-cookbook/cookbook/general_concepts/endianness)
+- [Endianness - Linux Cookbook](https://lucas-six.github.io/linux-cookbook/cookbook/general_concepts/endianness)
 
 ## References
 

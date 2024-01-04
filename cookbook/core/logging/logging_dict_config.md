@@ -103,7 +103,7 @@ logging.config.dictConfig(LOGGING)
 
 ## More Details
 
-- [Logging Components and Flow](https://leven-cn.github.io/python-cookbook/cookbook/core/logging/logging_flow)
+- [Logging Components and Flow](logging_flow)
 
 ## References
 

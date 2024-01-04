@@ -109,9 +109,9 @@ if __name__ == '__main__':
 
 ## More
 
-- [TCP Connect Timeout (Client Side) - Linux Cookbook](https://leven-cn.github.io/linux-cookbook/cookbook/admin/net/tcp_connect_timeout_client)
-- [TCP/UDP (Recv/Send) Buffer Size: `SO_RCVBUF`, `SO_SNDBUF` - Linux Cookbook](https://leven-cn.github.io/linux-cookbook/cookbook/admin/net/buffer_size)
-- [TCP Transmission Timeout: `SO_RCVTIMEO`, `SO_SNDTIMEO` - Linux Cookbook](https://leven-cn.github.io/linux-cookbook/cookbook/admin/net/tcp_transmission_timeout)
+- [TCP Connect Timeout (Client Side) - Linux Cookbook](https://lucas-six.github.io/linux-cookbook/cookbook/admin/net/tcp_connect_timeout_client)
+- [TCP/UDP (Recv/Send) Buffer Size: `SO_RCVBUF`, `SO_SNDBUF` - Linux Cookbook](https://lucas-six.github.io/linux-cookbook/cookbook/admin/net/buffer_size)
+- [TCP Transmission Timeout: `SO_RCVTIMEO`, `SO_SNDTIMEO` - Linux Cookbook](https://lucas-six.github.io/linux-cookbook/cookbook/admin/net/tcp_transmission_timeout)
 
 ## References
 
