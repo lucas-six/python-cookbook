@@ -106,7 +106,7 @@ from urllib.parse import parse_qsl
 
 ## More
 
-More details to see [URL, URI, URN - Linux Cookbook](https://leven-cn.github.io/linux-cookbook/cookbook/general_concepts/uri_url_urn).
+More details to see [URL, URI, URN - Linux Cookbook](https://lucas-six.github.io/linux-cookbook/cookbook/general_concepts/uri_url_urn).
 
 ## References
 

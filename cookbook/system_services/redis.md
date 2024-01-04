@@ -2,8 +2,8 @@
 
 ## Start
 
-See [Redis: Setup - Linux Cookbook](https://leven-cn.github.io/linux-cookbook/cookbook/admin/redis/redis_setup)
-and [Redis CLI: Basic Usage - Linux Cookbook](https://leven-cn.github.io/linux-cookbook/cookbook/admin/redis/redis_usage_basic).
+See [Redis: Setup - Linux Cookbook](https://lucas-six.github.io/linux-cookbook/cookbook/admin/redis/redis_setup)
+and [Redis CLI: Basic Usage - Linux Cookbook](https://lucas-six.github.io/linux-cookbook/cookbook/admin/redis/redis_usage_basic).
 
 ```toml
 # pyproject.toml

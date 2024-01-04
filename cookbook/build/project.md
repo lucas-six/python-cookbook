@@ -22,7 +22,7 @@ name = "<project_name>"
 description = "<project description>"
 authors = [
     {name = "<Author Name>", email = "<author@email>"},
-    {name = "Lee", email = "leven.cn@gmail.com"},
+    {name = "Lucas", email = "lucassix.lee@gmail.com"},
 ]
 readme = "README.md"
 requires-python = "~=3.11"
