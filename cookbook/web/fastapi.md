@@ -27,18 +27,6 @@ pipenv install celery[librabbitmq, mongodb, redis]
 
 # MQTT
 pipenv install asyncio-mqtt
-
-pipenv install --dev pylint-pydantic
-```
-
-```ini
-# pyproject.toml
-
-[tool.pylint.main]
-extension-pkg-whitelist = "pydantic"
-load-plugins = [
-    "pylint_pydantic",
-]
 ```
 
 ## Data Model and Validation

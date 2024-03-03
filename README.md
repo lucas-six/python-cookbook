@@ -145,6 +145,7 @@
 ### Project
 
 - [Project: `pyproject.toml`](https://lucas-six.github.io/python-cookbook/cookbook/build/project)
+- [FastAPI Project](https://lucas-six.github.io/python-cookbook/cookbook/build/project_fastapi)
 - `black`
 - `isort`
 - `mypy`
