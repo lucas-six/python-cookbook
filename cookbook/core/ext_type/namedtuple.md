@@ -1,6 +1,6 @@
 # Tuples with Named Fields - `namedtuple`
 
-## Sulution
+## Recipes
 
 ```python
 from collections import namedtuple
@@ -86,7 +86,7 @@ Point(x=11, y=22)
 
 ## More
 
-- [Type Hint for `namedtuple`: `typing.NamedTuple`](type_hint_for_namedtuple)
+- [Type Hint for `namedtuple`: `typing.NamedTuple`](../type_hint/type_hint_for_namedtuple)
 
 ## References
 

@@ -18,12 +18,12 @@ This is equivalent to:
 ```python
 from collections import namedtuple
 
-Point = collections.namedtuple('Point', ['x', 'y'])
+Point = namedtuple('Point', ['x', 'y'])
 ```
 
 ## More Details
 
-- [Type Hint](https://leven-cn.github.io/python-cookbook/cookbook/core/type_hint/type_hint)
+- [Type Hint](type_hint)
 
 ## References
 

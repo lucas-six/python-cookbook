@@ -43,6 +43,7 @@
 
 - [Tuples with Named Fields - `namedtuple` (命名元组)](https://lucas-six.github.io/python-cookbook/cookbook/core/ext_type/namedtuple)
 - [Ordered Dictionary - `OrderedDict`](https://lucas-six.github.io/python-cookbook/cookbook/core/ext_type/ordereddict)
+- [Data Classes - `dataclasses`（数据类）](https://lucas-six.github.io/python-cookbook/cookbook/core/ext_type/dataclass)
 
 ### Date & Time (日期时间)
 
