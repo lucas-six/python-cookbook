@@ -18,7 +18,7 @@ See [PEP 526](https://peps.python.org/pep-0526/ "PEP 526 - Syntax for Variable A
 ```bash
 pip install mypy
 
-pip install mypy-xxx
+pip install types-xxx
 ```
 
 See [`typeshed` on GitHub](https://github.com/python/typeshed)

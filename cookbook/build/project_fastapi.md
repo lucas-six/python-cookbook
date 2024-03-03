@@ -1,37 +1,53 @@
+# FastAPI Project
+
+First, set up [Base Project](project).
+
+## Setup Environment
+
+```bash
+pipenv install pydantic
+pipenv install --dev pylint-pydantic
+
+pipenv install fastapi[all]
+pipenv install uvicorn[standard]
+
+pipenv install motor  # MongoDB asyncio driver
+```
+
+## `pyproject.toml`
+
+```ini
 [project]
-name = "python-cookbook"
-description = "Recipes for Python. Hands-on code examples and snippets for daily work."
+name = "<project_name>"
+description = "<project description>"
 authors = [
-    {name = "Li Yun", email = "lucassix.lee@gmail.com"},
+    {name = "<Author Name>", email = "<author@email>"},
+    {name = "Lucas", email = "lucassix.lee@gmail.com"},
 ]
 readme = "README.md"
 requires-python = "~=3.11"
 license = {file = "LICENSE"}
 maintainers = [
-    {name = "Li Yun", email = "lucassix.lee@gmail.com"},
+    {name = "<Maintainer Name>", email = "<maintainer@email>"},
 ]
-keywords = ["cookbook", "recipe", "django"]
+keywords = ["xxx"]
 classifiers = [
     "Development Status :: 1 - Planning",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: Implementation :: CPython",
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Topic :: Utilities",
     "Operating System :: OS Independent",
+    "License :: OSI Approved :: MIT License",
     "License :: OSI Approved :: Apache Software License",
     "Typing :: Typed",
 ]
 dependencies = [
     "pydantic",
-    "redis[hiredis]",
-    "types-redis",
-    "celery[librabbitmq, mongodb, redis]",
-    #"requests",
-    #"types-requests",
-    #"django ~= 4.2",
-    #"psycopg[binary, pool] >= 3.2",
+    "fastapi[all]",
+    "uvicorn[standard]",
+    "motor",
 ]
 dynamic = ["version"]
 
@@ -39,27 +55,20 @@ dynamic = ["version"]
 test = [
     "black",
     "isort",
-    "mypy",
+    "mymy",
     "pylint",
     "pylint-pydantic",
-    #"pylint-django",
-    #"colorlog",
-    #"pytest",
-    #"coverage[toml]",
-    #"pytest-cov >= 3.0",
-    #"pyupgrade",
 ]
-doc = [
-]
+doc = []
 
 [project.urls]
-Home = "https://lucas-six.github.io/python-cookbook/"
-Documentation = "https://lucas-six.github.io/python-cookbook/"
-Source = "https://github.com/lucas-six/python-cookbook/"
+Home = "<URL>"
+Documentation = "<URL>"
+Source = "<URL>"
 
 [tool.black]
 line-length = 88
-target-version = ['py311']
+target-version = ['py310', 'py311']
 skip-string-normalization = true
 include = '\.pyi?$'
 extend-exclude = '''
@@ -68,7 +77,7 @@ migrations/.*\.py$
 '''
 
 [tool.isort]
-src_paths = ["examples"]
+src_paths = ["src", "app"]
 atomic = true
 profile = "black"
 # skip = [
@@ -92,9 +101,8 @@ profile = "black"
 #    'venv'
 # ]
 skip_gitignore = true
-extend_skip = [".gitignore", ".dockerignore"]
+extend_skip = [".gitignore", ".env", ".dockerignore"]
 # skip_glob = []
-extend_skip_glob = ["*/migrations/*"]
 
 [tool.mypy]
 python_version = "3.11"
@@ -119,18 +127,23 @@ init_typed = true
 warn_required_dynamic_aliases = true
 warn_untyped_fields = true
 
+# mypy for MongoDB motor
+[[tool.mypy.overrides]]
+module = "motor.*"
+ignore_missing_imports = true
+
 [tool.pylint.main]
 recursive = true
 py-version = 3.11
 jobs = 0
-ignore = "CVS,.git,__pycache__,.mypy_cache,tests,django_project"
+ignore = "CVS,.git,__pycache__,.mypy_cache,tests"
 ignore-paths = "tests"
-ignore-patterns = "test_.*.py,manage.py,settings.py"
+ignore-patterns = "test_.*.py"
 ignored-classes = "Body"
 extension-pkg-whitelist = "pydantic"
 load-plugins = [
+    "pylint.extensions.bad_builtin",
     "pylint_pydantic",
-    #"pylint_django",
 ]
 
 [tool.pylint.'FORMAT']
@@ -149,22 +162,7 @@ disable = [
     "useless-suppression",
     "deprecated-pragma",
     "use-symbolic-message-instead",
-    "logging-fstring-interpolation",
-    "W2601",
-    "W1203",
-    "C0116",
-    "R0801",
-    "C0103",
-    "W0621",
-    "R0914",
-    "W0108",
-    "C0115",
-    "R0913",
-    "E0401",
-    "W0201",
-    "too-few-public-methods",
-    "global-statement",
-#    "django-not-configured",
+    "logging-fstring-interpolation"
 ]
 enable = [
     "c-extension-no-member",
@@ -174,47 +172,27 @@ enable = [
 max-args = 12
 min-public-methods = 1
 max-locals = 22
-max-branches = 20
-max-statements = 80
 
-[tool.pytest.ini_options]
-markers = [
-]
-addopts = [
-    "--strict-markers",
-    "--cov",
-    "--cov-append",
-    "--durations=5",
-    "--durations-min=0.25",
-]
-norecursedirs = [
-    ".git",
-    ".*_cache",
-    ".tox",
-    "*.egg-info",
-    "docs",
-]
-
-[tool.coverage.run]
-parallel = true
-
-[tool.coverage.report]
-skip_empty = true
+[tool.pylint.deprecated_builtins]
+bad-functions = ["map", "filter", "print"]
 
 [tool.pyright]
 include = [
-    "examples",
+    "src",
+    "app",
 ]
 exclude = [
     ".git",
     "**/__pycache__",
     "**/.mypy_cache",
-    "**/migrations",
-]
-ignore = [
-    "**/admin.py",
 ]
 reportGeneralTypeIssues = "none"
 reportUnboundVariable = "none"
 stubPath = ""
 pythonVersion = "3.11"
+```
+
+## References
+
+- [Python Project - Python Cookbook](project)
+- [`Pydantic`](https://pydantic-docs.helpmanual.io/): data validation

@@ -7,16 +7,9 @@ pipenv --python 3.11
 pipenv install --dev black isort mypy pylint
 ```
 
-### Web Development: `FastAPI`
-
-```bash
-pipenv install pydantic
-pipenv install --dev pylint-pydantic
-```
-
 ## `pyproject.toml`
 
-```toml
+```ini
 [project]
 name = "<project_name>"
 description = "<project description>"
@@ -45,9 +38,6 @@ classifiers = [
     "Typing :: Typed",
 ]
 dependencies = [
-    # Web Development: FastAPI
-    "pydantic",
-
     "psycopg2 >= 2.8",
     "redis >= 4.0",
 
@@ -62,10 +52,6 @@ test = [
     "isort",
     "mymy",
     "pylint",
-
-    # Web Development: FastAPI
-    "pylint-pydantic",
-    "pylint-print",
 ]
 doc = []
 
@@ -111,13 +97,9 @@ profile = "black"
 skip_gitignore = true
 extend_skip = [".gitignore", ".env", ".dockerignore"]
 # skip_glob = []
-extend_skip_glob = ["*/migrations/*"]
 
 [tool.mypy]
 python_version = "3.11"
-plugins = [
-    "pydantic.mypy"
-]
 exclude = [
     "test_main.py",
 ]
@@ -129,12 +111,6 @@ disallow_any_generics = true
 check_untyped_defs = true
 no_implicit_reexport = true
 disallow_untyped_defs = true
-
-[tool.pydantic-mypy]
-init_forbid_extra = true
-init_typed = true
-warn_required_dynamic_aliases = true
-warn_untyped_fields = true
 
 # mypy for MongoDB motor
 [[tool.mypy.overrides]]
@@ -148,12 +124,6 @@ jobs = 0
 ignore = "CVS,.git,__pycache__,.mypy_cache,tests"
 ignore-paths = "tests"
 ignore-patterns = "test_.*.py"
-ignored-classes = "Body"
-extension-pkg-whitelist = "pydantic"
-load-plugins = [
-    "pylint_pydantic",
-    "pylint_print",
-]
 
 [tool.pylint.'FORMAT']
 max-line-length = 88
@@ -191,19 +161,55 @@ exclude = [
     ".git",
     "**/__pycache__",
     "**/.mypy_cache",
+]
+reportGeneralTypeIssues = "none"
+reportUnboundVariable = "none"
+stubPath = ""
+pythonVersion = "3.11"
+```
+
+## Web Development: `Django`
+
+```bash
+pipenv install "django~=4.2"
+```
+
+```ini
+dependencies = [
+    "django~=4.2",
+]
+
+[project.optional-dependencies]
+test = [
+    "pylint-django",
+]
+
+[tool.pylint.main]
+ignore-patterns = "test_.*.py,manage.py,settings.py"
+load-plugins = [
+    "pylint.extensions.bad_builtin",
+    "pylint_django",
+]
+
+[tool.pylint.deprecated_builtins]
+bad-functions = ["map", "filter", "print"]
+
+[tool.isort]
+extend_skip_glob = ["*/migrations/*"]
+
+[tool.pyright]
+exclude = [
     "**/migrations",
 ]
 ignore = [
     "**/admin.py",
 ]
-reportGeneralTypeIssues = "none"
-stubPath = ""
-pythonVersion = "3.11"
 ```
 
 ## More
 
-- [`pipenv`](pkg/pipenv)
+- [`pipenv` - Python Cookbook](pkg/pipenv)
+- [FastAPI Project](project_fastapi)
 
 ## References
 
