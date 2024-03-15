@@ -17,7 +17,7 @@ def callback(num: int, wait: float, *, kwarg: str = 'keyword') -> None:
     time.sleep(wait)
 
 
-def callback_time(num: int, wait: float, loop: asyncio.BaseEventLoop) -> None:
+def callback_time(num: int, wait: float, loop: asyncio.AbstractEventLoop) -> None:
     logging.debug(f'run callback_time {num}, wait {wait} seconds, at {loop.time()}')
     time.sleep(wait)
 
