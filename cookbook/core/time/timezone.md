@@ -49,6 +49,14 @@ import time
 ('CST', 'CST')
 ```
 
+## UTC Now
+
+```python
+from datetime import datetime, UTC
+
+datetime.now(UTC)
+```
+
 ## References
 
 - [Python - `zoneinfo` module](https://docs.python.org/3/library/zoneinfo.html)
