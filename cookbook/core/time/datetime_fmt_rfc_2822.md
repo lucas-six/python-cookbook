@@ -5,7 +5,7 @@
 ```python
 import email.utils
 import time
-from datetime import datetime, timezone
+from datetime import datetime, UTC
 
 
 # default
@@ -15,7 +15,7 @@ from datetime import datetime, timezone
 'Fri, 12 Aug 2022 13:56:40 GMT'
 
 
-# timestamp, for HTTP
+# timestamp (UTC), for HTTP
 >>> timestamp = time.time()
 >>> email.utils.formatdate(timestamp, usegmt=True)
 'Fri, 12 Aug 2022 13:56:40 GMT'
@@ -26,8 +26,9 @@ from datetime import datetime, timezone
 >>> email.utils.format_datetime(dt)
 'Fri, 12 Aug 2022 21:56:40 -0000'
 
-# datetime, for HTTP
->>> dt = datetime.now(timezone.utc)
+
+# datetime (UTC), for HTTP
+>>> dt = datetime.now(UTC)
 >>> email.utils.format_datetime(dt, usegmt=True)
 'Fri, 12 Aug 2022 13:56:40 GMT'
 ```
