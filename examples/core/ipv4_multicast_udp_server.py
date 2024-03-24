@@ -37,7 +37,7 @@ if os_name == 'Linux':
         Path('/proc/sys/net/core/wmem_max').read_text(encoding='utf-8').strip()
     )
 else:
-    max_recv_buf_size = max_send_buf_size = None
+    max_recv_buf_size = max_send_buf_size = None  # pylint: disable=invalid-name
 
 
 def run_server(

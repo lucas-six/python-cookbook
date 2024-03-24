@@ -10,16 +10,16 @@ logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
 )
 
-sockfile = 'xxx.sock'
+SOCKFILE = 'xxx.sock'
 
 # Make sure the socket does not already exist.
 with suppress(FileNotFoundError):
-    os.remove(sockfile)
+    os.remove(SOCKFILE)
 
 sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
 
 # bind
-sock.bind(sockfile)
+sock.bind(SOCKFILE)
 sock.listen()
 
 try:

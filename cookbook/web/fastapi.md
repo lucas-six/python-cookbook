@@ -3,14 +3,6 @@
 ## Installation
 
 ```bash
-pipenv install pydantic
-pipenv install fastapi[all]
-pipenv install uvicorn[standard]
-
-# NoSQL Database: MongoDB
-#pipenv install motor
-pipenv install beanie
-
 # HTTP Request
 pipenv install aiohttp
 
@@ -27,50 +19,6 @@ pipenv install celery[librabbitmq, mongodb, redis]
 
 # MQTT
 pipenv install asyncio-mqtt
-```
-
-## Data Model and Validation
-
-- [`Pydantic` Documentation](https://pydantic-docs.helpmanual.io/)
-
-```python
-from datetime import datetime
-
-from pydantic import BaseModel
-
-
-class User(BaseModel):
-    id: int
-    name = 'John Doe'
-    signup_ts: datetime | None = None
-    friends: list[int] = []
-
-
-user_data = {
-    'id': '123',
-    'signup_ts': '2019-06-01 12:22',
-    'friends': [1, 2, '3'],
-}
-user = User(**user_data)
-
->>> print(user.id)
-123
-
->>> print(repr(user.signup_ts))
-datetime.datetime(2019, 6, 1, 12, 22)
-
->>> print(user.friends)
-[1, 2, 3]
-
->>> print(user.dict())
-"""
-{
-    'id': 123,
-    'signup_ts': datetime.datetime(2019, 6, 1, 12, 22),
-    'friends': [1, 2, 3],
-    'name': 'John Doe',
-}
-"""
 ```
 
 ## MongoDB
@@ -187,23 +135,4 @@ async def delete_student(request: Request, student_id: str):
         return JSONResponse(status_code=status.HTTP_204_NO_CONTENT)
 
     raise HTTPException(status_code=404, detail=f'Student {student_id} not found')
-
-
-@app.on_event('startup')
-async def startup_db_client():
-    app.mongodb_client = AsyncIOMotorClient(os.environ['MONGODB_URL'])
-    app.mongodb_db = app.mongodb_client[os.environ['MONGODB_DBNAME']]
-
-
-@app.on_event('shutdown')
-async def shutdown_db_client():
-    app.mongodb_client.close()
 ```
-
-## References
-
-- [Getting Started with MongoDB and FastAPI](https://www.mongodb.com/developer/languages/python/python-quickstart-fastapi/)
-- [`uvicorn`: ASGI, WebSockets](uvicorn)
-- [`Pydantic`](https://pydantic-docs.helpmanual.io/): data validation
-- [`Beanie` - Async Python ODM for MongoDB, based on `Pydantic`](https://beanie-odm.dev/)
-- [Awesome List for FastAPI](https://github.com/mjhea0/awesome-fastapi)

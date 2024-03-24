@@ -40,6 +40,7 @@ classifiers = [
 dependencies = [
     "psycopg2 >= 2.8",
     "redis >= 4.0",
+    "types-redis",
 
     "requests >=2.6",
     "configparser; python_version == '2.7'",
@@ -97,6 +98,7 @@ profile = "black"
 skip_gitignore = true
 extend_skip = [".gitignore", ".env", ".dockerignore"]
 # skip_glob = []
+extend_skip_glob = []
 
 [tool.mypy]
 python_version = "3.11"
@@ -112,11 +114,6 @@ check_untyped_defs = true
 no_implicit_reexport = true
 disallow_untyped_defs = true
 
-# mypy for MongoDB motor
-[[tool.mypy.overrides]]
-module = "motor.*"
-ignore_missing_imports = true
-
 [tool.pylint.main]
 recursive = true
 py-version = 3.11
@@ -124,6 +121,9 @@ jobs = 0
 ignore = "CVS,.git,__pycache__,.mypy_cache,tests"
 ignore-paths = "tests"
 ignore-patterns = "test_.*.py"
+load-plugins = [
+    "pylint.extensions.bad_builtin",
+]
 
 [tool.pylint.'FORMAT']
 max-line-length = 88
@@ -137,20 +137,26 @@ disable = [
     "bad-inline-option",
     "locally-disabled",
     "file-ignored",
-    "suppressed-message",
-    "useless-suppression",
     "deprecated-pragma",
     "use-symbolic-message-instead",
-    "logging-fstring-interpolation"
+    "logging-fstring-interpolation",
+    #"missing-class-docstring",
+    #"missing-function-docstring",
+    #"duplicate-code",
 ]
 enable = [
     "c-extension-no-member",
+    "suppressed-message",
+    "useless-suppression",
 ]
 
 [tool.pylint.design]
-max-args = 12
-min-public-methods = 1
-max-locals = 22
+max-args = 15
+min-public-methods = 0
+max-locals = 25
+
+[tool.pylint.deprecated_builtins]
+bad-functions = ["map", "filter"]
 
 [tool.pyright]
 include = [
@@ -209,7 +215,6 @@ ignore = [
 ## More
 
 - [`pipenv` - Python Cookbook](pkg/pipenv)
-- [FastAPI Project](project_fastapi)
 
 ## References
 

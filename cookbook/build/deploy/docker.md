@@ -9,7 +9,7 @@ sed -i "1d" requirements.txt
 
 ```Dockerfile
 # syntax=docker/dockerfile:1
-FROM python:3.10
+FROM python:3.11
 
 ARG PYPI_INDEX_URL=https://pypi.org/simple
 ARG PYPI_TRUST_HOST=pypi.org
@@ -32,6 +32,23 @@ RUN python -m black . \
     && python -m isort . \
     && python -m mypy . \
     && python -m pylint .
+```
+
+OR
+
+```Dockerfile
+# syntax=docker/dockerfile:1
+FROM python:3.11-alpine
+
+ARG PYPI_INDEX_URL=https://pypi.org/simple
+ARG PYPI_TRUST_HOST=pypi.org
+ARG PYPI_TIMEOUT=300
+
+# ENV PYTHONUNBUFFERD 1
+
+# Aliyun mirrors
+#RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
+#RUN apk update && apk add git curl
 ```
 
 ```bash

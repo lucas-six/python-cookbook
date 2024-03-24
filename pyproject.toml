@@ -10,7 +10,7 @@ license = {file = "LICENSE"}
 maintainers = [
     {name = "Li Yun", email = "lucassix.lee@gmail.com"},
 ]
-keywords = ["cookbook", "recipe", "django"]
+keywords = ["cookbook", "recipe", "fastapi", "mongodb", "django"]
 classifiers = [
     "Development Status :: 1 - Planning",
     "Programming Language :: Python :: 3 :: Only",
@@ -25,6 +25,16 @@ classifiers = [
 ]
 dependencies = [
     "pydantic",
+    "fastapi[all]",
+    "uvicorn[standard]",
+
+    #"python-jose[cryptography]",
+    #"types-python-jose",
+
+    "motor",
+    #"beanie",
+    #"pyodmongo",
+
     "redis[hiredis]",
     "types-redis",
     "celery[librabbitmq, mongodb, redis]",
@@ -92,9 +102,9 @@ profile = "black"
 #    'venv'
 # ]
 skip_gitignore = true
-extend_skip = [".gitignore", ".dockerignore"]
+extend_skip = [".gitignore", ".env", ".dockerignore"]
 # skip_glob = []
-extend_skip_glob = ["*/migrations/*"]
+extend_skip_glob = []
 
 [tool.mypy]
 python_version = "3.11"
@@ -102,7 +112,7 @@ plugins = [
     "pydantic.mypy"
 ]
 exclude = [
-    "test_main.py",
+    "django_project/",
 ]
 follow_imports = "silent"
 warn_redundant_casts = true
@@ -119,16 +129,22 @@ init_typed = true
 warn_required_dynamic_aliases = true
 warn_untyped_fields = true
 
+# mypy for MongoDB motor
+[[tool.mypy.overrides]]
+module = "motor.*"
+ignore_missing_imports = true
+
 [tool.pylint.main]
 recursive = true
 py-version = 3.11
 jobs = 0
 ignore = "CVS,.git,__pycache__,.mypy_cache,tests,django_project"
 ignore-paths = "tests"
-ignore-patterns = "test_.*.py,manage.py,settings.py"
+ignore-patterns = "test_.*.py,manage.py"
 ignored-classes = "Body"
 extension-pkg-whitelist = "pydantic"
 load-plugins = [
+    "pylint.extensions.bad_builtin",
     "pylint_pydantic",
     #"pylint_django",
 ]
@@ -145,37 +161,29 @@ disable = [
     "bad-inline-option",
     "locally-disabled",
     "file-ignored",
-    "suppressed-message",
-    "useless-suppression",
     "deprecated-pragma",
     "use-symbolic-message-instead",
     "logging-fstring-interpolation",
-    "W2601",
-    "W1203",
-    "C0116",
-    "R0801",
-    "C0103",
-    "W0621",
-    "R0914",
-    "W0108",
-    "C0115",
-    "R0913",
-    "E0401",
-    "W0201",
-    "too-few-public-methods",
-    "global-statement",
+    "missing-class-docstring",
+    "missing-function-docstring",
+    "duplicate-code",
 #    "django-not-configured",
 ]
 enable = [
     "c-extension-no-member",
+    "suppressed-message",
+    "useless-suppression",
 ]
 
 [tool.pylint.design]
-max-args = 12
-min-public-methods = 1
-max-locals = 22
+max-args = 15
+min-public-methods = 0
+max-locals = 25
 max-branches = 20
 max-statements = 80
+
+[tool.pylint.deprecated_builtins]
+bad-functions = ["map", "filter"]
 
 [tool.pytest.ini_options]
 markers = [

@@ -7,7 +7,6 @@
 .pytest_cache
 .coverage
 
-### vscode ###
-.vscode
+.env
 
 playground/

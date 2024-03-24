@@ -149,7 +149,6 @@
 ### Project
 
 - [Project: `pyproject.toml`](https://lucas-six.github.io/python-cookbook/cookbook/build/project)
-- [FastAPI Project](https://lucas-six.github.io/python-cookbook/cookbook/build/project_fastapi)
 - `black`
 - `isort`
 - `mypy`
@@ -193,11 +192,10 @@
   - [Cache - Redis](https://lucas-six.github.io/python-cookbook/cookbook/web/django_cache_redis)
   - [Logging](https://lucas-six.github.io/python-cookbook/cookbook/web/django_logging)
 - [`Flask`](https://flask.palletsprojects.com/): tiny
-- [**`FastAPI`**](https://fastapi.tiangolo.com/)
-  - [**`Starlette`**](https://www.starlette.io/): *ASGI*
-  - [**`Pydantic`**](https://pydantic-docs.helpmanual.io/): data validation
-  - [*`Swagger`*](https://swagger.io/): *OpenAPI*
-  - type annotation
+- **`FastAPI`**: *ASGI* + type annotations + data model + *OpenAPI*(*Swagger UI*)
+  - [Quick Start](https://lucas-six.github.io/python-cookbook/cookbook/web/fastapi/fastapi_quickstart)
+  - [Data Model: **`Pydantic`**](https://lucas-six.github.io/python-cookbook/cookbook/web/pydantic)
+  - [with MongoDB: **`motor`**](https://lucas-six.github.io/python-cookbook/cookbook/web/fastapi/fastapi_mongodb)
 
 ### Web Server
 
@@ -217,8 +215,10 @@
 
 - [Official Driver](https://www.mongodb.com/docs/drivers/python/)
   - [`pymongo`: Sync](https://www.mongodb.com/docs/drivers/pymongo/)
-  - [**`motor`**: Async](https://www.mongodb.com/docs/drivers/motor/)
-- [`Beanie`: Async ODM (based on `Pydantic`)](https://beanie-odm.dev/)
+  - [**`motor`**: Async](https://lucas-six.github.io/python-cookbook/cookbook/system_services/mongodb_motor)
+- ODM
+  - [`Beanie`: Async ODM (based on `Pydantic`)](https://beanie-odm.dev/)
+  - [`PyODMongo`: Async ODM (based on `Pydantic V2`)](https://pyodmongo.dev/)
 
 ### Redis
 

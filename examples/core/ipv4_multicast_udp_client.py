@@ -29,6 +29,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as client:
 
         # The `IP_MULTICAST_LOOP` socket option
         # allows the application to send data to be looped back to your host or not.
+        # pylint: disable=invalid-name
         multicast_loopback_val = None
         if multicast_loopback is not None:
             multicast_loopback_val = 1 if multicast_loopback else 0

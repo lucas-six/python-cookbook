@@ -25,7 +25,7 @@ import struct
 # <: little endianness
 # >: big endianness
 # !: network (=big-endianness) RFC 1700
-fmt_str = '= I 2s Q 2h f'
+fmt_str = '= I 2s Q 2h f'  # pylint: disable=invalid-name
 
 value = (1, b'ab', 2, 3, 3, 2.5)
 

@@ -11,6 +11,7 @@ and [Redis CLI: Basic Usage - Linux Cookbook](https://lucas-six.github.io/linux-
 dependencies = [
     "redis",
     #"redis[hiredis]",
+    "types-redis",
 ]
 ```
 
@@ -19,7 +20,7 @@ pip install types-redis
 
 pipenv install redis
 # pipenv install redis[hiredis]
-pipenv install --dev types-redis
+pipenv install types-redis
 ```
 
 ## Usage

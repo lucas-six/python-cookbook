@@ -15,7 +15,7 @@ logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}'
 )
 
-tcp_quickack = True
+# TCP_QUICKACK = True
 recv_bufsize: int | None = None
 send_bufsize: int | None = None
 
@@ -28,7 +28,7 @@ class EchoServerProtocol(asyncio.Protocol):
         client_address = transport.get_extra_info('peername')
         logging.debug(f'connected from {client_address}')
 
-        self.transport = transport
+        self.transport = transport  # pylint: disable=attribute-defined-outside-init
 
         # `socket.getsockname()`
         # server_address = transport.get_extra_info('sockname')
@@ -55,7 +55,7 @@ class EchoServerProtocol(asyncio.Protocol):
         sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPCNT, 5)
         sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPINTVL, 15)
 
-        # handle_tcp_quickack(sock, tcp_quickack)
+        # handle_tcp_quickack(sock, TCP_QUICKACK)
         # logging.debug(dir(sock))
 
     def data_received(self, data: bytes) -> None:
@@ -77,7 +77,7 @@ async def tcp_echo_server(
 
     # The socket option `TCP_NODELAY` is set by default in Python 3.6+
     server = await loop.create_server(
-        lambda: EchoServerProtocol(),
+        EchoServerProtocol,
         host,
         port,
         reuse_address=True,

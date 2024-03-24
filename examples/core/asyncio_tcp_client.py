@@ -4,7 +4,7 @@
 import asyncio
 import logging
 
-from asyncio_tcp_server import HOST, PORT
+from examples.core.asyncio_tcp_server import HOST, PORT
 
 logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}'
