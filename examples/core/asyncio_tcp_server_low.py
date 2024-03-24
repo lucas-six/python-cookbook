@@ -49,7 +49,7 @@ class EchoServerProtocol(asyncio.Protocol):
         elif sys.platform == 'darwin' and sys.version_info >= (3, 10):
             sock.setsockopt(
                 socket.IPPROTO_TCP,
-                socket.TCP_KEEPALIVE,  # pylint: disable=no-member
+                socket.TCP_KEEPALIVE,
                 1800,
             )
         sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPCNT, 5)

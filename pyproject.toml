@@ -162,6 +162,7 @@ disable = [
     "locally-disabled",
     "file-ignored",
     "deprecated-pragma",
+    "suppressed-message",
     "use-symbolic-message-instead",
     "logging-fstring-interpolation",
     "missing-class-docstring",
@@ -171,7 +172,6 @@ disable = [
 ]
 enable = [
     "c-extension-no-member",
-    "suppressed-message",
     "useless-suppression",
 ]
 
