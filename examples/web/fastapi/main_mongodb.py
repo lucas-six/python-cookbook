@@ -1,8 +1,7 @@
 """FastAPI with MongoDB."""
 
-from collections.abc import AsyncGenerator, Mapping
+from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
-from typing import Any
 
 import uvicorn
 from fastapi import FastAPI
@@ -23,14 +22,12 @@ settings = get_settings()
 API_DOC_STATIC_DIR = 'examples/web/fastapi/static'
 API_DOC_STATIC_PATH = f'{settings.app_doc_url}/{API_DOC_STATIC_DIR}'
 
-MONGODB_CLIENT: AgnosticClient[Mapping[str, Any]] = AsyncIOMotorClient(
-    str(settings.mongodb_url)
-)
+MONGODB_CLIENT: AgnosticClient = AsyncIOMotorClient(str(settings.mongodb_url))
 DB_XXX = MONGODB_CLIENT[settings.mongodb_db_name]
 
 
 @asynccontextmanager
-async def lifespan(_: FastAPI) -> AsyncGenerator[Any, Any]:
+async def lifespan(_: FastAPI) -> AsyncGenerator:
     yield
     MONGODB_CLIENT.close()
 

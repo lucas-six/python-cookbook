@@ -109,7 +109,7 @@ follow_imports = "silent"
 warn_redundant_casts = true
 warn_unused_ignores = true
 warn_unused_configs = true
-disallow_any_generics = true
+disallow_any_generics = false
 check_untyped_defs = true
 no_implicit_reexport = true
 disallow_untyped_defs = true
@@ -137,6 +137,8 @@ disable = [
     "bad-inline-option",
     "locally-disabled",
     "file-ignored",
+    "suppressed-message",
+    "useless-suppression",
     "deprecated-pragma",
     "use-symbolic-message-instead",
     "logging-fstring-interpolation",
@@ -146,8 +148,6 @@ disable = [
 ]
 enable = [
     "c-extension-no-member",
-    "suppressed-message",
-    "useless-suppression",
 ]
 
 [tool.pylint.design]

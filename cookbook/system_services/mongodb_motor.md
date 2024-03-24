@@ -25,7 +25,6 @@ pipenv install motor
 ## Usage
 
 ```python
-from typing import Any, Mapping
 import logging
 
 import pymongo
@@ -37,8 +36,8 @@ from pymongo.results import InsertOneResult, UpdateResult
 
 MONGO_URL = 'mongo://xxx'
 
-MONGO_CLIENT: AgnosticClient[Mapping[str, Any]] = AsyncIOMotorClient(MONGO_URL)
-MONGO_DB: AgnosticDatabase[Mapping[str, Any]] = MONGO_CLIENT['database-name']
+MONGO_CLIENT: AgnosticClient = AsyncIOMotorClient(MONGO_URL)
+MONGO_DB: AgnosticDatabase = MONGO_CLIENT['database-name']
 
 tb_users: AgnosticCollection = MONGO_DB['table-name']
 

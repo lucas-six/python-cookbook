@@ -72,9 +72,8 @@ def get_settings() -> Settings:
 ```python
 """FastAPI with MongoDB."""
 
-from collections.abc import AsyncGenerator, Mapping
+from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
-from typing import Any
 
 import uvicorn
 from fastapi import FastAPI
@@ -95,14 +94,12 @@ settings = get_settings()
 API_DOC_STATIC_DIR = 'examples/web/fastapi/static'
 API_DOC_STATIC_PATH = f'{settings.app_doc_url}/{API_DOC_STATIC_DIR}'
 
-MONGODB_CLIENT: AgnosticClient[Mapping[str, Any]] = AsyncIOMotorClient(
-    str(settings.mongodb_url)
-)
+MONGODB_CLIENT: AgnosticClient = AsyncIOMotorClient(str(settings.mongodb_url))
 DB_XXX = MONGODB_CLIENT[settings.mongodb_db_name]
 
 
 @asynccontextmanager
-async def lifespan(_: FastAPI) -> AsyncGenerator[Any, Any]:
+async def lifespan(_: FastAPI) -> AsyncGenerator:
     yield
     MONGODB_CLIENT.close()
 
@@ -128,7 +125,7 @@ async def custom_swagger_ui_html() -> HTMLResponse:
     assert isinstance(app.openapi_url, str)
     return get_swagger_ui_html(
         openapi_url=app.openapi_url,
-        title=app.title + " - Swagger UI",
+        title=app.title + ' - Swagger UI',
         oauth2_redirect_url=app.swagger_ui_oauth2_redirect_url,
         swagger_js_url=f'{API_DOC_STATIC_PATH}/swagger-ui-bundle.js',
         swagger_css_url=f'{API_DOC_STATIC_PATH}/swagger-ui.css',
@@ -147,7 +144,7 @@ async def redoc_html() -> HTMLResponse:
     assert isinstance(app.openapi_url, str)
     return get_redoc_html(
         openapi_url=app.openapi_url,
-        title=app.title + " - ReDoc",
+        title=app.title + ' - ReDoc',
         redoc_js_url=f'{API_DOC_STATIC_PATH}/redoc.standalone.js',
     )
 
