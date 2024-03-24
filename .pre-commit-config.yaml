@@ -52,18 +52,15 @@ repos:
           [
             pydantic,
             pydantic-settings,
+            pylint-pydantic,
             fastapi,
             uvicorn,
             motor,
             redis,
             types-redis,
-            pylint-pydantic,
           ]
         exclude: django_project/
         language_version: python3.11
-        args:
-          - '--load-plugins=pylint.extensions.bad_builtin,pylint_pydantic'
-          - '--extension-pkg-whitelist=pydantic'
   - repo: https://github.com/asottile/pyupgrade
     rev: v3.15.1
     hooks:
