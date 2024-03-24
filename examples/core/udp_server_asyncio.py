@@ -22,7 +22,7 @@ class EchoServerProtocol(asyncio.DatagramProtocol):
     def connection_made(  # type: ignore[override]
         self, transport: asyncio.DatagramTransport
     ) -> None:
-        self.transport = transport
+        self.transport = transport  # pylint: disable=attribute-defined-outside-init
 
         sock = transport.get_extra_info('socket')
         server_address = transport.get_extra_info('sockname')
@@ -63,7 +63,7 @@ async def udp_echo_server(host: str, port: int) -> None:
     # specifically prevents processes with differing UIDs from assigning sockets to the
     # same socket address.
     transport, _ = await loop.create_datagram_endpoint(
-        lambda: EchoServerProtocol(),
+        EchoServerProtocol,
         (host, port),
         reuse_port=True,
     )

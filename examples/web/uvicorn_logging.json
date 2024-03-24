@@ -1,16 +1,3 @@
-# Uvicorn
-
-## Installation
-
-```bash
-pip install 'uvicorn[standard]'
-```
-
-## Logging
-
-```json
-/* uvicorn_logging.json */
-
 {
     "version": 1,
     "disable_existing_loggers": false,
@@ -42,7 +29,7 @@ pip install 'uvicorn[standard]'
             "handlers": [
                 "default"
             ],
-            "level": "INFO",
+            "level": "DEBUG",
             "propagate": false
         },
         "uvicorn.error": {
@@ -60,24 +47,3 @@ pip install 'uvicorn[standard]'
         }
     }
 }
-```
-
-## Run
-
-```bash
-uvicorn --host 0.0.0.0 --port 8000 \
-    --proxy-headers \
-    --forwarded-allow-ips "*" \
-    --workers 8 \
-    --limit-concurrency 1024 \
-    --backlog 4096 \
-    --log-level info \
-    --timeout-keep-alive 5 \
-    --no-use-colors \
-    --no-server-header \
-    app.main:app --log-config uvicorn_logging.json
-```
-
-## References
-
-- [`uvicorn` Home](https://www.uvicorn.org/)

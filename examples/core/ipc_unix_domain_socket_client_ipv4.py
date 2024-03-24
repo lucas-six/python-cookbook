@@ -8,13 +8,13 @@ logging.basicConfig(
     level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
 )
 
-sockfile = 'xxx.sock'
+SOCKFILE = 'xxx.sock'
 
 
 with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as client:
     try:
         logging.debug('connecting ...')
-        client.connect(sockfile)
+        client.connect(SOCKFILE)
         logging.debug('connected')
 
         data: bytes = b'data'

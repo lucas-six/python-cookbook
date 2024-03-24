@@ -19,7 +19,7 @@ pid = os.fork()
 if pid:
     # parent process
     child.close()
-    data = b'data'
+    data = b'data'  # pylint: disable=invalid-name
     parent.sendall(data)
     logging.debug(f'parent sent: {data!r}')
     data = parent.recv(1024)

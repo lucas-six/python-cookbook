@@ -5,6 +5,8 @@ name = "pypi"
 
 [packages]
 pydantic = "*"
+fastapi = {version = "*", extras = ["all"]}
+uvicorn = {version = "*", extras = ["standard"]}
 redis = {version = "*", extras = ["hiredis"]}
 types-redis = "*"
 #uvloop = {version = "*", markers = "sys_platform != 'win32'"}
@@ -13,6 +15,7 @@ celery = {version = "*", extras = ["librabbitmq", "mongodb", "redis"]}
 #types-requests = "*"
 #django = "~=4.2"
 #psycopg = {version = ">=3.2", extras = ["binary", "pool"]}
+motor = "*"
 
 [dev-packages]
 black = "*"
