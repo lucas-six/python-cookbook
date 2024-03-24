@@ -48,7 +48,7 @@ async def custom_swagger_ui_html() -> HTMLResponse:
     assert isinstance(app.openapi_url, str)
     return get_swagger_ui_html(
         openapi_url=app.openapi_url,
-        title=app.title + " - Swagger UI",
+        title=app.title + ' - Swagger UI',
         oauth2_redirect_url=app.swagger_ui_oauth2_redirect_url,
         swagger_js_url=f'{API_DOC_STATIC_PATH}/swagger-ui-bundle.js',
         swagger_css_url=f'{API_DOC_STATIC_PATH}/swagger-ui.css',
@@ -67,7 +67,7 @@ async def redoc_html() -> HTMLResponse:
     assert isinstance(app.openapi_url, str)
     return get_redoc_html(
         openapi_url=app.openapi_url,
-        title=app.title + " - ReDoc",
+        title=app.title + ' - ReDoc',
         redoc_js_url=f'{API_DOC_STATIC_PATH}/redoc.standalone.js',
     )
 
