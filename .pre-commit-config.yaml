@@ -49,7 +49,16 @@ repos:
     hooks:
       - id: pylint
         additional_dependencies:
-          [pydantic, fastapi, uvicorn, motor, redis, types-redis, pylint-pydantic]
+          [
+            pydantic,
+            pydantic-settings,
+            fastapi,
+            uvicorn,
+            motor,
+            redis,
+            types-redis,
+            pylint-pydantic,
+          ]
         exclude: django_project/
         language_version: python3.11
         args:
