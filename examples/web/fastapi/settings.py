@@ -29,7 +29,7 @@ class Settings(BaseSettings):
     cache_prefix: str
 
     # MQTT
-    mqtt_host: str = "localhost"
+    mqtt_host: str = 'localhost'
     mqtt_port: int = 1883
     mqtt_username: str | None = None
     mqtt_password: str | None = None
