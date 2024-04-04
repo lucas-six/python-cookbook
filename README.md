@@ -178,13 +178,17 @@
 ### HTTP Client/Request
 
 - [`urllib.request` (builtin)](https://lucas-six.github.io/python-cookbook/cookbook/web/urllib_request)
-- [*`requests`*](https://requests.readthedocs.io/en/latest/): sync io, using [`urllib3`](https://urllib3.readthedocs.io/en/stable/)
 - [**`aiohttp`**](https://docs.aiohttp.org/en/stable/): asyncio
   - [`aiodns`](https://pypi.org/project/aiodns/): DNS resolver for asyncio
     - [`pycares`](https://pypi.org/project/pycares/) (using C library: [`c-ares`](https://c-ares.org/)) with [`idna`](https://lucas-six.github.io/python-cookbook/cookbook/web/idna)
+- [*`requests`*](https://requests.readthedocs.io/en/latest/): sync io, using [`urllib3`](https://urllib3.readthedocs.io/en/stable/)
 
 ### Web Frameworks
 
+- **`FastAPI`**: *ASGI* + type annotations + data model + *OpenAPI*(*Swagger UI*)
+  - [Quick Start](https://lucas-six.github.io/python-cookbook/cookbook/web/fastapi/fastapi_quickstart)
+  - [Data Model: **`Pydantic`**](https://lucas-six.github.io/python-cookbook/cookbook/web/pydantic)
+  - [FastAPI App](https://lucas-six.github.io/python-cookbook/cookbook/web/fastapi/fastapi_app)
 - [*`Django`*](https://www.djangoproject.com/
 ): full-featured
   - [Quick Start](https://lucas-six.github.io/python-cookbook/cookbook/web/django_quickstart)
@@ -192,10 +196,6 @@
   - [Cache - Redis](https://lucas-six.github.io/python-cookbook/cookbook/web/django_cache_redis)
   - [Logging](https://lucas-six.github.io/python-cookbook/cookbook/web/django_logging)
 - [`Flask`](https://flask.palletsprojects.com/): tiny
-- **`FastAPI`**: *ASGI* + type annotations + data model + *OpenAPI*(*Swagger UI*)
-  - [Quick Start](https://lucas-six.github.io/python-cookbook/cookbook/web/fastapi/fastapi_quickstart)
-  - [Data Model: **`Pydantic`**](https://lucas-six.github.io/python-cookbook/cookbook/web/pydantic)
-  - [FastAPI App](https://lucas-six.github.io/python-cookbook/cookbook/web/fastapi/fastapi_app)
 
 ### Web Server
 
