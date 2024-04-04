@@ -11,8 +11,6 @@ redis = {version = "*", extras = ["hiredis"]}
 types-redis = "*"
 #uvloop = {version = "*", markers = "sys_platform != 'win32'"}
 celery = {version = "*", extras = ["librabbitmq", "mongodb", "redis"]}
-#requests = "*"
-#types-requests = "*"
 #django = "~=4.2"
 #psycopg = {version = ">=3.2", extras = ["binary", "pool"]}
 motor = "*"

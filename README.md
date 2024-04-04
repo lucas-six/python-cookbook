@@ -195,7 +195,7 @@
 - **`FastAPI`**: *ASGI* + type annotations + data model + *OpenAPI*(*Swagger UI*)
   - [Quick Start](https://lucas-six.github.io/python-cookbook/cookbook/web/fastapi/fastapi_quickstart)
   - [Data Model: **`Pydantic`**](https://lucas-six.github.io/python-cookbook/cookbook/web/pydantic)
-  - [with MongoDB: **`motor`**](https://lucas-six.github.io/python-cookbook/cookbook/web/fastapi/fastapi_mongodb)
+  - [FastAPI App](https://lucas-six.github.io/python-cookbook/cookbook/web/fastapi/fastapi_app)
 
 ### Web Server
 

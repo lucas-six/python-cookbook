@@ -2,6 +2,7 @@
 
 from functools import lru_cache
 
+from pydantic import MongoDsn, RedisDsn
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -15,6 +16,20 @@ class Settings(BaseSettings):
     app_doc_url: str = '/docs'
     app_description: str = ''
     debug: bool = False
+    mongodb_url: MongoDsn
+    mongodb_db_name: str
+    redis_url: RedisDsn
+    cache_max_conns: int = 4096
+    cache_conn_timeout: float | None = 3.0
+    cache_timeout: float | None = 3.5
+    cache_prefix: str
+    mqtt_host: str = "localhost"
+    mqtt_port: int = 1883
+    mqtt_username: str | None = None
+    mqtt_password: str | None = None
+    mqtt_timeout: float | None = 3.5
+    mqtt_qos: int = 2
+    mqtt_topic_prefix: str
 
 
 @lru_cache()

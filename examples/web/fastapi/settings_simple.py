@@ -1,8 +1,7 @@
-"""Settings with MongoDB."""
+"""Settings."""
 
 from functools import lru_cache
 
-from pydantic import MongoDsn
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -16,8 +15,6 @@ class Settings(BaseSettings):
     app_doc_url: str = '/docs'
     app_description: str = ''
     debug: bool = False
-    mongodb_url: MongoDsn
-    mongodb_db_name: str
 
 
 @lru_cache()
