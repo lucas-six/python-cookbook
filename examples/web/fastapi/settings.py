@@ -16,13 +16,19 @@ class Settings(BaseSettings):
     app_doc_url: str = '/docs'
     app_description: str = ''
     debug: bool = False
+
+    # MongoDB
     mongodb_url: MongoDsn
     mongodb_db_name: str
+
+    # Cache: Redis
     redis_url: RedisDsn
     cache_max_conns: int = 4096
     cache_conn_timeout: float | None = 3.0
     cache_timeout: float | None = 3.5
     cache_prefix: str
+
+    # MQTT
     mqtt_host: str = "localhost"
     mqtt_port: int = 1883
     mqtt_username: str | None = None

@@ -38,7 +38,7 @@ class State(TypedDict):
     mqtt_client: aiomqtt.Client
 
 
-async def mqtt_listen(client: aiomqtt.Client):
+async def mqtt_listen(client: aiomqtt.Client) -> None:
     async with asyncio.TaskGroup() as tg:
         async for message in client.messages:
             msg = message.payload
