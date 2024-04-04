@@ -222,8 +222,8 @@
 
 ### Redis
 
-- [**`redis-py`**: Sync / Async](https://lucas-six.github.io/python-cookbook/cookbook/system_services/redis)
-- [`aioredis`: Async (Obsoleted by `redis-py`)](https://aioredis.readthedocs.io/en/latest/)
+- [**`redis-py`**: Sync + Async](https://lucas-six.github.io/python-cookbook/cookbook/system_services/redis)
+- [~~`aioredis`: Async (Obsoleted by `redis-py`)~~](https://aioredis.readthedocs.io/en/latest/)
 - `pyton-redis-orm`: ORM
 
 ### RabbitMQ
@@ -234,7 +234,7 @@
 
 ### MQTT
 
-- [**`asyncio-mqtt`**: Async](https://pypi.org/project/asyncio-mqtt/) ([中文](https://blog.alexsun.top/vuepress-python-notes/pypi-package/async/asyncio-mqtt.html))
+- [**`aiomqtt`**: Async](https://lucas-six.github.io/python-cookbook/cookbook/system_services/mqtt_aiomqtt)
 
 ## Recipes
 

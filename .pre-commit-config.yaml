@@ -41,7 +41,7 @@ repos:
     rev: v1.9.0
     hooks:
       - id: mypy
-        exclude: (settings.py|manage.py|models.py|(migrations/)|admin.py)
+        exclude: (manage.py|models.py|(migrations/)|admin.py)
         additional_dependencies: [pydantic, types-redis]
         language_version: python3.11
   - repo: https://github.com/PyCQA/pylint

@@ -37,6 +37,9 @@ dependencies = [
 
     "redis[hiredis]",
     "types-redis",
+
+    "aiomqtt",
+
     "celery[librabbitmq, mongodb, redis]",
     #"requests",
     #"types-requests",
@@ -129,9 +132,12 @@ init_typed = true
 warn_required_dynamic_aliases = true
 warn_untyped_fields = true
 
-# mypy for MongoDB motor
 [[tool.mypy.overrides]]
 module = "motor.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "redis.*"
 ignore_missing_imports = true
 
 [tool.pylint.main]

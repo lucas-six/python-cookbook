@@ -16,6 +16,7 @@ celery = {version = "*", extras = ["librabbitmq", "mongodb", "redis"]}
 #django = "~=4.2"
 #psycopg = {version = ">=3.2", extras = ["binary", "pool"]}
 motor = "*"
+aiomqtt = "*"
 
 [dev-packages]
 black = "*"

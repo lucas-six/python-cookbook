@@ -74,7 +74,6 @@ async def redoc_html() -> HTMLResponse:
 
 @app.get('/api')
 async def root() -> dict[str, str]:
-    await app.state.mongodb_db['x'].find_one({''})
     return {'Hello': 'World'}
 
 
