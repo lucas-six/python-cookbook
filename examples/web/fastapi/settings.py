@@ -23,7 +23,7 @@ class Settings(BaseSettings):
     cache_conn_timeout: float | None = 3.0
     cache_timeout: float | None = 3.5
     cache_prefix: str
-    mqtt_host: str = "localhost"
+    mqtt_host: str = 'localhost'
     mqtt_port: int = 1883
     mqtt_username: str | None = None
     mqtt_password: str | None = None
