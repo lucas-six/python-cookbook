@@ -13,6 +13,10 @@ dependencies = [
     #"redis[hiredis]",
     "types-redis",
 ]
+
+[[tool.mypy.overrides]]
+module = "redis.*"
+ignore_missing_imports = true
 ```
 
 ```bash

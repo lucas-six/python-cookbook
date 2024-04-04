@@ -12,7 +12,6 @@ pipenv install --dev flake8 pytest coverage[toml] pytest-cov pre-commit pyupgrad
 [project]
 dependencies = [
     "psycopg2 >= 2.8",
-    "redis >= 4.0",
 
     "requests >=2.6",
     "configparser; python_version == '2.7'",
@@ -21,7 +20,6 @@ dynamic = ["version"]
 
 [project.optional-dependencies]
 test = [
-    "flake8",
     "pytest",
     "coverage",
     "pytest-cov",
@@ -109,52 +107,6 @@ skip_empty = true
 # See https://pre-commit.com for more information
 # See https://pre-commit.com/hooks.html for more hooks
 repos:
-  - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
-    hooks:
-      - id: trailing-whitespace
-        args: [--markdown-linebreak-ext=md]
-      - id: end-of-file-fixer
-      - id: check-yaml
-      - id: check-json
-      - id: check-toml
-      - id: check-added-large-files
-        args: ['--maxkb=500']
-      - id: mixed-line-ending
-      - id: fix-byte-order-marker
-      - id: detect-private-key
-      - id: double-quote-string-fixer
-        exclude: manage.py
-      - id: name-tests-test
-        args: [--django]
-  - repo: https://github.com/psf/black
-    rev: 22.12.0
-    hooks:
-      - id: black
-        exclude: migrations/
-        args: ['--verbose']
-        # It is recommended to specify the latest version of Python
-        # supported by your project here, or alternatively use
-        # pre-commit's default_language_version, see
-        # https://pre-commit.com/#top_level-default_language_version
-        language_version: python3.10
-  - repo: https://github.com/pycqa/isort
-    rev: v5.11.3
-    hooks:
-      - id: isort
-        name: isort (python)
-        language_version: python3.10
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v0.991
-    hooks:
-      - id: mypy
-        additional_dependencies: [pydantic, types-redis]
-        language_version: python3.10
-  - repo: https://github.com/PyCQA/pylint
-    rev: v2.15.9
-    hooks:
-      - id: pylint
-        language_version: python3.10
   - repo: https://github.com/PyCQA/flake8
     rev: 5.0.4
     hooks:
@@ -166,23 +118,6 @@ repos:
             '--max-line-length',
             '88',
           ]
-  - repo: https://github.com/asottile/pyupgrade
-    rev: v2.37.1
-    hooks:
-      - id: pyupgrade
-
-default_language_version:
-  # force all unspecified python hooks to run python3
-  python: python3
-
-ci:
-  autofix_prs: true
-  autofix_commit_msg: '[pre-commit.ci] auto fixes from pre-commit.com hooks'
-  autoupdate_branch: ''
-  autoupdate_commit_msg: '[pre-commit.ci] pre-commit autoupdate'
-  autoupdate_schedule: weekly
-  skip: []
-  submodules: false
 ```
 
 ```bash
@@ -194,9 +129,6 @@ pre-commit install
 ```bash
 # .git/hooks/pre-commit
 # chmod u+x .git/hooks/pre-commit
-
-pipenv run isort .
-pipenv run mypy .
 
 # IDE may included
 #pipenv run flake8 .

@@ -138,7 +138,6 @@ disable = [
     "locally-disabled",
     "file-ignored",
     "suppressed-message",
-    "useless-suppression",
     "deprecated-pragma",
     "use-symbolic-message-instead",
     "logging-fstring-interpolation",
@@ -148,6 +147,7 @@ disable = [
 ]
 enable = [
     "c-extension-no-member",
+    "useless-suppression",
 ]
 
 [tool.pylint.design]

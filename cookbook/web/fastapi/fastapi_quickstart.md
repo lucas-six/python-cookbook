@@ -15,6 +15,12 @@ pipenv install --dev pylint-pydantic
 # JWT
 pipenv install python-jose[cryptography]
 pipenv install types-python-jose
+
+# HTTP Request
+pipenv install aiohttp
+
+# MQTT
+pipenv install aiomqtt
 ```
 
 ## `pyproject.toml`
@@ -53,6 +59,9 @@ dependencies = [
 
     "python-jose[cryptography]",
     "types-python-jose",
+
+    #"aiohttp",
+    #"aio-mqtt",
 ]
 dynamic = ["version"]
 
@@ -121,7 +130,7 @@ follow_imports = "silent"
 warn_redundant_casts = true
 warn_unused_ignores = true
 warn_unused_configs = true
-disallow_any_generics = true
+disallow_any_generics = false
 check_untyped_defs = true
 no_implicit_reexport = true
 disallow_untyped_defs = true
@@ -158,14 +167,15 @@ disable = [
     "bad-inline-option",
     "locally-disabled",
     "file-ignored",
+    "suppressed-message",
     "deprecated-pragma",
     "use-symbolic-message-instead",
     "logging-fstring-interpolation",
     "missing-function-docstring",
+    "missing-class-docstring",
 ]
 enable = [
     "c-extension-no-member",
-    "suppressed-message",
     "useless-suppression",
 ]
 
@@ -357,7 +367,6 @@ async def redoc_html() -> HTMLResponse:
 
 @app.get('/api')
 async def root() -> dict[str, str]:
-    await app.state.mongodb_db['x'].find_one({''})
     return {'Hello': 'World'}
 
 
@@ -377,8 +386,9 @@ See [Uvicorn: ASGI, WebSockets - Python Cookbook](../uvicorn).
 
 - [Python Project - Python Cookbook](../../build/project)
 - [ASGI Web Server: **`Uvicorn`** - Python Cookbook](../uvicorn)
-- [Data Model: **`Pydantic`**](../pydantic)
-- [with MongoDB: **`motor`**](fastapi_mongodb)
+- [Data Model: **`Pydantic`** - Python Cookbook](../pydantic)
+- [with MongoDB: **`motor`** - Python Cookbook](fastapi_mongodb)
+- [with Redis: **`redis`** - Python Cookbook](../../system_services/redis)
 
 ## References
 

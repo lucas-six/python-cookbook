@@ -41,8 +41,8 @@ repos:
     rev: v1.9.0
     hooks:
       - id: mypy
-        exclude: (settings.py|manage.py|models.py|(migrations/)|admin.py)
-        additional_dependencies: [pydantic, types-redis]
+        exclude: (manage.py|models.py|(migrations/)|admin.py)
+        additional_dependencies: [pydantic, types-redis, aiomqtt]
         language_version: python3.11
   - repo: https://github.com/PyCQA/pylint
     rev: v3.1.0
@@ -58,6 +58,7 @@ repos:
             motor,
             redis,
             types-redis,
+            aiomqtt,
           ]
         exclude: django_project/
         language_version: python3.11

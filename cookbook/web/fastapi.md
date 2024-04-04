@@ -3,22 +3,12 @@
 ## Installation
 
 ```bash
-# HTTP Request
-pipenv install aiohttp
-
-# Cache: Redis
-pipenv install redis[hiredis]
-pipenv install types-redis
-
 # MQ: RabbitMQ/MongoDB/Redis
 pipenv install pika
 pipenv install types-pika
 
 # Task Queue: Celery
 pipenv install celery[librabbitmq, mongodb, redis]
-
-# MQTT
-pipenv install asyncio-mqtt
 ```
 
 ## MongoDB
