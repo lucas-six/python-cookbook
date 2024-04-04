@@ -12,35 +12,21 @@
             "args": [
                 "--host",
                 "0.0.0.0",
+                "examples.web.fastapi.main_simple:app",
+                "--reload"
+            ],
+            "jinja": true,
+            "cwd": "${workspaceFolder}",
+        },
+        {
+            "name": "FastAPI",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "uvicorn",
+            "args": [
+                "--host",
+                "0.0.0.0",
                 "examples.web.fastapi.main:app",
-                "--reload"
-            ],
-            "jinja": true,
-            "cwd": "${workspaceFolder}",
-        },
-        {
-            "name": "FastAPI: OpenAPI with Custom Static Files",
-            "type": "debugpy",
-            "request": "launch",
-            "module": "uvicorn",
-            "args": [
-                "--host",
-                "0.0.0.0",
-                "examples.web.fastapi.main_openapi_static:app",
-                "--reload"
-            ],
-            "jinja": true,
-            "cwd": "${workspaceFolder}",
-        },
-        {
-            "name": "FastAPI: MongoDB",
-            "type": "debugpy",
-            "request": "launch",
-            "module": "uvicorn",
-            "args": [
-                "--host",
-                "0.0.0.0",
-                "examples.web.fastapi.main_mongodb:app",
                 "--reload"
             ],
             "jinja": true,
