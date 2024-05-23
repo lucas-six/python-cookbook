@@ -12,4 +12,4 @@ def func(arg: int, arg2: str = 'a') -> NoReturn:
 
 ## More Details
 
-- [Type Hint](https://leven-cn.github.io/python-cookbook/cookbook/core/type_hint/type_hint)
+- [Type Hint](type_hint)

@@ -51,4 +51,4 @@ x3: tuple[Any, ...]  # tuple of items with any type and any size
 
 ## More Details
 
-- [Type Hint](https://leven-cn.github.io/python-cookbook/cookbook/core/type_hint/type_hint)
+- [Type Hint](type_hint)
