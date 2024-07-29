@@ -38,14 +38,14 @@ repos:
         name: isort (python)
         language_version: python3.11
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.10.0
+    rev: v1.11.0
     hooks:
       - id: mypy
         exclude: (manage.py|models.py|(migrations/)|admin.py)
         additional_dependencies: [pydantic, types-redis, aiomqtt]
         language_version: python3.11
   - repo: https://github.com/PyCQA/pylint
-    rev: v3.2.3
+    rev: v3.2.6
     hooks:
       - id: pylint
         additional_dependencies:
@@ -63,7 +63,7 @@ repos:
         exclude: django_project/
         language_version: python3.11
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.16.0
+    rev: v3.17.0
     hooks:
       - id: pyupgrade
 
