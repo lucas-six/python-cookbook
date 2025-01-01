@@ -31,7 +31,7 @@ API_DOC_STATIC_PATH = f'{settings.app_doc_url}/{API_DOC_STATIC_DIR}'
 
 LOGGER = logging.getLogger('uvicorn')
 
-MONGODB_CLIENT = AsyncIOMotorClient(str(settings.mongodb_url))
+MONGODB_CLIENT: AsyncIOMotorClient = AsyncIOMotorClient(str(settings.mongodb_url))
 DB_XXX = MONGODB_CLIENT[settings.mongodb_db_name]
 TB_XXX = DB_XXX['examples']
 
