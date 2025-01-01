@@ -95,23 +95,24 @@ redis_client.close()
 ### Async
 
 ```python
-from redis.asyncio import redis
+from redis.asyncio import Redis
 
 HOST = 'localhost'
 PORT = 6379
 DB = 1
 CACHE_KEY = 'python-cookbook:redis'
 
-# redis_client = await redis.from_url(
+# redis_client = await Redis.from_url(
 #     'redis://[[username]:[password]]@localhost:6379/0', decode_responses=True
 # )
 #
 # Unix Socket
-# redis_client = redis.Redis(unix_socket_path='/tmp/redis.sock')
-redis_client = redis.Redis(
+# redis_client = Redis(unix_socket_path='/tmp/redis.sock')
+redis_client = Redis(
     HOST,
     PORT,
     DB,
+    password=None,
     decode_responses=True,
     max_connections=2**12,
     socket_connect_timeout=3.5,
