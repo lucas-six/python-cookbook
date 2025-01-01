@@ -140,6 +140,7 @@ disable = [
     "suppressed-message",
     "deprecated-pragma",
     "use-symbolic-message-instead",
+    "logging-fstring-interpolation",
     "too-many-arguments",
     #"missing-class-docstring",
     #"missing-function-docstring",
@@ -148,7 +149,7 @@ disable = [
 enable = [
     "c-extension-no-member",
     "useless-suppression",
-    "logging-fstring-interpolation",
+    "logging-format-interpolation",
 ]
 
 [tool.pylint.design]

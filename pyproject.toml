@@ -173,13 +173,14 @@ disable = [
     "missing-class-docstring",
     "missing-function-docstring",
     "duplicate-code",
+    "logging-fstring-interpolation",
     "too-many-arguments",
 #    "django-not-configured",
 ]
 enable = [
     "c-extension-no-member",
     "useless-suppression",
-    "logging-fstring-interpolation",
+    "logging-format-interpolation",
 ]
 
 [tool.pylint.design]
