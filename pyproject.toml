@@ -174,7 +174,7 @@ disable = [
     "missing-function-docstring",
     "duplicate-code",
     "logging-fstring-interpolation",
-    "too-many-arguments",
+    "too-many-positional-arguments",
 #    "django-not-configured",
 ]
 enable = [

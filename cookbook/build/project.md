@@ -141,7 +141,7 @@ disable = [
     "deprecated-pragma",
     "use-symbolic-message-instead",
     "logging-fstring-interpolation",
-    "too-many-arguments",
+    "too-many-positional-arguments",
     #"missing-class-docstring",
     #"missing-function-docstring",
     #"duplicate-code",
