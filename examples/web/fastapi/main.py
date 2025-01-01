@@ -2,12 +2,13 @@
 
 import asyncio
 import json
+import logging
+import os
 from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
 from typing import TypedDict
 
 import aiomqtt
-import uvicorn
 from fastapi import FastAPI, Request
 from fastapi.openapi.docs import (
     get_redoc_html,
@@ -28,7 +29,9 @@ settings = get_settings()
 API_DOC_STATIC_DIR = 'examples/web/fastapi/static'
 API_DOC_STATIC_PATH = f'{settings.app_doc_url}/{API_DOC_STATIC_DIR}'
 
-MONGODB_CLIENT = AsyncIOMotorClient(str(settings.mongodb_url))
+LOGGER = logging.getLogger('uvicorn')
+
+MONGODB_CLIENT: AsyncIOMotorClient = AsyncIOMotorClient(str(settings.mongodb_url))
 DB_XXX = MONGODB_CLIENT[settings.mongodb_db_name]
 TB_XXX = DB_XXX['examples']
 
@@ -59,6 +62,7 @@ async def lifespan(_: FastAPI) -> AsyncGenerator:
             max_connections=settings.cache_max_conns,
             socket_connect_timeout=settings.cache_conn_timeout,
             socket_timeout=settings.cache_timeout,
+            client_name=f'python-cookbook-{os.getpid()}',
         ) as redis_client,
         aiomqtt.Client(
             settings.mqtt_host,
@@ -66,6 +70,7 @@ async def lifespan(_: FastAPI) -> AsyncGenerator:
             username=settings.mqtt_username,
             password=settings.mqtt_password,
             timeout=settings.mqtt_timeout,
+            identifier=f'python-cookbook-{os.getpid()}',
         ) as mqtt_client,
     ):
         # Subscribe MQTT
@@ -80,6 +85,8 @@ async def lifespan(_: FastAPI) -> AsyncGenerator:
         except asyncio.CancelledError:
             pass
 
+    LOGGER.debug(f'Redis client [python-cookbook-{os.getpid()}] disconected')
+    LOGGER.debug(f'MQTT client [python-cookbook-{os.getpid()}] disconected')
     MONGODB_CLIENT.close()
 
 
@@ -143,8 +150,3 @@ async def root(request: Request) -> dict[str, str | None]:
 
 
 app.include_router(router, prefix='/api/router', tags=['router'])
-
-
-# Only for develop environment
-if __name__ == '__main__':
-    uvicorn.run(app='main:app', host='', reload=True)
