@@ -170,15 +170,17 @@ disable = [
     "deprecated-pragma",
     "suppressed-message",
     "use-symbolic-message-instead",
-    "logging-fstring-interpolation",
     "missing-class-docstring",
     "missing-function-docstring",
     "duplicate-code",
+    "logging-fstring-interpolation",
+    "too-many-positional-arguments",
 #    "django-not-configured",
 ]
 enable = [
     "c-extension-no-member",
     "useless-suppression",
+    "logging-format-interpolation",
 ]
 
 [tool.pylint.design]
