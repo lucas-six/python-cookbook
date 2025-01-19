@@ -192,10 +192,6 @@
   - [FastAPI App](https://lucas-six.github.io/python-cookbook/cookbook/web/fastapi/fastapi_app)
 - [*`Django`*](https://www.djangoproject.com/
 ): full-featured
-  - [Quick Start](https://lucas-six.github.io/python-cookbook/cookbook/web/django_quickstart)
-  - [DB - PostgreSQL](https://lucas-six.github.io/python-cookbook/cookbook/web/django_db_postgresql)
-  - [Cache - Redis](https://lucas-six.github.io/python-cookbook/cookbook/web/django_cache_redis)
-  - [Logging](https://lucas-six.github.io/python-cookbook/cookbook/web/django_logging)
 - [`Flask`](https://flask.palletsprojects.com/): tiny
 
 ### Web Server
