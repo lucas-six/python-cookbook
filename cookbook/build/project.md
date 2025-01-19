@@ -68,11 +68,10 @@ skip-string-normalization = true
 include = '\.pyi?$'
 extend-exclude = '''
 tests/.*\.py$
-migrations/.*\.py$
 '''
 
 [tool.isort]
-src_paths = ["src", "app"]
+src_paths = ["src"]
 atomic = true
 profile = "black"
 # skip = [
@@ -163,7 +162,6 @@ bad-functions = ["map", "filter"]
 [tool.pyright]
 include = [
     "src",
-    "app",
 ]
 exclude = [
     ".git",
@@ -174,44 +172,6 @@ reportGeneralTypeIssues = "none"
 reportUnboundVariable = "none"
 stubPath = ""
 pythonVersion = "3.11"
-```
-
-## Web Development: `Django`
-
-```bash
-pipenv install "django~=4.2"
-```
-
-```ini
-dependencies = [
-    "django~=4.2",
-]
-
-[project.optional-dependencies]
-test = [
-    "pylint-django",
-]
-
-[tool.pylint.main]
-ignore-patterns = "test_.*.py,manage.py,settings.py"
-load-plugins = [
-    "pylint.extensions.bad_builtin",
-    "pylint_django",
-]
-
-[tool.pylint.deprecated_builtins]
-bad-functions = ["map", "filter", "print"]
-
-[tool.isort]
-extend_skip_glob = ["*/migrations/*"]
-
-[tool.pyright]
-exclude = [
-    "**/migrations",
-]
-ignore = [
-    "**/admin.py",
-]
 ```
 
 ## More

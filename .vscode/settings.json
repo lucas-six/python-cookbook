@@ -12,7 +12,6 @@
         }
     },
     "python.analysis.importFormat": "absolute",
-    "python.analysis.typeCheckingMode": "basic",
     "black-formatter.args": [
         "--line-length=88",
         "--skip-string-normalization"
