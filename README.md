@@ -90,10 +90,13 @@
 - [Literal: `typing.Literal`](https://lucas-six.github.io/python-cookbook/cookbook/core/type_hint/type_hint_for_literal)
 - [Any: `typing.Any` and `object`](https://lucas-six.github.io/python-cookbook/cookbook/core/type_hint/type_hint_for_any)
 - [Type objects](https://lucas-six.github.io/python-cookbook/cookbook/core/type_hint/type_hint_for_type)
+- [Type Alias](https://lucas-six.github.io/python-cookbook/cookbook/core/type_hint/type_hint_for_type_alias)
 - [Callable objects](https://lucas-six.github.io/python-cookbook/cookbook/core/type_hint/type_hint_for_callable)
 - [Class Variables: `typing.ClassVar`](https://lucas-six.github.io/python-cookbook/cookbook/core/type_hint/type_hint_for_class_var)
 - [Restricting Inheritance and Overriding: `@typing.final`](https://lucas-six.github.io/python-cookbook/cookbook/core/type_hint/type_hint_for_inheritance)
 - [`typing.NoReturn`](https://lucas-six.github.io/python-cookbook/cookbook/core/type_hint/type_hint_for_noreturn)
+- [Generic Function and Class](https://lucas-six.github.io/python-cookbook/cookbook/core/type_hint/type_hint_for_generic)
+- [Override](https://lucas-six.github.io/python-cookbook/cookbook/core/type_hint/type_hint_for_override)
 
 ### I/O, File-Like Object
 
@@ -233,9 +236,7 @@
 
 - [**`aiomqtt`**: Async](https://lucas-six.github.io/python-cookbook/cookbook/system_services/mqtt_aiomqtt)
 
-## Recipes
-
-### Language Core (语言核心)
+## TODO: Language Core (语言核心)
 
 - Parallelism and Concurrent (并发)
   - [Multi-Threads Parallelism for **I/O-bound** tasks](https://lucas-six.github.io/python-cookbook/recipes/core/multi_threads)
@@ -272,7 +273,7 @@
 ## More Details
 
 - [Linux Cookbook](https://lucas-six.github.io/linux-cookbook/)
-- [Cookbook collections](https://lucas-six.github.io/)
+- [Lucas' Cookbook](https://lucas-six.github.io/)
 
 ## License
 

@@ -170,3 +170,4 @@ Combination examples:
 
 - [PEP 3101 – Advanced String Formatting](https://peps.python.org/pep-3101/)
 - [PEP 498 – Literal String Interpolation](https://peps.python.org/pep-0498/)
+- [PEP 701 – Syntactic formalization of f-strings](https://peps.python.org/pep-0701/)
