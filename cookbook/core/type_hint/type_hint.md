@@ -54,7 +54,6 @@ are handled by evaluating them in `globalns` and `localns` namespaces.
 - [PEP 3107 – Function Annotations](https://peps.python.org/pep-3107/)
 - [PEP 484 – Type Hints](https://peps.python.org/pep-0484/)
 - [PEP 483 – The Theory of Type Hints](https://peps.python.org/pep-0483/)
-- [PEP 586 – Literal Types](https://peps.python.org/pep-0586/)
 - [PEP 563 – Postponed Evaluation of Annotations](https://peps.python.org/pep-0563/)
 - [`mypy` Documentation](https://mypy.readthedocs.io/en/latest/)
 - [GitHub - `typeshed`](https://github.com/python/typeshed)
