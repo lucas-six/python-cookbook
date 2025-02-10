@@ -1,5 +1,4 @@
-"""TCP Client - Asynchronous I/O (High-Level APIs).
-"""
+"""TCP Client - Asynchronous I/O (High-Level APIs)."""
 
 import asyncio
 import logging

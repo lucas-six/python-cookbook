@@ -1,5 +1,4 @@
-"""TCP Client (IPv4)
-"""
+"""TCP Client (IPv4)"""
 
 import logging
 import socket

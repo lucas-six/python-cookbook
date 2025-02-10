@@ -1,5 +1,4 @@
-"""Command-Line Arguments Parsing.
-"""
+"""Command-Line Arguments Parsing."""
 
 import sys
 

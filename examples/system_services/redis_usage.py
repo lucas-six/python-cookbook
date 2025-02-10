@@ -1,5 +1,4 @@
-"""Redis Usage.
-"""
+"""Redis Usage."""
 
 import redis
 

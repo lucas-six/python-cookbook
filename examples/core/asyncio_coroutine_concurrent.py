@@ -1,5 +1,4 @@
-"""Asynchronous I/O - Run coroutines concurrently.
-"""
+"""Asynchronous I/O - Run coroutines concurrently."""
 
 import asyncio
 import logging

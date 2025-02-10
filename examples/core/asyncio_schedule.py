@@ -1,5 +1,4 @@
-"""Asynchronous I/O - Scheduled Tasks.
-"""
+"""Asynchronous I/O - Scheduled Tasks."""
 
 import asyncio
 import logging

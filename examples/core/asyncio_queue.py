@@ -1,5 +1,4 @@
-"""Asynchronous I/O - Queue.
-"""
+"""Asynchronous I/O - Queue."""
 
 import asyncio
 import logging

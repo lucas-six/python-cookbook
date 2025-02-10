@@ -1,5 +1,4 @@
-"""MQTT `aiomqtt` Usage.
-"""
+"""MQTT `aiomqtt` Usage."""
 
 import asyncio
 import os

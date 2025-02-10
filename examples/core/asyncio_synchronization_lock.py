@@ -1,5 +1,4 @@
-"""Asynchronous I/O - Synchronization Primitives: Lock.
-"""
+"""Asynchronous I/O - Synchronization Primitives: Lock."""
 
 import asyncio
 import logging

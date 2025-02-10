@@ -1,5 +1,4 @@
-"""IPv4 Multicast (UDP Client)
-"""
+"""IPv4 Multicast (UDP Client)"""
 
 # PEP 604, Allow writing union types as X | Y
 from __future__ import annotations

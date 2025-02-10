@@ -1,5 +1,4 @@
-"""Asynchronous I/O - Synchronization Primitives: Condition.
-"""
+"""Asynchronous I/O - Synchronization Primitives: Condition."""
 
 import asyncio
 import logging

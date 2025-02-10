@@ -1,5 +1,4 @@
-"""Asynchronous I/O - Synchronization Primitives: Event.
-"""
+"""Asynchronous I/O - Synchronization Primitives: Event."""
 
 import asyncio
 import logging

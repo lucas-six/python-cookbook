@@ -1,5 +1,4 @@
-"""UDP Server (IPv4) - Timeout Mode
-"""
+"""UDP Server (IPv4) - Timeout Mode"""
 
 from __future__ import annotations
 

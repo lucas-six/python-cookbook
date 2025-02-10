@@ -1,5 +1,4 @@
-"""Asynchronous I/O - Non-blocking main thread.
-"""
+"""Asynchronous I/O - Non-blocking main thread."""
 
 import asyncio
 import logging

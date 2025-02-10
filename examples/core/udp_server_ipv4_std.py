@@ -1,5 +1,4 @@
-"""UDP Server with Standard Framework, based on IPv4
-"""
+"""UDP Server with Standard Framework, based on IPv4"""
 
 import logging
 import socket

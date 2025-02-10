@@ -1,5 +1,4 @@
-"""Asynchronous I/O - Waiting Primitives.
-"""
+"""Asynchronous I/O - Waiting Primitives."""
 
 import asyncio
 import logging
