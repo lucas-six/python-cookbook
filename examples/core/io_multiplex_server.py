@@ -1,5 +1,4 @@
-"""I/O Multiplex (Server)
-"""
+"""I/O Multiplex (Server)"""
 
 import logging
 import selectors

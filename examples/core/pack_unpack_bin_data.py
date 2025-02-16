@@ -1,5 +1,4 @@
-"""Pack/Unpack binary data.
-"""
+"""Pack/Unpack binary data."""
 
 import array
 import binascii

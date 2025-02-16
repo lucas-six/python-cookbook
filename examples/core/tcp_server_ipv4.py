@@ -1,5 +1,4 @@
-"""TCP Server (IPv4) - Standard Framework
-"""
+"""TCP Server (IPv4) - Standard Framework"""
 
 import logging
 import socket

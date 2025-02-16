@@ -1,5 +1,4 @@
-"""UDP Client, based on IPv4
-"""
+"""UDP Client, based on IPv4"""
 
 from __future__ import annotations
 

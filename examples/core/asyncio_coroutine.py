@@ -1,5 +1,4 @@
-"""Asynchronous I/O - coroutine.
-"""
+"""Asynchronous I/O - coroutine."""
 
 import asyncio
 import logging

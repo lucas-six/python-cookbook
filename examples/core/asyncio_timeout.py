@@ -1,5 +1,4 @@
-"""Asynchronous I/O - Timeout.
-"""
+"""Asynchronous I/O - Timeout."""
 
 import asyncio
 import logging

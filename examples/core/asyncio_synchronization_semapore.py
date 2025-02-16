@@ -1,5 +1,4 @@
-"""Asynchronous I/O - Synchronization Primitives: Semapore.
-"""
+"""Asynchronous I/O - Synchronization Primitives: Semapore."""
 
 import asyncio
 import logging

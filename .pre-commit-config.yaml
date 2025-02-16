@@ -20,7 +20,7 @@ repos:
         exclude: manage.py
       - id: name-tests-test
   - repo: https://github.com/psf/black
-    rev: 24.10.0
+    rev: 25.1.0
     hooks:
       - id: black
         exclude: migrations/
@@ -31,19 +31,19 @@ repos:
         # https://pre-commit.com/#top_level-default_language_version
         language_version: python3.12
   - repo: https://github.com/pycqa/isort
-    rev: 5.13.2
+    rev: 6.0.0
     hooks:
       - id: isort
         name: isort (python)
         language_version: python3.12
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.14.1
+    rev: v1.15.0
     hooks:
       - id: mypy
         additional_dependencies: [pydantic, types-redis, aiomqtt]
         language_version: python3.12
   - repo: https://github.com/PyCQA/pylint
-    rev: v3.3.3
+    rev: v3.3.4
     hooks:
       - id: pylint
         additional_dependencies:
