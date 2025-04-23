@@ -3,7 +3,7 @@
 ## Setup Environment
 
 ```bash
-pipenv --python 3.11
+pipenv --python 3.12
 pipenv install --dev black isort mypy pylint
 ```
 
@@ -18,7 +18,7 @@ authors = [
     {name = "Lucas", email = "lucassix.lee@gmail.com"},
 ]
 readme = "README.md"
-requires-python = "~=3.11"
+requires-python = "~=3.12"
 license = {file = "LICENSE"}
 maintainers = [
     {name = "<Maintainer Name>", email = "<maintainer@email>"},
@@ -27,8 +27,8 @@ keywords = ["xxx"]
 classifiers = [
     "Development Status :: 1 - Planning",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: Implementation :: CPython",
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Topic :: Utilities",
@@ -39,8 +39,6 @@ classifiers = [
 ]
 dependencies = [
     "psycopg2 >= 2.8",
-    "redis >= 4.0",
-    "types-redis",
 
     "requests >=2.6",
     "configparser; python_version == '2.7'",
@@ -100,7 +98,7 @@ extend_skip = [".gitignore", ".env", ".dockerignore"]
 extend_skip_glob = []
 
 [tool.mypy]
-python_version = "3.11"
+python_version = "3.12"
 exclude = [
     "test_main.py",
 ]
@@ -115,7 +113,7 @@ disallow_untyped_defs = true
 
 [tool.pylint.main]
 recursive = true
-py-version = 3.11
+py-version = 3.12
 jobs = 0
 ignore = "CVS,.git,__pycache__,.mypy_cache,tests"
 ignore-paths = "tests"
@@ -171,7 +169,7 @@ exclude = [
 reportGeneralTypeIssues = "none"
 reportUnboundVariable = "none"
 stubPath = ""
-pythonVersion = "3.11"
+pythonVersion = "3.12"
 ```
 
 ## More
