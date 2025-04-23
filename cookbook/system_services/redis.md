@@ -20,8 +20,6 @@ ignore_missing_imports = true
 ```
 
 ```bash
-pip install types-redis
-
 pipenv install redis
 # pipenv install redis[hiredis]
 pipenv install types-redis
