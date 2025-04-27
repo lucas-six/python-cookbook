@@ -4,66 +4,62 @@ description = "Recipes for Python. Hands-on code examples and snippets for daily
 authors = [{ name = "Li Yun", email = "lucassix.lee@gmail.com" }]
 readme = "README.md"
 requires-python = "~=3.12"
-license = { file = "LICENSE" }
+license-files = ["LICEN[CS]E*"]
 maintainers = [{ name = "Li Yun", email = "lucassix.lee@gmail.com" }]
 keywords = ["cookbook", "recipe", "fastapi", "mongodb"]
 classifiers = [
-    "Development Status :: 1 - Planning",
+    "Development Status :: 2 - Pre-Alpha",
+
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Documentation",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Utilities",
+
     "Programming Language :: Python :: 3 :: Only",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: Implementation :: CPython",
-    "Topic :: Software Development :: Libraries :: Python Modules",
-    "Topic :: Utilities",
     "Operating System :: OS Independent",
-    "License :: OSI Approved :: Apache Software License",
     "Typing :: Typed",
 ]
 dependencies = [
     "pydantic",
     "fastapi[all]",
     "uvicorn[standard]",
-
     #"python-jose[cryptography]",
     #"types-python-jose",
-
     "motor",
     #"beanie",
     #"pyodmongo",
-
     "redis[hiredis]",
     "types-redis",
-
     "aiomqtt",
-
     "celery[librabbitmq, mongodb, redis]",
     #"requests",
     #"types-requests",
 ]
 dynamic = ["version"]
 
-[project.optional-dependencies]
-test = [
-    "black",
-    "isort",
-    "mypy",
-    "pylint",
-    "pylint-pydantic",
-    #"pytest",
-    #"coverage[toml]",
-    #"pytest-cov >= 3.0",
-    #"pyupgrade",
-]
-doc = []
-
 [project.urls]
 Home = "https://lucas-six.github.io/python-cookbook/"
 Documentation = "https://lucas-six.github.io/python-cookbook/"
-Source = "https://github.com/lucas-six/python-cookbook/"
+Repository = "https://github.com/lucas-six/python-cookbook/"
+
+[tool.setuptools]
+py-modules = ['cookbook', 'examples']
 
 [[tool.uv.index]]
 url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
 default = true
+
+[dependency-groups]
+dev = [
+    "black>=25.1.0",
+    "isort>=6.0.1",
+    "mypy>=1.15.0",
+    "pylint>=3.3.6",
+    "pylint-pydantic>=0.3.5",
+]
 
 [tool.black]
 line-length = 88
@@ -134,7 +130,7 @@ ignore_missing_imports = true
 recursive = true
 py-version = 3.12
 jobs = 0
-ignore = "CVS,.git,__pycache__,.mypy_cache,tests"
+ignore = "CVS,.git,__pycache__,.venv,.mypy_cache,.pytest_cache,tests"
 ignore-paths = "tests"
 ignore-patterns = "test_.*.py"
 ignored-classes = "Body"

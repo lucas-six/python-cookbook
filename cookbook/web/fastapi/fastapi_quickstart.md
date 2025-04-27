@@ -32,21 +32,23 @@ authors = [
 ]
 readme = "README.md"
 requires-python = "~=3.12"
-license = {file = "LICENSE"}
+license-files = ["LICEN[CS]E*", "vendored/licenses/*.txt", "AUTHORS.md"]
 maintainers = [
     {name = "<Maintainer Name>", email = "<maintainer@email>"},
 ]
 keywords = ["xxx"]
 classifiers = [
-    "Development Status :: 1 - Planning",
+    "Development Status :: 2 - Pre-Alpha",
+
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Documentation",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Utilities",
+
     "Programming Language :: Python :: 3 :: Only",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: Implementation :: CPython",
-    "Topic :: Software Development :: Libraries :: Python Modules",
-    "Topic :: Utilities",
     "Operating System :: OS Independent",
-    "License :: OSI Approved :: MIT License",
-    "License :: OSI Approved :: Apache Software License",
     "Typing :: Typed",
 ]
 dependencies = [
@@ -61,20 +63,26 @@ dependencies = [
 ]
 dynamic = ["version"]
 
-[project.optional-dependencies]
-test = [
-    "black",
-    "isort",
-    "mymy",
-    "pylint",
-    "pylint-pydantic",
-]
-doc = []
-
 [project.urls]
 Home = "<URL>"
 Documentation = "<URL>"
-Source = "<URL>"
+Repository = "<URL>"
+
+[tool.setuptools]
+py-modules = ['app', 'src']
+
+[[tool.uv.index]]
+url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
+default = true
+
+[dependency-groups]
+dev = [
+    "black>=25.1.0",
+    "isort>=6.0.1",
+    "mypy>=1.15.0",
+    "pylint>=3.3.6",
+    "pylint-pydantic>=0.3.5",
+]
 
 [tool.black]
 line-length = 88
@@ -141,7 +149,7 @@ warn_untyped_fields = true
 recursive = true
 py-version = 3.12
 jobs = 0
-ignore = "CVS,.git,__pycache__,.mypy_cache,tests"
+ignore = "CVS,.git,__pycache__,.venv,.mypy_cache,.pytest_cache,tests"
 ignore-paths = "tests"
 ignore-patterns = "test_.*.py"
 ignored-classes = "Body"
@@ -173,6 +181,8 @@ disable = [
 enable = [
     "c-extension-no-member",
     "useless-suppression",
+    "logging-format-interpolation",
+    "duplicate-code",
 ]
 
 [tool.pylint.design]

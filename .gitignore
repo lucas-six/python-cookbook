@@ -3,6 +3,7 @@
 *.log
 *.sqlite3
 
+*.egg-info/
 .mypy_cache
 .pytest_cache
 .coverage
