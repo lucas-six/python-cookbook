@@ -162,10 +162,7 @@ jobs:
 
 ## References
 
-- [PEP 517 - A build-system independent format for source trees](https://peps.python.org/pep-0517/)
-- [PEP 518 – Specifying Minimum Build System Requirements for Python Projects](https://peps.python.org/pep-0518/)
 - [`flit` Documentation](https://flit.pypa.io/en/latest/)
-- [TOML 1.0](https://toml.io/en/v1.0.0)
 - [PEP 621 – Storing project metadata in pyproject.toml](https://peps.python.org/pep-0621/)
 - [`pre-commit` Documentation](https://pre-commit.com/)
 - [`flake8` Documentation](https://flake8.pycqa.org/en/latest/)
