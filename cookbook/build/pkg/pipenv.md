@@ -19,7 +19,7 @@ cd <project-dir>
 pipenv --python <x.y>
 
 # For example:
-pipenv --python 3.11
+pipenv --python 3.12
 
 # or default version:
 pipenv --three
@@ -31,19 +31,14 @@ pipenv --three
 pipenv --rm
 ```
 
-## Install Packages
+## Install Packages/Dependencies
 
 ```bash
 pipenv install <pkg ...>
+pipenv install --dev <pkg ...>  # for development
 ```
 
-## Install Packages for Development
-
-```bash
-pipenv install --dev <pkg ...>
-```
-
-## Install All Packages
+## Install All Packages/Dependencies
 
 ```bash
 pipenv install
@@ -55,19 +50,14 @@ If you want to install a local `setup.py`:
 pipenv install -e .
 ```
 
-## Uninstall Packages
+## Uninstall Packages/Dependencies
 
 ```bash
 pipenv uninstall <pkg ...>
+pipenv uninstall --dev <pkg ...>  # for development
 ```
 
-## Uninstall Packages for Development
-
-```bash
-pipenv uninstall --dev <pkg ...>
-```
-
-## Upgrade All Packages
+## Upgrade All Packages/Dependencies
 
 ```bash
 pipenv update
@@ -96,7 +86,7 @@ pipenv run uwsgi a.ini
 pipenv sync
 ```
 
-## Use Mirror
+## Package Indexes (Mirror)
 
 ```bash
 pipenv --pypi-mirror https://mirrors.aliyun.com/pypi/simple/ <cmd>
