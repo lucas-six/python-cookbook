@@ -2,6 +2,15 @@
 
 ## Setup Environment
 
+### `uv`
+
+```bash
+uv --python 3.12
+uv add --dev black isort mypy pylint
+```
+
+### `Pipenv`
+
 ```bash
 pipenv --python 3.12
 pipenv install --dev black isort mypy pylint
@@ -58,6 +67,10 @@ doc = []
 Home = "<URL>"
 Documentation = "<URL>"
 Source = "<URL>"
+
+[[tool.uv.index]]
+url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
+default = true
 
 [tool.black]
 line-length = 88
@@ -174,6 +187,7 @@ pythonVersion = "3.12"
 
 ## More
 
+- [`uv` - Python Cookbook](pkg/uv)
 - [`pipenv` - Python Cookbook](pkg/pipenv)
 
 ## References

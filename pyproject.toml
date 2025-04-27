@@ -61,9 +61,13 @@ Home = "https://lucas-six.github.io/python-cookbook/"
 Documentation = "https://lucas-six.github.io/python-cookbook/"
 Source = "https://github.com/lucas-six/python-cookbook/"
 
+[[tool.uv.index]]
+url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
+default = true
+
 [tool.black]
 line-length = 88
-target-version = ['py311']
+target-version = ['py311', 'py312']
 skip-string-normalization = true
 include = '\.pyi?$'
 extend-exclude = '''
