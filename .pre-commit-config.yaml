@@ -43,7 +43,7 @@ repos:
         additional_dependencies: [pydantic, types-redis, aiomqtt]
         language_version: python3.12
   - repo: https://github.com/PyCQA/pylint
-    rev: v3.3.6
+    rev: v3.3.7
     hooks:
       - id: pylint
         additional_dependencies:
