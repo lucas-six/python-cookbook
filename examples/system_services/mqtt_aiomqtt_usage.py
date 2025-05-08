@@ -4,17 +4,17 @@ import asyncio
 
 import aiomqtt
 
-MQTT_HOST = "localhost"
-MQTT_TOPIC_PREFIX = "python-cookbook"
+MQTT_HOST = 'localhost'
+MQTT_TOPIC_PREFIX = 'python-cookbook'
 
 
 async def main() -> None:
     async with aiomqtt.Client(MQTT_HOST, timeout=3.5) as client:
         # Subscribe
-        await client.subscribe(f"{MQTT_TOPIC_PREFIX}/#")
+        await client.subscribe(f'{MQTT_TOPIC_PREFIX}/#')
         async for message in client.messages:
             if isinstance(message.payload, bytes):
-                print(message.payload.decode("utf-8"))
+                print(message.payload.decode('utf-8'))
 
         # Publish
         # await client.publish(f'{MQTT_TOPIC_PREFIX}/example', payload={'msg': 'hello'})

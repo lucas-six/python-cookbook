@@ -7,9 +7,7 @@ import socket
 import struct
 from typing import Any
 
-logging.basicConfig(
-    level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
-)
+logging.basicConfig(level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}')
 logger = logging.getLogger()
 
 

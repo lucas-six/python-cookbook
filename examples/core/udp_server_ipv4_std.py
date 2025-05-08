@@ -4,9 +4,7 @@ import logging
 import socket
 import socketserver
 
-logging.basicConfig(
-    level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
-)
+logging.basicConfig(level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}')
 logger = logging.getLogger()
 
 
@@ -29,7 +27,9 @@ class MyUDPHandler(socketserver.BaseRequestHandler):
 
 
 with socketserver.UDPServer(
-    ('localhost', 9999), MyUDPHandler, bind_and_activate=False  # pyright: ignore
+    ('localhost', 9999),
+    MyUDPHandler,
+    bind_and_activate=False,  # pyright: ignore
 ) as server:
     # When multiple processes with differing UIDs assign sockets
     # to an identical UDP socket address with `SO_REUSEADDR`,

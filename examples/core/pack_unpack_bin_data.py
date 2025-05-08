@@ -30,10 +30,7 @@ value = (1, b'ab', 2, 3, 3, 2.5)
 
 # basic - pack
 data: bytes = struct.pack(fmt_str, *value)
-assert (
-    data
-    == b'\x01\x00\x00\x00ab\x02\x00\x00\x00\x00\x00\x00\x00\x03\x00\x03\x00\x00\x00 @'
-)
+assert data == b'\x01\x00\x00\x00ab\x02\x00\x00\x00\x00\x00\x00\x00\x03\x00\x03\x00\x00\x00 @'
 str_data = binascii.hexlify(data)
 assert str_data == b'01000000616202000000000000000300030000002040'
 

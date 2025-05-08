@@ -9,9 +9,7 @@ from __future__ import annotations
 import asyncio
 import logging
 
-logging.basicConfig(
-    level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}'
-)
+logging.basicConfig(level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}')
 
 
 class EchoClientProtocol(asyncio.Protocol):

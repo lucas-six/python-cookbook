@@ -6,9 +6,7 @@ import random
 import time
 from typing import Any, NoReturn
 
-logging.basicConfig(
-    level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}'
-)
+logging.basicConfig(level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}')
 
 
 async def worker(i: int, queue: asyncio.Queue[float]) -> NoReturn:
@@ -53,9 +51,7 @@ async def main(workers: int) -> None:
     await asyncio.gather(*tasks, return_exceptions=True)
 
     logging.debug('====')
-    logging.debug(
-        f'{workers} workers slept in parallel for {total_slept_for:.2f} seconds'
-    )
+    logging.debug(f'{workers} workers slept in parallel for {total_slept_for:.2f} seconds')
     logging.debug(f'total expected sleep time: {total_sleep_time:.2f} seconds')
 
 

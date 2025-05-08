@@ -3,9 +3,7 @@
 import logging
 import socket
 
-logging.basicConfig(
-    level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
-)
+logging.basicConfig(level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}')
 
 SOCKFILE = 'xxx.sock'
 

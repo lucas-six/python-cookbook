@@ -11,9 +11,7 @@ import logging
 import socket
 import sys
 
-logging.basicConfig(
-    level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}'
-)
+logging.basicConfig(level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}')
 
 # TCP_QUICKACK = True
 recv_bufsize: int | None = None

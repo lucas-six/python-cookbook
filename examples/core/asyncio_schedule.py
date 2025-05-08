@@ -5,9 +5,7 @@ import logging
 import time
 from functools import partial
 
-logging.basicConfig(
-    level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}'
-)
+logging.basicConfig(level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}')
 
 
 def callback(num: int, wait: float, *, kwarg: str = 'keyword') -> None:
