@@ -81,11 +81,10 @@ dev = [
     "isort>=6.0.1",
     "mypy>=1.15.0",
     "pylint>=3.3.6",
-    "pylint-pydantic>=0.3.5",
 ]
 
 [tool.black]
-line-length = 88
+line-length = 100
 target-version = ['py311', 'py312']
 skip-string-normalization = true
 include = '\.pyi?$'
@@ -140,7 +139,7 @@ disallow_untyped_defs = true
 recursive = true
 py-version = 3.12
 jobs = 0
-ignore = "CVS,.git,__pycache__,.venv,.mypy_cache,.pytest_cache,tests"
+ignore = "CVS,.git,__pycache__,.venv,.tox,.mypy_cache,.pytest_cache,tests"
 ignore-paths = "tests"
 ignore-patterns = "test_.*.py"
 load-plugins = [
@@ -148,7 +147,7 @@ load-plugins = [
 ]
 
 [tool.pylint.'FORMAT']
-max-line-length = 88
+max-line-length = 100
 
 [tool.pylint.'LOGGING']
 logging-format-style = "new"
@@ -189,7 +188,10 @@ include = [
 exclude = [
     ".git",
     "**/__pycache__",
+    "**/.venv",
+    "**/.tox",
     "**/.mypy_cache",
+    "**/.pytest_cache",
 ]
 reportGeneralTypeIssues = "none"
 reportUnboundVariable = "none"

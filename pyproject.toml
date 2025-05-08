@@ -183,7 +183,7 @@ addopts = [
     "--durations=5",
     "--durations-min=0.25",
 ]
-norecursedirs = [".git", ".*_cache", ".tox", "*.egg-info", "docs"]
+norecursedirs = [".git", ".venv", ".*_cache", ".tox", "*.egg-info", "docs"]
 
 [tool.coverage.run]
 parallel = true
@@ -193,7 +193,14 @@ skip_empty = true
 
 [tool.pyright]
 include = ["examples"]
-exclude = [".git", "**/__pycache__", "**/.mypy_cache"]
+exclude = [
+    ".git",
+    ".venv",
+    ".tox",
+    "**/__pycache__",
+    "**/.mypy_cache",
+    "**/.pytest_cache",
+]
 reportGeneralTypeIssues = "none"
 reportUnboundVariable = "none"
 stubPath = ""
