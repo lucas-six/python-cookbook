@@ -53,15 +53,17 @@ uv remove --dev <pkg ...>  # for development
 
 ```bash
 uv run <python-cmd>
+
+uv run --env-file .env <python-cmd>  # or UV_ENV_FILE = .env
 ```
 
 Examples:
 
 ```bash
-uv run python a.py
+uv run a.py
 
 uv run django-admin startproject a
-uv run python manage.py runserver
+uv run --env-file .env manage.py runserver
 
 uv run uwsgi a.ini
 ```

@@ -3,21 +3,19 @@
 ## Installation
 
 ```bash
-pipenv --python 3.12
+uv init --python 3.12
 
-pipenv install pydantic
-pipenv install fastapi[all]
-pipenv install uvicorn[standard]
+uv add fastapi[all]
+uv add uvicorn[standard]
 
-pipenv install --dev black isort mypy pylint
-pipenv install --dev pylint-pydantic
+uv add --dev black isort mypy pylint pylint-pydantic
 
 # JWT
-pipenv install python-jose[cryptography]
-pipenv install types-python-jose
+uv add python-jose[cryptography]
+uv add types-python-jose
 
 # HTTP Request
-pipenv install aiohttp
+uv add aiohttp
 ```
 
 ## `pyproject.toml`
@@ -52,7 +50,6 @@ classifiers = [
     "Typing :: Typed",
 ]
 dependencies = [
-    "pydantic",
     "fastapi[all]",
     "uvicorn[standard]",
 
@@ -85,7 +82,7 @@ dev = [
 ]
 
 [tool.black]
-line-length = 88
+line-length = 100
 target-version = ['py311', 'py312']
 skip-string-normalization = true
 include = '\.pyi?$'
@@ -149,7 +146,7 @@ warn_untyped_fields = true
 recursive = true
 py-version = 3.12
 jobs = 0
-ignore = "CVS,.git,__pycache__,.venv,.mypy_cache,.pytest_cache,tests"
+ignore = "CVS,.git,__pycache__,.venv,.tox,.mypy_cache,.pytest_cache,tests"
 ignore-paths = "tests"
 ignore-patterns = "test_.*.py"
 ignored-classes = "Body"
@@ -160,7 +157,7 @@ load-plugins = [
 ]
 
 [tool.pylint.'FORMAT']
-max-line-length = 88
+max-line-length = 100
 
 [tool.pylint.'LOGGING']
 logging-format-style = "new"
@@ -201,6 +198,7 @@ include = [
 exclude = [
     ".git",
     "**/__pycache__",
+    "**/.venv",
     "**/.mypy_cache",
 ]
 reportGeneralTypeIssues = "none"
