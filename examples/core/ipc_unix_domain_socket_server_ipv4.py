@@ -5,9 +5,7 @@ import os
 import socket
 from contextlib import suppress
 
-logging.basicConfig(
-    level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
-)
+logging.basicConfig(level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}')
 
 SOCKFILE = 'xxx.sock'
 

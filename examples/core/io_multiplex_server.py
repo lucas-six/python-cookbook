@@ -5,9 +5,7 @@ import selectors
 import socket
 from typing import NoReturn
 
-logging.basicConfig(
-    level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
-)
+logging.basicConfig(level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}')
 
 # In non-blocking mode: I/O multiplex
 # on Windows and POSIX: select()

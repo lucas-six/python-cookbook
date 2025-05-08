@@ -6,9 +6,7 @@ import struct
 import sys
 import time
 
-logging.basicConfig(
-    level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
-)
+logging.basicConfig(level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}')
 
 
 def run_tcp_client(
@@ -34,12 +32,8 @@ def run_tcp_client(
             # On Linux 2.4+: `TCP_SYNCNT`
             if hasattr(socket, 'TCP_SYNCNT') and sys.platform == 'linux':  # Linux 2.4+
                 if syn_retries is not None:
-                    client.setsockopt(
-                        socket.IPPROTO_TCP, socket.TCP_SYNCNT, syn_retries
-                    )
-                curr_syn_retries = client.getsockopt(
-                    socket.IPPROTO_TCP, socket.TCP_SYNCNT
-                )
+                    client.setsockopt(socket.IPPROTO_TCP, socket.TCP_SYNCNT, syn_retries)
+                curr_syn_retries = client.getsockopt(socket.IPPROTO_TCP, socket.TCP_SYNCNT)
                 logging.debug(f'SYN retries: {curr_syn_retries}')
 
             logging.debug(f'timeout: {client.gettimeout()}')
@@ -60,22 +54,18 @@ def run_tcp_client(
             # max: /proc/sys/net/core/rmem_max
             if recv_buf_size is not None:
                 client.setsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF, recv_buf_size)
-            cur_recv_buf_size: int = client.getsockopt(
-                socket.SOL_SOCKET, socket.SO_RCVBUF
-            )
+            cur_recv_buf_size: int = client.getsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF)
             logging.debug(f'recv buffer size: {cur_recv_buf_size}')
 
             # send buffer size
             # max: /proc/sys/net/core/wmem_max
             if send_buf_size is not None:
                 client.setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, send_buf_size)
-            cur_send_buff_size: int = client.getsockopt(
-                socket.SOL_SOCKET, socket.SO_SNDBUF
-            )
+            cur_send_buff_size: int = client.getsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF)
             logging.debug(f'send buffer size: {cur_send_buff_size}')
 
             nodelay = bool(client.getsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY))
-            logging.debug(f'NO_DELAY (disable Nagle\'s Algorithm): {nodelay}')
+            logging.debug(f"NO_DELAY (disable Nagle's Algorithm): {nodelay}")
 
             if read_sleep is not None:
                 time.sleep(read_sleep)

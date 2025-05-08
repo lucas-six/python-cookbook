@@ -3,9 +3,7 @@
 import asyncio
 import logging
 
-logging.basicConfig(
-    level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}'
-)
+logging.basicConfig(level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}')
 
 
 async def consumer(cond: asyncio.Condition, i: int) -> None:

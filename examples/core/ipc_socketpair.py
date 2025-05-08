@@ -7,9 +7,7 @@ import logging
 import os
 import socket
 
-logging.basicConfig(
-    level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
-)
+logging.basicConfig(level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}')
 
 parent, child = socket.socketpair()  # AF_UNIX by default
 assert isinstance(parent, socket.socket)

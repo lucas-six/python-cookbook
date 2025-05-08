@@ -4,9 +4,7 @@ import logging
 import selectors
 import socket
 
-logging.basicConfig(
-    level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
-)
+logging.basicConfig(level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}')
 
 
 # In non-blocking mode: I/O multiplex

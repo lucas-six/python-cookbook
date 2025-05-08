@@ -22,9 +22,10 @@ import json
 import mimetypes
 import sys
 import time
+from collections.abc import Callable
 from http import HTTPStatus
 from pathlib import Path
-from typing import Any, BinaryIO, Callable
+from typing import Any, BinaryIO
 
 
 def application(
@@ -65,14 +66,10 @@ def application(
         rsp_path = root_path / req_path[1:]
         rsp_content = rsp_path.read_bytes()
         _type = mimetypes.guess_type(rsp_path)[0]
-        rsp_content_type = (
-            f'image/{rsp_path.suffix.removeprefix(".")}' if _type is None else _type
-        )
+        rsp_content_type = f'image/{rsp_path.suffix.removeprefix(".")}' if _type is None else _type
         rsp = [rsp_content]
     elif req_path.endswith('.json'):  # json
-        rsp_content = json.dumps(
-            {'a': 1, 'b': '你好', 'time': time.time()}, ensure_ascii=False
-        )
+        rsp_content = json.dumps({'a': 1, 'b': '你好', 'time': time.time()}, ensure_ascii=False)
         rsp_content_type = 'application/json'
         rsp = [rsp_content.encode('utf-8')]
     elif req_method == 'POST':

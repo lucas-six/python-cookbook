@@ -6,9 +6,7 @@ from __future__ import annotations
 import logging
 import socket
 
-logging.basicConfig(
-    level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
-)
+logging.basicConfig(level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}')
 
 # params
 data: bytes = b'data'
@@ -33,12 +31,8 @@ with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as client:
         if multicast_loopback is not None:
             multicast_loopback_val = 1 if multicast_loopback else 0
         if multicast_loopback_val is not None:
-            client.setsockopt(
-                socket.IPPROTO_IP, socket.IP_MULTICAST_LOOP, multicast_loopback_val
-            )
-        multicast_loopback = (
-            client.getsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_LOOP) == 1
-        )
+            client.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_LOOP, multicast_loopback_val)
+        multicast_loopback = client.getsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_LOOP) == 1
         logging.debug(f'Server multicast loopback enabled: {multicast_loopback}')
 
         client.sendto(data, group_address)

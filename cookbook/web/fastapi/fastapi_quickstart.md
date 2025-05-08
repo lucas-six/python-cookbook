@@ -5,14 +5,11 @@
 ```bash
 uv init --python 3.12
 
-uv add fastapi[all]
-uv add uvicorn[standard]
-
-uv add --dev black isort mypy pylint pylint-pydantic
+uv add fastapi[all] uvicorn[standard]
+uv add --dev ruff mypy
 
 # JWT
-uv add python-jose[cryptography]
-uv add types-python-jose
+uv add python-jose[cryptography] types-python-jose
 
 # HTTP Request
 uv add aiohttp
@@ -74,51 +71,40 @@ default = true
 
 [dependency-groups]
 dev = [
-    "black>=25.1.0",
-    "isort>=6.0.1",
+    "ruff>=0.11.8",
     "mypy>=1.15.0",
-    "pylint>=3.3.6",
-    "pylint-pydantic>=0.3.5",
 ]
 
-[tool.black]
+[tool.ruff]
 line-length = 100
-target-version = ['py311', 'py312']
-skip-string-normalization = true
-include = '\.pyi?$'
-extend-exclude = '''
-tests/.*\.py$
-migrations/.*\.py$
-'''
+lint.extend-safe-fixes = [
+    # non-pep585-annotation
+    "UP006",
+]
+lint.select = [
+    # flake8-bugbear
+    "B",
+    # flake8-comprehensions
+    "C4",
+    # pycodestyle
+    "E",
+    # Pyflakes errors
+    "F",
+    # isort
+    "I",
+    # flake8-simplify
+    "SIM",
+    # flake8-tidy-imports
+    "TID",
+    # pyupgrade
+    "UP",
+    # Pyflakes warnings
+    "W",
+]
+lint.ignore = []
 
-[tool.isort]
-src_paths = ["src", "app"]
-atomic = true
-profile = "black"
-# skip = [
-#    '.bzr',
-#    '.direnv',
-#    '.eggs',
-#    '.git',
-#    '.hg',
-#    '.mypy_cache',
-#    '.nox',
-#    '.pants.d',
-#    '.svn',
-#    '.tox',
-#    '.venv',
-#    '__pypackages__',
-#    '_build',
-#    'buck-out',
-#    'build',
-#    'dist',
-#    'node_modules',
-#    'venv'
-# ]
-skip_gitignore = true
-extend_skip = [".gitignore", ".env", ".dockerignore"]
-# skip_glob = []
-extend_skip_glob = []
+[tool.ruff.format]
+quote-style = "single"
 
 [tool.mypy]
 python_version = "3.12"
@@ -141,54 +127,6 @@ init_forbid_extra = true
 init_typed = true
 warn_required_dynamic_aliases = true
 warn_untyped_fields = true
-
-[tool.pylint.main]
-recursive = true
-py-version = 3.12
-jobs = 0
-ignore = "CVS,.git,__pycache__,.venv,.tox,.mypy_cache,.pytest_cache,tests"
-ignore-paths = "tests"
-ignore-patterns = "test_.*.py"
-ignored-classes = "Body"
-extension-pkg-whitelist = "pydantic"
-load-plugins = [
-    "pylint.extensions.bad_builtin",
-    "pylint_pydantic",
-]
-
-[tool.pylint.'FORMAT']
-max-line-length = 100
-
-[tool.pylint.'LOGGING']
-logging-format-style = "new"
-
-[tool.pylint.'MESSAGES CONTROL']
-disable = [
-    "raw-checker-failed",
-    "bad-inline-option",
-    "locally-disabled",
-    "file-ignored",
-    "suppressed-message",
-    "deprecated-pragma",
-    "use-symbolic-message-instead",
-    "logging-fstring-interpolation",
-    "missing-function-docstring",
-    "missing-class-docstring",
-]
-enable = [
-    "c-extension-no-member",
-    "useless-suppression",
-    "logging-format-interpolation",
-    "duplicate-code",
-]
-
-[tool.pylint.design]
-max-args = 15
-min-public-methods = 0
-max-locals = 25
-
-[tool.pylint.deprecated_builtins]
-bad-functions = ["map", "filter", "print"]
 
 [tool.pyright]
 include = [

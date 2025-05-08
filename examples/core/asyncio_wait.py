@@ -3,9 +3,7 @@
 import asyncio
 import logging
 
-logging.basicConfig(
-    level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}'
-)
+logging.basicConfig(level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}')
 
 
 async def do_task(name: str | int, delay: float) -> str:
@@ -38,7 +36,7 @@ async def coroutine_as_completed_timeout(arg: str) -> list[str]:
     for coroutine in asyncio.as_completed(tasks, timeout=3.2):
         try:
             r = await coroutine
-        except asyncio.TimeoutError:
+        except TimeoutError:
             logging.warning('timeout')
         else:
             rs.append(r)
@@ -53,9 +51,7 @@ async def main() -> tuple[str, ...]:
         logging.debug(f'result: {t.result()}')
 
     # with timeout
-    tasks2 = {
-        asyncio.create_task(do_task(i, i / 2), name=f't{i}') for i in range(5, 10)
-    }
+    tasks2 = {asyncio.create_task(do_task(i, i / 2), name=f't{i}') for i in range(5, 10)}
     done, pending = await asyncio.wait(tasks2, timeout=3.0)
     for t in done:
         logging.debug(f'result: {t.result()}')

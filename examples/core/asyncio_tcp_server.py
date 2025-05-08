@@ -5,9 +5,7 @@ import logging
 import socket
 import sys
 
-logging.basicConfig(
-    level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}'
-)
+logging.basicConfig(level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}')
 
 HOST = 'localhost'
 PORT = 8888
@@ -17,9 +15,7 @@ KEEP_ALIVE_CNT = 5
 KEEP_ALIVE_INTVL = 15
 
 
-async def handle_echo(
-    reader: asyncio.StreamReader, writer: asyncio.StreamWriter
-) -> None:
+async def handle_echo(reader: asyncio.StreamReader, writer: asyncio.StreamWriter) -> None:
     client_address = writer.get_extra_info('peername')
     logging.debug(f'connected from {client_address}')
 
@@ -37,9 +33,7 @@ async def handle_echo(
     assert bool(sock.getsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE))
     if sys.platform == 'linux':
         # Keep Idle, Linux 2.4+
-        assert (
-            sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPIDLE) == KEEP_ALIVE_IDLE
-        )
+        assert sock.getsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPIDLE) == KEEP_ALIVE_IDLE
 
         # Fast Open, Linux 3.7+
         fastopen = sock.getsockopt(socket.SOL_SOCKET, socket.TCP_FASTOPEN)
@@ -121,14 +115,10 @@ async def tcp_echo_server(
         ):
             sock.setsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)
             if sys.platform == 'linux':  # Linux 2.4+
-                sock.setsockopt(
-                    socket.IPPROTO_TCP, socket.TCP_KEEPIDLE, keep_alive_idle
-                )
+                sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPIDLE, keep_alive_idle)
             elif hasattr(socket, 'TCP_KEEPALIVE'):
                 assert sys.platform == 'darwin' and sys.version_info >= (3, 10)
-                sock.setsockopt(
-                    socket.IPPROTO_TCP, socket.TCP_KEEPALIVE, keep_alive_idle
-                )
+                sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPALIVE, keep_alive_idle)
             sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPCNT, keep_alive_cnt)
             sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPINTVL, keep_alive_intvl)
 

@@ -5,7 +5,7 @@ import json
 import logging
 import os
 from collections.abc import AsyncGenerator
-from contextlib import asynccontextmanager
+from contextlib import asynccontextmanager, suppress
 from typing import TypedDict
 
 import aiomqtt
@@ -51,7 +51,6 @@ async def mqtt_listen(client: aiomqtt.Client) -> None:
 
 @asynccontextmanager
 async def lifespan(_: FastAPI) -> AsyncGenerator:
-
     loop = asyncio.get_event_loop()
 
     async with (
@@ -80,10 +79,8 @@ async def lifespan(_: FastAPI) -> AsyncGenerator:
         yield {'redis_client': redis_client, 'mqtt_client': mqtt_client}
 
         task.cancel()
-        try:
+        with suppress(asyncio.CancelledError):
             await task
-        except asyncio.CancelledError:
-            pass
 
     LOGGER.debug(f'Redis client [python-cookbook-{os.getpid()}] disconected')
     LOGGER.debug(f'MQTT client [python-cookbook-{os.getpid()}] disconected')
@@ -138,9 +135,7 @@ async def redoc_html() -> HTMLResponse:
 @app.get('/api')
 async def root(request: Request) -> dict[str, str | None]:
     db_doc = await TB_XXX.find_one({'name': settings.app_name})
-    cache_val = await request.state.redis_client.get(
-        f'{settings.cache_prefix}:examples'
-    )
+    cache_val = await request.state.redis_client.get(f'{settings.cache_prefix}:examples')
     await request.state.mqtt_client.publish(
         f'{settings.mqtt_topic_prefix}/example',
         payload=json.dumps({'msg': 'hello'}, ensure_ascii=False),

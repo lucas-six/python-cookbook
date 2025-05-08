@@ -10,9 +10,7 @@ import asyncio
 import logging
 import socket
 
-logging.basicConfig(
-    level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}'
-)
+logging.basicConfig(level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}')
 
 recv_bufsize: int | None = None
 send_bufsize: int | None = None

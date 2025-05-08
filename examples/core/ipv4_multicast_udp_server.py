@@ -9,9 +9,7 @@ import socket
 import struct
 from pathlib import Path
 
-logging.basicConfig(
-    level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
-)
+logging.basicConfig(level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}')
 logger: logging.Logger = logging.getLogger()
 
 
@@ -22,19 +20,16 @@ os_version_info = tuple(_uname.release.split('.'))
 max_recv_buf_size: int | None
 max_send_buf_size: int | None
 if os_name == 'Linux':
-    assert socket.SOMAXCONN == int(
-        Path('/proc/sys/net/core/somaxconn').read_text(encoding='utf-8').strip()
+    assert (
+        int(Path('/proc/sys/net/core/somaxconn').read_text(encoding='utf-8').strip())
+        == socket.SOMAXCONN
     )
 
     # Get max UDP recv/send buffer size in system (Linux)
     # - read(recv): /proc/sys/net/core/rmem_max
     # - write(send): /proc/sys/net/core/wmem_max
-    max_recv_buf_size = int(
-        Path('/proc/sys/net/core/rmem_max').read_text(encoding='utf-8').strip()
-    )
-    max_send_buf_size = int(
-        Path('/proc/sys/net/core/wmem_max').read_text(encoding='utf-8').strip()
-    )
+    max_recv_buf_size = int(Path('/proc/sys/net/core/rmem_max').read_text(encoding='utf-8').strip())
+    max_send_buf_size = int(Path('/proc/sys/net/core/wmem_max').read_text(encoding='utf-8').strip())
 else:
     max_recv_buf_size = max_send_buf_size = None  # pylint: disable=invalid-name
 
@@ -97,12 +92,8 @@ def run_server(
     if multicast_loopback is not None:
         multicast_loopback_val = 1 if multicast_loopback else 0
     if multicast_loopback_val is not None:
-        sock.setsockopt(
-            socket.IPPROTO_IP, socket.IP_MULTICAST_LOOP, multicast_loopback_val
-        )
-    multicast_loopback = (
-        sock.getsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_LOOP) == 1
-    )
+        sock.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_LOOP, multicast_loopback_val)
+    multicast_loopback = sock.getsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_LOOP) == 1
     logger.debug(f'Server multicast loopback enabled: {multicast_loopback}')
 
     # Accept and handle incoming client requests

@@ -7,9 +7,7 @@ import socket
 import struct
 from typing import Any
 
-logging.basicConfig(
-    level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
-)
+logging.basicConfig(level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}')
 
 data: bytes = b'data'
 server_address: tuple[str, int] = ('localhost', 9999)
