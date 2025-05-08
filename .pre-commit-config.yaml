@@ -15,8 +15,6 @@ repos:
         args: ['--maxkb=500']
       - id: mixed-line-ending
       - id: fix-byte-order-marker
-      - id: fix-encoding-pragma
-        args: [--remove]
       - id: detect-private-key
       - id: double-quote-string-fixer
         exclude: manage.py

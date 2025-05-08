@@ -81,6 +81,37 @@ dev = [
     "ruff>=0.11.8",
 ]
 
+[tool.ruff]
+line-length = 100
+lint.extend-safe-fixes = [
+    # non-pep585-annotation
+    "UP006",
+]
+lint.select = [
+    # flake8-bugbear
+    "B",
+    # flake8-comprehensions
+    "C4",
+    # pycodestyle
+    "E",
+    # Pyflakes errors
+    "F",
+    # isort
+    "I",
+    # flake8-simplify
+    "SIM",
+    # flake8-tidy-imports
+    "TID",
+    # pyupgrade
+    "UP",
+    # Pyflakes warnings
+    "W",
+]
+lint.ignore = []
+
+[tool.ruff.format]
+quote-style = "single"
+
 [tool.mypy]
 python_version = "3.12"
 exclude = [

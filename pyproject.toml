@@ -53,10 +53,7 @@ url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
 default = true
 
 [dependency-groups]
-dev = [
-    "mypy>=1.15.0",
-    "ruff>=0.11.8",
-]
+dev = ["mypy>=1.15.0", "ruff>=0.11.8"]
 
 [tool.ruff]
 line-length = 100
@@ -85,6 +82,9 @@ lint.select = [
     "W",
 ]
 lint.ignore = []
+
+[tool.ruff.format]
+quote-style = "single"
 
 [tool.ruff.lint.mccabe]
 max-complexity = 12

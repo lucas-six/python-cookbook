@@ -1,6 +1,7 @@
 {
     "files.exclude": {
         "**/__pycache__": true,
+        "**/.ruff_cache": true,
         "**/.mypy_cache": true,
         "**/*.egg-info": true,
         "**/.pytest_cache": true,
@@ -17,9 +18,14 @@
     "python.analysis.importFormat": "absolute",
     "ruff.lineLength": 100,
     "ruff.lint.select": [
-        "C",
+        "B",
+        "C4",
         "E",
         "F",
+        "I",
+        "SIM",
+        "TID",
+        "UP",
         "W"
     ],
     "mypy-type-checker.args": [
