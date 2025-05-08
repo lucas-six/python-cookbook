@@ -15,58 +15,28 @@ repos:
         args: ['--maxkb=500']
       - id: mixed-line-ending
       - id: fix-byte-order-marker
+      - id: fix-encoding-pragma
+        args: [--remove]
       - id: detect-private-key
       - id: double-quote-string-fixer
         exclude: manage.py
       - id: name-tests-test
-  - repo: https://github.com/psf/black
-    rev: 25.1.0
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.11.8
     hooks:
-      - id: black
-        exclude: migrations/
-        args: ['--verbose']
-        # It is recommended to specify the latest version of Python
-        # supported by your project here, or alternatively use
-        # pre-commit's default_language_version, see
-        # https://pre-commit.com/#top_level-default_language_version
-        language_version: python3.12
-  - repo: https://github.com/pycqa/isort
-    rev: 6.0.1
-    hooks:
-      - id: isort
-        name: isort (python)
-        language_version: python3.12
+      - id: ruff
+        args: [--fix]
+      - id: ruff-format
+
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.15.0
     hooks:
       - id: mypy
         additional_dependencies: [pydantic, types-redis, aiomqtt]
-        language_version: python3.12
-  - repo: https://github.com/PyCQA/pylint
-    rev: v3.3.7
-    hooks:
-      - id: pylint
-        additional_dependencies:
-          [
-            pydantic,
-            pydantic-settings,
-            pylint-pydantic,
-            fastapi,
-            uvicorn,
-            motor,
-            redis,
-            types-redis,
-            aiomqtt,
-          ]
-        language_version: python3.12
-  - repo: https://github.com/asottile/pyupgrade
-    rev: v3.19.1
-    hooks:
-      - id: pyupgrade
 
 default_language_version:
-  # force all unspecified python hooks to run python3
-  python: python3
+  python: 'python3.12'
 
 ci:
   autofix_prs: true

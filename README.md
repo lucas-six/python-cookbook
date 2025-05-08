@@ -154,10 +154,11 @@
 ### Project
 
 - [Project: `pyproject.toml`](https://lucas-six.github.io/python-cookbook/cookbook/build/project)
-- `black`
-- `isort`
-- `mypy`
-- `pylint`
+- `Ruff` - Linter and Code Formatter
+- `black` - Code Formatter
+- `isort` - Sort Imports
+- `mypy`  - Type Checker
+- `pylint`  - Linter
 
 ### Test
 

@@ -22,9 +22,10 @@ import json
 import mimetypes
 import sys
 import time
+from collections.abc import Callable
 from http import HTTPStatus
 from pathlib import Path
-from typing import Any, BinaryIO, Callable
+from typing import Any, BinaryIO
 
 
 def application(

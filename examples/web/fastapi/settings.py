@@ -38,6 +38,6 @@ class Settings(BaseSettings):
     mqtt_topic_prefix: str
 
 
-@lru_cache()
+@lru_cache
 def get_settings() -> Settings:
     return Settings()  # pyright: ignore[reportCallIssue]

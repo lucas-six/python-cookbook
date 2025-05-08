@@ -54,50 +54,40 @@ default = true
 
 [dependency-groups]
 dev = [
-    "black>=25.1.0",
-    "isort>=6.0.1",
     "mypy>=1.15.0",
-    "pylint>=3.3.6",
-    "pylint-pydantic>=0.3.5",
+    "ruff>=0.11.8",
 ]
 
-[tool.black]
-line-length = 88
-target-version = ['py311', 'py312']
-skip-string-normalization = true
-include = '\.pyi?$'
-extend-exclude = '''
-tests/.*\.py$
-'''
+[tool.ruff]
+line-length = 100
+lint.extend-safe-fixes = [
+    # non-pep585-annotation
+    "UP006",
+]
+lint.select = [
+    # flake8-bugbear
+    "B",
+    # flake8-comprehensions
+    "C4",
+    # pycodestyle
+    "E",
+    # Pyflakes errors
+    "F",
+    # isort
+    "I",
+    # flake8-simplify
+    "SIM",
+    # flake8-tidy-imports
+    "TID",
+    # pyupgrade
+    "UP",
+    # Pyflakes warnings
+    "W",
+]
+lint.ignore = []
 
-[tool.isort]
-src_paths = ["examples"]
-atomic = true
-profile = "black"
-# skip = [
-#    '.bzr',
-#    '.direnv',
-#    '.eggs',
-#    '.git',
-#    '.hg',
-#    '.mypy_cache',
-#    '.nox',
-#    '.pants.d',
-#    '.svn',
-#    '.tox',
-#    '.venv',
-#    '__pypackages__',
-#    '_build',
-#    'buck-out',
-#    'build',
-#    'dist',
-#    'node_modules',
-#    'venv'
-# ]
-skip_gitignore = true
-extend_skip = [".gitignore", ".env", ".dockerignore"]
-# skip_glob = []
-extend_skip_glob = []
+[tool.ruff.lint.mccabe]
+max-complexity = 12
 
 [tool.mypy]
 python_version = "3.12"
@@ -125,54 +115,6 @@ ignore_missing_imports = true
 [[tool.mypy.overrides]]
 module = "redis.*"
 ignore_missing_imports = true
-
-[tool.pylint.main]
-recursive = true
-py-version = 3.12
-jobs = 0
-ignore = "CVS,.git,__pycache__,.venv,.mypy_cache,.pytest_cache,tests"
-ignore-paths = "tests"
-ignore-patterns = "test_.*.py"
-ignored-classes = "Body"
-extension-pkg-whitelist = "pydantic"
-load-plugins = ["pylint.extensions.bad_builtin", "pylint_pydantic"]
-
-[tool.pylint.'FORMAT']
-max-line-length = 88
-
-[tool.pylint.'LOGGING']
-logging-format-style = "new"
-
-[tool.pylint.'MESSAGES CONTROL']
-disable = [
-    "raw-checker-failed",
-    "bad-inline-option",
-    "locally-disabled",
-    "file-ignored",
-    "deprecated-pragma",
-    "suppressed-message",
-    "use-symbolic-message-instead",
-    "missing-class-docstring",
-    "missing-function-docstring",
-    "duplicate-code",
-    "logging-fstring-interpolation",
-    "too-many-positional-arguments",
-]
-enable = [
-    "c-extension-no-member",
-    "useless-suppression",
-    "logging-format-interpolation",
-]
-
-[tool.pylint.design]
-max-args = 15
-min-public-methods = 0
-max-locals = 25
-max-branches = 20
-max-statements = 80
-
-[tool.pylint.deprecated_builtins]
-bad-functions = ["map", "filter"]
 
 [tool.pytest.ini_options]
 markers = []

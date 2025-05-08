@@ -38,7 +38,7 @@ async def coroutine_as_completed_timeout(arg: str) -> list[str]:
     for coroutine in asyncio.as_completed(tasks, timeout=3.2):
         try:
             r = await coroutine
-        except asyncio.TimeoutError:
+        except TimeoutError:
             logging.warning('timeout')
         else:
             rs.append(r)

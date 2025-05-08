@@ -1,9 +1,15 @@
-*.pyc
+*.py[co]
+.venv/
+__pycache__/
+*.pdb
+*.db
 
 *.log
+*.sqlite
 *.sqlite3
 
 *.egg-info/
+.ruff_cache
 .mypy_cache
 .pytest_cache
 .coverage

@@ -6,7 +6,7 @@
 
 ```bash
 uv init --python 3.12
-uv add --dev black isort mypy pylint
+uv add --dev ruff mypy
 ```
 
 ### `Pipenv`
@@ -77,9 +77,51 @@ default = true
 
 [dependency-groups]
 dev = [
+    "mypy>=1.15.0",
+    "ruff>=0.11.8",
+]
+
+[tool.mypy]
+python_version = "3.12"
+exclude = [
+    "test_main.py",
+]
+follow_imports = "silent"
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_unused_configs = true
+disallow_any_generics = false
+check_untyped_defs = true
+no_implicit_reexport = true
+disallow_untyped_defs = true
+
+[tool.pyright]
+include = [
+    "src",
+]
+exclude = [
+    ".git",
+    "**/__pycache__",
+    "**/.venv",
+    "**/.tox",
+    "**/.mypy_cache",
+    "**/.pytest_cache",
+]
+reportGeneralTypeIssues = "none"
+reportUnboundVariable = "none"
+stubPath = ""
+pythonVersion = "3.12"
+```
+
+### `black` + `isort` + `pylint`
+
+```toml
+# pyproject.toml
+
+[dependency-groups]
+dev = [
     "black>=25.1.0",
     "isort>=6.0.1",
-    "mypy>=1.15.0",
     "pylint>=3.3.6",
 ]
 
@@ -120,20 +162,6 @@ skip_gitignore = true
 extend_skip = [".gitignore", ".env", ".dockerignore"]
 # skip_glob = []
 extend_skip_glob = []
-
-[tool.mypy]
-python_version = "3.12"
-exclude = [
-    "test_main.py",
-]
-follow_imports = "silent"
-warn_redundant_casts = true
-warn_unused_ignores = true
-warn_unused_configs = true
-disallow_any_generics = false
-check_untyped_defs = true
-no_implicit_reexport = true
-disallow_untyped_defs = true
 
 [tool.pylint.main]
 recursive = true
@@ -180,23 +208,6 @@ max-locals = 25
 
 [tool.pylint.deprecated_builtins]
 bad-functions = ["map", "filter"]
-
-[tool.pyright]
-include = [
-    "src",
-]
-exclude = [
-    ".git",
-    "**/__pycache__",
-    "**/.venv",
-    "**/.tox",
-    "**/.mypy_cache",
-    "**/.pytest_cache",
-]
-reportGeneralTypeIssues = "none"
-reportUnboundVariable = "none"
-stubPath = ""
-pythonVersion = "3.12"
 ```
 
 ## More
@@ -210,9 +221,12 @@ pythonVersion = "3.12"
 - [PEP 517 - A build-system independent format for source trees](https://peps.python.org/pep-0517/)
 - [PEP 301 – Package Index and Metadata for Distutils](https://peps.python.org/pep-0301/)
 - [PEP 518 – Specifying Minimum Build System Requirements for Python Projects](https://peps.python.org/pep-0518/)
+- [PEP 621 – Storing project metadata in pyproject.toml](https://peps.python.org/pep-0621/)
 - [Package Classifiers](https://pypi.org/classifiers/)
 - [TOML Documentation](https://toml.io/en/)
 - [`black` Documentation](https://black.readthedocs.io/en/stable/)
 - [`isort` Documentation](https://pycqa.github.io/isort/)
 - [`mypy` Documentation](https://mypy.readthedocs.io/en/stable/)
 - [`pylint` Documentation](https://pylint.pycqa.org/en/latest/)
+- [`Ruff` Documentation](https://docs.astral.sh/ruff/)
+- [`pre-commit` Documentation](https://pre-commit.com/)

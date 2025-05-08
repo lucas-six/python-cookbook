@@ -54,14 +54,14 @@ async def handle_abs_timeout() -> None:
 async def handle_wait_for() -> None:
     try:
         r = await asyncio.wait_for(do_task('4', 1.0), timeout=0.5)
-    except asyncio.TimeoutError:
+    except TimeoutError:
         logging.error('task (4) timeout')
     else:
         logging.debug(f'result: {r}')
 
     try:
         r = await asyncio.wait_for(do_task('5', 1.0), timeout=1.5)
-    except asyncio.TimeoutError:
+    except TimeoutError:
         logging.error('task (5) timeout')
     else:
         logging.debug(f'result: {r}')

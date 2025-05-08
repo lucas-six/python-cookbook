@@ -22,9 +22,9 @@ os_version_info = tuple(_uname.release.split('.'))
 max_recv_buf_size: int | None
 max_send_buf_size: int | None
 if os_name == 'Linux':
-    assert socket.SOMAXCONN == int(
+    assert int(
         Path('/proc/sys/net/core/somaxconn').read_text(encoding='utf-8').strip()
-    )
+    ) == socket.SOMAXCONN
 
     # Get max UDP recv/send buffer size in system (Linux)
     # - read(recv): /proc/sys/net/core/rmem_max

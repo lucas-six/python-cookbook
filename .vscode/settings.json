@@ -1,10 +1,13 @@
 {
     "files.exclude": {
         "**/__pycache__": true,
-        "**/.mypy_cache": true
+        "**/.mypy_cache": true,
+        "**/*.egg-info": true,
+        "**/.pytest_cache": true,
+        "**/.coverage": true
     },
     "[python]": {
-        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.defaultFormatter": "charliermarsh.ruff",
         "editor.formatOnSave": true,
         "editor.codeActionsOnSave": {
             "source.organizeImports": "explicit",
@@ -12,24 +15,15 @@
         }
     },
     "python.analysis.importFormat": "absolute",
-    "black-formatter.args": [
-        "--line-length=88",
-        "--skip-string-normalization"
+    "ruff.lineLength": 100,
+    "ruff.lint.select": [
+        "C",
+        "E",
+        "F",
+        "W"
     ],
-    "isort.args": [
-        "--profile=black"
-    ],
-    "isort.severity": {
-        "E": "Error"
-    },
     "mypy-type-checker.args": [
         "--enable-incomplete-feature=NewGenericSyntax"
-    ],
-    "pylint.args": [
-        "--py-version=3.12",
-        "--load-plugins=pylint.extensions.bad_builtin,pylint_pydantic",
-        "--ignore=CVS,.git,__pycache__,.mypy_cache,tests",
-        "--disable=no-self-argument",
     ],
     "python.testing.pytestEnabled": false
 }
