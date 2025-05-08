@@ -133,10 +133,12 @@ include = [
 exclude = [
     ".git",
     "**/__pycache__",
-    "**/.venv",
-    "**/.tox",
-    "**/.mypy_cache",
-    "**/.pytest_cache",
+    ".venv",
+    "**/*.egg-info",
+    ".ruff_cache",
+    ".mypy_cache",
+    ".pytest_cache",
+    ".tox",
 ]
 reportGeneralTypeIssues = "none"
 reportUnboundVariable = "none"

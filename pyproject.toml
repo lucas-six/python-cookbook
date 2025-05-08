@@ -137,11 +137,13 @@ skip_empty = true
 include = ["examples"]
 exclude = [
     ".git",
-    ".venv",
-    ".tox",
     "**/__pycache__",
-    "**/.mypy_cache",
-    "**/.pytest_cache",
+    ".venv",
+    "**/*.egg-info",
+    ".ruff_cache",
+    ".mypy_cache",
+    ".pytest_cache",
+    ".tox",
 ]
 reportGeneralTypeIssues = "none"
 reportUnboundVariable = "none"

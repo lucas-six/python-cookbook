@@ -1,11 +1,11 @@
 {
     "files.exclude": {
         "**/__pycache__": true,
-        "**/.ruff_cache": true,
-        "**/.mypy_cache": true,
+        ".ruff_cache": true,
+        ".mypy_cache": true,
         "**/*.egg-info": true,
-        "**/.pytest_cache": true,
-        "**/.coverage": true
+        ".pytest_cache": true,
+        ".coverage": true
     },
     "[python]": {
         "editor.defaultFormatter": "charliermarsh.ruff",
