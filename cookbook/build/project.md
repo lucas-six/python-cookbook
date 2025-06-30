@@ -75,10 +75,14 @@ py-modules = ['src', 'app']
 url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
 default = true
 
+#[[tool.uv.index]]
+#url = "https://pypi.org/simple"
+#default = true
+
 [dependency-groups]
 dev = [
-    "mypy>=1.15.0",
-    "ruff>=0.11.8",
+    "mypy>=1.16.2",
+    "ruff>=0.12.1",
 ]
 
 [tool.ruff]
@@ -257,9 +261,9 @@ bad-functions = ["map", "filter"]
 - [PEP 621 – Storing project metadata in pyproject.toml](https://peps.python.org/pep-0621/)
 - [Package Classifiers](https://pypi.org/classifiers/)
 - [TOML Documentation](https://toml.io/en/)
+- [Ruff` Documentation](https://docs.astral.sh/ruff/)
+- [`mypy` Documentation](https://mypy.readthedocs.io/en/stable/)
 - [`black` Documentation](https://black.readthedocs.io/en/stable/)
 - [`isort` Documentation](https://pycqa.github.io/isort/)
-- [`mypy` Documentation](https://mypy.readthedocs.io/en/stable/)
 - [`pylint` Documentation](https://pylint.pycqa.org/en/latest/)
-- [`Ruff` Documentation](https://docs.astral.sh/ruff/)
 - [`pre-commit` Documentation](https://pre-commit.com/)
