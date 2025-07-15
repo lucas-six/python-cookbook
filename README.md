@@ -195,7 +195,7 @@
   - [Quick Start](https://lucas-six.github.io/python-cookbook/cookbook/web/fastapi/fastapi_quickstart)
   - [Data Model: **`Pydantic`**](https://lucas-six.github.io/python-cookbook/cookbook/web/pydantic)
   - [FastAPI App](https://lucas-six.github.io/python-cookbook/cookbook/web/fastapi/fastapi_app)
-- [*`Django`*](https://www.djangoproject.com/
+- [*`Django`*](https://lucas-six.github.io/django-cookbook/
 ): full-featured
 - [`Flask`](https://flask.palletsprojects.com/): tiny
 
