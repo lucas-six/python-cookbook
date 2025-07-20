@@ -8,6 +8,9 @@ uv init --python 3.12
 uv add fastapi[all] uvicorn[standard]
 uv add --dev ruff mypy
 
+# SQL Database
+uv add sqlmodel
+
 # JWT
 uv add python-jose[cryptography] types-python-jose
 
@@ -26,7 +29,7 @@ authors = [
     {name = "Lucas", email = "lucassix.lee@gmail.com"},
 ]
 readme = "README.md"
-requires-python = "~=3.12"
+requires-python = ">=3.12"
 license-files = ["LICEN[CS]E*", "vendored/licenses/*.txt", "AUTHORS.md"]
 maintainers = [
     {name = "<Maintainer Name>", email = "<maintainer@email>"},
@@ -44,11 +47,14 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: Implementation :: CPython",
     "Operating System :: OS Independent",
+    "Private :: Do Not Upload",
     "Typing :: Typed",
 ]
 dependencies = [
     "fastapi[all]",
     "uvicorn[standard]",
+
+    "sqlmodel",
 
     "python-jose[cryptography]",
     "types-python-jose",
@@ -71,8 +77,8 @@ default = true
 
 [dependency-groups]
 dev = [
-    "ruff>=0.11.8",
-    "mypy>=1.15.0",
+    "mypy>=1.16.2",
+    "ruff>=0.12.1",
 ]
 
 [tool.ruff]

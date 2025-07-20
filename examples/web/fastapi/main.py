@@ -6,7 +6,7 @@ import logging
 import os
 from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager, suppress
-from typing import TypedDict
+from typing import Any, TypedDict
 
 import aiomqtt
 from fastapi import FastAPI, Request
@@ -50,7 +50,7 @@ async def mqtt_listen(client: aiomqtt.Client) -> None:
 
 
 @asynccontextmanager
-async def lifespan(_: FastAPI) -> AsyncGenerator:
+async def lifespan(app: FastAPI) -> AsyncGenerator[State, Any]:
     loop = asyncio.get_event_loop()
 
     async with (
@@ -76,7 +76,14 @@ async def lifespan(_: FastAPI) -> AsyncGenerator:
         await mqtt_client.subscribe(f'{settings.mqtt_topic_prefix}/#')
         task = loop.create_task(mqtt_listen(mqtt_client))
 
+        app.state.redis_client = redis_client
+        app.state.mqtt_client = mqtt_client
+
         yield {'redis_client': redis_client, 'mqtt_client': mqtt_client}
+
+        LOGGER.debug(f'Redis client [python-cookbook-{os.getpid()}] disconected')
+        LOGGER.debug(f'MQTT client [python-cookbook-{os.getpid()}] disconected')
+        MONGODB_CLIENT.close()
 
         task.cancel()
         with suppress(asyncio.CancelledError):

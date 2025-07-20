@@ -26,6 +26,7 @@ dependencies = [
     "pydantic",
     "fastapi[all]",
     "uvicorn[standard]",
+    "sqlmodel>=0.0.24",
     #"python-jose[cryptography]",
     #"types-python-jose",
     "motor",

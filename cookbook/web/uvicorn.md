@@ -70,12 +70,14 @@ uvicorn --host 0.0.0.0 --port 8000 \
     --forwarded-allow-ips "*" \
     --workers 8 \
     --limit-concurrency 1024 \
+    --limit-max-requests 10000 \
     --backlog 4096 \
     --log-level info \
     --timeout-keep-alive 5 \
     --no-use-colors \
     --no-server-header \
-    app.main:app --log-config uvicorn_logging.json
+    app.main:app \
+    --log-config uvicorn_logging.json
 ```
 
 ## References
