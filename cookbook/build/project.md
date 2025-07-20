@@ -27,7 +27,7 @@ authors = [
     {name = "Lucas", email = "lucassix.lee@gmail.com"},
 ]
 readme = "README.md"
-requires-python = "~=3.12"
+requires-python = ">=3.12"
 license-files = ["LICEN[CS]E*", "vendored/licenses/*.txt", "AUTHORS.md"]
 maintainers = [
     {name = "<Maintainer Name>", email = "<maintainer@email>"},
