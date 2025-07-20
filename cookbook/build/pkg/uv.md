@@ -74,6 +74,12 @@ uv run uwsgi a.ini
 uv sync
 ```
 
+## Update Virtual Environment
+
+```bash
+uv venv
+```
+
 ## References
 
 - [`uv` Documentation](https://docs.astral.sh/uv/)
