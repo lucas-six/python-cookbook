@@ -134,7 +134,10 @@ class BinHandler(socketserver.BaseRequestHandler):
 
 # pylint: disable=no-member
 # mypy: disable-error-code="name-defined"
-def client(addr: tuple[str | bytes | bytearray, int], message: bytes) -> None:
+def client(
+    addr: tuple[str | bytes | bytearray, int] | tuple[str | bytes | bytearray, int, int, int],
+    message: bytes,
+) -> None:
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
         sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
 
