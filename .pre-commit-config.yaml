@@ -34,7 +34,7 @@ repos:
         additional_dependencies: [pydantic, types-redis, aiomqtt]
 
 default_language_version:
-  python: 'python3.12'
+  python: 'python3.13'
 
 ci:
   autofix_prs: true

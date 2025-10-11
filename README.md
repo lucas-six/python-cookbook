@@ -147,23 +147,23 @@
 ### Package Management
 
 - [`pip` - Standard Package Manager](https://lucas-six.github.io/python-cookbook/cookbook/build/pkg/pip)
-- [`uv` - Fast Python package and project manager](https://lucas-six.github.io/python-cookbook/cookbook/build/pkg/uv)
+- [**`uv`** - Fast Python package and project manager](https://lucas-six.github.io/python-cookbook/cookbook/build/pkg/uv)
 - [`pipx` - Install and Run Python Applications](https://lucas-six.github.io/python-cookbook/cookbook/build/pkg/pipx)
-- [`pipenv` - Virtual Environment Manager](https://lucas-six.github.io/python-cookbook/cookbook/build/pkg/pipenv)
+- [*`pipenv`* - Virtual Environment Manager](https://lucas-six.github.io/python-cookbook/cookbook/build/pkg/pipenv)
 
 ### Project
 
 - [Project: `pyproject.toml`](https://lucas-six.github.io/python-cookbook/cookbook/build/project)
-- `Ruff` - Linter and Code Formatter
+- **`Ruff`** - Linter and Code Formatter
 - `black` - Code Formatter
 - `isort` - Sort Imports
-- `mypy`  - Type Checker
-- `pylint`  - Linter
+- **`mypy`** - Type Checker
+- `pylint` - Linter
 
 ### Test
 
 - [`unittest` (builtin)](https://lucas-six.github.io/python-cookbook/cookbook/build/test/unittest)
-- [`pytest`](https://lucas-six.github.io/python-cookbook/cookbook/build/test/pytest)
+- [**`pytest`**](https://lucas-six.github.io/python-cookbook/cookbook/build/test/pytest)
 
 ### Performance
 
