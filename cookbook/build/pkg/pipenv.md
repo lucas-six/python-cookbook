@@ -19,7 +19,7 @@ cd <project-dir>
 pipenv --python <x.y>
 
 # For example:
-pipenv --python 3.12
+pipenv --python 3.13
 
 # or default version:
 pipenv --three

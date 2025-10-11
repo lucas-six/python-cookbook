@@ -3,10 +3,10 @@ name = "python-cookbook"
 description = "Recipes for Python. Hands-on code examples and snippets for daily work."
 authors = [{ name = "Li Yun", email = "lucassix.lee@gmail.com" }]
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.13"
 license-files = ["LICEN[CS]E*"]
 maintainers = [{ name = "Li Yun", email = "lucassix.lee@gmail.com" }]
-keywords = ["cookbook", "recipe", "fastapi", "mongodb"]
+keywords = ["cookbook", "recipe", "fastapi", "sql", "mongodb"]
 classifiers = [
     "Development Status :: 2 - Pre-Alpha",
 
@@ -16,8 +16,8 @@ classifiers = [
     "Topic :: Utilities",
 
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: Implementation :: CPython",
     "Operating System :: OS Independent",
     "Typing :: Typed",
@@ -54,7 +54,13 @@ url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
 default = true
 
 [dependency-groups]
-dev = ["mypy>=1.16.1", "ruff>=0.12.1"]
+dev = [
+    "mypy>=1.18.2",
+    "ruff>=0.12.1",
+    "pytest",
+    "coverage[toml]>=7.10.7",
+    "pytest-cov>=7.0.0",
+]
 
 [tool.ruff]
 line-length = 100
@@ -91,7 +97,7 @@ quote-style = "single"
 max-complexity = 12
 
 [tool.mypy]
-python_version = "3.12"
+python_version = "3.13"
 plugins = ["pydantic.mypy"]
 exclude = []
 follow_imports = "silent"
@@ -149,4 +155,4 @@ exclude = [
 reportGeneralTypeIssues = "none"
 reportUnboundVariable = "none"
 stubPath = ""
-pythonVersion = "3.12"
+pythonVersion = "3.13"

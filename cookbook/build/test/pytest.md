@@ -3,13 +3,13 @@
 ## Installation
 
 ```python
-pipx install pytest
+uv add --dev pytest coverage[toml] pytest-cov
 ```
 
-or:
+or
 
 ```bash
-pipenv install --dev pytest
+pipenv install --dev pytest coverage[toml] pytest-cov
 ```
 
 ## Basic Usage

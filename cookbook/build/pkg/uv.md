@@ -19,7 +19,7 @@ cd <project-dir>
 uv init -p <x.y>
 
 # For example:
-uv init -p 3.12
+uv init -p 3.13
 
 # or default version:
 uv init

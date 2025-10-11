@@ -5,15 +5,15 @@
 ### `uv`
 
 ```bash
-uv init --python 3.12
-uv add --dev ruff mypy
+uv init --python 3.13
+uv add --dev ruff mypy pytest
 ```
 
 ### `Pipenv`
 
 ```bash
-pipenv --python 3.12
-pipenv install --dev black isort mypy pylint
+pipenv --python 3.13
+pipenv install --dev black isort mypy pylint pytest
 ```
 
 ## `pyproject.toml`
@@ -27,7 +27,7 @@ authors = [
     {name = "Lucas", email = "lucassix.lee@gmail.com"},
 ]
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.13"
 license-files = ["LICEN[CS]E*", "vendored/licenses/*.txt", "AUTHORS.md"]
 maintainers = [
     {name = "<Maintainer Name>", email = "<maintainer@email>"},
@@ -45,6 +45,7 @@ classifiers = [
     "Programming Language :: Python :: 3 :: Only",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: Implementation :: CPython",
     "Operating System :: OS Independent",
     ; "Framework :: Django :: 4",
@@ -81,8 +82,11 @@ default = true
 
 [dependency-groups]
 dev = [
-    "mypy>=1.16.2",
+    "mypy>=1.18.2",
     "ruff>=0.12.1",
+    "pytest",
+    "coverage[toml]>=7.10.7",
+    "pytest-cov>=7.0.0",
 ]
 
 [tool.ruff]
@@ -117,7 +121,7 @@ lint.ignore = []
 quote-style = "single"
 
 [tool.mypy]
-python_version = "3.12"
+python_version = "3.13"
 exclude = [
     "test_main.py",
 ]
@@ -129,6 +133,32 @@ disallow_any_generics = false
 check_untyped_defs = true
 no_implicit_reexport = true
 disallow_untyped_defs = true
+
+[tool.pytest.ini_options]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "serial",
+]
+addopts = [
+    "--strict-markers",
+    "--cov",
+    "--cov-append",
+    "--durations=5",
+    "--durations-min=0.25",
+]
+norecursedirs = [
+    ".git",
+    ".*_cache",
+    ".tox",
+    "*.egg-info",
+    "docs",
+]
+
+[tool.coverage.run]
+parallel = true
+
+[tool.coverage.report]
+skip_empty = true
 
 [tool.pyright]
 include = [
@@ -147,7 +177,7 @@ exclude = [
 reportGeneralTypeIssues = "none"
 reportUnboundVariable = "none"
 stubPath = ""
-pythonVersion = "3.12"
+pythonVersion = "3.13"
 ```
 
 ### `black` + `isort` + `pylint`
@@ -164,7 +194,7 @@ dev = [
 
 [tool.black]
 line-length = 100
-target-version = ['py311', 'py312']
+target-version = ['py311', 'py312', 'py313']
 skip-string-normalization = true
 include = '\.pyi?$'
 extend-exclude = '''
@@ -202,7 +232,7 @@ extend_skip_glob = []
 
 [tool.pylint.main]
 recursive = true
-py-version = 3.12
+py-version = 3.13
 jobs = 0
 ignore = "CVS,.git,__pycache__,.venv,.tox,.mypy_cache,.pytest_cache,tests"
 ignore-paths = "tests"
@@ -251,6 +281,7 @@ bad-functions = ["map", "filter"]
 
 - [`uv` - Python Cookbook](pkg/uv)
 - [`pipenv` - Python Cookbook](pkg/pipenv)
+- [`pytest` - Python Cookbook](test/pytest)
 
 ## References
 
@@ -261,7 +292,7 @@ bad-functions = ["map", "filter"]
 - [PEP 621 – Storing project metadata in pyproject.toml](https://peps.python.org/pep-0621/)
 - [Package Classifiers](https://pypi.org/classifiers/)
 - [TOML Documentation](https://toml.io/en/)
-- [Ruff` Documentation](https://docs.astral.sh/ruff/)
+- [`Ruff` Documentation](https://docs.astral.sh/ruff/)
 - [`mypy` Documentation](https://mypy.readthedocs.io/en/stable/)
 - [`black` Documentation](https://black.readthedocs.io/en/stable/)
 - [`isort` Documentation](https://pycqa.github.io/isort/)

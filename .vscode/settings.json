@@ -15,7 +15,6 @@
             "source.fixAll": "explicit"
         }
     },
-    "python.analysis.importFormat": "absolute",
     "ruff.lineLength": 100,
     "ruff.lint.select": [
         "B",
