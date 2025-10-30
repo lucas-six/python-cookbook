@@ -54,14 +54,13 @@ classifiers = [
     "Typing :: Typed",
 ]
 dependencies = [
-    "psycopg2 >= 2.8",
+    "pydantic",
 
     "requests >=2.6",
     "configparser; python_version == '2.7'",
 ]
 dynamic = ["version"]
 
-#[project.optional-dependencies]
 #doc = []
 
 [project.urls]
@@ -90,12 +89,50 @@ dev = [
 ]
 
 [tool.ruff]
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".ipynb_checkpoints",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pyenv",
+    ".pytest_cache",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    ".vscode",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "site-packages",
+    "venv",
+]
+
+# Same as Black.
 line-length = 100
-lint.extend-safe-fixes = [
+indent-width = 4
+
+target-version = "py313"
+
+[tool.ruff.lint]
+extend-safe-fixes = [
     # non-pep585-annotation
     "UP006",
 ]
-lint.select = [
+#select = ["E4", "E7", "E9", "F"]
+select = [
+    # flake8-annotations
+    "ANN",
     # flake8-bugbear
     "B",
     # flake8-comprehensions
@@ -115,10 +152,11 @@ lint.select = [
     # Pyflakes warnings
     "W",
 ]
-lint.ignore = []
+ignore = []
 
 [tool.ruff.format]
 quote-style = "single"
+indent-style = "space"
 
 [tool.mypy]
 python_version = "3.13"
