@@ -16,7 +16,9 @@
         }
     },
     "ruff.lineLength": 100,
+    "ruff.lint.enable": true,
     "ruff.lint.select": [
+        "ANN",
         "B",
         "C4",
         "E",
