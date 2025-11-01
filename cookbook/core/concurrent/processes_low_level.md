@@ -1,6 +1,6 @@
 # Multi-Processes - `multiprocessing`
 
-## Solution
+## Recipes
 
 ```python
 import logging
@@ -71,9 +71,33 @@ if __name__ == '__main__':
     p.join()
 ```
 
-## More
+### Process Pool
 
-More details to see [Multi-Processes on Python Handbook](https://leven-cn.github.io/python-handbook/recipes/core/multi_processes).
+```python
+import multiprocessing
+
+
+def worker(data):
+    return data * 2
+
+
+def worker_initializer():
+    pass
+
+
+if __name__ == '__main__':
+    inputs = list(range(10))
+
+    # param: processes: default to multiprocessing.cpu_count()
+    pool = multiprocessing.Pool(
+        initializer=worker_initializer,
+        maxtasksperchild=2,
+    )
+
+    outputs = pool.map(worker, inputs)
+    pool.close()
+    pool.join()
+```
 
 ## References
 

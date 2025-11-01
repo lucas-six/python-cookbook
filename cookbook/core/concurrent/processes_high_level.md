@@ -1,6 +1,6 @@
-# High-Level Processes-Based Concurrent
+# Processes-Based Concurrent (High-Level API)
 
-## Solution
+## Recipes
 
 ```python
 from concurrent.futures import ProcessPoolExecutor, as_completed
