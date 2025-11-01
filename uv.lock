@@ -836,7 +836,7 @@ requires-dist = [
 [package.metadata.requires-dev]
 dev = [
     { name = "coverage", extras = ["toml"], specifier = ">=7.10.7" },
-    { name = "mypy", specifier = ">=1.16.2" },
+    { name = "mypy", specifier = ">=1.18.2" },
     { name = "pytest" },
     { name = "pytest-cov", specifier = ">=7.0.0" },
     { name = "ruff", specifier = ">=0.12.1" },
