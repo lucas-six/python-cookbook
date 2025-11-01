@@ -121,6 +121,11 @@
 - [I/O Multiplex (I/O多路复用) (Client)](https://lucas-six.github.io/python-cookbook/cookbook/core/net/io_multiplex_client)
 - [Pack/Unpack Binary Data - `struct`](https://lucas-six.github.io/python-cookbook/cookbook/core/net/struct)
 
+### Parallelism and Concurrent (并发)
+
+- [Processes-Based Concurrent (High-Level API)](https://lucas-six.github.io/python-cookbook/cookbook/core/concurrent/processes_high_level)
+- [Multi-Processes Parallelism for **CPU-bound** tasks (Low-Level API: `multiprocessing`)](https://lucas-six.github.io/python-cookbook/cookbook/core/concurrent/processes_low_level)
+
 ### Asynchronous I/O (异步 I/O)
 
 - [Coroutine (协程)](https://lucas-six.github.io/python-cookbook/cookbook/core/asyncio/coroutine)
@@ -242,11 +247,8 @@
 
 - Parallelism and Concurrent (并发)
   - [Multi-Threads Parallelism for **I/O-bound** tasks](https://lucas-six.github.io/python-cookbook/recipes/core/multi_threads)
-  - [Multi-Processes Parallelism for **CPU-bound** tasks](https://lucas-six.github.io/python-cookbook/recipes/core/multi_processes)
   - [Multi-Processes - Queue (队列)](https://lucas-six.github.io/python-cookbook/recipes/core/multi_processes_queue)
-  - [Process Pool](https://lucas-six.github.io/python-cookbook/recipes/core/process_pool)
   - [High-Level Threads-Based Concurrent](https://lucas-six.github.io/python-cookbook/recipes/core/concurrent_threads)
-  - [High-Level Processes-Based Concurrent](https://lucas-six.github.io/python-cookbook/recipes/core/concurrent_processes)
   - [Synchronization Primitives - `Event` (For Processes and Threads)](https://lucas-six.github.io/python-cookbook/recipes/core/synchronization_event)
   - [Synchronization Primitives - Mutex Lock (互斥锁): `Lock` (For Processes and Threads)](https://lucas-six.github.io/python-cookbook/recipes/core/synchronization_lock)
   - [Synchronization Primitives - Reentrant Lock (重入锁): `RLock`](https://lucas-six.github.io/python-cookbook/recipes/core/synchronization_rlock)
