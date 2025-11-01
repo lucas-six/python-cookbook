@@ -17,9 +17,11 @@ pip install uv
 ```bash
 cd <project-dir>
 uv init -p <x.y>
+# uv init --python <x.y>
 
 # For example:
 uv init -p 3.13
+# uv init --python 3.13
 
 # or default version:
 uv init
@@ -78,6 +80,13 @@ uv sync
 
 ```bash
 uv venv
+```
+
+## Update `uv`
+
+```bash
+uv self update
+uv self version  # show version
 ```
 
 ## References
