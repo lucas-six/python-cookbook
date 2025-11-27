@@ -178,6 +178,19 @@
 
 - [Deploy App with Docker](https://lucas-six.github.io/python-cookbook/cookbook/build/deploy/docker)
 
+## Data Science and Analytics
+
+### Data Format
+
+- JSON: `json`(builtin), [**`orjson`**](https://github.com/ijl/orjson)
+- CSV: `csv`(builtin), [**`pandas`**](https://pandas.pydata.org/)
+- Excel: [**`pandas`**](https://pandas.pydata.org/)
+- XML: `xml.etree.ElementTree`(builtin), [**`lxml`**](https://lxml.de/)
+- YAML: `yaml`(builtin), [**`pyyaml`**](https://pyyaml.org/)
+- HTML: `html.parser`(builtin), [**`lxml`**](https://lxml.de/)
+- PDF: [**`pdfminer.six`**](https://github.com/pdfminer/pdfminer.six)
+- Image: [**`Pillow`**](https://pillow.readthedocs.io/en/stable/)
+
 ## Web Development
 
 - [URL Parsing: `urllib.parse`](https://lucas-six.github.io/python-cookbook/cookbook/web/urllib_parse)
