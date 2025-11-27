@@ -3,7 +3,7 @@
 ## Installation
 
 ```bash
-uv init --python 3.12
+uv init --python 3.13
 
 uv add fastapi[all] uvicorn[standard]
 uv add --dev ruff mypy
@@ -29,7 +29,7 @@ authors = [
     {name = "Lucas", email = "lucassix.lee@gmail.com"},
 ]
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.13"
 license-files = ["LICEN[CS]E*", "vendored/licenses/*.txt", "AUTHORS.md"]
 maintainers = [
     {name = "<Maintainer Name>", email = "<maintainer@email>"},
@@ -44,7 +44,7 @@ classifiers = [
     "Topic :: Utilities",
 
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: Implementation :: CPython",
     "Operating System :: OS Independent",
     "Private :: Do Not Upload",
@@ -113,7 +113,7 @@ lint.ignore = []
 quote-style = "single"
 
 [tool.mypy]
-python_version = "3.12"
+python_version = "3.13"
 plugins = [
     "pydantic.mypy"
 ]
@@ -152,7 +152,7 @@ exclude = [
 reportGeneralTypeIssues = "none"
 reportUnboundVariable = "none"
 stubPath = ""
-pythonVersion = "3.12"
+pythonVersion = "3.13"
 ```
 
 ## App
@@ -248,13 +248,13 @@ See [Uvicorn: ASGI, WebSockets - Python Cookbook](../uvicorn).
 
 - [Python Project - Python Cookbook](../../build/project)
 - [ASGI Web Server: **`Uvicorn`** - Python Cookbook](../uvicorn)
-- [Data Model: **`Pydantic`** - Python Cookbook](../pydantic)
+- [Data Validation: **`Pydantic`** - Python Cookbook](../../data/pydantic)
 - [FastAPI App - Python Cookbook](fastapi_app)
 
 ## References
 
 - [**`FastAPI`**](https://fastapi.tiangolo.com/)
 - [*`Starlette`*: *ASGI* Web part](https://www.starlette.io/)
-- [*`Pydantic`*: data part](https://pydantic-docs.helpmanual.io/)
+- [*`Pydantic`*: data part](https://docs.pydantic.dev/)
 - [*`Swagger`*: *OpenAPI*](https://swagger.io/)
 - [Awesome List for FastAPI](https://github.com/mjhea0/awesome-fastapi)

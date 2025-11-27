@@ -191,6 +191,10 @@
 - PDF: [**`pdfminer.six`**](https://github.com/pdfminer/pdfminer.six)
 - Image: [**`Pillow`**](https://pillow.readthedocs.io/en/stable/)
 
+### Data Processing
+
+- [Data Validation: **`Pydantic`**](https://lucas-six.github.io/python-cookbook/cookbook/data/pydantic)
+
 ## Web Development
 
 - [URL Parsing: `urllib.parse`](https://lucas-six.github.io/python-cookbook/cookbook/web/urllib_parse)
@@ -209,9 +213,9 @@
 
 ### Web Frameworks
 
-- **`FastAPI`**: *ASGI* + type annotations + data model + *OpenAPI*(*Swagger UI*)
+- **`FastAPI`**: *ASGI* + type annotations + data validation + *OpenAPI*(*Swagger UI*)
   - [Quick Start](https://lucas-six.github.io/python-cookbook/cookbook/web/fastapi/fastapi_quickstart)
-  - [Data Model: **`Pydantic`**](https://lucas-six.github.io/python-cookbook/cookbook/web/pydantic)
+  - [Data Validation: **`Pydantic`**](https://lucas-six.github.io/python-cookbook/cookbook/data/pydantic)
   - [FastAPI App](https://lucas-six.github.io/python-cookbook/cookbook/web/fastapi/fastapi_app)
 - [*`Django`*](https://lucas-six.github.io/django-cookbook/
 ): full-featured

@@ -1,4 +1,4 @@
-# Data Model: `Pydantic`
+# Data Validation: `Pydantic`
 
 ## Recipes
 
@@ -45,4 +45,4 @@ datetime.datetime(2019, 6, 1, 12, 22)
 
 ## References
 
-- [`Pydantic` Documentation](https://pydantic-docs.helpmanual.io/)
+- [`Pydantic` Documentation](https://docs.pydantic.dev/)
