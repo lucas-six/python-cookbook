@@ -159,11 +159,11 @@
 ### Project
 
 - [Project: `pyproject.toml`](https://lucas-six.github.io/python-cookbook/cookbook/build/project)
-- **`Ruff`** - Linter and Code Formatter
-- `black` - Code Formatter
-- `isort` - Sort Imports
-- **`mypy`** - Type Checker
-- `pylint` - Linter
+- [**`Ruff`**](https://docs.astral.sh/ruff/) - Linter and Code Formatter
+- [~~`black`~~](https://black.readthedocs.io/en/stable/) - Code Formatter
+- [~~`isort`~~](https://pycqa.github.io/isort/) - Sort Imports
+- [**`mypy`**](https://mypy.readthedocs.io/en/stable/) - Type Checker
+- [~~`pylint`~~](https://pylint.pycqa.org/en/latest/) - Linter
 
 ### Test
 
