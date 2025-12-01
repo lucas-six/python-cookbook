@@ -201,6 +201,7 @@
 - [HTTP Datetime Format](https://lucas-six.github.io/python-cookbook/cookbook/web/http_datetime_fmt)
 - [HTTP Cookie (Server Side): `http.cookies`](https://lucas-six.github.io/python-cookbook/cookbook/web/http_cookie)
 - [ASGI](https://asgi.readthedocs.io/en/latest/) / [WSGI](https://lucas-six.github.io/python-cookbook/cookbook/web/wsgi) / ~~CGI~~
+  - ASGI: `asgiref`(builtin), [**`Starlette`**](https://www.starlette.io/)
 - [IDNA (Internationalized Domain Names in Applications, 国际化域名应用)](https://lucas-six.github.io/python-cookbook/cookbook/web/idna)
 
 ### HTTP Client/Request
@@ -213,9 +214,8 @@
 
 ### Web Frameworks
 
-- **`FastAPI`**: *ASGI* + type annotations + data validation + *OpenAPI*(*Swagger UI*)
-  - [Quick Start](https://lucas-six.github.io/python-cookbook/cookbook/web/fastapi/fastapi_quickstart)
-  - [Data Validation: **`Pydantic`**](https://lucas-six.github.io/python-cookbook/cookbook/data/pydantic)
+- **`FastAPI`**: *ASGI* + type annotations + data validation ([*`Pydantic`*](https://lucas-six.github.io/python-cookbook/cookbook/data/pydantic)) + *OpenAPI*(*Swagger UI*)
+  - [Template Repository (GitHub)](https://github.com/lucas-six/fastapi-template)
   - [FastAPI App](https://lucas-six.github.io/python-cookbook/cookbook/web/fastapi/fastapi_app)
 - [*`Django`*](https://lucas-six.github.io/django-cookbook/
 ): full-featured
@@ -234,6 +234,8 @@
 - [**`Celery`**](https://docs.celeryq.dev/en/stable/)
 
 ## System Services Driver
+
+- [SQL Database (PostgreSQL): `SQLModel` + `Alembic`](https://lucas-six.github.io/python-cookbook/cookbook/system_services/sql_db)
 
 ### MongoDB
 

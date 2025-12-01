@@ -9,8 +9,8 @@ See [MongoDB **`motor`** - Python Cookbook](../../system_services/mongodb_motor)
 ### ODM (Object-Document Model): `beanie`, `pyodmongo`
 
 ```bash
-pipenv install beanie
-pipenv install pyodmongo
+uv add beanie
+uv add pyodmongo
 ```
 
 ```toml
@@ -254,7 +254,7 @@ app.include_router(router, prefix='/api/router', tags=['router'])
 ### Run
 
 ```bash
-pipenv run uvicorn --host 0.0.0.0 --port 8000 \
+uv run uvicorn --host 0.0.0.0 --port 8000 \
     --proxy-headers \
     --forwarded-allow-ips "*" \
     --workers 8 \

@@ -3,7 +3,7 @@
 ## Installation
 
 ```bash
-pip install 'uvicorn[standard]'
+uv add uvicorn[standard]
 ```
 
 ## Logging
