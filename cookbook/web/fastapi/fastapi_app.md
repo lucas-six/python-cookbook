@@ -270,7 +270,6 @@ uv run uvicorn --host 0.0.0.0 --port 8000 \
 
 ## More
 
-- [Quick Start with **`FastAPI`**](fastapi_quickstart)
 - [MongoDB **`motor`** - Python Cookbook](../../system_services/mongodb_motor)
 - [Redis **`redis`** - Python Cookbook](../../system_services/redis)
 - [MQTT **`aiomqtt`** - Python Cookbook](../../system_services/mqtt_aiomqtt)
