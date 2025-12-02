@@ -236,6 +236,7 @@
 ## System Services Driver
 
 - [SQL Database (PostgreSQL): **`SQLModel`** (`SQLAlchemy` + `Pydantic`) + **`Alembic`** + **`Psycopg`**](https://lucas-six.github.io/python-cookbook/cookbook/system_services/sql_db)
+- [Cache (Redis): **`redis-py`**, **`pyton-redis-orm`**](https://lucas-six.github.io/python-cookbook/cookbook/system_services/redis)
 
 ### MongoDB
 
@@ -245,12 +246,6 @@
 - ODM
   - [`Beanie`: Async ODM (based on `Pydantic`)](https://beanie-odm.dev/)
   - [`PyODMongo`: Async ODM (based on `Pydantic V2`)](https://pyodmongo.dev/)
-
-### Redis
-
-- [**`redis-py`**: Sync + Async](https://lucas-six.github.io/python-cookbook/cookbook/system_services/redis)
-- [~~`aioredis`: Async (Obsoleted by `redis-py`)~~](https://aioredis.readthedocs.io/en/latest/)
-- `pyton-redis-orm`: ORM
 
 ### RabbitMQ
 

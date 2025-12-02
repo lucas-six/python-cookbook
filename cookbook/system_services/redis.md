@@ -1,4 +1,4 @@
-# `redis-py` - Python API for Redis
+# `redis-py` - Python API for Redis (Sync + Async)
 
 ## Start
 
@@ -9,8 +9,8 @@ and [Redis CLI: Basic Usage - Linux Cookbook](https://lucas-six.github.io/linux-
 # pyproject.toml
 
 dependencies = [
-    "redis",
-    #"redis[hiredis]",
+    #"redis",
+    "redis[hiredis]",
     "types-redis",
 ]
 
@@ -20,9 +20,9 @@ ignore_missing_imports = true
 ```
 
 ```bash
-pipenv install redis
-# pipenv install redis[hiredis]
-pipenv install types-redis
+# uv add redis
+uv add redis[hiredis]
+uv add types-redis
 ```
 
 ## Usage
@@ -158,3 +158,5 @@ await redis_client.aclose()
 
 - [Redis Documentation](https://redis.io/docs/)
 - [`redis-py` Documentation](https://redis.readthedocs.io/en/latest/)
+- [~~`aioredis`: Async (Obsoleted by `redis-py`)~~](https://aioredis.readthedocs.io/en/latest/)
+- `pyton-redis-orm`: ORM
