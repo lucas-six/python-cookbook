@@ -210,16 +210,16 @@
 - [**`aiohttp`**](https://docs.aiohttp.org/en/stable/): asyncio
   - [`aiodns`](https://pypi.org/project/aiodns/): DNS resolver for asyncio
     - [`pycares`](https://pypi.org/project/pycares/) (using C library: [`c-ares`](https://c-ares.org/)) with [`idna`](https://lucas-six.github.io/python-cookbook/cookbook/web/idna)
-- [*`requests`*](https://requests.readthedocs.io/en/latest/): sync io, using [`urllib3`](https://urllib3.readthedocs.io/en/stable/)
+- [`requests`](https://requests.readthedocs.io/en/latest/): sync io, using [`urllib3`](https://urllib3.readthedocs.io/en/stable/)
 
 ### Web Frameworks
 
-- **`FastAPI`**: *ASGI* + type annotations + data validation ([*`Pydantic`*](https://lucas-six.github.io/python-cookbook/cookbook/data/pydantic)) + *OpenAPI*(*Swagger UI*)
-  - [Template Repository (GitHub)](https://github.com/lucas-six/fastapi-template)
+- **`FastAPI`**: ASGI (`Starlette`) + type annotations + data validation ([`Pydantic`](https://lucas-six.github.io/python-cookbook/cookbook/data/pydantic)) + `OpenAPI` (Swagger UI)
+  - [Template Repository (GitHub)](https://github.com/lucas-six/fastapi-template): with `SQLModel`, `Alembic`, `Psycopg` (PostgreSQL)
   - [FastAPI App](https://lucas-six.github.io/python-cookbook/cookbook/web/fastapi/fastapi_app)
-- [*`Django`*](https://lucas-six.github.io/django-cookbook/
+- [`Django`](https://lucas-six.github.io/django-cookbook/
 ): full-featured
-- [`Flask`](https://flask.palletsprojects.com/): tiny
+- [~~`Flask`~~](https://flask.palletsprojects.com/): tiny
 
 ### Web Server
 
@@ -227,7 +227,7 @@
 - [`aiohttp`: asyncio, API](https://docs.aiohttp.org/en/stable/)
 - [**`uvicorn`**: ASGI, WebSockets](https://lucas-six.github.io/python-cookbook/cookbook/web/uvicorn)
 - [`Hypercorn`: HTTP/2, HTTP/3](https://pypi.org/project/hypercorn/)
-- [*`uWSGI`*: WSGI, HTTP/2](https://uwsgi.readthedocs.org/en/latest/index.html)
+- [`uWSGI`: WSGI, HTTP/2](https://uwsgi.readthedocs.org/en/latest/index.html)
 
 ### Task Queue
 
@@ -235,7 +235,7 @@
 
 ## System Services Driver
 
-- [SQL Database (PostgreSQL): `SQLModel` + `Alembic`](https://lucas-six.github.io/python-cookbook/cookbook/system_services/sql_db)
+- [SQL Database (PostgreSQL): **`SQLModel`** (`SQLAlchemy` + `Pydantic`) + **`Alembic`** + **`Psycopg`**](https://lucas-six.github.io/python-cookbook/cookbook/system_services/sql_db)
 
 ### MongoDB
 
