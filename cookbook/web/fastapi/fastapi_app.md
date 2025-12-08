@@ -35,11 +35,6 @@ APP_DESCRIPTION="FastAPI app description."
 DEBUG=true
 MONGODB_URL="mongodb://localhost:27019/?replicaSet=xxx&maxPoolSize=4096&connectTimeoutMS=3000&socketTimeoutMS=3500&serverSelectionTimeoutMS=2000"
 MONGODB_DB_NAME="xxx"
-REDIS_URL="redis://:foobared@localhost:6379/0"
-CACHE_MAX_CONNS=4096
-CACHE_CONN_TIMEOUT=3.0
-CACHE_TIMEOUT=3.5
-CACHE_PREFIX="python-cookbook"
 MQTT_TOPIC_PREFIX="python-cookbook"
 ```
 
@@ -50,7 +45,7 @@ MQTT_TOPIC_PREFIX="python-cookbook"
 
 from functools import lru_cache
 
-from pydantic import MongoDsn, RedisDsn
+from pydantic import MongoDsn
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -68,13 +63,6 @@ class Settings(BaseSettings):
     # MongoDB
     mongodb_url: MongoDsn
     mongodb_db_name: str
-
-    # Cache: Redis
-    redis_url: RedisDsn
-    cache_max_conns: int = 4096
-    cache_conn_timeout: float | None = 3.0
-    cache_timeout: float | None = 3.5
-    cache_prefix: str
 
     # MQTT
     mqtt_host: str = "localhost"
@@ -114,7 +102,6 @@ from fastapi.openapi.docs import (
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from motor.motor_asyncio import AsyncIOMotorClient
-from redis.asyncio import Redis
 
 from examples.web.fastapi.routers import router
 from examples.web.fastapi.settings import get_settings
@@ -133,7 +120,6 @@ TB_XXX = DB_XXX['examples']
 
 
 class State(TypedDict):
-    redis_client: Redis
     mqtt_client: aiomqtt.Client
 
 
@@ -151,15 +137,6 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[State, Any]:
     loop = asyncio.get_event_loop()
 
     async with (
-        Redis.from_url(
-            url=str(settings.redis_url),
-            encoding='utf-8',
-            decode_responses=True,
-            max_connections=settings.cache_max_conns,
-            socket_connect_timeout=settings.cache_conn_timeout,
-            socket_timeout=settings.cache_timeout,
-            client_name=f'python-cookbook-{os.getpid()}',
-        ) as redis_client,
         aiomqtt.Client(
             settings.mqtt_host,
             settings.mqtt_port,
@@ -173,10 +150,9 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[State, Any]:
         await mqtt_client.subscribe(f'{settings.mqtt_topic_prefix}/#')
         task = loop.create_task(mqtt_listen(mqtt_client))
 
-        app.state.redis_client = redis_client
         app.state.mqtt_client = mqtt_client
 
-        yield {'redis_client': redis_client, 'mqtt_client': mqtt_client}
+        yield {'mqtt_client': mqtt_client}
 
         task.cancel()
         try:
@@ -184,7 +160,6 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[State, Any]:
         except asyncio.CancelledError:
             pass
 
-    LOGGER.debug(f'Redis client [python-cookbook-{os.getpid()}] disconected')
     LOGGER.debug(f'MQTT client [python-cookbook-{os.getpid()}] disconected')
     MONGODB_CLIENT.close()
 
@@ -237,15 +212,12 @@ async def redoc_html() -> HTMLResponse:
 @app.get('/api')
 async def root(request: Request) -> dict[str, str | None]:
     db_doc = await TB_XXX.find_one({'name': settings.app_name})
-    cache_val = await request.state.redis_client.get(
-        f'{settings.cache_prefix}:examples'
-    )
     await request.state.mqtt_client.publish(
         f'{settings.mqtt_topic_prefix}/example',
         payload=json.dumps({'msg': 'hello'}, ensure_ascii=False),
         qos=settings.mqtt_qos,
     )
-    return {'db': db_doc, 'cache': cache_val}
+    return {'db': db_doc}
 
 
 app.include_router(router, prefix='/api/router', tags=['router'])
@@ -271,7 +243,6 @@ uv run uvicorn --host 0.0.0.0 --port 8000 \
 ## More
 
 - [MongoDB **`motor`** - Python Cookbook](../../system_services/mongodb_motor)
-- [Redis **`redis`** - Python Cookbook](../../system_services/redis)
 - [MQTT **`aiomqtt`** - Python Cookbook](../../system_services/mqtt_aiomqtt)
 - [Data Model: **`Pydantic`**](../pydantic)
 
