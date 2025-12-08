@@ -10,6 +10,14 @@ uv add psycopg[binary] sqlmodel alembic
 uv run alembic init --template pyproject alembic
 ```
 
+```python
+# alembic/env.py
+
+from sqlmodel import SQLModel
+
+target_metadata = SQLModel.metadata
+```
+
 ```mako
 # alembic/script.py.mako
 
