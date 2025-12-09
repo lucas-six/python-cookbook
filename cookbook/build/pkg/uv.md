@@ -73,7 +73,7 @@ uv run uwsgi a.ini
 ## Deploy a Project
 
 ```bash
-uv sync
+uv sync [--no-dev --frozen]
 ```
 
 ## Update Virtual Environment
@@ -94,3 +94,4 @@ uv self version  # show version
 - [`uv` Documentation](https://docs.astral.sh/uv/)
 - [Python - `venv` module](https://docs.python.org/3/library/venv.html)
 - [PEP 405 – Python Virtual Environments](https://peps.python.org/pep-0405/)
+- [`uv` Docker Images](https://docs.astral.sh/uv/guides/integration/docker/#available-images)
