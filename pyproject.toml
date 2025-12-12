@@ -35,7 +35,6 @@ dependencies = [
     "redis[hiredis]",
     "types-redis",
     "aiomqtt",
-    "celery[librabbitmq, mongodb, redis]",
     #"requests",
     #"types-requests",
 ]
