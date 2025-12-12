@@ -244,7 +244,6 @@ uv run uvicorn --host 0.0.0.0 --port 8000 \
 
 - [MongoDB **`motor`** - Python Cookbook](../../system_services/mongodb_motor)
 - [MQTT **`aiomqtt`** - Python Cookbook](../../system_services/mqtt_aiomqtt)
-- [Data Model: **`Pydantic`**](../pydantic)
 
 ## References
 
@@ -252,4 +251,3 @@ uv run uvicorn --host 0.0.0.0 --port 8000 \
 - [Getting Started with MongoDB and FastAPI](https://www.mongodb.com/developer/languages/python/python-quickstart-fastapi/)
 - [**`Beanie`** - Async Python ODM for MongoDB, based on `Pydantic`](https://beanie-odm.dev/)
 - [`PyODMongo`: Async ODM (based on `Pydantic V2`)](https://pyodmongo.dev/)
-- [*`Pydantic`*: data part](https://pydantic-docs.helpmanual.io/)

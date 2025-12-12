@@ -73,7 +73,7 @@ uv run uwsgi a.ini
 ## Deploy a Project
 
 ```bash
-uv sync [--no-dev --frozen]
+uv sync [--locked --no-dev]
 ```
 
 ## Update Virtual Environment
