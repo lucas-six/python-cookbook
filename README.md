@@ -214,8 +214,8 @@
 
 ### Web Frameworks
 
-- **`FastAPI`**: ASGI (`Starlette`) + type annotations + data validation ([`Pydantic`](https://lucas-six.github.io/python-cookbook/cookbook/data/pydantic)) + `OpenAPI` (Swagger UI)
-  - [Template Repository (GitHub)](https://github.com/lucas-six/fastapi-template): with `SQLModel`, `Alembic`, `Psycopg` (PostgreSQL)
+- **`FastAPI`**: ASGI (`Starlette`) + type annotations + data validation ([`Pydantic`](https://lucas-six.github.io/python-cookbook/cookbook/data/pydantic)) + *OpenAPI* (Swagger/Redoc UI)
+  - [Template Repository (GitHub)](https://github.com/lucas-six/fastapi-template): with `SQLModel`, `Alembic`, PostgreSQL, Redis, RabbitMQ, `Celery`, Docker, etc.
   - [FastAPI App](https://lucas-six.github.io/python-cookbook/cookbook/web/fastapi/fastapi_app)
 - [`Django`](https://lucas-six.github.io/django-cookbook/
 ): full-featured
@@ -236,8 +236,9 @@
 ## System Services Driver
 
 - [SQL Database (PostgreSQL): **`SQLModel`** (`SQLAlchemy` + `Pydantic`) + **`Alembic`** + **`Psycopg`**](https://lucas-six.github.io/python-cookbook/cookbook/system_services/sql_db)
-- [Cache (Redis): **`redis-py`**, **`pyton-redis-orm`**](https://lucas-six.github.io/python-cookbook/cookbook/system_services/redis)
+- Cache (Redis): [**`redis-py`**]((https://lucas-six.github.io/python-cookbook/cookbook/system_services/redis)), `pyton-redis-orm`
 - Message Queue (RabbitMQ): [**`pika`**](https://pika.readthedocs.io/en/stable/index.html), [`Pikadantic`](https://pypi.org/project/pikadantic/)
+- IoT MQTT: [**`aiomqtt`**](https://lucas-six.github.io/python-cookbook/cookbook/system_services/mqtt_aiomqtt)
 
 ### MongoDB
 
@@ -247,12 +248,6 @@
 - ODM
   - [`Beanie`: Async ODM (based on `Pydantic`)](https://beanie-odm.dev/)
   - [`PyODMongo`: Async ODM (based on `Pydantic V2`)](https://pyodmongo.dev/)
-
-## IoT
-
-### MQTT
-
-- [**`aiomqtt`**: Async](https://lucas-six.github.io/python-cookbook/cookbook/system_services/mqtt_aiomqtt)
 
 ## TODO: Language Core (语言核心)
 
