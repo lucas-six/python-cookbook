@@ -237,6 +237,7 @@
 
 - [SQL Database (PostgreSQL): **`SQLModel`** (`SQLAlchemy` + `Pydantic`) + **`Alembic`** + **`Psycopg`**](https://lucas-six.github.io/python-cookbook/cookbook/system_services/sql_db)
 - [Cache (Redis): **`redis-py`**, **`pyton-redis-orm`**](https://lucas-six.github.io/python-cookbook/cookbook/system_services/redis)
+- [Message Queue (RabbitMQ): **`pika`**](https://pika.readthedocs.io/en/stable/index.html)
 
 ### MongoDB
 
@@ -246,10 +247,6 @@
 - ODM
   - [`Beanie`: Async ODM (based on `Pydantic`)](https://beanie-odm.dev/)
   - [`PyODMongo`: Async ODM (based on `Pydantic V2`)](https://pyodmongo.dev/)
-
-### RabbitMQ
-
-- [`pika`: Async/Sync (Official Recommended)](https://pika.readthedocs.io/en/stable/index.html)
 
 ## IoT
 
