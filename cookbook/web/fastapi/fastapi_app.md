@@ -250,4 +250,3 @@ uv run uvicorn --host 0.0.0.0 --port 8000 \
 - [**`FastAPI`**](https://fastapi.tiangolo.com/)
 - [Getting Started with MongoDB and FastAPI](https://www.mongodb.com/developer/languages/python/python-quickstart-fastapi/)
 - [**`Beanie`** - Async Python ODM for MongoDB, based on `Pydantic`](https://beanie-odm.dev/)
-- [`PyODMongo`: Async ODM (based on `Pydantic V2`)](https://pyodmongo.dev/)
