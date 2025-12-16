@@ -238,16 +238,8 @@
 - [SQL Database (PostgreSQL): **`SQLModel`** (`SQLAlchemy` + `Pydantic`) + **`Alembic`** + **`Psycopg`**](https://lucas-six.github.io/python-cookbook/cookbook/system_services/sql_db)
 - Cache (Redis): [**`redis-py`**]((https://lucas-six.github.io/python-cookbook/cookbook/system_services/redis)), `pyton-redis-orm`
 - Message Queue (RabbitMQ): [**`pika`**](https://pika.readthedocs.io/en/stable/index.html), [`Pikadantic`](https://pypi.org/project/pikadantic/)
+- [Document (NoSQL) Database (MongoDB)]((https://www.mongodb.com/docs/drivers/python/)): [**`Beanie`**](https://beanie-odm.dev/) (based on [**`motor`**](https://lucas-six.github.io/python-cookbook/cookbook/system_services/mongodb_motor), `Pydantic`), [`pymongo`](https://www.mongodb.com/docs/drivers/pymongo/), [`PyODMongo`](https://pyodmongo.dev/)
 - IoT MQTT: [**`aiomqtt`**](https://lucas-six.github.io/python-cookbook/cookbook/system_services/mqtt_aiomqtt)
-
-### MongoDB
-
-- [Official Driver](https://www.mongodb.com/docs/drivers/python/)
-  - [`pymongo`: Sync](https://www.mongodb.com/docs/drivers/pymongo/)
-  - [**`motor`**: Async](https://lucas-six.github.io/python-cookbook/cookbook/system_services/mongodb_motor)
-- ODM
-  - [`Beanie`: Async ODM (based on `Pydantic`)](https://beanie-odm.dev/)
-  - [`PyODMongo`: Async ODM (based on `Pydantic V2`)](https://pyodmongo.dev/)
 
 ## TODO: Language Core (语言核心)
 
