@@ -56,7 +56,7 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[State, Any]:
             settings.mqtt_host,
             settings.mqtt_port,
             username=settings.mqtt_username,
-            password=settings.mqtt_password,
+            password=settings.mqtt_password.get_secret_value(),
             timeout=settings.mqtt_timeout,
             identifier=f'python-cookbook-{os.getpid()}',
         ) as mqtt_client,
@@ -64,8 +64,6 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[State, Any]:
         # Subscribe MQTT
         await mqtt_client.subscribe(f'{settings.mqtt_topic_prefix}/#')
         task = loop.create_task(mqtt_listen(mqtt_client))
-
-        app.state.mqtt_client = mqtt_client
 
         yield {'mqtt_client': mqtt_client}
 

@@ -2,7 +2,7 @@
 
 from functools import lru_cache
 
-from pydantic import MongoDsn
+from pydantic import MongoDsn, SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -22,8 +22,8 @@ class Settings(BaseSettings):
     # MQTT
     mqtt_host: str = 'localhost'
     mqtt_port: int = 1883
-    mqtt_username: str | None = None
-    mqtt_password: str | None = None
+    mqtt_username: str = 'admin'
+    mqtt_password: SecretStr = SecretStr('public')
     mqtt_timeout: float | None = 3.5
     mqtt_qos: int = 2
     mqtt_topic_prefix: str
