@@ -45,7 +45,7 @@ MQTT_TOPIC_PREFIX="python-cookbook"
 
 from functools import lru_cache
 
-from pydantic import MongoDsn
+from pydantic import MongoDsn, SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -67,8 +67,8 @@ class Settings(BaseSettings):
     # MQTT
     mqtt_host: str = "localhost"
     mqtt_port: int = 1883
-    mqtt_username: str | None = None
-    mqtt_password: str | None = None
+    mqtt_username: str = 'admin'
+    mqtt_password: SecretStr = SecretStr('public')
     mqtt_timeout: float | None = 3.5
     mqtt_qos: int = 2
     mqtt_topic_prefix: str
@@ -141,7 +141,7 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[State, Any]:
             settings.mqtt_host,
             settings.mqtt_port,
             username=settings.mqtt_username,
-            password=settings.mqtt_password,
+            password=settings.mqtt_password.get_secret_value(),
             timeout=settings.mqtt_timeout,
             identifier=f'python-cookbook-{os.getpid()}',
         ) as mqtt_client,
@@ -149,8 +149,6 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[State, Any]:
         # Subscribe MQTT
         await mqtt_client.subscribe(f'{settings.mqtt_topic_prefix}/#')
         task = loop.create_task(mqtt_listen(mqtt_client))
-
-        app.state.mqtt_client = mqtt_client
 
         yield {'mqtt_client': mqtt_client}
 

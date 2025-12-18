@@ -6,12 +6,6 @@ An extremely fast Python package and project manager, written in *Rust*.
 curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-or
-
-```bash
-pip install uv
-```
-
 ## Create Project and Virtual Environment
 
 ```bash
@@ -87,6 +81,13 @@ uv venv
 ```bash
 uv self update
 uv self version  # show version
+```
+
+## Update Packages/Dependencies
+
+```bash
+uv sync --upgrade  # upgrade all packages/dependencies
+uv sync --upgrade-package <pkg ...>  # upgrade specific packages/dependencies
 ```
 
 ## References
