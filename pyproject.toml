@@ -27,9 +27,7 @@ dependencies = [
     "fastapi[all]",
     "uvicorn[standard]",
     "sqlmodel>=0.0.24",
-    #"python-jose[cryptography]",
-    #"types-python-jose",
-    "motor",
+    "pymongo>=4.15.5",
     #"beanie",
     #"pyodmongo",
     "redis[hiredis]",
@@ -151,10 +149,6 @@ init_forbid_extra = true
 init_typed = true
 warn_required_dynamic_aliases = true
 warn_untyped_fields = true
-
-[[tool.mypy.overrides]]
-module = "motor.*"
-ignore_missing_imports = true
 
 [[tool.mypy.overrides]]
 module = "redis.*"

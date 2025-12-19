@@ -1,25 +1,12 @@
-# `motor` - Asyncio Driver for MongoDB
+# `pymongo` - Python Driver for MongoDB
 
 ## Start
 
 See [MongoDB Overview - Linux Cookbook](https://lucas-six.github.io/linux-cookbook/cookbook/admin/mongodb/mongodb_overview)
 and [MongoDB on Ubuntu - Linux Cookbook](https://lucas-six.github.io/linux-cookbook/cookbook/admin/mongodb/mongodb_ubuntu).
 
-```toml
-# pyproject.toml
-
-dependencies = [
-    "motor",
-]
-
-# mypy for MongoDB motor
-[[tool.mypy.overrides]]
-module = "motor.*"
-ignore_missing_imports = true
-```
-
 ```bash
-pipenv install motor
+uv add pymongo
 ```
 
 ## Usage
@@ -28,18 +15,16 @@ pipenv install motor
 import logging
 
 import pymongo
-from motor.core import AgnosticClient, AgnosticCollection, AgnosticDatabase
-from motor.motor_asyncio import AsyncIOMotorClient
+from pymongo import AsyncMongoClient
 from pymongo.errors import DuplicateKeyError
 from pymongo.results import InsertOneResult, UpdateResult
 
 
 MONGO_URL = 'mongo://xxx'
 
-MONGO_CLIENT: AgnosticClient = AsyncIOMotorClient(MONGO_URL)
-MONGO_DB: AgnosticDatabase = MONGO_CLIENT['database-name']
-
-tb_users: AgnosticCollection = MONGO_DB['table-name']
+mongo_client: AsyncMongoClient = AsyncMongoClient(MONGO_URL)
+mongo_db = mongo_client['database-name']
+tb_users = mongo_db['table-name']
 
 # create index
 await tb_users.create_index(
@@ -70,7 +55,7 @@ if rsp2.modified_count != 1:
 
 # transaction
 try:
-    async with await MONGO_CLIENT.start_session() as session:
+    async with await mongo_client.start_session() as session:
         async with session.start_transaction():
             await tb_users.insert_one(
                 {'login_name': 'a'}, session=session
@@ -92,5 +77,4 @@ except DuplicateKeyError:
 ## References
 
 - [MongoDB Python Driver](https://www.mongodb.com/docs/drivers/python/)
-- [**`motor`** Documentation](https://www.mongodb.com/docs/drivers/motor/)
 - [**`Beanie`** - Async Python ODM for MongoDB, based on `Pydantic`](https://beanie-odm.dev/)

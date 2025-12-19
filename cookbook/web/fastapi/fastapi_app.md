@@ -101,7 +101,7 @@ from fastapi.openapi.docs import (
 )
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
-from motor.motor_asyncio import AsyncIOMotorClient
+from pymongo import AsyncMongoClient
 
 from examples.web.fastapi.routers import router
 from examples.web.fastapi.settings import get_settings
@@ -114,9 +114,9 @@ API_DOC_STATIC_PATH = f'{settings.app_doc_url}/{API_DOC_STATIC_DIR}'
 
 LOGGER = logging.getLogger('uvicorn')
 
-MONGODB_CLIENT = AsyncIOMotorClient(str(settings.mongodb_url))
-DB_XXX = MONGODB_CLIENT[settings.mongodb_db_name]
-TB_XXX = DB_XXX['examples']
+mongodb_client: AsyncMongoClient = AsyncMongoClient(str(settings.mongodb_url))
+db_xxx = mongodb_client[settings.mongodb_db_name]
+tb_xxx = db_xxx['examples']
 
 
 class State(TypedDict):
@@ -159,7 +159,7 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[State, Any]:
             pass
 
     LOGGER.debug(f'MQTT client [python-cookbook-{os.getpid()}] disconected')
-    MONGODB_CLIENT.close()
+    await mongodb_client.close()
 
 
 app: FastAPI = FastAPI(
@@ -209,7 +209,7 @@ async def redoc_html() -> HTMLResponse:
 
 @app.get('/api')
 async def root(request: Request) -> dict[str, str | None]:
-    db_doc = await TB_XXX.find_one({'name': settings.app_name})
+    db_doc = await tb_xxx.find_one({'name': settings.app_name})
     await request.state.mqtt_client.publish(
         f'{settings.mqtt_topic_prefix}/example',
         payload=json.dumps({'msg': 'hello'}, ensure_ascii=False),
@@ -240,7 +240,7 @@ uv run uvicorn --host 0.0.0.0 --port 8000 \
 
 ## More
 
-- [MongoDB **`motor`** - Python Cookbook](../../system_services/mongodb_motor)
+- [MongoDB **`pymongo`** - Python Cookbook](../../system_services/mongodb)
 - [MQTT **`aiomqtt`** - Python Cookbook](../../system_services/mqtt_aiomqtt)
 
 ## References

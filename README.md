@@ -237,7 +237,7 @@
 
 - Database
   - [PostgreSQL: **`SQLModel`** (`SQLAlchemy` + `Pydantic`) + **`Alembic`** + **`Psycopg`**](https://lucas-six.github.io/python-cookbook/cookbook/system_services/sql_db)
-  - [MongoDB]((https://www.mongodb.com/docs/drivers/python/)): [**`Beanie`**](https://beanie-odm.dev/) ([**`motor`**](https://lucas-six.github.io/python-cookbook/cookbook/system_services/mongodb_motor) + `Pydantic`), [`pymongo`](https://www.mongodb.com/docs/drivers/pymongo/)
+  - [MongoDB]((https://www.mongodb.com/docs/drivers/python/)): [**`Beanie`**](https://beanie-odm.dev/) ([**`pymongo`**](https://lucas-six.github.io/python-cookbook/cookbook/system_services/mongodb) + `Pydantic`)
 - Cache (Redis): [**`redis-py`**]((https://lucas-six.github.io/python-cookbook/cookbook/system_services/redis)), `pyton-redis-orm`
 - Message Queue
   - RabbitMQ: [**`pika`**](https://pika.readthedocs.io/en/stable/index.html), [`Pikadantic`](https://pypi.org/project/pikadantic/)

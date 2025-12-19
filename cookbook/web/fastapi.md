@@ -16,8 +16,6 @@ pipenv install celery[librabbitmq, mongodb, redis]
 ```python
 import os
 
-from motor.motor_asyncio import AsyncIOMotorClient
-
 class PyObjectId(ObjectId):
     @classmethod
     def __get_validators__(cls):
