@@ -2,24 +2,9 @@
 
 ## Installation
 
-### `motor`
-
-See [MongoDB **`motor`** - Python Cookbook](../../system_services/mongodb_motor)
-
-### ODM (Object-Document Model): `beanie`, `pyodmongo`
-
 ```bash
 uv add beanie
 uv add pyodmongo
-```
-
-```toml
-# pyproject.toml
-
-dependencies = [
-    "beanie",
-    "pyodmongo",
-]
 ```
 
 ## App
