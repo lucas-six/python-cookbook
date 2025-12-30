@@ -3,7 +3,7 @@
 ## Recipes (PostgreSQL)
 
 ```bash
-uv add psycopg[binary] sqlmodel alembic
+uv add psycopg[binary] sqlmodel alembic alembic-postgresql-enum
 ```
 
 ```bash
@@ -14,6 +14,8 @@ uv run alembic init --template pyproject alembic
 # alembic/env.py
 
 from sqlmodel import SQLModel
+import alembic_postgresql_enum
+from app.db_models import XXXModel
 
 target_metadata = SQLModel.metadata
 ```
