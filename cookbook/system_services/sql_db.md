@@ -27,17 +27,17 @@ import sqlmodel
 ```
 
 ```bash
-uv run alembic revision --autogenerate -m "Initial migration."
-uv run alembic upgrade head
+uv run alembic check  # check migrations
 
-# rollback to the previous migration
-uv run alembic downgrade -1
+uv run alembic revision --autogenerate -m "Initial migration."  # generate a new migration
 
-# show migration history
-uv run alembic history
+uv run alembic upgrade head  # apply all migrations
 
-# show the current revision
-uv run alembic current
+uv run alembic downgrade -1  # rollback to the previous migration
+
+uv run alembic history  # show migration history
+
+uv run alembic current  # show the current revision
 ```
 
 ## References
