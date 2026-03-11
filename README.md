@@ -184,7 +184,7 @@
 
 - JSON: `json`(builtin), [**`orjson`**](https://github.com/ijl/orjson)
 - CSV: `csv`(builtin), [**`pandas`**](https://pandas.pydata.org/)
-- Excel: [**`pandas`**](https://pandas.pydata.org/)
+- Excel: [**`openpyxl`**](https://openpyxl.readthedocs.io/en/stable/), [**`pandas`**](https://pandas.pydata.org/)
 - XML: `xml.etree.ElementTree`(builtin), [**`lxml`**](https://lxml.de/)
 - YAML: `yaml`(builtin), [**`pyyaml`**](https://pyyaml.org/)
 - HTML: `html.parser`(builtin), [**`lxml`**](https://lxml.de/)
