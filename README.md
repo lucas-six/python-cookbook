@@ -182,9 +182,12 @@
 
 ### Data Format
 
+- File Type: **`mimetypes`**(builtin)
+- INI: **`configparser`**(builtin)
 - JSON: `json`(builtin), [**`orjson`**](https://github.com/ijl/orjson)
 - CSV: `csv`(builtin), [**`pandas`**](https://pandas.pydata.org/)
 - Excel: [**`openpyxl`**](https://openpyxl.readthedocs.io/en/stable/), [**`pandas`**](https://pandas.pydata.org/)
+- Parquet: [**`pyarrow`**](https://arrow.apache.org/docs/python/), [**`fastparquet`**](https://fastparquet.readthedocs.io/en/stable/)
 - XML: `xml.etree.ElementTree`(builtin), [**`lxml`**](https://lxml.de/)
 - YAML: `yaml`(builtin), [**`pyyaml`**](https://pyyaml.org/)
 - HTML: `html.parser`(builtin), [**`lxml`**](https://lxml.de/)
