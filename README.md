@@ -198,6 +198,10 @@
 
 - [Data Validation: **`Pydantic`**](https://lucas-six.github.io/python-cookbook/cookbook/data/pydantic)
 
+### Dataset & Database
+
+- [Country (ISO 3166-1), Language (ISO 639-3), Currency (ISO 4217): **`pycountry`**](https://pypi.org/project/pycountry/)
+
 ## Web Development
 
 - [URL Parsing: `urllib.parse`](https://lucas-six.github.io/python-cookbook/cookbook/web/urllib_parse)
