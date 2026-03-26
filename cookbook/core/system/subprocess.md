@@ -14,11 +14,11 @@ try:
                        text=True,
                        encoding='utf-8',
                        errors='strict')
-except subproess.TimeoutExpired:
+except subprocess.TimeoutExpired:
     logging.error('timeout')
-except CalledProcessError:
-    logging.error('run failed')
-isinstance(p.stdout, str)
+except subprocess.CalledProcessError as err:
+    logging.error(f'run failed {err}')
+assert isinstance(p.stdout, str)
 ```
 
 ## References
