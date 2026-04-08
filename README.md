@@ -197,10 +197,12 @@
 ### Data Processing
 
 - [Data Validation: **`Pydantic`**](https://lucas-six.github.io/python-cookbook/cookbook/data/pydantic)
+- [Number to Text: **`num2words`**](https://github.com/savoirfairelinux/num2words)
 
 ### Dataset & Database
 
 - [Country (ISO 3166-1), Language (ISO 639-3), Currency (ISO 4217): **`pycountry`**](https://pypi.org/project/pycountry/)
+- [Currency Sign/Symbol: **`currency-symbols`**](https://pypi.org/project/currency-symbols/)
 
 ## Web Development
 
