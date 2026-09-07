@@ -7,6 +7,7 @@
 ```python
 from typing import TypedDict, NotRequired, Unpack
 
+
 class KwArgs(TypedDict):
     key_a: int
     key_b: float

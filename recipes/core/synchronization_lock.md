@@ -7,8 +7,8 @@
 ```python
 import multiprocessing
 
-class MutexResource:
 
+class MutexResource:
     def __init__(self):
         self.value = 0
         self.lock = multiprocessing.Lock()
@@ -48,7 +48,6 @@ import time
 
 
 class MutexResource:
-
     def __init__(self):
         self.value = 0
         self.lock = threading.Lock()

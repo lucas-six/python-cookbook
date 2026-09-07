@@ -3,15 +3,12 @@
 ## Solution
 
 ```python
-"""Asynchronous I/O - Synchronization Primitives: Semapore.
-"""
+"""Asynchronous I/O - Synchronization Primitives: Semapore."""
 
 import asyncio
 import logging
 
-logging.basicConfig(
-    level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}'
-)
+logging.basicConfig(level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}')
 
 
 class Pool:

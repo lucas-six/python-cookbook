@@ -46,7 +46,8 @@ logging.info(f'id={rsp1.inserted_id}')
 # update one
 try:
     rsp2: UpdateResult = await tb_users.update_one(
-        {'login_name': 'xxx', '$set': {'login_name': 'yyy'}})
+        {'login_name': 'xxx', '$set': {'login_name': 'yyy'}}
+    )
 except DuplicateKeyError:
     logging.error('duplicated key')
 if rsp2.modified_count != 1:
@@ -57,12 +58,8 @@ if rsp2.modified_count != 1:
 try:
     async with await mongo_client.start_session() as session:
         async with session.start_transaction():
-            await tb_users.insert_one(
-                {'login_name': 'a'}, session=session
-            )
-            await tb_users.insert_one(
-                {'login_name': 'b'}, session=session
-            )
+            await tb_users.insert_one({'login_name': 'a'}, session=session)
+            await tb_users.insert_one({'login_name': 'b'}, session=session)
 except DuplicateKeyError:
     logging.error('transaction failed')
 ```

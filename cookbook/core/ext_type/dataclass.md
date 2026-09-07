@@ -31,12 +31,14 @@ assert p.sum() == 33
 ```python
 from dataclasses import dataclass, KW_ONLY
 
+
 @dataclass
 class Point:
     x: int
     _: KW_ONLY
     y: int = 0
     z: int
+
 
 p = Point(0, y=1, z=2)
 ```
@@ -45,6 +47,7 @@ p = Point(0, y=1, z=2)
 
 ```python
 from dataclasses import dataclass, field
+
 
 @dataclass
 class Point:

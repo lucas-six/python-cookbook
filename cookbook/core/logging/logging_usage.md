@@ -28,10 +28,9 @@ logging.basicConfig(
     style='{',  # f-string
     format='[{levelname}] [{asctime}] {name} {processName}({process}) {message}',
     # datefmt='%Y-%m-%d %H:%M:%S'
-
     # logging to file
     filename='example.log',
-    encoding='utf-8'
+    encoding='utf-8',
 )
 
 logger = logging.getLogger(__name__)

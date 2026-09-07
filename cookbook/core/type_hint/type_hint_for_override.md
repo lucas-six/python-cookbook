@@ -7,12 +7,14 @@ New in Python **3.12**.
 ```python
 from typing import override
 
+
 class Parent:
     def foo(self) -> int:
         return 1
 
     def bar(self, x: str) -> str:
         return x
+
 
 class Child(Parent):
     @override

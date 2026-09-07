@@ -5,17 +5,14 @@ UDP = User Datagram Protocol
 ## Solution
 
 ```python
-"""UDP Server with Standard Framework, based on IPv4
-"""
+"""UDP Server with Standard Framework, based on IPv4"""
 
 import logging
 import socketserver
 
 from net import handle_reuse_port
 
-logging.basicConfig(
-    level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
-)
+logging.basicConfig(level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}')
 logger = logging.getLogger()
 
 
@@ -38,7 +35,9 @@ class MyUDPHandler(socketserver.BaseRequestHandler):
 
 
 with socketserver.UDPServer(
-    ('localhost', 9999), MyUDPHandler, bind_and_activate=False  # type: ignore
+    ('localhost', 9999),
+    MyUDPHandler,
+    bind_and_activate=False,  # type: ignore
 ) as server:
     # When multiple processes with differing UIDs assign sockets
     # to an identical UDP socket address with `SO_REUSEADDR`,
