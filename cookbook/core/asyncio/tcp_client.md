@@ -8,9 +8,7 @@ import logging
 
 from asyncio_tcp_server import HOST, PORT
 
-logging.basicConfig(
-    level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}'
-)
+logging.basicConfig(level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}')
 
 
 async def tcp_echo_client(host: str, port: int, data: bytes) -> None:

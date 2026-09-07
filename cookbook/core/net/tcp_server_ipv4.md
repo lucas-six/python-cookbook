@@ -51,25 +51,19 @@ class ByteHandler(socketserver.BaseRequestHandler):
         # recv buffer size
         # max: /proc/sys/net/core/rmem_max
         # self.request.setsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF, 10240)
-        recv_buffer_size: int = self.request.getsockopt(
-            socket.SOL_SOCKET, socket.SO_RCVBUF
-        )
+        recv_buffer_size: int = self.request.getsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF)
         logger.debug(f'[{self.client_address}] recv buffer size: {recv_buffer_size}')
 
         # send buffer size
         # max: /proc/sys/net/core/wmem_max
         # self.request.setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, 10240)
-        send_buffer_size: int = self.request.getsockopt(
-            socket.SOL_SOCKET, socket.SO_SNDBUF
-        )
+        send_buffer_size: int = self.request.getsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF)
         logger.debug(f'[{self.client_address}] send buffer size: {send_buffer_size}')
 
         # QUICK ACK
         if hasattr(socket, 'TCP_QUICKACK'):
             assert sys.platform == 'linux'
-            enable_quickack = bool(
-                self.request.getsockopt(socket.IPPROTO_TCP, socket.TCP_QUICKACK)
-            )
+            enable_quickack = bool(self.request.getsockopt(socket.IPPROTO_TCP, socket.TCP_QUICKACK))
             logger.debug(f'[{self.client_address}] QUICK_ACK: {enable_quickack}')
 
         # Fast Open
@@ -180,9 +174,7 @@ def run_tcp_server(
         - `'localhost'`: `socket.INADDR_LOOPBACK`
         - `socket.INADDR_BROADCAST`
     """
-    server_class = (
-        socketserver.ThreadingTCPServer if enable_threading else socketserver.TCPServer
-    )
+    server_class = socketserver.ThreadingTCPServer if enable_threading else socketserver.TCPServer
 
     with server_class((host, port), request_hander, bind_and_activate=False) as server:
         # Reuse Address: `SO_REUSEADDR`
@@ -202,17 +194,11 @@ def run_tcp_server(
         # Keep-Alive
         server.socket.setsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)
         if sys.platform == 'linux':  # Linux 2.4+
-            server.socket.setsockopt(
-                socket.IPPROTO_TCP, socket.TCP_KEEPIDLE, keep_alive_idle
-            )
+            server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPIDLE, keep_alive_idle)
         elif sys.platform == 'darwin' and sys.version_info >= (3, 10):
-            server.socket.setsockopt(
-                socket.IPPROTO_TCP, socket.TCP_KEEPALIVE, keep_alive_idle
-            )
+            server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPALIVE, keep_alive_idle)
         server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPCNT, keep_alive_cnt)
-        server.socket.setsockopt(
-            socket.IPPROTO_TCP, socket.TCP_KEEPINTVL, keep_alive_intvl
-        )
+        server.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPINTVL, keep_alive_intvl)
 
         # NO_DELAY (disable Nagle's Algorithm)
         if allow_nodelay:
@@ -231,25 +217,19 @@ def run_tcp_server(
 
         server.server_bind()
 
-        reuse_address = bool(
-            server.socket.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR)
-        )
+        reuse_address = bool(server.socket.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR))
         logger.debug(f'Reuse Address: {reuse_address}')
 
-        reuse_port = bool(
-            server.socket.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT)
-        )
+        reuse_port = bool(server.socket.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT))
         logger.debug(f'Reuse Port: {reuse_port}')
 
         nodelay = bool(server.socket.getsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY))
-        logger.debug(f'No Delay (disable Nagle\'s Algorithm): {nodelay}')
+        logger.debug(f"No Delay (disable Nagle's Algorithm): {nodelay}")
 
         # Quick ACK (disable delayed ACKs)
         if hasattr(socket, 'TCP_QUICKACK'):  # Linux 2.4.4+
             assert sys.platform == 'linux'
-            quickack = bool(
-                server.socket.getsockopt(socket.IPPROTO_TCP, socket.TCP_QUICKACK)
-            )
+            quickack = bool(server.socket.getsockopt(socket.IPPROTO_TCP, socket.TCP_QUICKACK))
             logger.debug(f'Quick ACK: {quickack}')
 
         if sys.platform == 'linux':  # Linux 3.7+
