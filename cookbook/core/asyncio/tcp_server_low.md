@@ -23,9 +23,7 @@ from net import (
     handle_tcp_quickack,
 )
 
-logging.basicConfig(
-    level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}'
-)
+logging.basicConfig(level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}')
 
 tcp_quickack = True
 recv_bufsize: int | None = None

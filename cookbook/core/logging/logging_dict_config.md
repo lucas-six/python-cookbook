@@ -6,9 +6,11 @@
 import logging
 import time
 
+
 # UTC (GMT) Time
 class UTCFormatter(logging.Formatter):
     converter = time.gmtime
+
 
 LOGGING = {
     'version': 1,
@@ -80,16 +82,8 @@ LOGGING = {
             'formatter': 'verbose',
         },
     },
-    'loggers': {
-        'app': {
-            'level': 'INFO',
-            'handlers': ['tfile', 'errors']
-        }
-    },
-    'root': {
-        'level': 'DEBUG',
-        'handlers': ['console', 'rfile', 'errors']
-    },
+    'loggers': {'app': {'level': 'INFO', 'handlers': ['tfile', 'errors']}},
+    'root': {'level': 'DEBUG', 'handlers': ['console', 'rfile', 'errors']},
 }
 ```
 

@@ -7,13 +7,15 @@ import subprocess
 
 
 try:
-    p = subprocess.run(['ls', '-l'],
-                       check=True,
-                       timeout=1.0,
-                       capture_output=True,
-                       text=True,
-                       encoding='utf-8',
-                       errors='strict')
+    p = subprocess.run(
+        ['ls', '-l'],
+        check=True,
+        timeout=1.0,
+        capture_output=True,
+        text=True,
+        encoding='utf-8',
+        errors='strict',
+    )
 except subprocess.TimeoutExpired:
     logging.error('timeout')
 except subprocess.CalledProcessError as err:
