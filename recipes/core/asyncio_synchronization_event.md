@@ -3,15 +3,12 @@
 ## Solution
 
 ```python
-"""Asynchronous I/O - Synchronization Primitives: Event.
-"""
+"""Asynchronous I/O - Synchronization Primitives: Event."""
 
 import asyncio
 import logging
 
-logging.basicConfig(
-    level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}'
-)
+logging.basicConfig(level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}')
 
 
 async def coro1(event: asyncio.Event):

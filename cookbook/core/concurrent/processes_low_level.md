@@ -30,7 +30,6 @@ def worker_args(logger: logging.Logger, num: int):
 
 
 if __name__ == '__main__':
-
     # is equivalent to:
     #
     # logging.basicConfig(
@@ -39,16 +38,13 @@ if __name__ == '__main__':
     # )
     logger = multiprocessing.log_to_stderr(logging.DEBUG)
 
-
     p1 = multiprocessing.Process(target=worker, name='worker_name', args=(logger,))
     p1.start()
     for i in range(5):
-
         # passing arguments
         # default name: "Process-N"
         p = multiprocessing.Process(target=worker_args, args=(logger, i))
         p.start()
-
 
     # enumerate active child processes
     for p in multiprocessing.active_children():
@@ -60,10 +56,11 @@ if __name__ == '__main__':
 ```python
 import multiprocessing
 
-class MyProcess(multiprocessing.Process):
 
+class MyProcess(multiprocessing.Process):
     def run(self):
         print('run')
+
 
 if __name__ == '__main__':
     p = MyProcess()
