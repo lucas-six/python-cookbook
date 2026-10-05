@@ -5,15 +5,12 @@ In essence, a `Condition` object combines the functionality of an `Event` and a 
 ## Solution
 
 ```python
-"""Asynchronous I/O - Synchronization Primitives: Condition.
-"""
+"""Asynchronous I/O - Synchronization Primitives: Condition."""
 
 import asyncio
 import logging
 
-logging.basicConfig(
-    level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}'
-)
+logging.basicConfig(level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}')
 
 
 async def consumer(cond: asyncio.Condition, i: int):
