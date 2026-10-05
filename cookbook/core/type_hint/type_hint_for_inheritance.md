@@ -17,6 +17,7 @@ from typing import final
 class Base:
     pass
 
+
 class Derived(Base):  # Error: Cannot inherit from final class "Base"
     pass
 ```
@@ -29,13 +30,12 @@ from typing import final
 
 class Base:
     @final
-    def done(self) -> None:
-        ...
+    def done(self) -> None: ...
 
 
 class Sub(Base):
     def done(self) -> None:  # Error: Cannot override final attribute "done"
-                             # (previously declared in base class "Base")
+        # (previously declared in base class "Base")
         ...
 ```
 

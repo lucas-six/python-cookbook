@@ -18,9 +18,7 @@ import socket
 import struct
 from pathlib import Path
 
-logging.basicConfig(
-    level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
-)
+logging.basicConfig(level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}')
 logger = logging.getLogger()
 
 
@@ -31,9 +29,7 @@ os_version_info = tuple(_uname.release.split('.'))
 max_recv_buf_size: int | None
 max_send_buf_size: int | None
 if os_name == 'Linux':
-    assert socket.SOMAXCONN == int(
-        Path('/proc/sys/net/core/somaxconn').read_text().strip()
-    )
+    assert socket.SOMAXCONN == int(Path('/proc/sys/net/core/somaxconn').read_text().strip())
 
     # Get max UDP recv/send buffer size in system (Linux)
     # - read(recv): /proc/sys/net/core/rmem_max
@@ -102,12 +98,8 @@ def run_server(
     if multicast_loopback is not None:
         multicast_loopback_val = 1 if multicast_loopback else 0
     if multicast_loopback_val is not None:
-        sock.setsockopt(
-            socket.IPPROTO_IP, socket.IP_MULTICAST_LOOP, multicast_loopback_val
-        )
-    multicast_loopback = (
-        sock.getsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_LOOP) == 1
-    )
+        sock.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_LOOP, multicast_loopback_val)
+    multicast_loopback = sock.getsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_LOOP) == 1
     logger.debug(f'Server multicast loopback enabled: {multicast_loopback}')
 
     # Accept and handle incoming client requests
@@ -122,7 +114,6 @@ def run_server(
                 logger.debug(f'no data from {client_address}')
                 break
     finally:
-
         # Leave group
         #
         # The `IP_DROP_MEMBERSHIP` socket option
@@ -154,9 +145,7 @@ from __future__ import annotations
 import logging
 import socket
 
-logging.basicConfig(
-    level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
-)
+logging.basicConfig(level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}')
 
 # params
 data: bytes = b'data'
@@ -166,7 +155,6 @@ multicast_loopback: bool | None = None
 
 with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as client:
     try:
-
         # The `IP_MULTICAST_TTL` socket option
         # allows the application to primarily limit the lifetime (TTL, Time-to-Live) of
         # the packet in the Internet and prevent it from circulating indefinitely.
@@ -181,12 +169,8 @@ with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as client:
         if multicast_loopback is not None:
             multicast_loopback_val = 1 if multicast_loopback else 0
         if multicast_loopback_val is not None:
-            client.setsockopt(
-                socket.IPPROTO_IP, socket.IP_MULTICAST_LOOP, multicast_loopback_val
-            )
-        multicast_loopback = (
-            client.getsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_LOOP) == 1
-        )
+            client.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_LOOP, multicast_loopback_val)
+        multicast_loopback = client.getsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_LOOP) == 1
         logging.debug(f'Server multicast loopback enabled: {multicast_loopback}')
 
         client.sendto(data, group_address)
