@@ -14,6 +14,8 @@ semantically equivalent:
 ```python
 class A:
     pass
+
+
 A = decorator_a(decorator_b(A))
 ```
 
@@ -99,18 +101,24 @@ def provides(*interfaces):
     the current implementation of PyProtocols.
     Not particularly important for the PEP text.
     """
+
     def provides(typ):
         declareImplementation(typ, instancesProvide=interfaces)
         return typ
+
     return provides
+
 
 class IBar(Interface):
     """Declare something about IBar here"""
+
     pass
+
 
 @provides(IBar)
 class Foo(object):
     """Implement something here..."""
+
     pass
 ```
 

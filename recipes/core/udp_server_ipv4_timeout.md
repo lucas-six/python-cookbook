@@ -5,8 +5,7 @@ UDP = User Datagram Protocol
 ## Solution
 
 ```python
-"""UDP Server (IPv4) - Timeout Mode
-"""
+"""UDP Server (IPv4) - Timeout Mode"""
 
 from __future__ import annotations
 
@@ -17,9 +16,7 @@ from typing import Any
 
 from net import handle_reuse_address, handle_reuse_port, handle_socket_bufsize
 
-logging.basicConfig(
-    level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
-)
+logging.basicConfig(level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}')
 logger = logging.getLogger()
 
 
