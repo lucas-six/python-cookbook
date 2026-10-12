@@ -21,19 +21,33 @@ s = a  # type check fails
 
 def f(arg: Any):
     arg.method()  # ok
+
+
 def f(arg: object):
     arg.method()  # type check fails
 
 
-def f1() -> Any: return 1  # ok
-def f2() -> object: return 1  # ok
+def f1() -> Any:
+    return 1  # ok
+
+
+def f2() -> object:
+    return 1  # ok
+
+
 s: str = ''
 s = f1()  # ok
 s = f2()  # type check fails
 
 
-def f1(arg: Any): pass
-def f2(arg: object): pass
+def f1(arg: Any):
+    pass
+
+
+def f2(arg: object):
+    pass
+
+
 f1(1)  # ok
 f1('s')  # ok
 f2(1)  # ok
