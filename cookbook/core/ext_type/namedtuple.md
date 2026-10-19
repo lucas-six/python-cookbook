@@ -60,7 +60,7 @@ from csv:
 ```python
 import csv
 
-for emp in map(Point._make, csv.reader(open("point.csv", "rb"))):
+for emp in map(Point._make, csv.reader(open('point.csv', 'rb'))):
     print(emp.x, emp.y)
 ```
 
