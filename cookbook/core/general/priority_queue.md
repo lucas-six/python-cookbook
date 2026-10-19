@@ -5,6 +5,7 @@
 ```python
 import heapq
 
+
 class PriorityQueue:
     def __init__(self):
         self._queue = []

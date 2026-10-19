@@ -31,9 +31,9 @@ and execution continues `with` the statement following the `with` statement.
 semantically equivalent to:
 
 ```python
-manager = (EXPRESSION)
+manager = EXPRESSION
 enter = type(manager).__enter__  # Not calling it yet
-exit = type(manager).__exit__    # Not calling it yet
+exit = type(manager).__exit__  # Not calling it yet
 value = enter(manager)
 hit_except = False
 
