@@ -48,27 +48,23 @@ if __name__ == '__main__':
     logger = multiprocessing.log_to_stderr(logging.DEBUG)
 
     e1 = multiprocessing.Event()
-    p1 = multiprocessing.Process(target=worker_1,
-                                 name='worker_1',
-                                 args=(e1, logger))
-    p2 = multiprocessing.Process(target=worker_2,
-                                 name='worker_2',
-                                 args=(e1, logger))
+    p1 = multiprocessing.Process(target=worker_1, name='worker_1', args=(e1, logger))
+    p2 = multiprocessing.Process(target=worker_2, name='worker_2', args=(e1, logger))
     p1.start()
     p2.start()
 
     # event timeout
     e2 = multiprocessing.Event()
-    p_timeout = multiprocessing.Process(target=worker_timeout,
-                                        name='worker_timeout',
-                                        args=(e2, logger))
+    p_timeout = multiprocessing.Process(
+        target=worker_timeout, name='worker_timeout', args=(e2, logger)
+    )
     p_timeout.start()
 
     # wait for main process
     e3 = multiprocessing.Event()
-    p_main = multiprocessing.Process(target=worker_wait_main,
-                                     name='worker_wait_main',
-                                     args=(e3, logger))
+    p_main = multiprocessing.Process(
+        target=worker_wait_main, name='worker_wait_main', args=(e3, logger)
+    )
     p_main.start()
     time.sleep(2.0)
     e3.set()
@@ -87,9 +83,7 @@ import time
 
 
 logging.basicConfig(
-    level=logging.DEBUG,
-    style='{',
-    format='[{asctime}] [{threadName:<24}] {message}'
+    level=logging.DEBUG, style='{', format='[{asctime}] [{threadName:<24}] {message}'
 )
 
 
@@ -133,15 +127,11 @@ t1.start()
 t2.start()
 
 e2 = threading.Event()
-t_timeout = threading.Thread(target=worker_timeout,
-                             name='worker_timeout',
-                             args=(e2,))
+t_timeout = threading.Thread(target=worker_timeout, name='worker_timeout', args=(e2,))
 t_timeout.start()
 
 e3 = threading.Event()
-t_main = threading.Thread(target=worker_wait_mainthread,
-                          name='worker_wait_mainthread',
-                          args=(e3,))
+t_main = threading.Thread(target=worker_wait_mainthread, name='worker_wait_mainthread', args=(e3,))
 t_main.start()
 time.sleep(2.0)
 e3.set()

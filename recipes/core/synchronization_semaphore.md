@@ -18,14 +18,12 @@ typical use case: producer-consumer situation with limited buffer capacity:
 ### For Processes
 
 ```python
-"""Connection Pool.
-"""
+"""Connection Pool."""
 
 import multiprocessing
 
 
 class ConnectionPool:
-
     def __init__(self, init_conns: int, max_conns: int):
         if init_conns > max_conns:
             raise ValueError
@@ -78,6 +76,7 @@ import queue
 import threading
 
 MAX_SIZE = 5
+
 
 def consumer(s: threading.BoundedSemaphore, q: queue.Queue):
     with s:
