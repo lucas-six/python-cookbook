@@ -18,6 +18,7 @@ MAX_SIZE: Final[int] = 1024
 class Base:
     ATTR: Final[int] = 10
 
+
 class Sub(Base):
     ATTR = 1  # Error: cannot be changed in subclasses.
 
