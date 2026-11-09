@@ -6,7 +6,10 @@
 from typing import Type
 
 
-class C: pass
+class C:
+    pass
+
+
 c: Type[C] = C
 
 o: Type[object]

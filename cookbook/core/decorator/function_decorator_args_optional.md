@@ -5,6 +5,7 @@
 ```python
 from functools import wraps, partial
 
+
 def decorator(func=None, *, arg1=None, arg2=None):
     if func is None:
         return partial(decorator, arg1=arg1, arg2=arg2)
