@@ -19,9 +19,7 @@ import socket
 
 from net import handle_reuse_port, handle_socket_bufsize
 
-logging.basicConfig(
-    level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}'
-)
+logging.basicConfig(level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}')
 
 recv_bufsize: int | None = None
 send_bufsize: int | None = None

@@ -11,7 +11,7 @@ logging.basicConfig(
     level=logging.DEBUG,
     style='{',
     # thread: thread id
-    format='[{levelName}] {threadName}({thread}) {message}'
+    format='[{levelName}] {threadName}({thread}) {message}',
 )
 
 
@@ -64,15 +64,10 @@ import logging
 import threading
 
 
-logging.basicConfig(
-    level=logging.DEBUG,
-    style='{',
-    format='[{threadName}] {message}'
-)
+logging.basicConfig(level=logging.DEBUG, style='{', format='[{threadName}] {message}')
 
 
 class MyThread(threading.Thread):
-
     def run(self):
         logging.debug('start')
         logging.debug('end')

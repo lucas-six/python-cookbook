@@ -17,6 +17,7 @@ from typing import TypeVar
 # Generic Type Variables
 T = TypeVar['T', int, float]
 
+
 def generic_func(arg: T) -> T:
     return arg + 1
 ```
@@ -35,6 +36,7 @@ from typing import TypeVar, Generic
 
 # Generic Type Variables
 T = TypeVar['T', int, float]
+
 
 class GenericClass(Generic[T]):
     pass

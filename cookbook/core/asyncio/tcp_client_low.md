@@ -19,9 +19,7 @@ import logging
 
 from net import handle_socket_bufsize, handle_tcp_nodelay
 
-logging.basicConfig(
-    level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}'
-)
+logging.basicConfig(level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}')
 
 
 class EchoClientProtocol(asyncio.Protocol):

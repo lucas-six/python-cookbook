@@ -10,9 +10,7 @@ import os
 import socket
 from contextlib import suppress
 
-logging.basicConfig(
-    level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
-)
+logging.basicConfig(level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}')
 
 sockfile = 'xxx.sock'
 
@@ -57,9 +55,7 @@ See [source code](https://github.com/leven-cn/python-cookbook/blob/main/examples
 import logging
 import socket
 
-logging.basicConfig(
-    level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
-)
+logging.basicConfig(level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}')
 
 sockfile = 'xxx.sock'
 

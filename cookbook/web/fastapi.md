@@ -16,6 +16,7 @@ pipenv install celery[librabbitmq, mongodb, redis]
 ```python
 import os
 
+
 class PyObjectId(ObjectId):
     @classmethod
     def __get_validators__(cls):
@@ -69,9 +70,7 @@ async def create_student(request: Request, student: StudentModel = Body(...)):
     return JSONResponse(status_code=status.HTTP_201_CREATED, content=created_student)
 
 
-@router.get(
-    '/', response_description='List all students', response_model=list[StudentModel]
-)
+@router.get('/', response_description='List all students', response_model=list[StudentModel])
 async def list_students(request: Request):
     coll = request.app.mongodb_db['students']
     return await coll.find().to_list(1000)
@@ -88,25 +87,18 @@ async def show_student(request: Request, student_id: str):
     raise HTTPException(status_code=404, detail=f'Student {student_id} not found')
 
 
-
 @router.put('/{student_id}', response_description='Update a student', response_model=StudentModel)
 async def update_student(
-    request: Request,
-    student_id: str,
-    student: UpdateStudentModel = Body(...)
+    request: Request, student_id: str, student: UpdateStudentModel = Body(...)
 ):
     student = {k: v for k, v in student.dict().items() if v is not None}
     coll = request.app.mongodb_db['students']
 
     if len(student) >= 1:
-        update_result = await coll.update_one({
-            '_id': student_id},
-            {'$set': student})
+        update_result = await coll.update_one({'_id': student_id}, {'$set': student})
 
         if update_result.modified_count == 1:
-            if (
-                updated_student := await coll.find_one({'_id': student_id})
-            ) is not None:
+            if (updated_student := await coll.find_one({'_id': student_id})) is not None:
                 return updated_student
 
     if (existing_student := await coll.find_one({'_id': student_id})) is not None:

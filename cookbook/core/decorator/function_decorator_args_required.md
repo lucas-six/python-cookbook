@@ -13,7 +13,9 @@ def decorator(arg1=None, arg2=None, *_args, **_kwargs):
             """wrapper function."""
             print(f'run wrapper: {arg1}, {arg2}, {_args}, {_kwargs}')
             return _func(*args, **kwargs)
+
         return wrapper
+
     return _decorator
 ```
 
