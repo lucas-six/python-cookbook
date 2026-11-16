@@ -8,9 +8,7 @@ import logging
 import time
 from functools import partial
 
-logging.basicConfig(
-    level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}'
-)
+logging.basicConfig(level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}')
 
 
 def callback(num: int, wait: float, *, kwarg: str = 'keyword'):
@@ -24,9 +22,7 @@ def callback_time(num: int, wait: float, loop: asyncio.BaseEventLoop):
     time.sleep(wait)
 
 
-def callback_result(
-    num: int, wait: float, future: asyncio.Future[str], *, kwarg: str = 'keyword'
-):
+def callback_result(num: int, wait: float, future: asyncio.Future[str], *, kwarg: str = 'keyword'):
     """Not a coroutine, return results."""
     logging.debug(f'run callback {num}, [{kwarg}] wait {wait} seconds')
     time.sleep(wait)

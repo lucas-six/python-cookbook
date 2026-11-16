@@ -18,7 +18,10 @@ assert min(zip(data.values(), data.keys())) == (10.75, 'FB')
 assert max(zip(data.values(), data.keys())) == (612.78, 'AAPL')
 
 assert sorted(zip(data.values(), data.keys())) == [
-    (10.75, 'FB'), (37.2, 'HPQ'),
-    (45.23, 'ACME'), (205.55, 'IBM'),
-    (612.78, 'AAPL')]
+    (10.75, 'FB'),
+    (37.2, 'HPQ'),
+    (45.23, 'ACME'),
+    (205.55, 'IBM'),
+    (612.78, 'AAPL'),
+]
 ```

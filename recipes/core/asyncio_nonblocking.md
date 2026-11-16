@@ -6,16 +6,13 @@ if they were ran in the main thread.
 ## Solution
 
 ```python
-"""Asynchronous I/O - Non-blocking main thread.
-"""
+"""Asynchronous I/O - Non-blocking main thread."""
 
 import asyncio
 import logging
 import time
 
-logging.basicConfig(
-    level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}'
-)
+logging.basicConfig(level=logging.DEBUG, style='{', format='[{threadName} ({thread})] {message}')
 
 
 def blocking_io():

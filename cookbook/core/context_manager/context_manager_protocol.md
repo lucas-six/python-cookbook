@@ -36,10 +36,9 @@ class ContextManager:
         print('enter into runtime context')
         return self
 
-    def __exit__(self,
-                 exc_type: Type[BaseException] | None,
-                 exc_val: Exception | None,
-                 exc_tb: TracebackType) -> bool:
+    def __exit__(
+        self, exc_type: Type[BaseException] | None, exc_val: Exception | None, exc_tb: TracebackType
+    ) -> bool:
         """Exit the runtime context and return a Boolean flag
         indicating if any exception that occurred should be suppressed.
         `True` for suppressed.

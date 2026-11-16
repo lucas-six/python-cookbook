@@ -7,6 +7,7 @@
 ```python
 from contextlib import contextmanager
 
+
 @contextmanager
 def managed_resource(*args, **kwds):
     # Code to acquire resource, e.g.:
