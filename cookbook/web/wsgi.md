@@ -73,9 +73,7 @@ def application(
             rsp_content_type = f'image/{rsp_path.suffix.removeprefix(".")}'
         rsp = [rsp_content]
     elif req_path.endswith('.json'):  # json
-        rsp_content = json.dumps(
-            {'a': 1, 'b': '你好', 'time': time.time()}, ensure_ascii=False
-        )
+        rsp_content = json.dumps({'a': 1, 'b': '你好', 'time': time.time()}, ensure_ascii=False)
         rsp_content_type = 'application/json'
         rsp = [rsp_content.encode('utf-8')]
     elif req_method == 'POST':
