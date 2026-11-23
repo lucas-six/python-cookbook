@@ -41,9 +41,8 @@ from functools import partial, update_wrapper
 WRAPPER_ASSIGNMENTS = ('__module__', '__name__', '__qualname__', '__doc__', '__annotations__')
 WRAPPER_UPDATES = ('__dict__',)
 
-def wraps(wrapped,
-          assigned = WRAPPER_ASSIGNMENTS,
-          updated = WRAPPER_UPDATES):
+
+def wraps(wrapped, assigned=WRAPPER_ASSIGNMENTS, updated=WRAPPER_UPDATES):
     return partial(update_wrapper, wrapped=wrapped, assigned=assigned, updated=updated)
 ```
 

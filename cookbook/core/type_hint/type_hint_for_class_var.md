@@ -7,9 +7,10 @@ Special type construct to mark **class variables**.
 ```python
 from typing import ClassVar
 
+
 class C:
-    cls_attr: ClassVar[dict[str, int]] = {}   # class variable
-    ins_attr: int = 10                        # instance variable
+    cls_attr: ClassVar[dict[str, int]] = {}  # class variable
+    ins_attr: int = 10  # instance variable
 ```
 
 ## More Details
