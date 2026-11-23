@@ -50,6 +50,7 @@ if __name__ == '__main__':
 import queue
 import threading
 
+
 def consumer(cond: threading.Condition, q: queue.SimpleQueue):
     with cond:
         # is equivalent to:

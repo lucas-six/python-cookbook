@@ -5,8 +5,7 @@ UDP = User Datagram Protocol
 ## Solution
 
 ```python
-"""UDP Client, based on IPv4
-"""
+"""UDP Client, based on IPv4"""
 
 from __future__ import annotations
 
@@ -16,9 +15,7 @@ import struct
 
 from net import handle_socket_bufsize
 
-logging.basicConfig(
-    level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}'
-)
+logging.basicConfig(level=logging.DEBUG, style='{', format='[{processName} ({process})] {message}')
 
 data: bytes = b'data'
 server_address = ('localhost', 9999)
@@ -31,7 +28,6 @@ binary_value: tuple = (1, b'ab', 2, 3, 3, 2.5)
 packer = struct.Struct(binary_fmt)
 
 with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as client:
-
     client.settimeout(timeout)
     logging.debug(f'recv/send timeout: {client.gettimeout()} seconds')
 
